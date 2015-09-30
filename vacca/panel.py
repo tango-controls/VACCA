@@ -48,32 +48,29 @@ def init_qt():
     return Qt.QApplication([])
             
 def get_dev_attrs(dev):
-    default = ['state', 'status']
+    default = ['state','status']    
     #: DEV_ATTRS definition
     #: The lists of attributes to visualize for each vacuum device class    
     #attrs = taurus.Device(dev).get_attribute_list()
     for k,v in DEV_ATTRS.items():
-        if re.match(k, dev.lower()):
+        if re.match(k,dev.lower()): 
             return default+v
     return default
     
 def get_eqtype(dev):
     ''' It extracts the eqtype from a device name like domain/family/eqtype-serial'''
-    try:
-        eq = str(dev).split('/')[-1].split('-', 1)[0].upper()
-    except:
-        eq = ''
+    try: eq = str(dev).split('/')[-1].split('-',1)[0].upper()
+    except: eq = ''
     return eq
 
 ###############################################################################
 # Variables that control VaccaPanel shape
-STATUS_HEIGHT = 170
-SPLIT_SIZES = [] #[15,50,35]
+STATUS_HEIGHT=170
+SPLIT_SIZES=[] #[15,50,35]
 
 #APP_FOLDER = '/homelocal/sicilia/applications/vacca/'
-EQUIP_IMAGE = wdir('image/equips/icon-%s.gif')
-IMAGE_SIZE = (200, 100) #(width,height)
-
+EQUIP_IMAGE=wdir('image/equips/icon-%s.gif')
+IMAGE_SIZE=(200,100) #(width,height)
 
 class VaccaSplash(Qt.QSplashScreen, fandango.Singleton):
 
@@ -83,7 +80,6 @@ class VaccaSplash(Qt.QSplashScreen, fandango.Singleton):
         self.showMessage('initializing application...')
         self._timer = Qt.QTimer.singleShot(timeout, self.close)
         self.show()
-
 
 class DomainButton(Qt.QToolButton):
 
@@ -106,10 +102,7 @@ class DomainButton(Qt.QToolButton):
         #print 'DomainButton.setModel(%s,%s)'%(model,action)
         self._model = model
         self._led.setModel(model)
-
-        if not self._label.text():
-            self.setLabel(model.split('/')[0])
-
+        if not self._label.text(): self.setLabel(model.split('/')[0])
         self._cmd = action#action.split()
         self._action = taurus.qt.qtgui.util.ExternalAppAction(cmdargs=self._cmd)
         self.connect(self, Qt.SIGNAL("pressed()"), self.show)
@@ -314,7 +307,7 @@ if __name__ == '__main__':
         form = VaccaPanel(palette=get_fullWhite_palette(),filters=filters)
         form.setModel(model)
     elif model.lower().endswith('.jdw'):
-        print 'loading a vacca Panel'
+        print 'loading a synoptic'
         form = taurus.qt.qtgui.graphic.TauJDrawSynopticsView(designMode=False,
           updateMode=taurus.qt.qtgui.graphic.TauJDrawSynopticsView.NoViewportUpdate
           ) 
@@ -327,16 +320,11 @@ if __name__ == '__main__':
         models = form.get_item_list()
         for m in models:
             m = str(m)
-            if m.count('/') == 2:
-                m += '/state'
+            if m.count('/')==2: m+='/state'
             period = 120000.
             try: 
                 taurus.Attribute(m).changePollingPeriod(period)
-            except:
-                print '(%s).changePollingPeriod(%s): Failed: %s' % (m,
-                                                                    period,
-                                                        traceback.format_exc()
-                                                                    )
+            except: print '(%s).changePollingPeriod(%s): Failed: %s'%(m,period,traceback.format_exc())
     print 'showing ...'
     form.show()
     sys.exit(app.exec_())

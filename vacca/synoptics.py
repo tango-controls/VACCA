@@ -25,6 +25,7 @@
 
 
 import fandango
+import fandango.qt
 import fandango.functional as fun
 from PyQt4 import Qt,Qwt5
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
@@ -35,7 +36,7 @@ from fandango import partial,FakeLogger as FL
 from taurus.qt.qtgui.graphic import TaurusJDrawSynopticsView
 
 
-class VaccaSynoptic(fandango.qt.Draggable(TaurusJDrawSynopticsView)):
+class VaccaSynoptic(TaurusJDrawSynopticsView):
 
     JDRAW_FILE = None
     JDRAW_HOOK = None
@@ -58,12 +59,12 @@ class VaccaSynoptic(fandango.qt.Draggable(TaurusJDrawSynopticsView)):
         TaurusJDrawSynopticsView.setModel(self, model)
 
 
-    def selectGraphicItem(self,item_name):
-        item = self.scene().selectGraphicItem(item_name)
-        MimeData = self.getModelMimeData()
-        print repr(MimeData)
-        print "SelectedGraphicItem in VaccaSynoptic: %s, %s"%(item_name, MimeData)
-        return False
+    #def selectGraphicItem(self,item_name):
+        #item = self.scene().selectGraphicItem(item_name)
+        #MimeData = self.getModelMimeData()
+        #print repr(MimeData)
+        #print "SelectedGraphicItem in VaccaSynoptic: %s, %s"%(item_name, MimeData)
+        #return False
 
     def getPanelDescription(self):
 
