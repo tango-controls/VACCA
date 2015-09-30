@@ -1,0 +1,505 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
+<title>Vacca</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style>
+body { font:80% Verdana,Tahoma,Arial,sans-serif; }
+h1, h2, h3, h4 {  font-family: "Trebuchet MS",Georgia,"Times New Roman",serif; }
+ul.toc { padding: 4px; margin-left: 0; }
+ul.toc li { list-style-type:none; }
+ul.toc li.heading2 { margin-left: 1em; }
+ul.toc li.heading3 { margin-left: 2em; }
+a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
+a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
+h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor { display: inline; color: #ddd; }
+</style>
+</head>
+<body>
+<a name="Vacca-the-VACuum-Controls-Application"></a>
+<h1>Vacca, the VACuum Controls Application<a href="#Vacca-the-VACuum-Controls-Application" class="wiki-anchor">¶</a></h1>
+
+
+	<p>Vacca is a synoptic-oriented Taurus gui. It is highly customizable, 
+using python files to setup the devices/attributes/icons/commands to be 
+displayed in several grid/tree/profile/synoptic widgets.</p>
+
+
+	<ul class="toc right"><li><a href="#Vacca-the-VACuum-Controls-Application">Vacca, the VACuum Controls Application</a></li><li><a href="#Links">Links</a><ul><li><a href="#Getting-Vacca">Getting Vacca</a></li><li><a href="#Other-Links">Other Links</a></li></ul>
+</li><li><a href="#Using-Vacca">Using Vacca</a><ul><li><a href="#Overview-of-the-application">Overview of the application</a><ul><li><a href="#The-Tree">The Tree</a></li><li><a href="#The-central-panel">The central panel</a></li><li><a href="#The-Synoptic">The Synoptic</a></li><li><a href="#Plotting-area">Plotting area</a></li></ul>
+</li><li><a href="#Device-Naming">Device Naming</a><ul><li><a href="#Device-Name-Structure">Device Name Structure</a></li><li><a href="#Searching-for-a-device">Searching for a device</a></li><li><a href="#Equipment-Types-Glossary">Equipment Types Glossary</a></li></ul>
+</li><li><a href="#Showing-attributes-and-archived-values">Showing attributes and archived values</a></li></ul>
+</li><li><a href="#Setup-of-Vacca">Setup of Vacca</a><ul><li><a href="#Installing">Installing</a></li><li><a href="#Running">Running</a></li><li><a href="#Editing-Vacca-defaultpy-file">Editing Vacca default.py file</a><ul><li><a href="#defaultpyini">default.py.ini</a></li><li><a href="#Logo-and-title">Logo and title</a></li><li><a href="#Synoptic">Synoptic</a></li><li><a href="#Setup-of-the-tree">Setup of the tree</a></li><li><a href="#Device-Panel-setup">Device Panel setup</a></li><li><a href="#Setup-of-Attribute-Icon-filters-for-Panel-and-Tree">Setup of Attribute / Icon filters for Panel and Tree</a></li><li><a href="#Plot-Setup">Plot Setup</a></li><li><a href="#Grid-setup">Grid setup</a></li><li><a href="#Setup-of-external-tools">Setup of external tools</a></li></ul></li></ul></li></ul>
+
+
+	<p><img src="/attachments/download/503" style="height:350px;" alt=""></p>
+
+
+	<p><img src="----------------------------------------" alt=""></p>
+
+
+	<a name="Links"></a>
+<h1>Links<a href="#Links" class="wiki-anchor">¶</a></h1>
+
+
+	<p><a name="Getting-Vacca"></a>
+</p><h2><a href="file:///projects/vaccabo/wiki/GetVacca" class="wiki-page">Getting Vacca</a><a href="#Getting-Vacca" class="wiki-anchor">¶</a></h2>
+
+
+	<p>Source is available from sourceforge:</p>
+
+
+	<ul>
+	<li>svn co <a class="external" href="https://svn.code.sf.net/p/tango-cs/code/tools/vacca/trunk">https://svn.code.sf.net/p/tango-cs/code/tools/vacca/trunk</a></li>
+	</ul>
+
+
+	<p>Containing 2 python modules to be installed within your $PYTHONPATH :</p>
+
+
+	<ul>
+	<li><strong>vacca</strong>: it contains the code/widgets specific for vacca. </li>
+		<li><strong>vaccagui</strong>: it is a <strong>taurusgui</strong> application that loads vacca module.</li>
+	</ul>
+
+
+	<p>Dependencies of vacca are Taurus and fandango:</p>
+
+
+	<ul>
+	<li><a class="external" href="https://pypi.python.org/packages/source/t/taurus/taurus-3.1.0.tar.gz">https://pypi.python.org/packages/source/t/taurus/taurus-3.1.0.tar.gz</a></li>
+		<li>svn co <a class="external" href="https://svn.code.sf.net/p/tango-cs/code/share/fandango/trunk/fandango">https://svn.code.sf.net/p/tango-cs/code/share/fandango/trunk/fandango</a></li>
+	</ul><p></p>
+
+
+	<p><a name="Other-Links"></a>
+</p><h2><a href="file:///projects/vaccabo/wiki/Links" class="wiki-page">Other Links</a><a href="#Other-Links" class="wiki-anchor">¶</a></h2>
+
+
+	<p>Vacca is a Tango User Interface:</p>
+
+
+	<p><a class="external" href="http://www.tango-controls.org/Members/srubio/vacca">http://www.tango-controls.org/Members/srubio/vacca</a></p>
+
+
+	<p>Sources are available at sourceforge within Tango-CS project:</p>
+
+
+	<p><a class="external" href="http://sourceforge.net/p/tango-cs/code/HEAD/tree/tools/vacca/trunk">http://sourceforge.net/p/tango-cs/code/HEAD/tree/tools/vacca/trunk</a></p>
+
+
+	<p>The Vacuum GUIs have a help page in cells intranet</p>
+
+
+	<p><a class="external" href="http://www.cells.es/Intranet/Divisions/Computing/Controls/Help/Vacuum/vacca_gui/">http://www.cells.es/Intranet/Divisions/Computing/Controls/Help/Vacuum/vacca_gui/</a></p>
+
+
+	<p>The development of Taurus widgets was in Trac:</p>
+
+
+	<p><a class="external" href="http://pc148.cells.es:8077/Synoptics">http://pc148.cells.es:8077/Synoptics</a></p>
+
+
+	<p>You can find some information regarding devices in the Vacuum project wiki:</p>
+
+
+	<p><a class="external" href="http://redmine.cells.es/wiki/vacuum/">http://redmine.cells.es/wiki/vacuum/</a></p><p></p>
+
+
+	<p><a name="Using-Vacca"></a>
+</p><h1><a href="file:///projects/vaccabo/wiki/VaccaUsage" class="wiki-page">Using Vacca</a><a href="#Using-Vacca" class="wiki-anchor">¶</a></h1>
+
+
+	<a name="Overview-of-the-application"></a>
+<h2>Overview of the application<a href="#Overview-of-the-application" class="wiki-anchor">¶</a></h2>
+
+
+	<p>The Vacuum Control Application for ALBA is based in the interaction between 4 main panels:</p>
+
+
+	<p><img src="/attachments/download/505" style="height:400px;" alt=""></p>
+
+
+	<a name="The-Tree"></a>
+<h3>The Tree<a href="#The-Tree" class="wiki-anchor">¶</a></h3>
+
+
+	<p>The device tree in the left-side allows to search for any vacuum device in the machine and to access their attributes values.<br>Writing just part of a name (e.g. 'eh pnv 02') in the Search field (or Ctrl+f) you can go directly to any element.<br>Right-button click on any device name open the attribute list, to add attributes to plots or see the archived values.</p>
+
+
+	<a name="The-central-panel"></a>
+<h3>The central panel<a href="#The-central-panel" class="wiki-anchor">¶</a></h3>
+
+
+	<p>When a device is selected in the tree or in the synoptics its most common attributes and commands will be accessible here.<br>To visualize more than one element, you can push in the device image to move it to a new window.</p>
+
+
+	<a name="The-Synoptic"></a>
+<h3>The Synoptic<a href="#The-Synoptic" class="wiki-anchor">¶</a></h3>
+
+
+	<p>It shows the state of all the devices and its pressure readings; 
+clicking on any device it will be selected in both tree and central 
+panel.<br>The synoptic can be hidden at any time going to 
+Menu-&gt;View-&gt;ShowSynoptic , that will reduce the size of the 
+application to fit in small screens.</p>
+
+
+	<a name="Plotting-area"></a>
+<h3>Plotting area<a href="#Plotting-area" class="wiki-anchor">¶</a></h3>
+
+
+	<p>There are different tabs showing the pressure profiles from all the 
+sectors of the machine and a Trends (taurus) tab that allows to plot any
+ variable from the tree.<br>The Trends tab will display last values and also archived values if past dates are selected in the "Plot Configuration" dialog. <br>Attributes
+ can be added to "Trends" tab using righ-click on attribute nodes in the
+ tree or doing drag-and-drop from the attribute names in the central 
+panel.</p>
+
+
+	<a name="Device-Naming"></a>
+<h2>Device Naming<a href="#Device-Naming" class="wiki-anchor">¶</a></h2>
+
+
+	<a name="Device-Name-Structure"></a>
+<h3>Device Name Structure<a href="#Device-Name-Structure" class="wiki-anchor">¶</a></h3>
+
+
+	<p>Every device is identified by a code like:<br></p><pre>DOMAIN / FAMILY / EQUIPMENT_TYPE - [RACK] - Number
+</pre><p></p>
+
+
+	<ul>
+	<li>Domain is a cabling system: LI, LT, BO*, BT, SR*, FE*, ...</li>
+		<li>Family is a cabling subsystem: VC, RF, CT, ...</li>
+		<li>Equipment type defines a code for each type of device: Gauge=CCG, Controller=VGCT, ...</li>
+		<li>RACK and Number allow the operator to identify a unique device in the machine.</li>
+	</ul>
+
+
+	<p>All devices related to the vacuum control system are available in 
+the left-side tree of the application, and can be easily searched.</p>
+
+
+	<a name="Searching-for-a-device"></a>
+<h3>Searching for a device<a href="#Searching-for-a-device" class="wiki-anchor">¶</a></h3>
+
+
+	<p>The "search" button allows to find any name in the Vacca device list. Any space in the search field acts as a "*" wildcard.</p>
+
+
+	<p>It means that a search like "bo vgct" will return any name 
+containing "bo" and "vgct" codes in the given order (all the gauge 
+controllers of the booster).</p>
+
+
+	<a name="Equipment-Types-Glossary"></a>
+<h3>Equipment Types Glossary<a href="#Equipment-Types-Glossary" class="wiki-anchor">¶</a></h3>
+
+
+	<p>Those are the names commonly used, although it can be customized to fit any need.</p>
+
+
+	<ul>
+	<li>CCG: Cold Cathode Gauges</li>
+		<li>PIR: Pirani Gauges</li>
+		<li>VGCT: MKS 937 Gauge Controller</li>
+		<li>IP: Ion Pump</li>
+		<li>IPCT: Varian DUAL Ion Pump Controller</li>
+		<li>SPBX: Ion Pump Splitter Box unit</li>
+		<li>PNV: Pneumatic Valve (Booster/FrontEnds)</li>
+		<li>SPNV: Pneumatic Valve (Storage Ring)</li>
+		<li>EPS-PLC: Equipment Protection System PLC</li>
+		<li>RGA/MicrovisionIP: Residual Gas Analyzer</li>
+		<li>Modbus/Serial/Socket: Communication devices</li>
+		<li>Composer/ALL/ALL-IPs: Control system devices calculating pressure profiles for each sector</li>
+		<li>Alarms: Alarm servers used to send emails/SMS or perform automatic actions on certain conditions.</li>
+	</ul>
+
+
+	<a name="Showing-attributes-and-archived-values"></a>
+<h2>Showing attributes and archived values<a href="#Showing-attributes-and-archived-values" class="wiki-anchor">¶</a></h2>
+
+
+	<ul>
+	<li>Clicking on a device in the tree or in synoptic panel will show the device status in the central panel.</li>
+		<li>Most common attributes and commands from the device will appear in two tabs.</li>
+		<li>Other attributes can be obtained by clicking with the right button over the device name in the tree.</li>
+		<li>The menu option "Show Attributes" will display the available attributes.</li>
+	</ul>
+
+
+	<p>The attribute values history can be visualized in two ways:</p>
+
+
+	<ul>
+	<li>Dragging the attribute name from the tree to the Taurus Trend tab, if the attribute is readable it will be plot in the graph.</li>
+		<li>Right button on the attribute name node in the tree will display 
+the "Show History" action if the attribute is archived. That action will
+ show archived values in a table and will allow to export them into 
+.csv.</li>
+	</ul><p></p>
+
+
+	<p><a name="Setup-of-Vacca"></a>
+</p><h1><a href="file:///projects/vaccabo/wiki/VaccaSetup" class="wiki-page">Setup of Vacca</a><a href="#Setup-of-Vacca" class="wiki-anchor">¶</a></h1>
+
+
+	<a name="Installing"></a>
+<h2>Installing<a href="#Installing" class="wiki-anchor">¶</a></h2>
+
+
+	<p>Get vacca and vaccagui modules from sourceforge:</p>
+
+
+	<blockquote>
+		<p>svn co <a class="external" href="https://svn.code.sf.net/p/tango-cs/code/tools/vacca/trunk">https://svn.code.sf.net/p/tango-cs/code/tools/vacca/trunk</a></p>
+	</blockquote>
+
+
+	<p>Copy vacca folder to a folder in your PYTHONPATH<br>Copy ./vaccagui script to a folder in your PATH<br>Copy default.py.ini to default.py and edit your default options (follow comments in the file)</p>
+
+
+	<p>The idea is to have general config in default.py (ORGANIZATION_LOGO,
+ EXTRA_APPS, ...) and use another file to customize to your 
+beamline/system.<br>Copy default.py to my_beamline.py; modify variables like JDRAW_FILE, COMPOSER, GRID, DEVICE, GAUGES, ...<br>Remove all variables you don't need to modify (if ORGANIZATION_LOG is the same for all do not have it declared in many files)</p>
+
+
+	<a name="Running"></a>
+<h2>Running<a href="#Running" class="wiki-anchor">¶</a></h2>
+
+
+	<p>Launch the gui as:<br> ./vaccagui path/to/mybeamline.py</p>
+
+
+	<p>Path to your file must be absolute or relative from "vacca" module location.<br>If no config file is passed as argument the application will try to open $VACCA_CONF or $TANGO_HOST.py if exists.</p>
+
+
+	<p>The VACCA_CONFIG environment variable can be used to set the Vacca config file to load.</p>
+
+
+	<a name="Editing-Vacca-defaultpy-file"></a>
+<h2>Editing Vacca <strong>default.py</strong> file<a href="#Editing-Vacca-defaultpy-file" class="wiki-anchor">¶</a></h2>
+
+
+	<p>The widgets that are part of Vacca are defined at 3 levels:</p>
+
+
+	<ul>
+	<li><strong>vacca/config.py</strong> : it configures the <strong>Taurus GUI</strong> creating the widgets that are <em>permanent</em> in Vacca. Those widgets are created from those variables defined in the next configuration files. Therefore, <strong>config.py doesn't need to be modified</strong>.</li>
+	</ul>
+
+
+	<ul>
+	<li><strong>vacca/default.py</strong> : it defines the default value to
+ all vacca instances. Typically you will add here your logo, icons and 
+default tools to be added to Vacca toolbars; and then you will use a <strong>local_configuration_file.py</strong> to customize vacca to each beamline or subsystem.</li>
+	</ul>
+
+
+	<blockquote>
+		<p>In case you don't need different configurations you can use directly default.py to customize vacca.</p>
+	</blockquote>
+
+
+	<ul>
+	<li><strong>vacca/local_configuration_file.py</strong> : customization 
+of vacca to your beamline / subsystem. Define your synoptic, device 
+tree, default device, attributes in trend, etc ...</li>
+	</ul>
+
+
+	<a name="defaultpyini"></a>
+<h3>default.py.ini<a href="#defaultpyini" class="wiki-anchor">¶</a></h3>
+
+
+	<p>default.py.ini is a configuration file example of how to specify system-wide defaults for VaccaGUI</p>
+
+
+	<p>After copying it to default.py this configuration file determines the default, permanent, pre-defined<br>options for the GUI; modify them to match your default gui options.</p>
+
+
+	<p>Every CONFIG file loaded by vaccagui will override those options redefined on it; <br>use default.py for your common options and whatever.py for your in-place customization.</p>
+
+
+	<p>Several methods are imported from <strong>fandango</strong> module to allow easy use of caseless regular expressions while searching in the Tango database:<br></p><pre><code class="python syntaxhl"><span class="CodeRay"><span class="keyword">from</span> <span class="include">fandango</span> <span class="keyword">import</span> <span class="include">matchCl</span>,<span class="include">searchCl</span>,<span class="include">replaceCl</span>,<span class="include">CaselessDict</span>,<span class="include">CaselessList</span>,<span class="include">get_matching_devices</span>,<span class="include">get_matching_attributes</span>
+</span></code></pre><p></p>
+
+
+	<p>A typical usage of <strong>fandango</strong> methods for searching devices:<br></p><pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">#This will return all valve-related devices but excluding Tango admin devices </span>
+all_valves = [d <span class="keyword">for</span> d <span class="keyword">in</span> get_matching_devices(<span class="string"><span class="delimiter">'</span><span class="content">*(pnv|valve)*</span><span class="delimiter">'</span></span>) <span class="keyword">if</span> <span class="keyword">not</span> searchCl(<span class="string"><span class="delimiter">'</span><span class="content">dserver</span><span class="delimiter">'</span></span>,d)]
+<span class="comment">#This will return all ion pump, cold cathode or pirani attributes if name matches P1,p2,P3. or pressure.</span>
+all_pressures = get_matching_attributes(<span class="string"><span class="delimiter">'</span><span class="content">*/*/(ip|ccg|pir)*/(pressure|p[0-9])</span><span class="delimiter">'</span></span>)
+</span></code></pre><p></p>
+
+
+	<a name="Logo-and-title"></a>
+<h3>Logo and title<a href="#Logo-and-title" class="wiki-anchor">¶</a></h3>
+
+
+<pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">#ALL these variables can be re-defined in CONFIG FILE</span>
+GUI_NAME = <span class="string"><span class="delimiter">'</span><span class="content">VACCA</span><span class="delimiter">'</span></span>
+WDIR = imp.find_module(<span class="string"><span class="delimiter">'</span><span class="content">vacca</span><span class="delimiter">'</span></span>)[<span class="integer">1</span>]+<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>
+URL_HELP = <span class="string"><span class="delimiter">'</span><span class="content">http://www.tango-controls.org/Members/srubio/vacca</span><span class="delimiter">'</span></span>
+URL_LOGBOOK = <span class="string"><span class="delimiter">'</span><span class="content">http://logbook.cells.es/</span><span class="delimiter">'</span></span>
+VACCA_LOGO = WDIR+<span class="string"><span class="delimiter">'</span><span class="content">image/icons/nggshow.php.png</span><span class="delimiter">'</span></span>
+ORGANIZATION_LOGO = WDIR+<span class="string"><span class="delimiter">'</span><span class="content">image/icons/AlbaLogo.png</span><span class="delimiter">'</span></span>
+</span></code></pre>
+
+	<a name="Synoptic"></a>
+<h3>Synoptic<a href="#Synoptic" class="wiki-anchor">¶</a></h3>
+
+
+<pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">#Synoptic file</span>
+JDRAW_FILE = <span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span> <span class="comment">#WDIR+'%s/%s.jdw'%(TARGET,TARGET)</span>
+<span class="comment">#Enables/disables loading jdraw objects into tree</span>
+JDRAW_TREE = <span class="predefined-constant">True</span> 
+<span class="comment">#A method that does transformation on signals sent to other widgets.</span>
+JDRAW_HOOK = <span class="predefined-constant">None</span> <span class="comment">#lambda s: apply_transform(get_coordinates(s)) </span>
+<span class="comment"># Enable multiple selection of objects in Synoptic</span>
+<span class="comment">#from taurus.qt.qtgui.graphic import TaurusGraphicsScene</span>
+<span class="comment">#TaurusGraphicsScene.ANY_ATTRIBUTE_SELECTS_DEVICE = True</span>
+
+</span></code></pre>
+
+	<a name="Setup-of-the-tree"></a>
+<h3>Setup of the tree<a href="#Setup-of-the-tree" class="wiki-anchor">¶</a></h3>
+
+
+<pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">#Domain/Target used to generate grids/trees ; domain may be regexp, target should not</span>
+DOMAIN = <span class="string"><span class="delimiter">'</span><span class="content">BL*</span><span class="delimiter">'</span></span>
+TARGET = DOMAIN
+USE_DEVICE_TREE = <span class="predefined-constant">True</span>
+
+<span class="comment">#Devices not in JDraw or regular expression to be added to the tree</span>
+EXTRA_DEVICES = [DEVICE] <span class="comment">#map(bool,set(['%s/VC/ALL'%TARGET,'%s/CT/ALARMS'%TARGET,DEVICE,COMPOSER]))</span>
+
+<span class="comment">#Custom tree branches are built using nested dictionaries and regular expressions (if empty a jive-like tree is built).</span>
+CUSTOM_TREE = {} 
+<span class="comment"># {'CT':'BL*(CT|ALARMS|PLC)$',</span>
+<span class="comment">#  'FE':'FE*/VC/*',</span>
+<span class="comment">#  'Valves': {'.OH':'*OH/PNV*',</span>
+<span class="comment">#             'EH01':'*EH01/PNV*',},</span>
+<span class="comment">#  'BAKEOUTS':'BL*(BAKE|BK)*',}</span>
+</span></code></pre>
+
+	<a name="Device-Panel-setup"></a>
+<h3>Device Panel setup<a href="#Device-Panel-setup" class="wiki-anchor">¶</a></h3>
+
+
+<pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">#PyStateComposer to get Vacuum Profile curves</span>
+COMPOSER = <span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span> <span class="comment">#'%s/vc/all'%DOMAIN</span>
+
+<span class="comment">#Default device to appear in the DevicePanel</span>
+DEVICE = <span class="string"><span class="delimiter">'</span><span class="content">sys/tg_test/1</span><span class="delimiter">'</span></span>
+USE_DEVICE_PANEL = <span class="predefined-constant">True</span>
+PANEL_COMMAND = <span class="string"><span class="delimiter">'</span><span class="content">taurusdevicepanel --config-file=</span><span class="delimiter">'</span></span>+WDIR+<span class="string"><span class="delimiter">'</span><span class="content">default.py</span><span class="delimiter">'</span></span>
+</span></code></pre>
+
+	<a name="Setup-of-Attribute-Icon-filters-for-Panel-and-Tree"></a>
+<h3>Setup of Attribute / Icon filters for Panel and Tree<a href="#Setup-of-Attribute-Icon-filters-for-Panel-and-Tree" class="wiki-anchor">¶</a></h3>
+
+
+	<p>The AttributeFilters and CommandFilters dictionary will control 
+which attributes are shown for each equipment tree in the tree and 
+device panel.</p>
+
+
+	<p>Key of the dictionary should be part of the device member, you can 
+distribute attributes or commands in several tabs if you use a list of 
+tuples.</p>
+
+
+<pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">#Examples of Attribute filters to be applied to DevicePanel</span>
+AttributeFilters = CaselessDict(<span class="string"><span class="delimiter">'</span><span class="content">V-PEN</span><span class="delimiter">'</span></span>: [<span class="string"><span class="delimiter">'</span><span class="content">pressure</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">channelstatus</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">controller</span><span class="delimiter">'</span></span>],)
+AttributeFilters[<span class="string"><span class="delimiter">'</span><span class="content">EPS</span><span class="delimiter">'</span></span>]=[ <span class="comment">#You can distribute attributes in different tabs using tuples</span>
+    (<span class="string"><span class="delimiter">'</span><span class="content">Status</span><span class="delimiter">'</span></span>,[<span class="string"><span class="delimiter">'</span><span class="content">_READY</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">OPEN_</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">CLOSE_</span><span class="delimiter">'</span></span>]),
+    (<span class="string"><span class="delimiter">'</span><span class="content">Signals</span><span class="delimiter">'</span></span>,[<span class="string"><span class="delimiter">'</span><span class="content">.*_PT.*</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">was_</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">paas_</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">*RGA*</span><span class="delimiter">'</span></span>]),
+    ]
+CommandFilters = CaselessDict(<span class="string"><span class="delimiter">'</span><span class="content">V-PEN</span><span class="delimiter">'</span></span>: ((<span class="string"><span class="delimiter">'</span><span class="content">on</span><span class="delimiter">'</span></span>,()),(<span class="string"><span class="delimiter">'</span><span class="content">off</span><span class="delimiter">'</span></span>,())),(<span class="string"><span class="delimiter">'</span><span class="content">setMode</span><span class="delimiter">'</span></span>,(<span class="string"><span class="delimiter">'</span><span class="content">START</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">PROTECT</span><span class="delimiter">'</span></span>)),) <span class="comment">#Second argument of tuple is the list of default arguments</span>
+</span></code></pre>
+
+	<p>The IconMap will link each equipment type to the icon to be shown in
+ tree and panel. It is recommended to use .gif files with transparent 
+background.</p>
+
+
+<pre><code class="python syntaxhl"><span class="CodeRay">IconMap = CaselessDict(<span class="string"><span class="delimiter">'</span><span class="content">v-pen</span><span class="delimiter">'</span></span>:WDIR+<span class="string"><span class="delimiter">'</span><span class="content">image/equips/icon-pen.gif</span><span class="delimiter">'</span></span>) <span class="comment">#Will be used in both panel and tree</span>
+</span></code></pre>
+
+<pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">## Optional:</span>
+<span class="comment">## If you put filters in a separate file you can load a taurusdevicepanel.py with --config-file=filters.py option</span>
+<span class="comment">## Then replace previous lines by:</span>
+<span class="comment"># from vacca.filters import * </span>
+</span></code></pre>
+
+	<a name="Plot-Setup"></a>
+<h3>Plot Setup<a href="#Plot-Setup" class="wiki-anchor">¶</a></h3>
+
+
+<pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">#Pressure values to be added to the trend</span>
+GAUGES = [] <span class="comment">#['bl13/vc/vgct-01/p1','bl13/vc/vgct-01/p2'] </span>
+<span class="comment">#sorted(fandango.get_matching_attributes('%s/*/vgct*/p[12]'%DOMAIN.replace('BL','(BL|FE|ID)')))</span>
+</span></code></pre>
+
+	<a name="Grid-setup"></a>
+<h3>Grid setup<a href="#Grid-setup" class="wiki-anchor">¶</a></h3>
+
+
+<pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">#Grid showing all pressures in rows/columns</span>
+GRID = {
+    <span class="string"><span class="delimiter">'</span><span class="content">column_labels</span><span class="delimiter">'</span></span>: <span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span>,
+    <span class="string"><span class="delimiter">'</span><span class="content">delayed</span><span class="delimiter">'</span></span>: <span class="predefined-constant">False</span>,
+    <span class="string"><span class="delimiter">'</span><span class="content">frames</span><span class="delimiter">'</span></span>: <span class="predefined-constant">False</span>,
+    <span class="string"><span class="delimiter">'</span><span class="content">model</span><span class="delimiter">'</span></span>: [<span class="string"><span class="delimiter">'</span><span class="content">%s/VC/(IPCT|VGCT|CCGX)*/(P[12]|Pressure|State)$</span><span class="delimiter">'</span></span>%DOMAIN,<span class="string"><span class="delimiter">'</span><span class="content">%s/V-[^/]*/[0-9]*/(Pressure|State)</span><span class="delimiter">'</span></span>%DOMAIN],
+    <span class="string"><span class="delimiter">'</span><span class="content">row_labels</span><span class="delimiter">'</span></span>:<span class="string"><span class="delimiter">'</span><span class="content">VcGauges(mbar):(VGCT|PEN), IonPumps(mbar):(IPCT|VARIP)</span><span class="delimiter">'</span></span>,
+    }
+</span></code></pre>
+
+	<a name="Setup-of-external-tools"></a>
+<h3>Setup of external tools<a href="#Setup-of-external-tools" class="wiki-anchor">¶</a></h3>
+
+
+<pre><code class="python syntaxhl"><span class="CodeRay"><span class="comment">#Extra widgets to appear in the NewPanel dialog</span>
+EXTRA_WIDGETS = [] <span class="comment">#('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),</span>
+EXTRA_PANELS = [] <span class="comment">#('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),</span>
+TOOLBARS = [] <span class="comment">#[(name,modulename.classname)]</span>
+
+<span class="comment">#===============================================================================</span>
+<span class="comment"># Define which External Applications are to be inserted.</span>
+<span class="comment"># To define an external application, instantiate an ExternalApp object</span>
+<span class="comment"># See TaurusMainWindow.addExternalAppLauncher for valid values of ExternalApp</span>
+<span class="comment">#===============================================================================</span>
+
+<span class="keyword">from</span> <span class="include">taurus.qt.qtgui.taurusgui.utils</span> <span class="keyword">import</span> <span class="include">PanelDescription</span>, <span class="include">ExternalApp</span>, <span class="include">ToolBarDescription</span>, <span class="include">AppletDescription</span>
+
+xvacca = ExternalApp(cmdargs=[<span class="string"><span class="delimiter">'</span><span class="content">konqueror</span><span class="delimiter">'</span></span>,URL_HELP], text=<span class="string"><span class="delimiter">"</span><span class="content">Alba VACuum Controls Application</span><span class="delimiter">"</span></span>, icon=WDIR+<span class="string"><span class="delimiter">'</span><span class="content">image/icons/cow-tux.png</span><span class="delimiter">'</span></span>)
+xtrend = ExternalApp(cmdargs=[<span class="string"><span class="delimiter">'</span><span class="content">taurustrend</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">-a</span><span class="delimiter">'</span></span>], text=<span class="string"><span class="delimiter">"</span><span class="content">TaurusTrend</span><span class="delimiter">"</span></span>)
+xjive = ExternalApp(cmdargs=[<span class="string"><span class="delimiter">'</span><span class="content">jive</span><span class="delimiter">'</span></span>], text=<span class="string"><span class="delimiter">"</span><span class="content">Jive</span><span class="delimiter">"</span></span>)<span class="comment">#, icon=WDIR+'image/icons/cow-tux.png')</span>
+xastor = ExternalApp(cmdargs=[<span class="string"><span class="delimiter">'</span><span class="content">astor</span><span class="delimiter">'</span></span>], text=<span class="string"><span class="delimiter">"</span><span class="content">Astor</span><span class="delimiter">"</span></span>)<span class="comment">#, icon=WDIR+'image/icons/cow-tux.png')</span>
+<span class="comment">#logbook = ExternalApp(cmdargs=['konqueror %s'%URL_LOGBOOK], text="Logbook", icon=WDIR+"image/icons/elog.png")</span>
+
+<span class="comment">#===============================================================================</span>
+<span class="comment"># Define custom applets to be shown in the applets bar (the wide bar that</span>
+<span class="comment"># contains the logos). To define an applet, instantiate an AppletDescription</span>
+<span class="comment"># object (see documentation for the gblgui_utils module)</span>
+<span class="comment">#===============================================================================</span>
+
+<span class="comment">#Each Applet can be described with a dictionary like this:</span>
+<span class="comment">#   (name, classname=None, modulename=None, widgetname=None, </span>
+<span class="comment">#       sharedDataWrite=None, sharedDataRead=None, model=None, floating=True, **kwargs)</span>
+<span class="comment">#For ExternalApp/VaccaActions use:</span>
+<span class="comment"># {'$VarName':{'name':'$AppName','classname':'VaccaAction','model':['$Test','$/path/to/icon.png','$launcher']}}</span>
+
+EXTRA_APPS = {
+    <span class="comment">#'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}</span>
+    }
+
+<span class="comment">#from vacca.panel import VaccaAction</span>
+
+xmambo = AppletDescription(<span class="string"><span class="delimiter">'</span><span class="content">Mambo</span><span class="delimiter">'</span></span>,classname = <span class="string"><span class="delimiter">'</span><span class="content">vacca.panel.VaccaAction</span><span class="delimiter">'</span></span>,model=[<span class="string"><span class="delimiter">"</span><span class="content">Archiving</span><span class="delimiter">"</span></span>,WDIR+<span class="string"><span class="delimiter">'</span><span class="content">image/icons/Mambo-icon.png</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">mambo</span><span class="delimiter">'</span></span>],)
+xalarms = AppletDescription(<span class="string"><span class="delimiter">'</span><span class="content">Alarms</span><span class="delimiter">'</span></span>,classname=<span class="string"><span class="delimiter">'</span><span class="content">vacca.panel.VaccaAction</span><span class="delimiter">'</span></span>,model=[<span class="string"><span class="delimiter">'</span><span class="content">Alarms</span><span class="delimiter">'</span></span>,WDIR+<span class="string"><span class="delimiter">'</span><span class="content">image/icons/panic.gif</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">panic</span><span class="delimiter">'</span></span>])
+xsnap = AppletDescription(<span class="string"><span class="delimiter">'</span><span class="content">xSnap</span><span class="delimiter">'</span></span>,classname=<span class="string"><span class="delimiter">'</span><span class="content">vacca.panel.VaccaAction</span><span class="delimiter">'</span></span>,model=[<span class="string"><span class="delimiter">'</span><span class="content">Snap</span><span class="delimiter">'</span></span>,WDIR+<span class="string"><span class="delimiter">'</span><span class="content">image/icons/Crystal_Clear_app_kedit.png</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">ctsnaps</span><span class="delimiter">'</span></span>])
+</span></code><pre></pre></pre><p></p>
+
+
+</body></html>

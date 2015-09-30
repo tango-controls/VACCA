@@ -1,0 +1,11 @@
+
+August 2014
+
+config.py : Adapted to parse .svg synoptic files from MAXLAB
+panel.py: Added SimplePanel class to solve layout issues with TaurusDevicePanel
+
+
+10 august 2013> not in bliss yet!
+plot> modified to use taurusplot._pointPicker instead of _picker
+Many bugs solved due to renaming of trace, positions, label, picker methods
+Traces and check for exceptions added

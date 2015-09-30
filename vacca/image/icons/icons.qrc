@@ -1,0 +1,13 @@
+<RCC>
+    <qresource>
+        <file alias="FILEOPEN">fileopen.png</file>
+        <file alias="FILESAVE">filesave.png</file>
+        <file alias="FILESAVEAS">filesaveas.png</file>
+        <file alias="CLOSE">close.png</file>
+        <file alias="REFRESH">refresh.png</file>
+        <file alias="CLEAR">clear.png</file>
+        <file alias="AUTHOR">author.png</file>
+        <file alias="LOGO">logo.jpg</file>
+        <file alias="INFO">info.png</file>
+    </qresource>
+</RCC>
