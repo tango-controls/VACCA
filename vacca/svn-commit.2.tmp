@@ -1,6 +1,0 @@
-Add VaccaSynoptic in specific file
---This line, and those below, will be ignored--
-
-M    properties.py
-AM   synoptics.py
-M    config.py
