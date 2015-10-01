@@ -42,8 +42,14 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
             sdm.connectReader('SelectedInstrument',self.setTable,readOnConnect=True)
         print sorted(a for a in dir(self) if 'check'  in a )
         if self.checkDropSupport():
-            self.setSupportedMimeTypes([self.TAURUS_DEV_MIME_TYPE, self.TAURUS_MODEL_MIME_TYPE, self.TEXT_MIME_TYPE])
-        #self.setAcceptDrops(True)
+            self.setSupportedMimeTypes([self.TAURUS_DEV_MIME_TYPE,
+                                        self.TAURUS_MODEL_MIME_TYPE,
+                                        self.TAURUS_MODEL_MIME_TYPE,
+                                        self.TAURUS_MODEL_LIST_MIME_TYPE,
+                                        self.TEXT_MIME_TYPE])
+
+
+        self.setAcceptDrops(True)
         #self.setModifiableByUser(True)
         self.setDropEventCallback(self.setTable)
         self.setModelInConfig(False)
