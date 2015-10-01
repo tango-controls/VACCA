@@ -254,14 +254,13 @@ class SimplePanel(WIDGET_CLASS):
         i = self.getInnerPanel()
         return i.getModel() if i else None
             
-
-#class VaccaPanel(vacca.utils.WidgetAcceptDrops,taurus.qt.qtgui.panel.TaurusDevicePanel):
 class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     
     def __init__(self,parent=None,model=None,palette=None,bound=True,filters=[]):
         
         self.call__init__(taurus.qt.qtgui.panel.TaurusDevicePanel, parent, model)
-        #taurus.qt.qtgui.panel.TaurusDevicePanel(self) #,parent,model,palette,bound)
+        self.setLogLevel(4)
+        taurus.qt.qtgui.panel.TaurusDevicePanel(self) #,parent,model,palette,bound)
         if self.checkDropSupport():
             self.setSupportedMimeTypes([self.TAURUS_DEV_MIME_TYPE,
                                         self.TEXT_MIME_TYPE, self.TAURUS_MODEL_MIME_TYPE])
@@ -272,7 +271,12 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self._label.font().setBold(True)
         self._header.layout().addWidget(self._label,0,1,Qt.Qt.AlignLeft)
         self._label.setDragEventCallback(self._label.text)
-
+        
+    @Qt.pyqtSignature("setModel(QString)")
+    def setModel(self,model,pixmap=None): 
+        self.info('VaccaPanel.setModel(%s,%s)'%(model,pixmap))
+        TaurusDevicePanel.setModel(self,model,pixmap)
+        
 def configure_form(dev,form=None):
     """ Creates a TauForm and configures its Status fields 
     """

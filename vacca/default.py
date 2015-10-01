@@ -64,20 +64,6 @@ JDRAW_HOOK = None #lambda s: apply_transform(get_coordinates(s))
 #TaurusGraphicsScene.ANY_ATTRIBUTE_SELECTS_DEVICE = True
 
 ###############################################################################
-# Setup of the tree
-
-#Custom tree branches are built using nested dictionaries and regular expressions (if empty a jive-like tree is built).
-CUSTOM_TREE = {}
-
-# {'CT':'BL*(CT|ALARMS|PLC)$',
-#  'FE':'FE*/VC/*',
-#  'Valves': {'.OH':'*OH/PNV*',
-#             'EH01':'*EH01/PNV*',},
-#  'BAKEOUTS':'BL*(BAKE|BK)*',}
-
-EXTRA_DEVICES = [DEVICE] #map(bool,set(['%s/VC/ALL'%TARGET,'%s/CT/ALARMS'%TARGET,DEVICE,COMPOSER]))
-
-###############################################################################
 # Device Panel setup
 
 #PyStateComposer to get Vacuum Profile curves
@@ -97,6 +83,20 @@ PANEL_COMMAND = 'taurusdevicepanel --config-file='+WDIR+'filters.py'
 #    ]
 #CommandFilters = {'V-PEN': (('on',()),('off',())),} #Second argument of tuple is the list of default arguments
 #IconMap = {'v-pen':WDIR+'image/equips/icon-pen.gif'} #Will be used in both panel and tree
+
+###############################################################################
+# Setup of the tree
+
+#Custom tree branches are built using nested dictionaries and regular expressions (if empty a jive-like tree is built).
+CUSTOM_TREE = {}
+
+# {'CT':'BL*(CT|ALARMS|PLC)$',
+#  'FE':'FE*/VC/*',
+#  'Valves': {'.OH':'*OH/PNV*',
+#             'EH01':'*EH01/PNV*',},
+#  'BAKEOUTS':'BL*(BAKE|BK)*',}
+
+EXTRA_DEVICES = [DEVICE] #map(bool,set(['%s/VC/ALL'%TARGET,'%s/CT/ALARMS'%TARGET,DEVICE,COMPOSER]))
 
 try:
   from config.filters import *

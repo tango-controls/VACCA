@@ -138,14 +138,13 @@ try:
     #Removable due to high CPU usage due to dummy threads
     if USE_DEVICE_PANEL:
         print '>'*20+'Loading Device panel ...'
-        from taurus.qt.qtgui.panel import TaurusDevicePanel
-        #from vacca.panel import VaccaPanel as TaurusDevicePanel
-        if AttributeFilters: TaurusDevicePanel.setAttributeFilters(AttributeFilters)
-        if CommandFilters: TaurusDevicePanel.setCommandFilters(CommandFilters)
-        if IconMap: TaurusDevicePanel.setIconMap(IconMap)
+        #from taurus.qt.qtgui.panel import TaurusDevicePanel as VaccaPanel
+        from vacca.panel import VaccaPanel
+        #if AttributeFilters: VaccaPanel.setAttributeFilters(AttributeFilters)
+        #if CommandFilters: VaccaPanel.setCommandFilters(CommandFilters)
+        #if IconMap: VaccaPanel.setIconMap(IconMap)
         device = PanelDescription('Device',
-                            classname = 'TaurusDevicePanel',
-                            #classname = 'vacca.panel.VaccaPanel', 
+                            classname = 'vacca.panel.VaccaPanel', 
                             model=DEVICE,
                             sharedDataRead={'SelectedInstrument':'setModel'},
                             )
@@ -200,11 +199,12 @@ try:
         print '>'*20
         print '>'*20
         from vacca.synoptics import VaccaSynoptic
-        syn = VaccaSynoptic()
-        syn.JDRAW_FILE = JDRAW_FILE
-        syn.JDRAW_HOOK = JDRAW_HOOK
-        syn.JDRAW_TREE = JDRAW_TREE
-        synoptic = syn.getPanelDescription()
+        try:
+            synoptic1 = VaccaSynoptic.getPanelDescription('Synoptic1',JDRAW_FILE,JDRAW_HOOK,JDRAW_TREE)
+            synoptic2 = VaccaSynoptic.getPanelDescription('Synoptic2',JDRAW_FILE,JDRAW_HOOK,JDRAW_TREE)
+        except:
+            traceback.print_exc()
+            sys.exit()
 
 
 

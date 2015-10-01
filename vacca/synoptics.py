@@ -66,21 +66,20 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
         #print "SelectedGraphicItem in VaccaSynoptic: %s, %s"%(item_name, MimeData)
         #return False
 
-    def getPanelDescription(self):
+    @staticmethod
+    def getPanelDescription(NAME='Synoptic',JDRAW_FILE='',JDRAW_HOOK=None,JDRAW_TREE=[]):
 
-        # TODO: Replace sdm to fandango.utils.getSMD()
+        # CONNECTING FAKELOGGER FOR DEBUGGING
         try:
             import vacca
             sdm = vacca.utils.get_shared_data_manager()
             if sdm:
-
                 v = sdm._SharedDataManager__models.get('SelectedInstrument')
-                sdm.connectReader('SelectedInstrument', FL('SDM.SelectedInstrument ['
-                                                   '%s,%s]' % (v.readerCount(),
-                                                             v.writerCount(
-
-                                                             )), True).info,
-                          readOnConnect=False)
+                # An inline instantiated FakeLogger will print selected instrument on each click
+                sdm.connectReader('SelectedInstrument', 
+                    FL('SDM.SelectedInstrument [%s,%s]' % 
+                       (v.readerCount(),v.writerCount()), True).info,
+                    readOnConnect=False)
         except:
             print '#'*80
             print('Shared Data Manager is not available! (no TaurusGUI instance?)')
@@ -89,18 +88,17 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
             print '#'*80
 
 
-
-        print '>'*20+'Loading Synoptic panel new ... %s, %s, ' \
-                     '%s'%(self.JDRAW_FILE,self.JDRAW_HOOK,
-                                                              self.JDRAW_TREE)
-        if self.JDRAW_FILE.endswith('.jdw'):
+        print '>'*20+'Loading Synoptic panel new ... %s, %s, %s'%\
+            (JDRAW_FILE,JDRAW_HOOK,JDRAW_TREE)
+            
+        if JDRAW_FILE.endswith('.jdw'):
             print '>'*20+'Creating VaccaSynoptic'
 
-            if self.JDRAW_HOOK is not None:
-                print 'Enabling JDRAW_HOOK = %s'%self.JDRAW_HOOK
+            if JDRAW_HOOK is not None:
+                print 'Enabling JDRAW_HOOK = %s'%JDRAW_HOOK
                 from fandango.qt import QSignalHook
-                in_hook = QSignalHook(self.JDRAW_HOOK)
-                out_hook = QSignalHook(self.JDRAW_HOOK)
+                in_hook = QSignalHook(JDRAW_HOOK)
+                out_hook = QSignalHook(JDRAW_HOOK)
 
                 #Synoptic will write this signal
                 wsignal = {'JDrawOut': 'graphicItemSelected(QString)', }
@@ -138,18 +136,18 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
                 rsignal = {'SelectedInstrument': 'selectGraphicItem'}
                 wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
 
-            if self.JDRAW_TREE:
+            if JDRAW_TREE:
                 wsignal['LoadItems'] = 'modelsChanged'
 
 
-            self.class_name='vacca.synoptics.VaccaSynoptic'
+            class_name='vacca.synoptics.VaccaSynoptic'
 
-        elif self.JDRAW_FILE.endswith('.svg'):
+        elif JDRAW_FILE.endswith('.svg'):
             from svgsynoptic import SynopticWidget, Registry
             rsignal = {'SelectedInstrument': 'select_devices'}
             wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
 
-            self.class_name='svgsynoptic.SynopticWidget'
+            class_name='svgsynoptic.SynopticWidget'
             # synoptic = PanelDescription('Synoptic',
             #                     #classname = 'vacca.VacuumSynoptic',
             #                     classname='svgsynoptic.SynopticWidget',
@@ -158,10 +156,11 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
             #                     sharedDataRead=rsignal,
             #                     sharedDataWrite=wsignal,
             #                     )
-        return PanelDescription('Synoptic',
+        print 'Out of VaccaSynoptic.getPanelDescription(%s,%s)'%(class_name,JDRAW_FILE)
+        return PanelDescription(NAME,
                                 #classname = 'vacca.VacuumSynoptic',
-                                classname=self.class_name,
-                                model=self.JDRAW_FILE, #Model loading is delayed by
+                                classname=class_name,
+                                model=JDRAW_FILE, #Model loading is delayed by
                                 # VacuumSynoptic method
                                 sharedDataRead=rsignal,
                                 sharedDataWrite=wsignal,
