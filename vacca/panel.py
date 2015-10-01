@@ -35,11 +35,7 @@ import taurus
 import taurus.qt
 from taurus.qt import Qt
 from taurus.qt.qtgui.container import TaurusWidget as WIDGET_CLASS
-from taurus.qt.qtgui.display import TaurusValueLabel as LABEL_CLASS
-from taurus.qt.qtgui.display import TaurusStateLed as LED_CLASS
-from taurus.qt.qtgui.panel import TaurusValue as VALUE_CLASS
 from taurus.qt.qtgui.panel import TaurusForm as FORM_CLASS
-from taurus.qt.qtgui.panel import TaurusCommandsForm as COMMAND_CLASS
 from taurus.qt.qtgui.panel import TaurusDevicePanel
 
 ###############################################################################

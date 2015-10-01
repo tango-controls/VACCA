@@ -23,12 +23,13 @@
 ##
 #############################################################################
 
-
-import fandango
-import fandango.qt
+import traceback
 import fandango.functional as fun
 from PyQt4 import Qt,Qwt5
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
+from taurus.core.taurusvalidator import DeviceNameValidator, AttributeNameValidator
+from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, \
+    TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE, TAURUS_MODEL_LIST_MIME_TYPE
 
 from taurus.qt import Qt
 from fandango import partial,FakeLogger as FL
@@ -41,6 +42,7 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
     JDRAW_FILE = None
     JDRAW_HOOK = None
     JDRAW_TREE = None
+
     def __init__(self, *args, **kwargs):
         TaurusJDrawSynopticsView.__init__(self, *args, **kwargs)
         self.setModelInConfig(False)
@@ -58,6 +60,35 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
         print 'setJDrawModel(%s)' % model
         TaurusJDrawSynopticsView.setModel(self, model)
 
+    def getModelMimeData(self):
+        """ Used for drag events """
+
+        model,mimeData = '',None
+        try:
+            #model = getattr(self.scene().itemAt(*self.mousePos),'_name','')
+            selected = self.scene()._selectedItems
+            if not selected:
+                self.debug('jdrawView.getModelMimeData(%s): nothing to drag'%model)
+                return
+            model = getattr(([s for s in selected if getattr(s,'_name','')] or [selected])[0],'_name','')
+            self.debug('getModelMimeData(%s)'%model)
+            mimeData = Qt.QMimeData()
+            if model:
+                # self.debug('getMimeData(): DeviceModel at %s: %s',self.mousePos,model)
+                # mimeData.setData(TAURUS_MODEL_LIST_MIME_TYPE,model)
+                if DeviceNameValidator().getParams(model):
+                    self.debug('getMimeData(): DeviceModel at %s: %s',self.mousePos,model)
+                    mimeData.setData(TAURUS_DEV_MIME_TYPE,model)
+                elif AttributeNameValidator().getParams(model):
+                    self.debug('getMimeData(): AttributeModel at %s: %s',self.mousePos,model)
+                    mimeData.setData(TAURUS_ATTR_MIME_TYPE,model)
+                else:
+                    self.debug('getMimeData(): UnknownModel at %s: %s',self.mousePos,model)
+                    mimeData.setData(TAURUS_MODEL_MIME_TYPE, model)
+        except:
+            self.debug('jdrawView.getModelMimeData(%s): unable to get MimeData'%model)
+            self.debug(traceback.format_exc())
+        return mimeData
 
     #def selectGraphicItem(self,item_name):
         #item = self.scene().selectGraphicItem(item_name)
@@ -65,6 +96,14 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
         #print repr(MimeData)
         #print "SelectedGraphicItem in VaccaSynoptic: %s, %s"%(item_name, MimeData)
         #return False
+
+
+    def setHighLightModels(self, models = [], color=Qt.QBrush(Qt.Qt.red)):
+        Qt.QBrush(color),
+        for model in models:
+            print 'setHighLightModels: (%s)' % model
+            self.selectGraphicItem(model)
+
 
     @staticmethod
     def getPanelDescription(NAME='Synoptic',JDRAW_FILE='',JDRAW_HOOK=None,JDRAW_TREE=[]):
