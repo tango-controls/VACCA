@@ -23,8 +23,8 @@
 ##
 #############################################################################
 
-import traceback
-import fandango.functional as fun
+import sys,re,traceback
+import fandango,fandango.qt,taurus
 from PyQt4 import Qt,Qwt5
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 from taurus.core.taurusvalidator import DeviceNameValidator, AttributeNameValidator
@@ -34,7 +34,8 @@ from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, \
 from taurus.qt import Qt
 from fandango import partial,FakeLogger as FL
 
-from taurus.qt.qtgui.graphic import TaurusJDrawSynopticsView
+from taurus.qt.qtgui.graphic import TaurusJDrawSynopticsView,TaurusGraphicsScene,TaurusJDrawGraphicsFactory
+from taurus.qt.qtgui.graphic.taurusgraphic import TaurusGroupItem
 
 
 class VaccaSynoptic(TaurusJDrawSynopticsView):
@@ -75,36 +76,22 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
             mimeData = Qt.QMimeData()
             if model:
                 # self.debug('getMimeData(): DeviceModel at %s: %s',self.mousePos,model)
-                # mimeData.setData(TAURUS_MODEL_LIST_MIME_TYPE,model)
+                mimeData.setText(model)
+                mimeData.setData(TAURUS_MODEL_MIME_TYPE, model)
                 if DeviceNameValidator().getParams(model):
                     self.debug('getMimeData(): DeviceModel at %s: %s',self.mousePos,model)
                     mimeData.setData(TAURUS_DEV_MIME_TYPE,model)
                 elif AttributeNameValidator().getParams(model):
                     self.debug('getMimeData(): AttributeModel at %s: %s',self.mousePos,model)
                     mimeData.setData(TAURUS_ATTR_MIME_TYPE,model)
+                    mimeData.setData(TAURUS_DEV_MIME_TYPE,model.rsplit('/',1)[0])
                 else:
                     self.debug('getMimeData(): UnknownModel at %s: %s',self.mousePos,model)
-                    mimeData.setData(TAURUS_MODEL_MIME_TYPE, model)
         except:
             self.debug('jdrawView.getModelMimeData(%s): unable to get MimeData'%model)
             self.debug(traceback.format_exc())
         return mimeData
-
-    #def selectGraphicItem(self,item_name):
-        #item = self.scene().selectGraphicItem(item_name)
-        #MimeData = self.getModelMimeData()
-        #print repr(MimeData)
-        #print "SelectedGraphicItem in VaccaSynoptic: %s, %s"%(item_name, MimeData)
-        #return False
-
-
-    def setHighLightModels(self, models = [], color=Qt.QBrush(Qt.Qt.red)):
-        Qt.QBrush(color),
-        for model in models:
-            print 'setHighLightModels: (%s)' % model
-            self.selectGraphicItem(model)
-
-
+        
     @staticmethod
     def getPanelDescription(NAME='Synoptic',JDRAW_FILE='',JDRAW_HOOK=None,JDRAW_TREE=[]):
 
@@ -173,6 +160,7 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
                                       readOnConnect=False)
             else:
                 rsignal = {'SelectedInstrument': 'selectGraphicItem'}
+                rsignal['HighlightInstruments'] = 'setHighlightedItems'
                 wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
 
             if JDRAW_TREE:
@@ -184,6 +172,7 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
         elif JDRAW_FILE.endswith('.svg'):
             from svgsynoptic import SynopticWidget, Registry
             rsignal = {'SelectedInstrument': 'select_devices'}
+            #@TODO: rsignal['HighlightInstruments'] = 'setHighlightedItems'
             wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
 
             class_name='svgsynoptic.SynopticWidget'
@@ -203,46 +192,173 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
                                 # VacuumSynoptic method
                                 sharedDataRead=rsignal,
                                 sharedDataWrite=wsignal,
-                                )
+                                )        
 
+    ###########################################################################
+    # OVERLOADED METHODS FOR CUSTOM HIGHLITHING
+    # It should be included in Taurus as patches
+    
+    def setHighlightedItems(self, models = [], color=Qt.Qt.red):
+        if fandango.isSequence(models):
+            models = '(%s)'%')|('.join(models)
+        self.warning('setHighLightedItems(%s)' % models)
+        try:
+            default = self.scene().selectionColor()
+            self.scene().setSelectionColor(color)
+            self.scene().selectGraphicItem(models)
+            self.scene().setSelectionColor(default)
+        except:
+            err = traceback.format_exc()
+            self.error(err)
+        finally:
+            self.scene().setSelectionColor(default)
+    
+    def getGraphicsFactory(self,delayed=False):
+        return VaccaSynopticGraphicsFactory(self,alias=(self.alias or None),delayed=delayed)
 
+class VaccaSynopticGraphicsFactory(TaurusJDrawGraphicsFactory):
+    
+    def getSceneObj(self,items):
+        scene = VaccaGraphicsScene(self.myparent)
+        for item in items:
+            try:
+                if isinstance(item, Qt.QWidget):
+                    scene.addWidget(item)
+                elif isinstance(item, Qt.QGraphicsItem):
+                    scene.addItem(item)
+            except:
+                self.warning("Unable to add item %s to scene" % str(item))
+                self.debug("Details:", exc_info=1)
+        return scene
+    
+class VaccaGraphicsScene(TaurusGraphicsScene):
+        
+    def setSelectionColor(self,color):
+        self._selectioncolor = color
+        
+    def selectionColor(self):
+        try:
+            assert self._selectioncolor
+        except:
+            self._selectioncolor = Qt.Qt.blue
+        return self._selectioncolor
+        
+    def _displaySelectionAsOutline(self, items):
+        def _outline(shapes):
+            """"Compute the boolean union from a list of QGraphicsItem. """
+            shape = None
+            # TODO we can use a stack instead of recursivity
+            for s in shapes:
+                # TODO we should skip text and things like that
+                if isinstance(s, TaurusGroupItem):
+                    s = _outline(s.childItems())
+                    if s == None:
+                        continue
 
-if __name__ == '__main__':
-    #!/usr/bin/python
-    import sys,re,traceback,taurus
+                s = s.shape()
+                if shape != None:
+                    shape = shape.united(s)
+                else:
+                    shape = s
+
+            if shape == None:
+                return None
+
+            return Qt.QGraphicsPathItem(shape)
+
+        # TODO we can cache the outline instead of computing it again and again
+        selectionShape = _outline(items)
+        if selectionShape:
+            # copy-paste from getSelectionMark
+            color = Qt.QColor(self.selectionColor())
+            color.setAlphaF(.10)
+            pen = Qt.QPen(Qt.Qt.SolidLine)
+            pen.setWidth(4)
+            pen.setColor(Qt.QColor(self.selectionColor()))
+            selectionShape.setBrush(color)
+            selectionShape.setPen(pen)
+
+            for item in items:
+                if item not in self._selectedItems: self._selectedItems.append(item)
+
+            # TODO i dont think this function work... or i dont know how...
+            #self.setSelectionMark(picture=selectionShape)
+            # ... Then do it it with hands...
+            # copy-paste from drawSelectionMark
+            self._selection.append(selectionShape)
+            # It's better to add it hidden to avoid resizings
+            selectionShape.hide()
+            self.addItem(selectionShape)
+            # Put on Top
+            selectionShape.setZValue(9999)
+            selectionShape.show()
+            self.updateSceneViews()
+
+            return True
+
+        return False
+    
+    def getSelectionMark(self,picture=None,w=10,h=10):
+        if picture is None:
+            if self.SelectionMark:
+                SelectionMark = self.SelectionMark()
+            else:
+                SelectionMark = Qt.QGraphicsEllipseItem()
+                color = Qt.QColor(self.selectionColor())
+                color.setAlphaF(.10)
+                SelectionMark.setBrush(color)
+                pen = Qt.QPen(Qt.Qt.CustomDashLine)
+                pen.setWidth(4)
+                pen.setColor(Qt.QColor(self.selectionColor()))
+                SelectionMark.setPen(pen)
+                SelectionMark.hide() #It's better to add it hidden to avoid resizings                
+        else:
+            try:
+                if isinstance(picture,Qt.QGraphicsItem):
+                    SelectionMark = picture
+                    SelectionMark.setRect(0,0,w,h)
+                    SelectionMark.hide()
+                elif operator.isCallable(picture):
+                    SelectionMark = picture()
+                else:
+                    if isinstance(picture,Qt.QPixmap):
+                        pixmap = picture
+                    elif isinstance(picture,basestring) or isinstance(picture,Qt.QString):
+                        picture = str(picture)
+                        pixmap = Qt.QPixmap(os.path.realpath(picture))
+                    SelectionMark = Qt.QGraphicsPixmapItem()
+                    SelectionMark.setPixmap(pixmap.scaled(w,h))
+                    SelectionMark.hide()
+            except:
+                self.debug('In setSelectionMark(%s): %s'%(picture,traceback.format_exc()))
+                picture = None
+        return SelectionMark
+
+###############################################################################
+
+def test(model):
     taurus.setLogLevel(taurus.core.util.Logger.Debug)
-    app = Qt.QApplication(sys.argv)
     assert len(sys.argv)>1, '\n\nUsage:\n\t> python synoptic [jdw file]'
-    model = sys.argv[1]
-    filters = fun.first(sys.argv[2:],'')
+    try: 
+        app = Qt.QApplication([]) #sys.argv)
+    except:
+        pass
+    
+    filters = fandango.first(sys.argv[2:],'')
     form = None
     if model.lower().endswith('.jdw'):
         print 'loading a synoptic'
-        #form = taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView(
-        #    designMode=False,
-        #  updateMode=taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView
-        #      .NoViewportUpdate
-        #  )
-        form = VaccaSynoptic(
-            designMode=False,
-          updateMode=VaccaSynoptic.NoViewportUpdate
-          )
-
-
+        form = VaccaSynoptic()
+        #designMode=False,updateMode=VaccaSynoptic.NoViewportUpdate)
         form.setModel(model)
-        # models = form.get_item_list()
-        # for m in models:
-        #     m = str(m)
-        #     if m.count('/') == 2:
-        #         m += '/state'
-        #     period = 120000.
-        #     try:
-        #         taurus.Attribute(m).changePollingPeriod(period)
-        #     except:
-        #         print '(%s).changePollingPeriod(%s): Failed: %s' % (m,
-        #                                                             period,
-        #                                                 traceback.format_exc()
-        #                                                             )
+
     print 'showing ...'
     form.show()
-    sys.exit(app.exec_())
+    return form
+
+if __name__ == '__main__':
+    #!/usr/bin/python
+    assert len(sys.argv)>1, '\n\nUsage:\n\t> python synoptic [jdw file]'
+    model = sys.argv[1]
+    form = test(model = sys.argv[1])
+    sys.exit(fandango.qt.getApplication().exec_())

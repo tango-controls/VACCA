@@ -200,8 +200,7 @@ try:
         print '>'*20
         from vacca.synoptics import VaccaSynoptic
         try:
-            synoptic1 = VaccaSynoptic.getPanelDescription('Synoptic1',JDRAW_FILE,JDRAW_HOOK,JDRAW_TREE)
-            synoptic2 = VaccaSynoptic.getPanelDescription('Synoptic2',JDRAW_FILE,JDRAW_HOOK,JDRAW_TREE)
+            synoptic = VaccaSynoptic.getPanelDescription('Synoptic',JDRAW_FILE,JDRAW_HOOK,JDRAW_TREE)
         except:
             traceback.print_exc()
             sys.exit()
