@@ -175,7 +175,7 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
             #@TODO: rsignal['HighlightInstruments'] = 'setHighlightedItems'
             wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
 
-            class_name='svgsynoptic.SynopticWidget'
+            class_name='synoptic.SynopticWidget'
             # synoptic = PanelDescription('Synoptic',
             #                     #classname = 'vacca.VacuumSynoptic',
             #                     classname='svgsynoptic.SynopticWidget',

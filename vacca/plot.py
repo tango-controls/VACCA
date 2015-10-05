@@ -31,6 +31,8 @@ from taurus.qt import Qt
 from taurus.qt.qtgui.plot import TaurusTrend,TaurusPlot
 from taurus.qt.qtgui.panel import TaurusDevicePanel
 from PyQt4 import Qwt5
+from fandango.qt import Draggable
+
 
 class PressureTrend(TaurusTrend):
         
@@ -72,7 +74,7 @@ def setup_pressure_trend(tt, length=12*3600): #,models):
         print traceback.format_exc()
     print '*'*80
 
-class ProfilePlot(TaurusPlot):
+class VaccaProfilePlot(Draggable(TaurusPlot)):
     
     #def getModelClass(self):
         #return taurus.core.TaurusDevice
@@ -85,7 +87,7 @@ class ProfilePlot(TaurusPlot):
         
     def setModel(self, model):
         print '*'*80
-        self.info('ProfilePlot.setModel(%s)' % model)
+        self.info('VaccaProfilePlot.setModel(%s)' % model)
         print '*'*80
         try:
             #if self._profile_loaded: return
@@ -109,7 +111,7 @@ class ProfilePlot(TaurusPlot):
                 self.setAxisCustomLabels(Qwt5.QwtPlot.xBottom,
                                          zip(self._positions, self._labels), 60)
         except Exception, e:
-            self.warning('ProfilePlot.setModel(%s) failed!: %s' % (model, e))
+            self.warning('VaccaProfilePlot.setModel(%s) failed!: %s' % (model, e))
             
 def setup_profile_plot(tp, composer, picker=True):
     #,gauges,pumps,tcs,positions=None,labels=None):
@@ -356,7 +358,7 @@ if __name__ == '__main__':
     import taurus.qt.qtgui.application
     app = taurus.qt.qtgui.application.TaurusApplication()
     cmps = fandango.get_matching_devices('*/vc/all')
-    tp = ProfilePlot()
+    tp = VaccaProfilePlot()
     tp.setWindowTitle(cmps[0])
     tp.setModel(cmps[0])
     tp.show()
