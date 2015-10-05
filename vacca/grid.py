@@ -24,25 +24,49 @@
 ###########################################################################
 
 import fandango
-    
-def get_empty_grid():
-    from taurus.qt.qtgui.table import TaurusGrid
-    tg = TaurusGrid()    
+from taurus.qt.qtgui.table import TaurusGrid
+from taurus.qt.qtgui.taurusgui.utils import PanelDescription
+
+
+class VaccaGrid(TaurusGrid):
+
+    @staticmethod
+    def getGridPanelDescription(grid):
+        class_name = _get_grid(grid)
+        gridPanel = PanelDescription('VaccaGrid',
+                                classname = 'vacca.VaccaGrid',
+                                model = grid,
+                                )
+        return gridPanel
+
+class VaccaVerticalGrid(TaurusGrid):
+
+    @staticmethod
+    def getVerticalGridPanelDescription(grid):
+        class_name = _get_grid(_get_vertical_grid(grid))
+        gridPanel = PanelDescription('VaccaVGrid',
+                                classname = 'vacca.VaccaVerticalGrid',
+                                model = _get_vertical_grid(grid),
+                                )
+        return gridPanel
+
+def _get_empty_grid():
+    tg = TaurusGrid()
     tg.showRowFrame(False)
     tg.showColumnFrame(False)
     tg.showAttributeLabels(False)
     tg.showAttributeUnits(False)    
     return tg
 
-def get_grid(grid):
+def _get_grid(grid):
     print 'get_grid(%s)'%str(grid.keys())
-    tg = get_empty_grid()
+    tg = _get_empty_grid()
     tg.setRowLabels(grid['row_labels'])
     tg.setColumnLabels(grid['column_labels'])
     tg.setModel(grid['model'])#,delayed=False)
     return tg
 
-def get_vertical_grid(grid):
+def _get_vertical_grid(grid):
     vgrid = dict(grid)
     vgrid['column_labels'] = grid['row_labels']#'Gauges:VGCT|CCG|V-PEN,Pumps:IPCT|V-VARIP'
     vgrid['row_labels'] = grid['column_labels']

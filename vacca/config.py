@@ -181,17 +181,7 @@ try:
                             sharedDataWrite={'SelectedInstrument':'deviceSelected(QString)'}
                             )
     
-    try:
-        sdm = Qt.qApp.SDM
-        v = sdm._SharedDataManager__models.get('SelectedInstrument')
-        sdm.connectReader('SelectedInstrument',FL('SDM.SelectedInstrument [%s,%s]'%(v.readerCount(),v.writerCount()),True).info,readOnConnect=False)
-    except:
-        print '#'*80
-        print('Shared Data Manager is not available! (no TaurusGUI instance?)')
-        traceback.print_exc()
-        sdm = None
-        print '#'*80
-            
+
     if JDRAW_FILE:
         print '>'*20+'Loading Synoptic panel new ... %s, %s, %s'%(JDRAW_FILE,
                                                          JDRAW_HOOK, JDRAW_TREE)
@@ -214,19 +204,16 @@ try:
         GRID['labels'] = False
         GRID['units'] = False
         
-        from .grid import get_vertical_grid, get_grid
-        def VacuumGrid(grid=GRID): return get_grid(grid)
-        def VerticalGrid(grid=GRID): return get_grid(get_vertical_grid(grid))
-        
-        grid = PanelDescription('Grid',
-                            classname = 'TaurusGrid',#'vacca.VacuumGrid',
-                            model = GRID,
-                            )
+        from .grid import VaccaGrid, VaccaVerticalGrid
+
+
         try:
-            vgrid = PanelDescription('VGrid',
-                            classname = 'TaurusGrid',#'vacca.VerticalGrid',
-                            model = get_vertical_grid(GRID),
-                            )
+            grid = VaccaGrid.getGridPanelDescription(GRID)
+        except:
+            print 'Unable to create Grid'
+
+        try:
+            vgrid = VaccaVerticalGrid.getVerticalGridPanelDescription(GRID)
         except:
             print 'Unable to create VerticalGrid'
     
@@ -234,13 +221,13 @@ try:
         def VacuumProfile():
             print 'VacuumProfile()'
             from . import plot
-            p = plot.ProfilePlot()
+            p = plot.VaccaProfilePlot()
             p.setModel(COMPOSER)
             return p
         try:
             print '>'*20+'Loading Profile panel ...'
             profile = PanelDescription('Profile',
-                            classname = 'vacca.plot.ProfilePlot',
+                            classname = 'vacca.plot.VaccaProfilePlot',
                             model = COMPOSER,
                             )
         except:

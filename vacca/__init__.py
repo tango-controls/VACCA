@@ -30,6 +30,7 @@ from panel import *
 from tree import *
 from utils import *
 from properties import *
+from grid import *
 #try:
  #from config import *
 #except Exception,e:
