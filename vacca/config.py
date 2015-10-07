@@ -38,6 +38,7 @@ user will find when launching the GUI for the first time.
 
 import fandango
 import taurus
+import vacca
 from taurus.qt import Qt
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
 from vacca.panel import VaccaAction,VaccaSplash
@@ -79,7 +80,7 @@ try:
     #ALL Variables that can be defined in CONFIG FILE
     OPTIONS = [
         'GUI_NAME','WDIR','DOMAIN','TARGET',
-        'JDRAW_FILE','JDRAW_TREE','JDRAW_HOOK','GRID',
+        'JDRAW_FILE','JDRAW_TREE','JDRAW_HOOK','GRID','USE_DEVICE_TREE',
         'COMPOSER','CUSTOM_TREE','EXTRA_DEVICES','GAUGES','DEVICE',
         'USE_DEVICE_PANEL','EXTRA_WIDGETS','EXTRA_PANELS','TOOLBARS','PANEL_COMMAND',
         'AttributeFilters','CommandFilters','IconMap',
@@ -117,7 +118,7 @@ try:
     
     # You can provide an URI for a manual in html format
     # (comment out or make MANUAL_URI=None to skip creating a Manual panel) 
-    MANUAL_URI = URL_HELP #'http://packages.python.org/taurus'
+    MANUAL_URI = '' #URL_HELP #'http://packages.python.org/taurus'
     
     #===============================================================================
     # Define panels to be shown.  
@@ -269,14 +270,14 @@ try:
     # -screenshot can either be a file name relative to the application dir or 
     # a resource URL or None
     #===============================================================================
-    EXTRA_CATALOG_WIDGETS = [
-        ('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
-        ('vacca.plot.PressureTrend',WDIR+'image/PressureTrend.jpg'),
-        ('vacca.VacuumGrid',WDIR+'image/BLGrid.jpg'),
-        ('vacca.VerticalGrid',WDIR+'image/VerticalGrid.jpg'),
+    EXTRA_CATALOG_WIDGETS = EXTRA_WIDGETS+[
+        #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
+        #('vacca.plot.PressureTrend',WDIR+'image/PressureTrend.jpg'),
+        #('vacca.VacuumGrid',WDIR+'image/BLGrid.jpg'),
+        #('vacca.VerticalGrid',WDIR+'image/VerticalGrid.jpg'),
         ('vacca.properties.VaccaPropTable',':/designer/devs_table.png'),#WDIR+'image/equips/cable_serie_rs232.jpg'),
         ('fandango.qt.QEvaluator',':/designer/dockwidget.png'),
-        ]+EXTRA_WIDGETS
+        ]
 
     #===============================================================================
     # Define custom toolbars to be shown. To define a toolbar, instantiate a
