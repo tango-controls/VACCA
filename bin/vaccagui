@@ -5,22 +5,42 @@
 #    vaccagui [CONFIG] ; tries to open config file with absolute path or relative to the vacca module.
 #
 # With no argument the file default.py or TANGO_HOST.py will be launched as config
-# Both vacca and vaccagui modules must be in PYTHONPATH
+#
+# The VACCA_PATH environment variable should be used to set the path to vacca modules
+# To use vacca widgets in other GUI's, both vacca and vaccagui modules must be in PYTHONPATH
 
-#source /homelocal/sicilia/etc/SICILIA.rc
+# NOTE: It's better to not modify this file to allow setup.py to work properly, 
+# to write your custom launcher better copy it to vaccagui.sh and continue editing there.
+
+# S.Rubio-Manrique, srubio@cells.es, 2006-2015
+
+#Source your own environment variables from here:
 #source alba_blissrc
 
-if [ "x$VACCA_CONFIG" = "x" ] && [ "x$1" != "x" ] ; then
+echo "Usage: vaccagui [CONFIG.py]"
+
+if [ ! "$VACCA_CONFIG" ] && [ "$1" ] ; then
     export VACCA_CONFIG="$1"
 else
     export VACCA_CONFIG=$VACCA_CONFIG
 fi
 
+if [ ! "$VACCA_PATH" ] ; then
+    if [ "$WORKING_DIR" ] ; then
+        export VACCA_PATH=$WORKING_DIR
+    else
+        #Getting current script folder
+        export VACCA_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
+    fi
+    echo "VACCA_PATH environment variable not set, trying $VACCA_PATH instead ..."
+fi
+
 #Exporting the folder for config files
-#export WORKING_DIR=~/applications/vacca
-#export PYTHONPATH=$WORKING_DIR:$PYTHONPATH
+export WORKING_DIR=$VACCA_PATH #For compatibility with old vacca launchers/scripts
+export PYTHONPATH=$VACCA_PATH:$PYTHONPATH
 
 #launcher, may use taurusgui or vacca_run (that strips must of taurusgui application setup)
-#taurusgui --taurus-log-level=DEBUG vaccagui &
 
-python vacca_run.py
+cd $WORKING_DIR
+#taurusgui --taurus-log-level=DEBUG vaccagui &
+python bin/vacca_run.py

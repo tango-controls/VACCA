@@ -82,7 +82,6 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
         return path
 
 
-
     @classmethod
     def __test__(klass,arg=None):
         from PyQt4 import Qt

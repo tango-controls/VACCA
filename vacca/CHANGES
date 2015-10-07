@@ -1,8 +1,16 @@
+2015
+
+Added custom widgets for tree, panel and properties; solving current issues with drag/drop between widgets using decorators.
+Added setup.py for Vacca+Dependencies installation and update.
+Refactored default.py.ini
+Added VaccaSynoptics/Grid/Properties/Plot classes for Taurus subclassing (extra Drops, PanelDescriptions, SharedSignals, etc..)
+Synoptics enabled to show alarms in custom colors.
 
 August 2014
 
 config.py : Adapted to parse .svg synoptic files from MAXLAB
 panel.py: Added SimplePanel class to solve layout issues with TaurusDevicePanel
+
 
 
 10 august 2013> not in bliss yet!

@@ -86,19 +86,21 @@ try:
         'AttributeFilters','CommandFilters','IconMap',
         'URL_HELP','URL_LOGBOOK','VACCA_LOGO','ORGANIZATION_LOGO',
         ]
-    for op in OPTIONS:
-        if hasattr(CONFIG,op):
-            v = getattr(CONFIG,op)
-            print '\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v)[:80])
-            setattr(default,op,v)
     
-    if hasattr(CONFIG,'COMPOSER') and not hasattr(CONFIG,'DEVICE'):
-        default.DEVICE = default.COMPOSER
+    if CONFIG:
+        for op in OPTIONS:
+            if hasattr(CONFIG,op):
+                v = getattr(CONFIG,op)
+                print '\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v)[:80])
+                setattr(default,op,v)
         
-    #Trying to Load rith-toolbar apps from dictionary (NOTE: this doesn't work)
-    if hasattr(CONFIG,'EXTRA_APPS'): 
-        print 'Loading %s apps from %s'%(str(CONFIG.EXTRA_APPS.keys()),CONFIG.__name__)
-        [setattr(default,X,AppletDescription(**app)) for X,app in CONFIG.EXTRA_APPS.items()]
+        if hasattr(CONFIG,'COMPOSER') and not hasattr(CONFIG,'DEVICE'):
+            default.DEVICE = default.COMPOSER
+            
+        #Trying to Load rith-toolbar apps from dictionary (NOTE: this doesn't work)
+        if hasattr(CONFIG,'EXTRA_APPS'): 
+            print 'Loading %s apps from %s'%(str(CONFIG.EXTRA_APPS.keys()),CONFIG.__name__)
+            [setattr(default,X,AppletDescription(**app)) for X,app in CONFIG.EXTRA_APPS.items()]
     
     #Adding Variables to Namespace where taurusgui can found them
     from default import *
@@ -118,7 +120,7 @@ try:
     
     # You can provide an URI for a manual in html format
     # (comment out or make MANUAL_URI=None to skip creating a Manual panel) 
-    MANUAL_URI = '' #URL_HELP #'http://packages.python.org/taurus'
+    #MANUAL_URI = '' #URL_HELP #'http://packages.python.org/taurus'
     
     #===============================================================================
     # Define panels to be shown.  

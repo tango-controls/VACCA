@@ -159,7 +159,7 @@ class VaccaAction(Qt.QToolButton,taurus.qt.qtgui.base.TaurusBaseWidget):
             
 try:
   import MySQLdb
-  from PyTangoArchiving.widget import ArchivingBrowser
+  from PyTangoArchiving.widget.ArchivingBrowser import ArchivingBrowser
   BROWSER = ArchivingBrowser
 except:
   print('Failed to load PyTangoArchiving!')
@@ -169,6 +169,12 @@ class VaccaFinder(BROWSER):
   """
   Convenience class to deal with alternatives to ArchivingBrowser when not available in the PYTHONPATH
   """
+  def __init__(self,parent=None,domains=None,regexp='*pnv-*',USE_SCROLL=True,USE_TREND=False):
+        print 'In DomainChooser(), loading thermocouples from Tango'
+        if BROWSER is Qt.QWidget:
+            Qt.QWidget.__init__(self,parent)
+        else:
+            BROWSER.__init__(self,parent,domains,regexp,USE_SCROLL,USE_TREND)
   pass
 
 ###############################################################################
@@ -366,7 +372,6 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     def getDefaultIcon():
         path = 'image/icons/DevicePanel.png'
         return path
-
         
 def configure_form(dev,form=None):
     """ Creates a TauForm and configures its Status fields 

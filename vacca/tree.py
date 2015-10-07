@@ -171,7 +171,7 @@ class VaccaTree(TaurusSearchTree):
                                       f = self,
                                       s = signal: f.emit(Qt.SIGNAL(s), args))
         self.edit.connectWithTree(self.tree)
-        return    
+        return
 
     @staticmethod
     def getDefaultIcon():

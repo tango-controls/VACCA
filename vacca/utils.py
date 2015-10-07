@@ -51,12 +51,17 @@ vpath = lambda s: '%s/%s'%(VACCA_PATH, s)
 def get_config_file():
     #CONFIG_FILE sys.argv[-1] if fandango.matchCl('^[^-].*py$',sys.argv[-1]) else
     CONFIG_FILE = os.getenv('VACCA_CONFIG') or DB_HOST+'.py'
-    print CONFIG_FILE
+    print('get_config_file(%s)'%CONFIG_FILE)
+
     if not CONFIG_FILE.startswith('/'):
         CONFIG_FILE = DEFAULT_PATH+CONFIG_FILE
-
+        
     if not fandango.linos.file_exists(CONFIG_FILE):
-        CONFIG_FILE += '.py'
+        if fandango.linos.file_exists(CONFIG_FILE+'.py'):
+            CONFIG_FILE += '.py'
+        else:
+            print('WARNING: %s config file not found!'%CONFIG_FILE)
+            return
 
     print 'VaccaGUI: Loading %s ...' % CONFIG_FILE
     try: 

@@ -24,7 +24,7 @@
 ###########################################################################
 
 """
-configuration file for an example of how to specify system-wide defaults for VaccaGUI 
+default.py.ini is a configuration file example of how to specify system-wide defaults for VaccaGUI 
 
 After copying it to default.py this configuration file determines the default, permanent, pre-defined
 options for the GUI; modify them to match your default gui options.
@@ -40,21 +40,16 @@ print '>'*20+' Loading Default.py'
 
 #ALL these variables can be re-defined in CONFIG FILE
 GUI_NAME = 'VACCA'
-WDIR = vacca.utils.WORKING_DIR
-URL_HELP = 'http://www.cells.es/Intranet/Divisions/Computing/Controls/Help/Vacuum/vacca_gui'
+WDIR = vacca.utils.WORKING_DIR #imp.find_module('vacca')[1]+'/'
+URL_HELP = 'http://www.tango-controls.org/Members/srubio/vacca'
 URL_LOGBOOK = 'http://logbook.cells.es/'
 VACCA_LOGO = WDIR+'image/icons/nggshow.php.png'
 ORGANIZATION_LOGO = WDIR+'image/icons/AlbaLogo.png'
 
-#Domain/Target used to generate grids/trees ; domain may be regexp, target should not
-DOMAIN = 'BL*'
-TARGET = DOMAIN
-USE_DEVICE_TREE = True
-
 ###############################################################################
 # Synoptic file
 
-JDRAW_FILE = '' #WDIR+'%s/%s.jdw'%(TARGET,TARGET)
+JDRAW_FILE = WDIR+'/examples/elinac/linac.jdw' #WDIR+'%s/%s.jdw'%(TARGET,TARGET)
 #Enables/disables loading jdraw objects into tree
 JDRAW_TREE = True 
 #A method that does transformation on signals sent to other widgets.
@@ -64,31 +59,18 @@ JDRAW_HOOK = None #lambda s: apply_transform(get_coordinates(s))
 #TaurusGraphicsScene.ANY_ATTRIBUTE_SELECTS_DEVICE = True
 
 ###############################################################################
-# Device Panel setup
-
-#PyStateComposer to get Vacuum Profile curves
-COMPOSER = '' #'%s/vc/all'%DOMAIN
-
-#Default device to appear in the DevicePanel
-DEVICE = 'sys/tg_test/1'
-USE_DEVICE_PANEL = True
-PANEL_COMMAND = 'taurusdevicepanel --config-file='+WDIR+'filters.py'
-
-#Examples of Attribute filters to be applied to DevicePanel
-
-#AttributeFilters = {'V-PEN': ['pressure','channelstatus','controller'],}
-#AttributeFilters['EPS']=[ #You can distribute attributes in different tabs using tuples
-#    ('Status',['_READY','OPEN_','CLOSE_']),
-#    ('Signals',['.*_PT.*','was_','paas_','*RGA*']),
-#    ]
-#CommandFilters = {'V-PEN': (('on',()),('off',())),} #Second argument of tuple is the list of default arguments
-#IconMap = {'v-pen':WDIR+'image/equips/icon-pen.gif'} #Will be used in both panel and tree
-
-###############################################################################
 # Setup of the tree
 
+#Domain/Target used to generate grids/trees ; domain may be regexp, target should not
+DOMAIN = '*test*'
+TARGET = DOMAIN
+USE_DEVICE_TREE = True
+
+#Devices not in JDraw or regular expression to be added to the tree
+EXTRA_DEVICES = get_matching_devices(DOMAIN) #map(bool,set(['%s/VC/ALL'%TARGET,'%s/CT/ALARMS'%TARGET,DEVICE,COMPOSER]))
+
 #Custom tree branches are built using nested dictionaries and regular expressions (if empty a jive-like tree is built).
-CUSTOM_TREE = {}
+CUSTOM_TREE = {} 
 
 # {'CT':'BL*(CT|ALARMS|PLC)$',
 #  'FE':'FE*/VC/*',
@@ -96,21 +78,35 @@ CUSTOM_TREE = {}
 #             'EH01':'*EH01/PNV*',},
 #  'BAKEOUTS':'BL*(BAKE|BK)*',}
 
-EXTRA_DEVICES = [DEVICE] #map(bool,set(['%s/VC/ALL'%TARGET,'%s/CT/ALARMS'%TARGET,DEVICE,COMPOSER]))
+###############################################################################
+# Device Panel setup
 
-try:
-  from config.filters import *
-except:
-  try:
-    from filters import *
-    from vacca.filters import *
-  except:
-    print 'UNABLE TO LOAD filters.py!'
+#PyStateComposer to get Vacuum Profile curves
+COMPOSER = '' #'%s/vc/all'%DOMAIN
+
+#Default device to appear in the DevicePanel
+DEVICE = None # 'sys/tg_test/1' ; tg_test caused segfault in some cases!?
+USE_DEVICE_PANEL = True
+PANEL_COMMAND = 'taurusdevicepanel --config-file='+WDIR+'default.py'
+
+#Examples of Attribute filters to be applied to DevicePanel
+AttributeFilters = {'V-PEN': ['pressure','channelstatus','controller'],}
+AttributeFilters['EPS']=[ #You can distribute attributes in different tabs using tuples
+    ('Status',['_READY','OPEN_','CLOSE_']),
+    ('Signals',['.*_PT.*','was_','paas_','*RGA*']),
+    ]
+CommandFilters = {'V-PEN': (('on',()),('off',()),('setMode',('START','PROTECT'))),} #Second argument of tuple is the list of default arguments
+IconMap = {'v-pen':WDIR+'image/equips/icon-pen.gif'} #Will be used in both panel and tree
+
+## Optional:
+## If you put filters in a separate file you can load a taurusdevicepanel.py with --config-file=filters.py option
+## Then replace previous lines by:
+# from vacca.filters import * 
 
 ###############################################################################
 # Plot setup
 
-#Pressure values to be added to the trend
+#Pressure values to be added to the logaritmic trend
 GAUGES = [] #['bl13/vc/vgct-01/p1','bl13/vc/vgct-01/p2'] 
 #sorted(fandango.get_matching_attributes('%s/*/vgct*/p[12]'%DOMAIN.replace('BL','(BL|FE|ID)')))
 
@@ -122,13 +118,23 @@ GRID = {
     'column_labels': '',
     'delayed': False,
     'frames': False,
-    'model': ['%s/VC/(IPCT|VGCT|CCGX)*/(P[12]|Pressure|State)$'%DOMAIN,'%s/V-[^/]*/[0-9]*/(Pressure|State)'%DOMAIN],
+    'model': [], 
+    #'%s/VC/(IPCT|VGCT|CCGX)*/(P[12]|Pressure|State)$'%DOMAIN,'%s/V-[^/]*/[0-9]*/(Pressure|State)'%DOMAIN],
     'row_labels':'VcGauges(mbar):(VGCT|PEN), IonPumps(mbar):(IPCT|VARIP)',
     }
 
 #Extra widgets to appear in the NewPanel dialog
-EXTRA_WIDGETS = [] #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
-EXTRA_PANELS = [] #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
+EXTRA_WIDGETS = [
+        ('panic.gui.AlarmGUI',WDIR+'/vacca/image/icons/panic.gif'),
+        ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',WDIR+'/vacca/image/icons/search.png'),
+    ] #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
+
+EXTRA_PANELS = {}
+from taurus.qt.qtgui.taurusgui.utils import PanelDescription
+#EXTRA_PANELS['PANIC'] = PanelDescription(
+    #'PANIC','panic.gui.AlarmGUI',model='',#---
+    #sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+
 TOOLBARS = [] #[(name,modulename.classname)]
 
 #===============================================================================
@@ -139,15 +145,11 @@ TOOLBARS = [] #[(name,modulename.classname)]
 
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
 
-#xvacca = ExternalApp(cmdargs=['konqueror',URL_HELP], text="Alba VACuum Controls Application", icon=WDIR+'image/icons/cow-tux.png')
+xvacca = ExternalApp(cmdargs=['konqueror',URL_HELP], text="Alba VACuum Controls Application", icon=WDIR+'/image/icons/cow-tux.png')
 xtrend = ExternalApp(cmdargs=['taurustrend','-a'], text="TaurusTrend")
-xjive = ExternalApp(cmdargs=['jive'], text="Jive")#, icon=WDIR+'image/icons/cow-tux.png')
-xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'image/icons/cow-tux.png')
-#imageprofile = ExternalApp(cmdargs=['python -c "import vacca;vacca.image_profile.show(\'%s\');"'%str(IMAGE_PROFILE)], 
-#   text="ImageProfile", icon=WDIR+'image/icons/profile.png')
-#valves = ExternalApp(cmdargs=['ctvalves'], text="Valves", icon=WDIR+'image/equips/icon-pnv.gif')
-#thermocouples = ExternalApp(cmdargs=['cttcs'], text="Thermocouples", icon=WDIR+'image/equips/icon-eps.gif')
-#logbook = ExternalApp(cmdargs=['konqueror %s'%URL_LOGBOOK], text="Logbook", icon=WDIR+"image/icons/elog.png")
+xjive = ExternalApp(cmdargs=['jive'], text="Jive")#, icon=WDIR+'/image/icons/cow-tux.png')
+xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'/image/icons/cow-tux.png')
+#logbook = ExternalApp(cmdargs=['konqueror %s'%URL_LOGBOOK], text="Logbook", icon=WDIR+"/image/icons/elog.png")
 
 #===============================================================================
 # Define custom applets to be shown in the applets bar (the wide bar that
@@ -163,17 +165,10 @@ xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'image/icons/c
 
 EXTRA_APPS = {
     #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
-    'snaps':{'name':'Snapshots','classname':'VaccaAction','model':['SNAPS',':/apps/accessories-text-editor.svg',lambda:os.system('ctsnaps')]},
     }
     
 #from vacca.panel import VaccaAction
-import os
-#xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',model=["Archiving",WDIR+'image/icons/Mambo-icon.png','mambo'],)
-xmambo = AppletDescription('ctarchiving',classname = 'vacca.panel.VaccaAction',model=["Archiving",WDIR+'image/PressureTrend.jpg','ctarchiving'],)
-#xrga = AppletDescription('RGA',classname = 'VaccaAction',model=['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01'])
-xeps = AppletDescription('EPS',classname = 'vacca.panel.VaccaAction',model=['EPS',WDIR+'image/equips/icon-eps.gif',
-        'alba_EPS' if 'alba03' in os.environ['TANGO_HOST'] else 'epsGUI'])
-xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaAction',model=['Alarms',WDIR+'image/icons/panic.gif','panic'])
-xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction',model=['Snap',':/apps/accessories-text-editor.svg','ctsnaps'])
-
-xprops = AppletDescription('xProperties',classname='vacca.panel.VaccaAction',model=['Properties',':/apps/accessories-text-editor.svg','vacca.properties.VaccaPropTable'])
+    
+xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',model=["Archiving",WDIR+'/vacca/image/icons/Mambo-icon.png','mambo'],)
+xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaAction',model=['Alarms',WDIR+'/vacca/image/icons/panic.gif','panic'])
+xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction',model=['Snap',WDIR+'/vacca/image/icons/Crystal_Clear_app_kedit.png','ctsnaps'])

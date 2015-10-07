@@ -199,9 +199,17 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
             wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
 
             class_name='synoptic.SynopticWidget'
-
+            # synoptic = PanelDescription('Synoptic',
+            #                     #classname = 'vacca.VacuumSynoptic',
+            #                     classname='svgsynoptic.SynopticWidget',
+            #                     model=jdraw_file, #Model loading is delayed by
+            #                     # VacuumSynoptic method
+            #                     sharedDataRead=rsignal,
+            #                     sharedDataWrite=wsignal,
+            #                     )
         print 'Out of VaccaSynoptic.getPanelDescription(%s,%s)'%(class_name,JDRAW_FILE)
         return PanelDescription(NAME,
+                                #classname = 'vacca.VacuumSynoptic',
                                 classname=class_name,
                                 model=JDRAW_FILE, #Model loading is delayed by
                                 # VacuumSynoptic method
@@ -237,8 +245,7 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
     def getDefaultIcon():
         path = 'image/icons/Synoptic.png'
         return path
-
-
+    
 #A decorator for QGraphics Objects
 def GetClassWithExtensions(klass):
     class ClassWithExtensions(klass):
