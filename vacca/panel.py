@@ -36,7 +36,10 @@ import taurus.qt
 from taurus.qt import Qt
 from taurus.qt.qtgui.container import TaurusWidget as WIDGET_CLASS
 from taurus.qt.qtgui.panel import TaurusForm as FORM_CLASS
-from taurus.qt.qtgui.panel import TaurusDevicePanel
+from taurus.qt.qtgui.panel.taurusdevicepanel import TaurusDevicePanel,get_regexp_dict,searchCl,matchCl,str_to_filter,get_White_palette,get_eqtype
+import taurus.qt.qtgui.resource
+from taurus.core import TaurusAttribute,TaurusDevice,TaurusDatabase
+from taurus.qt.qtgui.container import TaurusWidget
 
 ###############################################################################
 # Help Methods
@@ -153,6 +156,20 @@ class VaccaAction(Qt.QToolButton,taurus.qt.qtgui.base.TaurusBaseWidget):
     def kill(self):
         if self._action:
             self._action.kill()
+            
+try:
+  import MySQLdb
+  from PyTangoArchiving.widget import ArchivingBrowser
+  BROWSER = ArchivingBrowser
+except:
+  print('Failed to load PyTangoArchiving!')
+  BROWSER = Qt.QWidget
+  
+class VaccaFinder(BROWSER):
+  """
+  Convenience class to deal with alternatives to ArchivingBrowser when not available in the PYTHONPATH
+  """
+  pass
 
 ###############################################################################
 # Variables that control VaccaPanel attributes
@@ -255,7 +272,6 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     def __init__(self,parent=None,model=None,palette=None,bound=True,filters=[]):
         
         self.call__init__(taurus.qt.qtgui.panel.TaurusDevicePanel, parent, model)
-        self.setLogLevel(4)
         taurus.qt.qtgui.panel.TaurusDevicePanel(self) #,parent,model,palette,bound)
         if self.checkDropSupport():
             self.setSupportedMimeTypes([self.TAURUS_DEV_MIME_TYPE,
@@ -268,10 +284,89 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self._header.layout().addWidget(self._label,0,1,Qt.Qt.AlignLeft)
         self._label.setDragEventCallback(self._label.text)
         
-    @Qt.pyqtSignature("setModel(QString)")
-    def setModel(self,model,pixmap=None): 
-        self.info('VaccaPanel.setModel(%s,%s)'%(model,pixmap))
-        TaurusDevicePanel.setModel(self,model,pixmap)
+    def setModel(self,model,pixmap=None):    
+        try:    
+          model,modelclass,raw = str(model).strip(),'',model
+          model = fandango.tango.parse_tango_model(str(model))['device']
+          self.warning('VaccaPanel(%s).setModel(%s,%s)'%(id(self),model,pixmap))
+          if model: 
+            model = model and model.split()[0] or ''
+            modelclass = taurus.Factory().findObjectClass(model)
+          self.warning('In TaurusDevicePanel.setModel(%s(%s),%s)'%(raw,modelclass,pixmap))
+          if model == self.getModel():
+            return
+          elif raw is None or not model or not modelclass: 
+            if self.getModel(): self.detach()
+            return
+          elif issubclass(modelclass, TaurusAttribute):
+            #if model.lower().endswith('/state'): 
+            model = model.rsplit('/',1)[0]
+          elif not issubclass(modelclass, TaurusDevice):
+            self.warning('TaurusDevicePanel accepts only Device models')
+            return
+        except:
+          traceback.print_exc()
+        print('panel 2 ........................')
+        try:
+            taurus.Device(model).ping()
+            if self.getModel(): self.detach() #Do not dettach previous model before pinging the new one (fail message will be shown at except: clause)
+            TaurusWidget.setModel(self,model)
+            self.setWindowTitle(str(model).upper())
+            model = self.getModel()
+            self._label.setText(model.upper())
+            font = self._label.font()
+            font.setPointSize(15)
+            self._label.setFont(font)
+            if pixmap is None and self.getIconMap():
+                for k,v in self.getIconMap().items():
+                    if searchCl(k,model):
+                        pixmap = v                  
+            if pixmap is not None:
+                #print 'Pixmap is %s'%pixmap
+                qpixmap = Qt.QPixmap(pixmap)
+                if qpixmap.height()>.9*IMAGE_SIZE[1]: qpixmap=qpixmap.scaledToHeight(.9*IMAGE_SIZE[1])
+                if qpixmap.width()>.9*IMAGE_SIZE[0]: qpixmap=qpixmap.scaledToWidth(.9*IMAGE_SIZE[0])
+            else:
+                qpixmap = taurus.qt.qtgui.resource.getPixmap(':/logo.png')
+            
+            self._image.setPixmap(qpixmap)
+            self._state.setModel(model+'/state')
+            if hasattr(self,'_statelabel'): self._statelabel.setModel(model+'/state')
+            self._status.setModel(model+'/status')
+            try:
+                self._attrsframe.clear()
+                filters = get_regexp_dict(TaurusDevicePanel._attribute_filter,model,['.*'])
+                if hasattr(filters,'keys'): filters = filters.items() #Dictionary!
+                if filters and isinstance(filters[0],(list,tuple)): #Mapping
+                    self._attrs = []
+                    for tab,attrs in filters:
+                        self._attrs.append(self.get_attrs_form(device=model,filters=attrs,parent=self))
+                        self._attrsframe.addTab(self._attrs[-1],tab)
+                else:
+                    if self._attrs and isinstance(self._attrs,list): self._attrs = self._attrs[0]
+                    self._attrs = self.get_attrs_form(device=model,form=self._attrs,filters=filters,parent=self)
+                    if self._attrs: self._attrsframe.addTab(self._attrs,'Attributes')               
+                if not TaurusDevicePanel.READ_ONLY:
+                    self._comms = self.get_comms_form(model,self._comms,self)
+                    if self._comms: self._attrsframe.addTab(self._comms,'Commands')
+                if SPLIT_SIZES: self._splitter.setSizes(SPLIT_SIZES)
+            except:
+                self.warning( traceback.format_exc())
+                qmsg = Qt.QMessageBox(Qt.QMessageBox.Critical,'%s Error'%model,'%s not available'%model,Qt.QMessageBox.Ok,self)
+                qmsg.setDetailedText(traceback.format_exc())
+                qmsg.show()
+        except:
+            self.warning(traceback.format_exc())
+            qmsg = Qt.QMessageBox(Qt.QMessageBox.Critical,'%s Error'%model,'%s not available'%model,Qt.QMessageBox.Ok,self)
+            qmsg.show()
+        self.setWindowTitle(self.getModel())
+        return
+
+    @staticmethod
+    def getDefaultIcon():
+        path = 'image/icons/DevicePanel.png'
+        return path
+
         
 def configure_form(dev,form=None):
     """ Creates a TauForm and configures its Status fields 

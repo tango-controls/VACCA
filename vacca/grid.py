@@ -32,7 +32,7 @@ class VaccaGrid(TaurusGrid):
 
     @staticmethod
     def getGridPanelDescription(grid):
-        class_name = _get_grid(grid)
+        class_name = get_grid(grid)
         gridPanel = PanelDescription('VaccaGrid',
                                 classname = 'vacca.VaccaGrid',
                                 model = grid,
@@ -43,14 +43,14 @@ class VaccaVerticalGrid(TaurusGrid):
 
     @staticmethod
     def getVerticalGridPanelDescription(grid):
-        class_name = _get_grid(_get_vertical_grid(grid))
+        class_name = get_grid(get_vertical_grid(grid))
         gridPanel = PanelDescription('VaccaVGrid',
                                 classname = 'vacca.VaccaVerticalGrid',
-                                model = _get_vertical_grid(grid),
+                                model = get_vertical_grid(grid),
                                 )
         return gridPanel
 
-def _get_empty_grid():
+def get_empty_grid():
     tg = TaurusGrid()
     tg.showRowFrame(False)
     tg.showColumnFrame(False)
@@ -58,15 +58,15 @@ def _get_empty_grid():
     tg.showAttributeUnits(False)    
     return tg
 
-def _get_grid(grid):
+def get_grid(grid):
     print 'get_grid(%s)'%str(grid.keys())
-    tg = _get_empty_grid()
+    tg = get_empty_grid()
     tg.setRowLabels(grid['row_labels'])
     tg.setColumnLabels(grid['column_labels'])
     tg.setModel(grid['model'])#,delayed=False)
     return tg
 
-def _get_vertical_grid(grid):
+def get_vertical_grid(grid):
     vgrid = dict(grid)
     vgrid['column_labels'] = grid['row_labels']#'Gauges:VGCT|CCG|V-PEN,Pumps:IPCT|V-VARIP'
     vgrid['row_labels'] = grid['column_labels']

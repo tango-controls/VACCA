@@ -173,6 +173,11 @@ class VaccaTree(TaurusSearchTree):
         self.edit.connectWithTree(self.tree)
         return    
 
+    @staticmethod
+    def getDefaultIcon():
+        path = 'image/icons/Tree.png'
+        return path
+
 #class VaccaTreeWidget(TaurusBaseWidget):
     #def __init__(self, parent=None, designMode = False):
         #name = "TaurusDevTree"

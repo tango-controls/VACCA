@@ -30,37 +30,59 @@ from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 from taurus.core.taurusvalidator import DeviceNameValidator, AttributeNameValidator
 from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, \
     TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE, TAURUS_MODEL_LIST_MIME_TYPE
+from taurus import Manager
 
 from taurus.qt import Qt
 from fandango import partial,FakeLogger as FL
 
-from taurus.qt.qtgui.graphic import TaurusJDrawSynopticsView,TaurusGraphicsScene,TaurusJDrawGraphicsFactory
+from taurus.qt.qtgui.graphic import TaurusJDrawSynopticsView,TaurusGraphicsScene,TaurusJDrawGraphicsFactory,TYPE_TO_GRAPHICS
 from taurus.qt.qtgui.graphic.taurusgraphic import TaurusGroupItem
 
+import traceback
+def catched(f):
+  def new_f(*args,**kwargs):
+    try:
+      return f(*args,**kwargs)
+    except:
+      traceback.print_exc()
+  return new_f
 
 class VaccaSynoptic(TaurusJDrawSynopticsView):
+    """
+    Overrides TaurusJDrawSynopticsView methods to highlight multiple items in multiple colors.
+    
+    It allows to setup a delayed setModel call to reduce "hungs" on heavy synoptics.
+    But!: This delayed call may cause problems in some versions of taurusGUI. (due to scene not-set yet)
+    """
 
     JDRAW_FILE = None
     JDRAW_HOOK = None
     JDRAW_TREE = None
 
-    def __init__(self, *args, **kwargs):
-        TaurusJDrawSynopticsView.__init__(self, *args, **kwargs)
+    
+    def __init__(self, parent = None, delay=0, designMode = False, updateMode=None, alias = None, resizable = True, panelClass = None):
+        self.delay = delay
+        TaurusJDrawSynopticsView.__init__(self, parent,designMode,updateMode,alias,resizable,panelClass)
         self.setModelInConfig(False)
 
+    
     def setModel(self, model):
-        from fandango import partial
-        self._setter = Qt.QTimer.singleShot(3000, partial(
-            self._setJDrawModel, model))
-        self.JDRAW_FILE = model
+        if self.delay:
+            self.warning('VaccaSynoptic.setModel() delayed %d ms'%self.delay)
+            self._setter = Qt.QTimer.singleShot(
+                self.delay, 
+                partial(self._setJDrawModel, model))
+            self.JDRAW_FILE = model
+        else:
+            TaurusJDrawSynopticsView.setModel(self, model)
 
-
-
+    
     def _setJDrawModel(self, model):
         print '>'*80
         print 'setJDrawModel(%s)' % model
         TaurusJDrawSynopticsView.setModel(self, model)
 
+    
     def getModelMimeData(self):
         """ Used for drag events """
 
@@ -116,9 +138,10 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
 
         print '>'*20+'Loading Synoptic panel new ... %s, %s, %s'%\
             (JDRAW_FILE,JDRAW_HOOK,JDRAW_TREE)
-            
-        if JDRAW_FILE.endswith('.jdw'):
-            print '>'*20+'Creating VaccaSynoptic'
+
+        class_name,rsignal,wsignal = '',{},{}            
+        if not JDRAW_FILE.endswith('.svg'): #Assuming a JDraw file
+            print '>'*20+'Creating JDW VaccaSynoptic'
 
             if JDRAW_HOOK is not None:
                 print 'Enabling JDRAW_HOOK = %s'%JDRAW_HOOK
@@ -176,17 +199,9 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
             wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
 
             class_name='synoptic.SynopticWidget'
-            # synoptic = PanelDescription('Synoptic',
-            #                     #classname = 'vacca.VacuumSynoptic',
-            #                     classname='svgsynoptic.SynopticWidget',
-            #                     model=jdraw_file, #Model loading is delayed by
-            #                     # VacuumSynoptic method
-            #                     sharedDataRead=rsignal,
-            #                     sharedDataWrite=wsignal,
-            #                     )
+
         print 'Out of VaccaSynoptic.getPanelDescription(%s,%s)'%(class_name,JDRAW_FILE)
         return PanelDescription(NAME,
-                                #classname = 'vacca.VacuumSynoptic',
                                 classname=class_name,
                                 model=JDRAW_FILE, #Model loading is delayed by
                                 # VacuumSynoptic method
@@ -198,10 +213,11 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
     # OVERLOADED METHODS FOR CUSTOM HIGHLITHING
     # It should be included in Taurus as patches
     
+    
     def setHighlightedItems(self, models = [], color=Qt.Qt.red):
         if fandango.isSequence(models):
             models = '(%s)'%')|('.join(models)
-        self.warning('setHighLightedItems(%s)' % models)
+        self.info('setHighLightedItems(%s)' % models)
         try:
             default = self.scene().selectionColor()
             self.scene().setSelectionColor(color)
@@ -213,10 +229,51 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
         finally:
             self.scene().setSelectionColor(default)
     
+    
     def getGraphicsFactory(self,delayed=False):
         return VaccaSynopticGraphicsFactory(self,alias=(self.alias or None),delayed=delayed)
 
+    @staticmethod
+    def getDefaultIcon():
+        path = 'image/icons/Synoptic.png'
+        return path
+
+
+#A decorator for QGraphics Objects
+def GetClassWithExtensions(klass):
+    class ClassWithExtensions(klass):
+        
+        
+        def setName(self,name):
+            name = str(name or self.__class__.__name__)
+            self._name = name#srubio@cells.es: modified to store ._name since initialization (even if a model is not set)
+        
+        
+        def getExtensions(self):
+            """
+            Any in
+            ExtensionsList,noPrompt,standAlone,noTooltip,noSelect,ignoreRepaint,shellCommand,className,classParams
+            """
+            self._extensions = getattr(self,'_extensions',{})
+            if 'ExtensionsList' in self._extensions:
+                self._extensions.update((k.strip(),True) for k in self._extensions['ExtensionsList'].split(','))
+                self._extensions.pop('ExtensionsList')
+            for k in ('noPrompt','standAlone','noTooltip','ignoreRepaint','noSelect'):
+                if self._extensions.get(k,None)=='': self._extensions[k] = True
+            self.noPrompt = self._extensions.get('noPrompt',False)
+            self.standAlone = self._extensions.get('standAlone',False)
+            self.noTooltip = self._extensions.get('noTooltip',False)
+            self.ignoreRepaint = self._extensions.get('ignoreRepaint', getattr(self,'ignoreRepaint',False))
+            self.setName(self._extensions.get('name',self._name))
+            tooltip = '' if (self.noTooltip or self._name==self.__class__.__name__ or self._name is None) else str(self._name)
+            #self.debug('setting %s.tooltip = %s'%(self._name,tooltip))
+            self.setToolTip(tooltip)
+            #self.debug('%s.getExtensions(): %s'%(self._name,self._extensions))
+            return self._extensions
+    return ClassWithExtensions
+
 class VaccaSynopticGraphicsFactory(TaurusJDrawGraphicsFactory):
+
     
     def getSceneObj(self,items):
         scene = VaccaGraphicsScene(self.myparent)
@@ -231,11 +288,42 @@ class VaccaSynopticGraphicsFactory(TaurusJDrawGraphicsFactory):
                 self.debug("Details:", exc_info=1)
         return scene
     
+    
+    def getGraphicsItem(self,type_,params):
+        name = params.get(self.getNameParam())
+        #applying alias
+        for k,v in getattr(self,'alias',{}).items():
+            if k in name:
+                name = str(name).replace(k,v)
+                params[self.getNameParam()] = name
+        cls = None
+        if '/' in name:
+            #replacing Taco identifiers in %s'%name
+            if name.lower().startswith('tango:') and (name.count('/')==2 or not 'tango:/' in name.lower()): 
+                nname = name.split(':',1)[-1]
+                params[self.getNameParam()] = name = nname
+            if name.lower().endswith('/state'): name = name.rsplit('/',1)[0]
+            cls = Manager().findObjectClass(name)
+        else: 
+            if name: self.debug('%s does not match a tango name'%name)
+        klass = self.getGraphicsClassItem(cls, type_)
+        self.debug(str((cls,type_,klass,klass.__name__)))
+        if not hasattr(klass,'getExtensions'):
+            klass = GetClassWithExtensions(klass)
+        item = klass()
+        ## It's here were Attributes are subscribed
+        self.set_common_params(item,params)
+        if hasattr(item,'getExtensions'):
+            item.getExtensions() #<= must be called here to take extensions from params
+        return item    
+    
 class VaccaGraphicsScene(TaurusGraphicsScene):
         
+    
     def setSelectionColor(self,color):
         self._selectioncolor = color
         
+    
     def selectionColor(self):
         try:
             assert self._selectioncolor
@@ -243,6 +331,7 @@ class VaccaGraphicsScene(TaurusGraphicsScene):
             self._selectioncolor = Qt.Qt.blue
         return self._selectioncolor
         
+    
     def _displaySelectionAsOutline(self, items):
         def _outline(shapes):
             """"Compute the boolean union from a list of QGraphicsItem. """
@@ -298,6 +387,7 @@ class VaccaGraphicsScene(TaurusGraphicsScene):
 
         return False
     
+    
     def getSelectionMark(self,picture=None,w=10,h=10):
         if picture is None:
             if self.SelectionMark:
@@ -333,32 +423,121 @@ class VaccaGraphicsScene(TaurusGraphicsScene):
                 self.debug('In setSelectionMark(%s): %s'%(picture,traceback.format_exc()))
                 picture = None
         return SelectionMark
+    
+    ##################################################################
+    
+    
+    def getItemByPosition(self,x,y):
+        """ This method will try first with named objects; if failed then with itemAt """
+        pos = Qt.QPointF(x,y)
+        itemsAtPos = []
+        for z,o in sorted((i.zValue(),i) for v in self._itemnames.values() for i in v if i.contains(pos) or i.isUnderMouse()):
+            if not hasattr(o,'getExtensions'):
+                self.warning('getItemByPosition(%d,%d): adding Qt primitive %s'%(x,y,o))
+                itemsAtPos.append(o)
+            elif not o.getExtensions().get('noSelect'):
+                self.warning('getItemByPosition(%d,%d): adding GraphicsItem %s'%(x,y,o))
+                itemsAtPos.append(o)
+            else: self.warning('getItemByPosition(%d,%d): object ignored, %s'%(x,y,o))
+        if itemsAtPos:
+            obj = itemsAtPos[-1]
+            return self.getTaurusParentItem(obj) or obj
+        else: 
+            #return self.itemAt(x,y)
+            self.debug('getItemByPosition(%d,%d): no items found!'%(x,y))
+            return None    
+        
+    #def getItemClicked(self,mouseEvent):
+        #pos = mouseEvent.scenePos()
+        #x,y = pos.x(),pos.y()
+        #self.emit(Qt.SIGNAL("graphicSceneClicked(QPoint)"),Qt.QPoint(x,y))
+        #obj = self.getItemByPosition(x,y)
+        ##self.debug('mouse clicked on %s(%s) at (%s,%s)'%(type(obj).__name__,getattr(obj,'_name',''),x,y))
+        #return obj        
+
+    #def mousePressEvent(self,mouseEvent):
+        ##self.debug('In TaurusGraphicsScene.mousePressEvent(%s,%s))'%(str(type(mouseEvent)),str(mouseEvent.button())))
+        #try: 
+            #obj = self.getItemClicked(mouseEvent)
+            #obj_name = getattr(obj,'_name', '')
+            #if not obj_name and isinstance(obj,QGraphicsTextBoxing): obj_name = obj.toPlainText()
+            #if (mouseEvent.button() == Qt.Qt.LeftButton):
+                ### A null obj_name should deselect all, we don't send obj because we want all similar to be matched                
+                #if self.selectGraphicItem(obj_name):
+                    #self.debug(' => graphicItemSelected(QString)(%s)'%obj_name)
+                    #self.emit(Qt.SIGNAL("graphicItemSelected(QString)"),obj_name)
+                #else:
+                    ## It should send None but the signature do not allow it
+                    #self.emit(Qt.SIGNAL("graphicItemSelected(QString)"), "")
+            #def addMenuAction(menu,k,action,last_was_separator=False):
+                #try:
+                    #if k:
+                        #configDialogAction = menu.addAction(k)
+                        #if action: 
+                            #self.connect(configDialogAction, Qt.SIGNAL("triggered()"), lambda dev=obj_name,act=action: act(dev))
+                        #else: configDialogAction.setEnabled(False)
+                        #last_was_separator = False
+                    #elif not last_was_separator: 
+                        #menu.addSeparator()
+                        #last_was_separator = True
+                #except Exception,e: 
+                    #self.warning('Unable to add Menu Action: %s:%s'%(k,e))                    
+                #return last_was_separator
+            #if (mouseEvent.button() == Qt.Qt.RightButton):
+                #''' This function is called when right clicking on TaurusDevTree area. A pop up menu will be shown with the available options. '''
+                #self.debug('RightButton Mouse Event on %s'%(obj_name))
+                #if isinstance(obj,TaurusGraphicsItem) and (obj_name or obj.contextMenu() or obj.getExtensions()):
+                    #menu = Qt.QMenu(None)#self.parent)    
+                    #last_was_separator = False
+                    #extensions = obj.getExtensions()
+                    #if obj_name and (not extensions or not extensions.get('className')): 
+                        ##menu.addAction(obj_name)
+                        #addMenuAction(menu,'Show %s panel'%obj_name,lambda x=obj_name: self.showNewPanel(x))
+                    #if obj.contextMenu():
+                        #if obj_name: 
+                            #menu.addSeparator()
+                            #last_was_separator = True
+                        #for t in obj.contextMenu(): #It must be a list of tuples (ActionName,ActionMethod)
+                            #last_was_separator = addMenuAction(menu,t[0],t[1],last_was_separator)
+                    #if extensions:
+                        #if not menu.isEmpty(): menu.addSeparator()
+                        #className = extensions.get('className')
+                        #if className and className!='noPanel':
+                            #self.debug('launching className extension object')
+                            #addMenuAction(menu,'Show %s'%className,lambda d,x=obj: self.showNewPanel(x))
+                        #if extensions.get('shellCommand'):
+                            #addMenuAction(menu,'Execute',lambda d,x=obj: self.getShellCommand(x))
+                    #if not menu.isEmpty():
+                        #menu.exec_(Qt.QPoint(mouseEvent.screenPos().x(),mouseEvent.screenPos().y()))
+                    #del menu
+        #except Exception:
+            #self.warning( traceback.format_exc())
 
 ###############################################################################
 
-def test(model):
-    taurus.setLogLevel(taurus.core.util.Logger.Debug)
-    assert len(sys.argv)>1, '\n\nUsage:\n\t> python synoptic [jdw file]'
-    try: 
-        app = Qt.QApplication([]) #sys.argv)
-    except:
-        pass
+def test(model,filters='',debug=False):
     
-    filters = fandango.first(sys.argv[2:],'')
-    form = None
-    if model.lower().endswith('.jdw'):
-        print 'loading a synoptic'
-        form = VaccaSynoptic()
-        #designMode=False,updateMode=VaccaSynoptic.NoViewportUpdate)
-        form.setModel(model)
+    if debug: 
+        taurus.setLogLevel(taurus.core.util.Logger.Debug)
 
-    print 'showing ...'
+    print 'loading synoptic: %s'%model
+    form = VaccaSynoptic(delay=1000,designMode=False)
+    #form = taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView(designMode=False)
+    #designMode=False,updateMode=VaccaSynoptic.NoViewportUpdate)
     form.show()
+    form.setModel(model)
+    form.setWindowTitle(model)
+    print 'showing ...'
     return form
 
 if __name__ == '__main__':
     #!/usr/bin/python
     assert len(sys.argv)>1, '\n\nUsage:\n\t> python synoptic [jdw file]'
+    
+    app = Qt.QApplication([]) #sys.argv)
+
     model = sys.argv[1]
-    form = test(model = sys.argv[1])
-    sys.exit(fandango.qt.getApplication().exec_())
+    filters = fandango.first(sys.argv[2:],'')
+    form = test(model,filters)
+
+    sys.exit(app.exec_())

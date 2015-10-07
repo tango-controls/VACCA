@@ -23,7 +23,7 @@
 ##
 #############################################################################
 
-import vacca,traceback
+import fandango,vacca,traceback
 from taurus.qt.qtgui.table.taurusdevicepropertytable import TaurusPropTable
 from taurus.qt.qtgui.base import TaurusBaseWidget
 from PyQt4 import Qt
@@ -64,14 +64,24 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
         return TaurusDevice    
 
     def setModel(self,model): 
+        #DOES NOT WORK FROM SIGNALS, USE setTable INSTEAD
+        model = fandango.tango.parse_tango_model(str(model))['device']
         self.setTable(model)
         
     def setTable(self,model):
         try:
+            model = fandango.tango.parse_tango_model(str(model))['device']
             print('VaccaPropTable.setTable(%s(%s))'%(type(model),model))
             TaurusPropTable.setTable(self,model)
         except:
             traceback.print_exc()
+
+    @staticmethod
+    def getDefaultIcon():
+        path = 'image/icons/Properties.png'
+        return path
+
+
 
     @classmethod
     def __test__(klass,arg=None):
