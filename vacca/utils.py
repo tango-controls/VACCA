@@ -40,7 +40,7 @@ from fandango.qt import Qt
 from taurus.qt.qtgui.base import TaurusBaseComponent
 from taurus.core.util.eventfilters import ONLY_CHANGE_AND_PERIODIC
 
-DB_HOST = os.getenv('TANGO_HOST').split(':')[0]
+DB_HOST = fandango.tango.get_tango_host().split(':')[0]
 VACCA_PATH = os.environ.get('VACCA_PATH', imp.find_module('vacca')[1])
 WORKING_DIR = os.environ.get('WORKING_DIR', VACCA_PATH)
 if not WORKING_DIR.endswith('/'): WORKING_DIR += '/'
