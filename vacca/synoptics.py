@@ -240,12 +240,12 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
     
     def getGraphicsFactory(self,delayed=False):
         return VaccaSynopticGraphicsFactory(self,alias=(self.alias or None),delayed=delayed)
-
+    
     @staticmethod
     def getDefaultIcon():
         path = 'image/icons/Synoptic.png'
         return path
-    
+
 #A decorator for QGraphics Objects
 def GetClassWithExtensions(klass):
     class ClassWithExtensions(klass):

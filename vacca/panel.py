@@ -30,6 +30,7 @@ import fandango.functional as fun
 from PyQt4 import Qt,Qwt5
 
 from vacca.utils import wdir,get_White_palette,get_fullWhite_palette,get_halfWhite_palette
+from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 
 import taurus
 import taurus.qt
@@ -370,8 +371,13 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
 
     @staticmethod
     def getDefaultIcon():
-        path = 'image/icons/DevicePanel.png'
+        path = 'image/widgets/DevicePanel.png'
         return path
+
+    @staticmethod
+    def getPanelDescription(name='VaccaDevicePanel',model=''):
+        return PanelDescription(name,'vacca.panel.VaccaPanel',model)
+
         
 def configure_form(dev,form=None):
     """ Creates a TauForm and configures its Status fields 
