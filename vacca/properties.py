@@ -78,9 +78,8 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
 
     @staticmethod
     def getDefaultIcon():
-        path = 'image/icons/Properties.png'
+        path = 'image/widgets/Properties.png'
         return path
-
 
     @classmethod
     def __test__(klass,arg=None):
