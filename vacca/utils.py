@@ -330,3 +330,70 @@ class MyTaurusComponent(TaurusBaseComponent,Qt.QObject):
         #self.error('in handleEvent(%s,%s)'%(str(args[0]),len(args)))
         self.my_handler(*args)
         
+class addCustomPanel2Gui(object):
+    # this Class is used to add new panel to existing TaurusGUI with
+    # the same Context.
+    # Each extra_panel class should have a 'getPaneldescription' and
+    # getDefaultIcon methods.
+    #
+    # Pass a dictionary like this:
+    #    EXTRA_PANELS['VaccaProperties'] = {'class': vacca.VaccaPropTable}
+    #
+
+    def __init__(self, extra_panels= None):
+        from taurus.external.qt import QtGui
+        from vacca.utils import WORKING_DIR
+
+        app = Qt.QApplication.instance()
+
+        #find actual Taurusgui Instance
+        widgets = app.allWidgets()
+        taurusgui = None
+        for widget in widgets:
+            widgetType = str(type(widget))
+            if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
+                taurusgui = widget
+
+        #Launch method
+        def _launchPanel(panelName, panelClass, *args):
+            #print args
+            #print panelName, panelClass
+            #print "Launch Panel"
+
+
+            exist = False
+
+            #find if exists instance with this Widget
+            for widget in app.allWidgets():
+                widgetType = str(type(widget))
+                if str(panelClass) in widgetType:
+
+                    #If exist set Flag to know it
+                    exist = True
+                    taurusgui.setFocusToPanel(panelName)
+                    break
+
+            if not exist:
+                taurusgui.createCustomPanel(panelClass.getPanelDescription(panelName))
+
+        def launchPanel(panelName, panelClass):
+            return lambda args: _launchPanel(panelName, panelClass, args)
+
+        for panel in extra_panels.keys():
+            class_Panel = extra_panels[panel]['class']
+            icon = class_Panel.getDefaultIcon()
+            final_icon_url = WORKING_DIR+'vacca/' + icon
+            print final_icon_url
+
+            #button = TaurusLauncherButton(
+            #    widget=class_Panel.getPanelDescription(panel))
+            #taurusgui.jorgsBar.addWidget(button)
+            action = QtGui.QAction(QtGui.QIcon(final_icon_url),
+                panel, taurusgui)
+            func = launchPanel(panel, class_Panel)
+            Qt.QObject.connect(action, Qt.SIGNAL("triggered(bool)"), func)
+            print "Add in jorgsBar"
+            taurusgui.jorgsBar.addAction(action)
+        #button =  TaurusLauncherButton(widget =
+        #
+        # vacca.properties.VaccaPropTable.getPanelDescription('Properties2'))
