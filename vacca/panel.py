@@ -280,6 +280,11 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         
         self.call__init__(taurus.qt.qtgui.panel.TaurusDevicePanel, parent, model)
         taurus.qt.qtgui.panel.TaurusDevicePanel(self) #,parent,model,palette,bound)
+        sdm = vacca.utils.get_shared_data_manager()
+        if sdm:
+            sdm.connectReader('SelectedInstrument',self.setModel,
+                              readOnConnect=True)
+
         if self.checkDropSupport():
             self.setSupportedMimeTypes([self.TAURUS_DEV_MIME_TYPE,
                                         self.TEXT_MIME_TYPE, self.TAURUS_MODEL_MIME_TYPE])
