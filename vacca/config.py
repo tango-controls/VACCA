@@ -36,19 +36,19 @@ user will find when launching the GUI for the first time.
 # Import section. You probably want to keep this line. Don't edit this block 
 # unless you know what you are doing
 
-import fandango
-import taurus
+import time,os,sys,traceback,imp
+from PyQt4.QtCore import SIGNAL
+import fandango,taurus
 import vacca
+from fandango import partial,FakeLogger as FL
 from taurus.qt import Qt
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
 from vacca.panel import VaccaAction,VaccaSplash
-import time
-from fandango import partial,FakeLogger as FL
+from vacca.utils import WORKING_DIR,wdir,VACCA_PATH,vpath,DB_HOST,\
+    DEFAULT_PATH,get_config_file
 
 # (end of import section)
 #==============================================================================
-
-import os,sys,fandango,traceback,imp
 
 #print ('*'*80+'\n')*1
 print 'In vacca.config(%s)'%globals().get('CONFIG_DONE',None)
@@ -56,14 +56,14 @@ print 'In vacca.config(%s)'%globals().get('CONFIG_DONE',None)
 
 assert Qt.QApplication.instance(),'QApplication not running!'
 
-from vacca.utils import WORKING_DIR,wdir,VACCA_PATH,vpath
+
 WDIR = WORKING_DIR
 print 'WORKING_DIR: %s:%s'%(WORKING_DIR,wdir(''))
 print 'VACCA_PATH: %s:%s'%(VACCA_PATH,vpath(''))
 
 try:
     import default
-    from .utils import DB_HOST,DEFAULT_PATH,get_config_file
+
     splash = VaccaSplash()
     
     #===============================================================================
@@ -143,14 +143,15 @@ try:
         print '>'*20+'Loading Device panel ...'
         #from taurus.qt.qtgui.panel import TaurusDevicePanel as VaccaPanel
         from vacca.panel import VaccaPanel
+        panel = VaccaPanel.getPanelDescription('Device')
         #if AttributeFilters: VaccaPanel.setAttributeFilters(AttributeFilters)
         #if CommandFilters: VaccaPanel.setCommandFilters(CommandFilters)
         #if IconMap: VaccaPanel.setIconMap(IconMap)
-        device = PanelDescription('Device',
-                            classname = 'vacca.panel.VaccaPanel', 
-                            model=DEVICE,
-                            sharedDataRead={'SelectedInstrument':'setModel'},
-                            )
+        #device = PanelDescription('Device',
+        #                    classname = 'vacca.panel.VaccaPanel',
+        #                    model=DEVICE,
+        #                    sharedDataRead={'SelectedInstrument':'setModel'},
+        #                    )
     
     if USE_DEVICE_TREE or JDRAW_FILE or EXTRA_DEVICES:
         print '>'*20+'Loading Tree panel ...'
@@ -235,7 +236,8 @@ try:
                             )
         except:
             print 'Unable to create ProfilePlot'
-            
+
+    #Make Properties
     import vacca.properties
     properties = vacca.properties.VaccaPropTable.getPanelDescription('Properties')
             
@@ -277,8 +279,8 @@ try:
         #('vacca.plot.PressureTrend',WDIR+'image/PressureTrend.jpg'),
         #('vacca.VacuumGrid',WDIR+'image/BLGrid.jpg'),
         #('vacca.VerticalGrid',WDIR+'image/VerticalGrid.jpg'),
-        ('vacca.properties.VaccaPropTable',':/designer/devs_table.png'),#WDIR+'image/equips/cable_serie_rs232.jpg'),
-        ('fandango.qt.QEvaluator',':/designer/dockwidget.png'),
+        ('vacca.properties.VaccaPropTable',wdir('vacca/image/widgets/Properties.png')),
+        ('fandango.qt.QEvaluator',':/snapshot/large/snapshot/TaurusShell.png'),
         ]
 
     #===============================================================================
@@ -354,9 +356,63 @@ try:
     SYNOPTIC = [] #'images/example01.jdw','images/syn2.jdw']    
     
     #===============================================================================
-    
-    
+
+
+
+    #EXTRA_PANELS['PANIC'] = PanelDescription(
+    #'PANIC','panic.gui.AlarmGUI',model='',#---
+    #sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+
+    EXTRA_PANELS = {}
+    EXTRA_PANELS['Properties'] = {'class' : vacca.VaccaPropTable}
+    EXTRA_PANELS['DevicePanel'] = {'class' : vacca.VaccaPanel}
+    EXTRA_PANELS['Panic']= {'class' : vacca.VaccaPanic       }
+
+    vacca.addCustomPanel2Gui(EXTRA_PANELS)
+
+    # from fandango.qt import Qt
+    # app = Qt.QApplication.instance()
+    # button = TaurusLauncherButton(widget =
+    #                            vacca.properties.VaccaPropTable.getPanelDescription('Properties2'))
+    #
+    # widgets = app.allWidgets()
+    # print widgets
+    # taurusgui = None
+    # for widget in widgets:
+    #     print type(widget)
+    #     widgetType = str(type(widget))
+    #     if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
+    #         taurusgui = widget
+    # taurusgui.jorgsBar.addWidget(button)
+    #
+    # from taurus.external.qt import QtGui
+    # exitAction = QtGui.QAction(QtGui.QIcon(WDIR+'vacca/image/icons/panic.gif'),
+    #                            'vacca.properties.VaccaPropTable.getPanelDescription', app)
+    # #print WDIR
+    # #exitAction.setShortcut('Ctrl+Q')
+    #
+    # def launchProp():
+    #     print "LaunchProp"
+    #     #c = vacca.properties.VaccaPropTable.getPanelDescription('test')
+    #     taurusgui = None
+    #     for widget in widgets:
+    #         widgetType = str(type(widget))
+    #         if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
+    #             taurusgui = widget
+    #     taurusgui.createCustomPanel(vacca.properties.VaccaPropTable.getPanelDescription())
+    #
+    # Qt.QObject.connect(exitAction, SIGNAL("triggered()"),
+    #         launchProp)
+    #
+    # #exitAction.triggered.connect(QtGui.qApp.quit)
+    # taurusgui.jorgsBar.addAction(exitAction)
+
     print '>'*20+'Config Finished ...'
+    print '>'*20+'Config Finished ...'
+    print '>'*20+'Config Finished ...'
+    print '>'*20+'Config Finished ...'
+
+
     globals()['CONFIG_DONE'] = True
 
 except:

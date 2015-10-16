@@ -34,6 +34,8 @@ use default.py for your common options and whatever.py for your in-place customi
 """
 
 import os,fandango,imp,vacca.utils
+from taurus.qt.qtgui.button import TaurusLauncherButton
+from vacca.utils import wdir
 from fandango import matchCl,searchCl,replaceCl,CaselessDict,CaselessList,get_matching_devices,get_matching_attributes
 
 print '>'*20+' Loading Default.py'
@@ -49,7 +51,7 @@ ORGANIZATION_LOGO = WDIR+'image/icons/AlbaLogo.png'
 ###############################################################################
 # Synoptic file
 
-JDRAW_FILE = WDIR+'/examples/elinac/linac.jdw' #WDIR+'%s/%s.jdw'%(TARGET,TARGET)
+JDRAW_FILE = '' #WDIR+'/examples/elinac/linac.jdw' #WDIR+'%s/%s.jdw'%(TARGET,TARGET)
 #Enables/disables loading jdraw objects into tree
 JDRAW_TREE = True 
 #A method that does transformation on signals sent to other widgets.
@@ -125,8 +127,8 @@ GRID = {
 
 #Extra widgets to appear in the NewPanel dialog
 EXTRA_WIDGETS = [
-        ('panic.gui.AlarmGUI',WDIR+'/vacca/image/icons/panic.gif'),
-        ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',WDIR+'/vacca/image/icons/search.png'),
+        ('panic.gui.AlarmGUI',wdir('vacca/image/icons/panic.gif')),
+        ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',wdir('vacca/image/widgets/Archiving.png')),
     ] #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
 
 EXTRA_PANELS = {}
@@ -167,8 +169,20 @@ EXTRA_APPS = {
     #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
     }
     
-#from vacca.panel import VaccaAction
+from vacca.panel import VaccaAction
     
-xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',model=["Archiving",WDIR+'/vacca/image/icons/Mambo-icon.png','mambo'],)
-xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaAction',model=['Alarms',WDIR+'/vacca/image/icons/panic.gif','panic'])
-xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction',model=['Snap',WDIR+'/vacca/image/icons/Crystal_Clear_app_kedit.png','ctsnaps'])
+#xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',
+# model=["Archiving",wdir('vacca/image/widgets/ProfilePlot.png'),'mambo'],)
+#xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaNewPanel',
+# model=['Alarms',wdir('vacca/image/icons/panic.gif'),'panic.gui.AlarmGUI'])
+xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction', model=['Snap',wdir('vacca/image/widgets/VerticalGrid.jpg'),'ctsnaps'])
+
+
+#button =  TaurusLauncherButton(widget =
+#
+# vacca.properties.VaccaPropTable.getPanelDescription('Properties2'))
+#prop = AppletDescription('proper',
+#                         classname='vacca.properties.VaccaPropTable',
+#                         modulename='getPanelDescription',)
+#button.setModel('a/b/c') #a device name, which will be given to the
+# TaurusAttrForm when clicking
