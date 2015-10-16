@@ -21,18 +21,37 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with Taurus.  If not, see <http://www.gnu.org/licenses/>.
 ##
-###########################################################################
+#############################################################################
 
-print '#'*80
-print 'vacca.__init__'
+import fandango,vacca,traceback
+#from panic.gui import AlarmGUI
+from taurus.qt.qtgui.taurusgui.utils import PanelDescription
+from panic.gui.gui import AlarmGUI
 
-from panel import *
-from tree import *
-from utils import *
-from properties import *
-from grid import *
-from vaccaPanic import *
-#try:
- #from config import *
-#except Exception,e:
- #print 'Unable to import vacca.config: %s'%str(e)
+
+
+class VaccaPanic(AlarmGUI):
+
+    @staticmethod
+    def getPanelDescription(name='Panic',model=''):
+        return PanelDescription(name,'vacca.vaccaPanic.VaccaPanic',model)
+
+    @staticmethod
+    def getDefaultIcon():
+        path = 'image/icons/panic.gif'
+        return path
+
+    @classmethod
+    def __test__(klass,arg=None):
+        from PyQt4 import Qt
+        qapp = Qt.QApplication([])
+        i = klass()
+        print i
+        print klass
+        i.show()
+
+        
+if __name__ == '__main__':
+    import sys
+    VaccaPanic.__test__(*sys.argv[1:])
+        
