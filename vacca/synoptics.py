@@ -49,6 +49,7 @@ def catched(f):
 
 class VaccaSynoptic(TaurusJDrawSynopticsView):
     """
+
     Overrides TaurusJDrawSynopticsView methods to highlight multiple items in multiple colors.
     
     It allows to setup a delayed setModel call to reduce "hungs" on heavy synoptics.
@@ -116,6 +117,14 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
         
     @staticmethod
     def getPanelDescription(NAME='Synoptic',JDRAW_FILE='',JDRAW_HOOK=None,JDRAW_TREE=[]):
+        """
+
+        :param NAME: Name for the Panel
+        :param JDRAW_FILE: synoptic configuration file
+        :param JDRAW_HOOK: ''
+        :param JDRAW_TREE: None
+        :return: PanelDescription Object
+        """
 
         # CONNECTING FAKELOGGER FOR DEBUGGING
         try:
@@ -193,20 +202,13 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
             class_name='vacca.synoptics.VaccaSynoptic'
 
         elif JDRAW_FILE.endswith('.svg'):
-            from svgsynoptic import SynopticWidget, Registry
             rsignal = {'SelectedInstrument': 'select_devices'}
             #@TODO: rsignal['HighlightInstruments'] = 'setHighlightedItems'
             wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
 
             class_name='synoptic.SynopticWidget'
-            # synoptic = PanelDescription('Synoptic',
-            #                     #classname = 'vacca.VacuumSynoptic',
-            #                     classname='svgsynoptic.SynopticWidget',
-            #                     model=jdraw_file, #Model loading is delayed by
-            #                     # VacuumSynoptic method
-            #                     sharedDataRead=rsignal,
-            #                     sharedDataWrite=wsignal,
-            #                     )
+
+
         print 'Out of VaccaSynoptic.getPanelDescription(%s,%s)'%(class_name,JDRAW_FILE)
         return PanelDescription(NAME,
                                 #classname = 'vacca.VacuumSynoptic',
@@ -223,6 +225,11 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
     
     
     def setHighlightedItems(self, models = [], color=Qt.Qt.red):
+        """
+
+        :param models: List of model to be Highlighted
+        :param color: Color, by default Qt.Qt.red
+        """
         if fandango.isSequence(models):
             models = '(%s)'%')|('.join(models)
         self.info('setHighLightedItems(%s)' % models)
@@ -243,6 +250,9 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
     
     @staticmethod
     def getDefaultIcon():
+        """
+        :return: The Default Icon Path.
+        """
         path = 'image/icons/Synoptic.png'
         return path
 

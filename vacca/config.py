@@ -358,11 +358,6 @@ try:
     #===============================================================================
 
 
-
-    #EXTRA_PANELS['PANIC'] = PanelDescription(
-    #'PANIC','panic.gui.AlarmGUI',model='',#---
-    #sharedDataWrite={'HighlightInstruments':'devicesSelected'})
-
     EXTRA_PANELS = {}
     EXTRA_PANELS['Properties'] = {'class' : vacca.VaccaPropTable}
     EXTRA_PANELS['DevicePanel'] = {'class' : vacca.VaccaPanel}

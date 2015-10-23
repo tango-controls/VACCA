@@ -25,16 +25,32 @@
 
 import fandango,vacca,traceback
 from taurus.qt.qtgui.table.taurusdevicepropertytable import TaurusPropTable
-from taurus.qt.qtgui.base import TaurusBaseWidget
-from PyQt4 import Qt
+
 from fandango.qt import DoubleClickable,Dropable
 from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE
 from taurus.core import TaurusDevice,TaurusAttribute,TaurusDatabase
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 
 class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
-    #DoubleClickable,
+    """
+    It is a class that inherits from TaurusPropTable, DoubleClickable (fandango) and Dropable (fandango).
+
+    Shows the Devices Properties, this widget is listening to shareDataManager if any Device has been selected to show its properties
+
+    This class has the follow functionalities:
+        * Is connected to shareDataManager to share information in the GUI.
+        * Can be edit the property by doubleclick function.
+    """
+
     def __init__(self, parent=None, designMode = False):
+        """
+        In Init, the class VaccaPropTable check if exist any shareDataManager to
+        subscribe in it.
+
+        :param parent:
+        :param designMode:
+        :return:
+        """
         #super(type(self),self).__init__(parent,designMode)
         TaurusPropTable.__init__(self,parent,designMode)
         sdm = vacca.utils.get_shared_data_manager()
@@ -57,14 +73,23 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
         
     @staticmethod
     def getPanelDescription(name='TangoDeviceProperties',model=''):
+        """
+        :param name: Name for the Panel
+        :param model: Model for the panel
+        :return:
+        """
         return PanelDescription(name,'vacca.properties.VaccaPropTable',model)
     
     def getModelClass(self):
-        #return taurus.core.taurusdatabase.TaurusDatabase
-        return TaurusDevice    
+        return TaurusDevice
 
     def setModel(self,model): 
-        #DOES NOT WORK FROM SIGNALS, USE setTable INSTEAD
+        """
+        Set Model is the callback used in shareDataManager to manage device
+        selections.
+        :param model:
+        :return:
+        """
         model = fandango.tango.parse_tango_model(str(model))['device']
         self.setTable(model)
         
@@ -78,6 +103,9 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
 
     @staticmethod
     def getDefaultIcon():
+        """
+        :return: The Default Icon Path.
+        """
         path = 'image/widgets/Properties.png'
         return path
 

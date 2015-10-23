@@ -95,7 +95,12 @@ class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree,TaurusBas
         return mimeData            
     
 class VaccaTree(TaurusSearchTree):
-    
+    """
+    It is a class that inherits from TaurusSearchTree.
+    Allow show the devices and start/stop it with the right button (
+    expandable menu)
+
+    """
     #This slots are overloaded here because they are not yet in the last taurus package. Once it will be included in TaurusSearchTree than it can be removed.
     #The slots are needed because the method_forwarder method is not seen from the SharedDataManager side.
     
@@ -119,6 +124,11 @@ class VaccaTree(TaurusSearchTree):
         TaurusDevTree.setIconMap(iconMap)
     
     def start_server(self, device=None):
+        """
+        Allow start Servers.
+        :param device: DeviceName
+        :return:
+        """
         device = device or self.tree.getNodeDeviceName()
         self.astor.load_by_name(device)
         ss = self.astor.get_device_server(device)
@@ -132,6 +142,11 @@ class VaccaTree(TaurusSearchTree):
             return False
         
     def stop_server(self, device=None):
+        """
+        Allow stop Servers
+        :param device: DeviceName
+        :return:
+        """
         device = device or self.tree.getNodeDeviceName()
         self.astor.load_by_name(device)
         ss = self.astor.get_device_server(device)
@@ -144,6 +159,11 @@ class VaccaTree(TaurusSearchTree):
             return False
         
     def device_info(self,device=None):
+        """
+        Show a the Device Info
+        :param device: DeviceName
+        :return:
+        """
         device = device or self.tree.getNodeDeviceName()
         di = fandango.tango.get_device_info(device)
         txt = '\n'.join('%s : %s'%(k,getattr(di,k)) for k in 'name dev_class server host level exported started stopped PID'.split())
@@ -175,22 +195,13 @@ class VaccaTree(TaurusSearchTree):
 
     @staticmethod
     def getDefaultIcon():
+        """
+        :return: The Default Icon Path.
+        """
         path = 'image/widgets/Tree.png'
         return path
 
-#class VaccaTreeWidget(TaurusBaseWidget):
-    #def __init__(self, parent=None, designMode = False):
-        #name = "TaurusDevTree"
-        #self._useParentModel = True
-        #self._localModel = ''
-        #self.call__init__wo_kw(Qt.QTreeWidget, parent)
-        #self.call__init__(TaurusBaseWidget, name, designMode=designMode)
-        #self.setLayout(Qt.QVBoxLayout())
-        #self.search = 
-        #self.tree = TaurusDevTree(self)
-        #self.layout().addWidget()
-        
+
 
 ###############################################################################
 
-print('loaded vacca.tree.VaccaTree')

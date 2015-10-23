@@ -27,7 +27,6 @@
 import re,os,traceback,time,sys
 import fandango,vacca
 import fandango.functional as fun
-from PyQt4 import Qt,Qwt5
 
 from vacca.utils import wdir,get_White_palette,get_fullWhite_palette,get_halfWhite_palette
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
@@ -178,72 +177,6 @@ class VaccaFinder(BROWSER):
             BROWSER.__init__(self,parent,domains,regexp,USE_SCROLL,USE_TREND)
   pass
 
-###############################################################################
-# Variables that control VaccaPanel attributes
-
-## -> Moved to filters.py!
-
-#DEV_ATTRS = fandango.dicts.CaselessDict({ #Put attribute names in lower case!
-    #'ALARMS' : ['ActiveAlarms', 'PastAlarms', 'AlarmList', 'AlarmReceivers'],
-    #'COMPOSER' : 'Q1,Q2,Q3,Q4,IPNames,CCGNames,.*Pressure.*'.split(','),
-    #'ALL' : '.*Pressure.*,Average.*,DevStates,Thermocouples'.split(','),
-    #'VGCT': ['ChannelState']+['p%d'%(i+1) for i in range(5)],
-    ##'IPCT': [
-                ##'hv1code','hv2code',
-                ##'p1','p2','modelocal',
-                ##'v1','v2','modestep',
-                ##'i1','i2','modeprotect',
-                ##'interlock',
-                ###'hv1code','p1','i1','v1','hv2code','p2','i2','v2',
-                ##'errorstatus','ionpump.*'],
-    #'IPCT': [
-                #('Attributes',['hv1code','p1','hv2code','p2']),
-                #('CH1',['p1','v1','i1']),
-                #('CH2',['p2','v2','i2']),
-                ##'p1','p2','modelocal',
-                ##'v1','v2','modestep',
-                ##'i1','i2','modeprotect',
-                ##'interlock',
-                ###'hv1code','p1','i1','v1','hv2code','p2','i2','v2',
-                ##'errorstatus','ionpump.*'],
-            #],
-    #'SPBX': ['totalcurrent','cableinterlocks','pressureinterlocks'] + 
-            #reduce(list.__add__,(['p%d'%i] for i in range(1,1+8))) +
-            #reduce(list.__add__,(['i%d'%i] for i in range(1,1+8))) +
-            #['channelvoltages','ionpumpsconfig'] +
-            #['interlockthresholds','warningthresholds'],
-            ##reduce(list.__add__,(['p%d'%i,'i%d'%i] for i in range(1,1+8))),
-    #'PNV': ['state','PLCAttribute'],
-    #'SPNV': ['state'],
-    #'EPS': ['CpuStatus','PLC_Config_Status','RGA_.*','THERMOCOUPLES','.*_T[0-9]+$','.*TC.*',], #These lines are overriden by blXX.rc.py files
-    #'EPS-PLC': ['CpuStatus','PLC_Config_Status','RGA_.*','THERMOCOUPLES','.*_T[0-9]+$','.*TC.*',], #These lines are overriden by blXX.rc.py files
-    ##'.*TC.*','.*_PT.*','_READY','OPEN_','CLOSE_','was_','paas_'],
-    ##'EPS-PLC': ['CPU_STATUS','PLC_CONFIG_STATUS','THERMOCOUPLES'],
-    #'CCG': ['pressure','channelstatus','controller'],
-    #'PIR': ['pressure','channelstatus','controller'],
-    #'IP': ['pressure','channelstatus','controller'],
-    #})
-
-#DEV_COMMS = fandango.dicts.CaselessDict({ #Put commands names in lower case!
-    #'ALARMS': (('ResetAlarm',()),('ResetAll',())),
-    #'VGCT': (('cc_on',('P1','P2')),  ('cc_off',('P1','P2')), ('sendcommand',())),
-    #'IPCT': (('setmode',('SERIAL','LOCAL','STEP','FIXED','START','PROTECT')), 
-                #('onhv1',()), ('offhv1',()), ('onhv2',()), ('offhv2',()), 
-               #('sendcommand',())),
-    #'SPBX': (
-        #('GetAlarms',()),
-        #('ResetAlarms',()),
-        #('talk',()),
-        #),
-    #'PNV': (('open',()),('close',())),
-    #'SPNV': (('open',()),('close',())),
-    #'EPS': (),
-    #'EPS-PLC': (),
-    #'SERIAL': (('init',()),),
-    #'CCG': (('on',()),('off',())),
-    #'PIR': (),
-    #'IP': (),    
-    #})
 
 class SimplePanel(WIDGET_CLASS):
 
@@ -275,8 +208,27 @@ class SimplePanel(WIDGET_CLASS):
         return i.getModel() if i else None
             
 class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
+    """
+    It is a class that inherits from TaurusDevicePanel and Dropable module from fandango.
+
+    This Widget shows the device Commands and Attributes, it is listening the shareDataManager to show the device selected information.
+    The title of this Widget can be draggable.
+    This class has the follow functionalities:
+        * Title is draggable.
+        * Is connected to shareDataManager to share information in the GUI.
+    """
     
     def __init__(self,parent=None,model=None,palette=None,bound=True,filters=[]):
+        """
+        In Init, the class VaccaPanel check if exist any shareDataManager to
+        subscribe in it.
+        :param parent:
+        :param model:
+        :param palette:
+        :param bound:
+        :param filters:
+        :return:
+        """
         
         self.call__init__(taurus.qt.qtgui.panel.TaurusDevicePanel, parent, model)
         taurus.qt.qtgui.panel.TaurusDevicePanel(self) #,parent,model,palette,bound)
@@ -296,7 +248,14 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self._header.layout().addWidget(self._label,0,1,Qt.Qt.AlignLeft)
         self._label.setDragEventCallback(self._label.text)
         
-    def setModel(self,model,pixmap=None):    
+    def setModel(self,model,pixmap=None):
+        """
+        Set Model is the callback used in shareDataManager to manage device
+        selections.
+        :param model: Model to VaccaPanel
+        :param pixmap:
+        :return:
+        """
         try:    
           model,modelclass,raw = str(model).strip(),'',model
           model = fandango.tango.parse_tango_model(str(model))['device']
@@ -376,11 +335,19 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
 
     @staticmethod
     def getDefaultIcon():
+        """
+        :return: The Default Icon Path.
+        """
         path = 'image/widgets/DevicePanel.png'
         return path
 
     @staticmethod
     def getPanelDescription(name='VaccaDevicePanel',model=''):
+        """
+        :param name: Name for the Panel
+        :param model: Model for the panel
+        :return:
+        """
         return PanelDescription(name,'vacca.panel.VaccaPanel',model)
 
         
