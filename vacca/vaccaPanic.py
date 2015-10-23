@@ -31,13 +31,27 @@ from panic.gui.gui import AlarmGUI
 
 
 class VaccaPanic(AlarmGUI):
+    """
+    It is a class that inherits from AlarmGUI.
+
+    This Panel show the alarms, and allow to interact with them.
+
+    """
 
     @staticmethod
     def getPanelDescription(name='Panic',model=''):
+        """
+        :param name: Name for Panel
+        :param model: Model for the Panel
+        :return: Panel Descritption Object
+        """
         return PanelDescription(name,'vacca.vaccaPanic.VaccaPanic',model)
 
     @staticmethod
     def getDefaultIcon():
+        """
+        :return: The Default Icon Path.
+        """
         path = 'image/icons/panic.gif'
         return path
 

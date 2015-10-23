@@ -390,7 +390,9 @@ class addCustomPanel2Gui(object):
             #taurusgui.jorgsBar.addWidget(button)
             action = QtGui.QAction(QtGui.QIcon(final_icon_url),
                 panel, taurusgui)
-            func = launchPanel(panel, class_Panel)
+            #func = launchPanel(panel, class_Panel)
+            func = lambda args,panelName=panel,panelClass=class_Panel: \
+                _launchPanel(panelName,panelClass, args)
             Qt.QObject.connect(action, Qt.SIGNAL("triggered(bool)"), func)
             print "Add in jorgsBar"
             taurusgui.jorgsBar.addAction(action)

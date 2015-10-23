@@ -368,8 +368,60 @@ try:
     #SYNOPTIC = [] #'images/example01.jdw','images/syn2.jdw']    
     
     #===============================================================================
+<<<<<<< HEAD
     
     
+=======
+
+
+    EXTRA_PANELS = {}
+    EXTRA_PANELS['Properties'] = {'class' : vacca.VaccaPropTable}
+    EXTRA_PANELS['DevicePanel'] = {'class' : vacca.VaccaPanel}
+    EXTRA_PANELS['Panic']= {'class' : vacca.VaccaPanic       }
+
+    vacca.addCustomPanel2Gui(EXTRA_PANELS)
+
+    # from fandango.qt import Qt
+    # app = Qt.QApplication.instance()
+    # button = TaurusLauncherButton(widget =
+    #                            vacca.properties.VaccaPropTable.getPanelDescription('Properties2'))
+    #
+    # widgets = app.allWidgets()
+    # print widgets
+    # taurusgui = None
+    # for widget in widgets:
+    #     print type(widget)
+    #     widgetType = str(type(widget))
+    #     if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
+    #         taurusgui = widget
+    # taurusgui.jorgsBar.addWidget(button)
+    #
+    # from taurus.external.qt import QtGui
+    # exitAction = QtGui.QAction(QtGui.QIcon(WDIR+'vacca/image/icons/panic.gif'),
+    #                            'vacca.properties.VaccaPropTable.getPanelDescription', app)
+    # #print WDIR
+    # #exitAction.setShortcut('Ctrl+Q')
+    #
+    # def launchProp():
+    #     print "LaunchProp"
+    #     #c = vacca.properties.VaccaPropTable.getPanelDescription('test')
+    #     taurusgui = None
+    #     for widget in widgets:
+    #         widgetType = str(type(widget))
+    #         if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
+    #             taurusgui = widget
+    #     taurusgui.createCustomPanel(vacca.properties.VaccaPropTable.getPanelDescription())
+    #
+    # Qt.QObject.connect(exitAction, SIGNAL("triggered()"),
+    #         launchProp)
+    #
+    # #exitAction.triggered.connect(QtGui.qApp.quit)
+    # taurusgui.jorgsBar.addAction(exitAction)
+
+    print '>'*20+'Config Finished ...'
+    print '>'*20+'Config Finished ...'
+    print '>'*20+'Config Finished ...'
+>>>>>>> 00063559975e182f60dc98741cb2defe8b061469
     print '>'*20+'Config Finished ...'
     globals()['CONFIG_DONE'] = True
 
