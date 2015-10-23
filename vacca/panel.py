@@ -275,7 +275,12 @@ class SimplePanel(WIDGET_CLASS):
         return i.getModel() if i else None
             
 class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
+    """
+    This class extends the standard behaviour of TaurusDevicePanel adding Drag and Drop.
+    """
     
+    __help__ = """You may want to drag a device name into this panel to show a device, or drag the device name to a properties table to show them up."""
+ 
     def __init__(self,parent=None,model=None,palette=None,bound=True,filters=[]):
         
         self.call__init__(taurus.qt.qtgui.panel.TaurusDevicePanel, parent, model)
@@ -295,6 +300,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self._label.font().setBold(True)
         self._header.layout().addWidget(self._label,0,1,Qt.Qt.AlignLeft)
         self._label.setDragEventCallback(self._label.text)
+        self.setToolTip(getattr(self,'__help__',self.__doc__))
         
     def setModel(self,model,pixmap=None):    
         try:    
