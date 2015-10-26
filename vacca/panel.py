@@ -209,9 +209,6 @@ class SimplePanel(WIDGET_CLASS):
             
 class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     """
-<<<<<<< HEAD
-    This class extends the standard behaviour of TaurusDevicePanel adding Drag and Drop.
-=======
     It is a class that inherits from TaurusDevicePanel and Dropable module from fandango.
 
     This Widget shows the device Commands and Attributes, it is listening the shareDataManager to show the device selected information.
@@ -219,7 +216,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     This class has the follow functionalities:
         * Title is draggable.
         * Is connected to shareDataManager to share information in the GUI.
->>>>>>> 00063559975e182f60dc98741cb2defe8b061469
+
     """
     
     __help__ = """You may want to drag a device name into this panel to show a device, or drag the device name to a properties table to show them up."""

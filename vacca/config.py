@@ -368,10 +368,6 @@ try:
     #SYNOPTIC = [] #'images/example01.jdw','images/syn2.jdw']    
     
     #===============================================================================
-<<<<<<< HEAD
-    
-    
-=======
 
 
     EXTRA_PANELS = {}
@@ -418,10 +414,6 @@ try:
     # #exitAction.triggered.connect(QtGui.qApp.quit)
     # taurusgui.jorgsBar.addAction(exitAction)
 
-    print '>'*20+'Config Finished ...'
-    print '>'*20+'Config Finished ...'
-    print '>'*20+'Config Finished ...'
->>>>>>> 00063559975e182f60dc98741cb2defe8b061469
     print '>'*20+'Config Finished ...'
     globals()['CONFIG_DONE'] = True
 
