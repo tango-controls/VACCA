@@ -209,8 +209,8 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
                 wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
                 class_name='synoptic.SynopticWidget'
             except:
-            	print('Horreur!: svgsynoptic MODULE NOT AVAILABLE!')
-            	return None
+                print('Horreur!: svgsynoptic MODULE NOT AVAILABLE!')
+                return None
 
         print 'Out of VaccaSynoptic.getPanelDescription(%s,%s)'%(class_name,JDRAW_FILE)
         return PanelDescription(NAME,
