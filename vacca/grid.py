@@ -43,7 +43,7 @@ class VaccaVerticalGrid(TaurusGrid):
 
     @staticmethod
     def getVerticalGridPanelDescription(grid):
-        class_name = get_grid(_get_vertical_grid(grid))
+        class_name = get_grid(get_vertical_grid(grid))
         gridPanel = PanelDescription('VaccaVGrid',
                                 classname = 'vacca.VaccaVerticalGrid',
                                 model = get_vertical_grid(grid),
@@ -55,7 +55,7 @@ def get_empty_grid():
     tg.showRowFrame(False)
     tg.showColumnFrame(False)
     tg.showAttributeLabels(False)
-    tg.showAttributeUnits(False)    
+    tg.showAttributeUnits(False)
     return tg
 
 def get_grid(grid):

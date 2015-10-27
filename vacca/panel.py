@@ -209,27 +209,36 @@ class SimplePanel(WIDGET_CLASS):
             
 class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     """
+
+    :param parent:
+    :param model:
+    :param palette:
+    :param bound:
+    :param filters:
+    :return:
+
     It is a class that inherits from TaurusDevicePanel and Dropable module from fandango.
 
+    In Init, the class VaccaPanel check if exist any shareDataManager to
+        subscribe in it.
+
     This Widget shows the device Commands and Attributes, it is listening the shareDataManager to show the device selected information.
+
     The title of this Widget can be draggable.
     This class has the follow functionalities:
         * Title is draggable.
         * Is connected to shareDataManager to share information in the GUI.
-
     """
     
-    __help__ = """You may want to drag a device name into this panel to show a device, or drag the device name to a properties table to show them up."""
- 
-    def __init__(self,parent=None,model=None,palette=None,bound=True,filters=[]):
+    def __init__(self,parent=None,model=None, filters=[]): #,palette=None,
+    # bound=True,filters=[]):
         """
         In Init, the class VaccaPanel check if exist any shareDataManager to
         subscribe in it.
+
         :param parent:
-        :param model:
-        :param palette:
-        :param bound:
-        :param filters:
+        :param model: Model to start the Panel.
+        :param filters: List of filters, by default is None
         :return:
         """
         
@@ -256,6 +265,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         """
         Set Model is the callback used in shareDataManager to manage device
         selections.
+
         :param model: Model to VaccaPanel
         :param pixmap:
         :return:
