@@ -202,12 +202,15 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
             class_name='vacca.synoptics.VaccaSynoptic'
 
         elif JDRAW_FILE.endswith('.svg'):
-            rsignal = {'SelectedInstrument': 'select_devices'}
-            #@TODO: rsignal['HighlightInstruments'] = 'setHighlightedItems'
-            wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
-
-            class_name='synoptic.SynopticWidget'
-
+            try:
+                from svgsynoptic import SynopticWidget, Registry
+                rsignal = {'SelectedInstrument': 'select_devices'}
+                #@TODO: rsignal['HighlightInstruments'] = 'setHighlightedItems'
+                wsignal = {'SelectedInstrument': 'graphicItemSelected(QString)'}
+                class_name='synoptic.SynopticWidget'
+            except:
+            	print('Horreur!: svgsynoptic MODULE NOT AVAILABLE!')
+            	return None
 
         print 'Out of VaccaSynoptic.getPanelDescription(%s,%s)'%(class_name,JDRAW_FILE)
         return PanelDescription(NAME,
