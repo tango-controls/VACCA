@@ -119,7 +119,9 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
         i.show()
         if arg: i.setTable(arg)
         qapp.exec_()
-        
+
+__doc__ = vacca.get_autodoc(__name__,vars())
+
 if __name__ == '__main__':
     import sys
     VaccaPropTable.__test__(*sys.argv[1:])

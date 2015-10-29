@@ -29,6 +29,7 @@ from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 
 
 class VaccaGrid(TaurusGrid):
+    """ TaurusGrid enhanced to provide default PanelDescription """
 
     @staticmethod
     def getGridPanelDescription(grid):
@@ -74,3 +75,5 @@ def get_vertical_grid(grid):
         grid['model'])]
     return vgrid #get_grid(vgrid)
 
+from .doc import get_autodoc
+__doc__ = get_autodoc(__name__,vars())

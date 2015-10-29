@@ -23,6 +23,12 @@
 ##
 #############################################################################
 
+__doc__ = """
+
+.. automodule vacca.panel
+   :members:
+
+"""
 
 import re,os,traceback,time,sys
 import fandango,vacca
@@ -225,9 +231,12 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     This Widget shows the device Commands and Attributes, it is listening the shareDataManager to show the device selected information.
 
     The title of this Widget can be draggable.
+
     This class has the follow functionalities:
+
         * Title is draggable.
         * Is connected to shareDataManager to share information in the GUI.
+
     """
     
     def __init__(self,parent=None,model=None, filters=[]): #,palette=None,
@@ -383,7 +392,6 @@ def configure_form(dev,form=None):
     sw.setMinimumHeight(STATUS_HEIGHT)
     #sw.setShowQuality(False) #It didn't work as expected
     return form
-    
 
 if __name__ == '__main__':
     #!/usr/bin/python
@@ -420,3 +428,5 @@ if __name__ == '__main__':
     print 'showing ...'
     form.show()
     sys.exit(app.exec_())
+
+__doc__ = vacca.get_autodoc(__name__,vars())

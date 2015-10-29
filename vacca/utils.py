@@ -50,7 +50,7 @@ vpath = lambda s: '%s/%s'%(VACCA_PATH, s)
 
 def get_config_file():
     #CONFIG_FILE sys.argv[-1] if fandango.matchCl('^[^-].*py$',sys.argv[-1]) else
-    CONFIG_FILE = os.getenv('VACCA_CONFIG') or DB_HOST+'.py'
+    CONFIG_FILE = os.getenv('VACCA_CONFIG') or ''# or DB_HOST+'.py'
     print('get_config_file(%s)'%CONFIG_FILE)
 
     if not CONFIG_FILE.startswith('/'):
@@ -331,14 +331,15 @@ class MyTaurusComponent(TaurusBaseComponent,Qt.QObject):
         self.my_handler(*args)
         
 class addCustomPanel2Gui(object):
-    # this Class is used to add new panel to existing TaurusGUI with
-    # the same Context.
-    # Each extra_panel class should have a 'getPaneldescription' and
-    # getDefaultIcon methods.
-    #
-    # Pass a dictionary like this:
-    #    EXTRA_PANELS['VaccaProperties'] = {'class': vacca.VaccaPropTable}
-    #
+    """
+    this Class is used to add new panel to existing TaurusGUI with
+    the same Context.
+    Each extra_panel class should have a 'getPaneldescription' and
+    getDefaultIcon methods.
+    
+    Pass a dictionary like this:
+       EXTRA_PANELS['VaccaProperties'] = {'class': vacca.VaccaPropTable}
+    """
 
     def __init__(self, extra_panels= None):
         from taurus.external.qt import QtGui
@@ -407,3 +408,6 @@ class addCustomPanel2Gui(object):
                 taurusgui.jorgsBar.addAction(action)
         except:
             print "Don't Exist any App instance"
+
+from .doc import get_autodoc
+__doc__ = get_autodoc(__name__,vars())

@@ -201,7 +201,8 @@ class VaccaTree(TaurusSearchTree):
         path = 'image/widgets/Tree.png'
         return path
 
-
+from .doc import get_autodoc
+__doc__ = get_autodoc(__name__,vars())
 
 ###############################################################################
 

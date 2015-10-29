@@ -26,12 +26,29 @@
 print '#'*80
 print 'vacca.__init__'
 
-from panel import *
-from tree import *
-from utils import *
-from properties import *
-from grid import *
-from vaccaPanic import *
+__doc__ = """This is vacca"""
+
+from vacca.doc import get_autodoc
+from vacca.panel import *
+from vacca.tree import *
+from vacca.utils import *
+from vacca.properties import *
+from vacca.grid import *
+from vacca.vaccaPanic import *
+
+## THIS DIDNT WORKED!!
+#print('Autogenerating VACCA docs')
+#import panel,tree,utils,properties,grid,vaccaPanic,doc
+#for m in panel,tree,utils,properties,grid,vaccaPanic:
+    #print m.__name__
+    #if not m.__doc__:
+        #m.__doc__ = "\n%s\n%s\n\n" % (m.__name__,'='*len(m.__name__))
+    #if ".. auto" not in m.__doc__:
+        #m.__doc__+=doc.get_function_docs(m.__name__,vars(m))
+        #m.__doc__+=doc.get_class_docs(m.__name__,vars(m))
+
+__doc__+="\nextended"
+
 #try:
  #from config import *
 #except Exception,e:

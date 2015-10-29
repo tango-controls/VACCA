@@ -186,3 +186,5 @@ xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction', model=['S
 #                         modulename='getPanelDescription',)
 #button.setModel('a/b/c') #a device name, which will be given to the
 # TaurusAttrForm when clicking
+
+__doc__ = vacca.get_autodoc(__name__,vars())

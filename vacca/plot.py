@@ -354,6 +354,8 @@ def pickPlotPoint(self, pos, scope=20, showMarker=True,
         
     return picked,pickedCurveName,pickedIndex
         
+__doc__ = vacca.get_autodoc(__name__,vars())
+
 if __name__ == '__main__':
     import taurus.qt.qtgui.application
     app = taurus.qt.qtgui.application.TaurusApplication()

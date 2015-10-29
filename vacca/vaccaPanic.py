@@ -64,6 +64,7 @@ class VaccaPanic(AlarmGUI):
         print klass
         i.show()
 
+__doc__ = vacca.get_autodoc(__name__,vars())
         
 if __name__ == '__main__':
     import sys

@@ -220,6 +220,7 @@ def main(args):
       
     os.chdir(current)
 
+__doc__ = vacca.get_autodoc(__name__,vars())
    
 if __name__ == '__main__':
   main(sys.argv[1:])

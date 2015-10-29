@@ -24,12 +24,58 @@
 ###########################################################################
 
 """
-configuration file used by Vacca to construct a GUI based on TaurusGUI  
+TaurusGUI configuration file used to convert Taurus into VACCA
+
+This file should be NOT modified.
+
+.. toc::
+   :maxdepth: 4
+
+h2. Usage
+=========
 
 This configuration file determines the default, permanent, pre-defined
 contents of the GUI. While the user may add/remove more elements at run
 time and those customizations will also be stored, this file defines what a
 user will find when launching the GUI for the first time.
+
+Don't modify this file, use default.py to do a simple setup of your
+facility and paths and a CONFIG.py file (based on default.py format) to 
+construct a VACCA gui for each subsystem.
+
+h3. Contents
+------------
+
+This file mainly defines two kinds of objects:
+
+ * Panel descriptors: the panels to be shown.
+   To define a panel, instantiate a PanelDescription object (see documentation
+   for the gblgui_utils module)
+ * Panels will be TREE, JDRAW_FILE, DEVICE, ...
+   
+ * QSignals (managed by Taurus Shared Data Manager):
+  * SelectedInstrument: goes from taurusgui and tree into panel/synoptic
+  * SelectionMultiple: goes from panic/finder/... to synoptic to display multiple elements
+  * JDrawIn/JDrawOut: used only if JDRAW_HOOK defined, to transform data between synoptic and selection
+  * lastWindowClosed: signal will close all opened widgets and dialogs on application exit
+
+h3. Extending Taurus
+--------------------
+
+Use EXTRA_WIDGETS to add new widgets to the catalog and the right-side toolbar.
+
+Use EXTRA_PANELS to force new Panels always at startup.
+
+Use EXTRA_APPS to add launchers to the toolbar.
+
+Create new AppletDescription objects to add elements to the right-side toolbar.
+
+
+h1. Config Variables
+--------------------
+
+Described below
+
 """
 
 #==============================================================================
@@ -40,6 +86,7 @@ import time,os,sys,traceback,imp
 from PyQt4.QtCore import SIGNAL
 import fandango,taurus
 import vacca
+from .doc import get_autodoc,get_vars_docs
 from fandango import partial,FakeLogger as FL
 from taurus.qt import Qt
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
@@ -75,24 +122,28 @@ try:
     # Loading of Config Files
     #===============================================================================
 
-    #: The Config file will be either TANGO_HOST.py or a python module passed
-    #: as argument
     SETTINGS = '/home/$USER/.config/$ORGANIZATION/$GUI_NAME'
 
-    #: Options can be specified in default.py file and
-    #: CONFIG can be a .py file passed as argument or a TANGO_HOST.py file in
+    #: Default options are set in default.py file and later customized in a config file.
+    #: This CONFIG can be a .py file passed as argument or a TANGO_HOST.py file in
     #: vacca folder.
     CONFIG = get_config_file()
 
     #: ALL Variables that can be defined in CONFIG FILE
-    OPTIONS = [
-        'GUI_NAME','WDIR','DOMAIN','TARGET',
-        'JDRAW_FILE','JDRAW_TREE','JDRAW_HOOK','GRID','USE_DEVICE_TREE',
-        'COMPOSER','CUSTOM_TREE','EXTRA_DEVICES','GAUGES','DEVICE',
-        'USE_DEVICE_PANEL','EXTRA_WIDGETS','EXTRA_PANELS','TOOLBARS','PANEL_COMMAND',
-        'AttributeFilters','CommandFilters','IconMap',
-        'URL_HELP','URL_LOGBOOK','VACCA_LOGO','ORGANIZATION_LOGO',
-        ]
+    OPTION_LISTS = [
+        ('General Info', ['GUI_NAME','URL_HELP','URL_LOGBOOK','VACCA_LOGO','ORGANIZATION','ORGANIZATION_LOGO',]),
+        ('Installation', ['WDIR','SETTINGS']),
+        ('Sub systems', ['DOMAIN','TARGET','COMPOSER',]),
+        ('Device Tree', ['USE_DEVICE_TREE','CUSTOM_TREE','EXTRA_DEVICES',]),
+        ('Synoptics', ['JDRAW_FILE','JDRAW_TREE','JDRAW_HOOK','GRID',]),
+        ('Device Panel', ['USE_DEVICE_PANEL','DEVICE','PANEL_COMMAND','AttributeFilters','CommandFilters','IconMap',]),
+        ('Plot', ['GAUGES']),
+        ('Widgets', ['EXTRA_WIDGETS','EXTRA_PANELS','TOOLBARS','EXTRA_APPS','EXTRA_CATALOG_WIDGETS']),]
+
+    OPTIONS = [o for c,l in OPTION_LISTS for o in l]
+    
+    for c,l in OPTION_LISTS:
+        __doc__ += get_vars_docs(__name__,title=c+' Options',module_vars=l,subtitle=False)
     
     if CONFIG:
         for op in OPTIONS:
@@ -125,27 +176,20 @@ try:
     #: resource path. If commented out, ":/taurus.png" will be used
     CUSTOM_LOGO = VACCA_LOGO
 
-    # You can provide an URI for a manual in html format
-    # (comment out or make MANUAL_URI=None to skip creating a Manual panel)
-    #MANUAL_URI = '' #URL_HELP #'http://packages.python.org/taurus'
+    #: You can provide an URI for a manual in html format
+    #: (comment out or make MANUAL_URI=None to skip creating a Manual panel)
+    MANUAL_URI = '' #URL_HELP #'http://packages.python.org/taurus'
 
     #===============================================================================
     # Define panels to be shown.
     # To define a panel, instantiate a PanelDescription object (see documentation
     # for the gblgui_utils module)
     #===============================================================================
+    
     print '>'*20+'Loading Trend panel ... %s'%','.join(GAUGES)
     trend = PanelDescription('Gauges',
                         classname = 'vacca.plot.PressureTrend',
                         model = GAUGES)
-    """
-    ## Description of signals used in Vacca
-    * SelectedInstrument: goes from taurusgui and tree into panel/synoptic
-    * SelectionMultiple: goes from panic/finder/... to synoptic to display multiple elements
-    * JDrawIn/JDrawOut: used only if JDRAW_HOOK defined, to transform data between synoptic and selection
-    """
-    
-    #Removable due to high CPU usage due to dummy threads
 
     #: USE_DEVICE_PANEL:  True or False, To Show by default the DevicePanel
     USE_DEVICE_PANEL = USE_DEVICE_PANEL
@@ -161,16 +205,15 @@ try:
     if USE_DEVICE_TREE or JDRAW_FILE or EXTRA_DEVICES:
         print '>'*20+'Loading Tree panel ...'
         from tree import *
-
-
-        #why?
-        # try:
-        #     panelclass = VaccaAction(default=PANEL_COMMAND)
-        #     Qt.QObject.connect(Qt.QApplication.instance(), Qt.SIGNAL(
-        #      "lastWindowClosed()"), panelclass.kill )
-        #     VaccaTree.setDefaultPanelClass(panelclass)
-        # except:
-        #     print "Cannot instance Device Tree"
+        try:
+            # The lastWindowClosed() signal will close all opened widgets and dialogs on application exit
+            assert Qt.QApplication.instance(),'QApplication not running!'
+            panelclass = VaccaAction(default=PANEL_COMMAND)
+            Qt.QObject.connect(Qt.QApplication.instance(), Qt.SIGNAL(
+             "lastWindowClosed()"), panelclass.kill )
+            VaccaTree.setDefaultPanelClass(panelclass)
+        except:
+            print("Cannot instance Device Tree")
         logger = fandango.Logger()
         printf = logger.info
 
@@ -198,7 +241,8 @@ try:
                             sharedDataWrite={'SelectedInstrument':'deviceSelected(QString)'}
                             )
 
-    #: JDRAW_FILE:  The JDRAW file to create the Synoptic
+    #: JDRAW_FILE:  The JDRAW file to create the Synoptic, 
+    #: it can be .jdw or .svg but the second option will require the svgsynoptic module from maxlab.
     JDRAW_FILE = JDRAW_FILE
 
     if JDRAW_FILE:
@@ -225,15 +269,16 @@ try:
         GRID['labels'] = False
         GRID['units'] = False
         
-        from .grid import VaccaGrid, VaccaVerticalGrid
-
+        from vacca.grid import VaccaGrid, VaccaVerticalGrid
 
         try:
+            assert Qt.QApplication.instance(),'QApplication not running!'
             grid = VaccaGrid.getGridPanelDescription(GRID)
         except:
             print 'Unable to create Grid'
 
         try:
+            assert Qt.QApplication.instance(),'QApplication not running!'
             vgrid = VaccaVerticalGrid.getVerticalGridPanelDescription(GRID)
         except:
             print 'Unable to create VerticalGrid'
@@ -261,7 +306,20 @@ try:
     properties = vacca.properties.VaccaPropTable.getPanelDescription('Properties')
 
 
-    #: EXTRA_PANELS:  disctionary of Extra Panels to Show by default.
+    #: EXTRA_PANELS:  dictionary of Extra Panels to be shown by default.
+    #: Each element may be a PanelDescription object or a tuple with its arguments.
+    #:
+    #: The dictionary will be defined like:
+    #:  * key: Panel name
+    #:  * value: list of arguments to PanelDescription
+    #:  * value[0]: panel name
+    #:  * value[1]: class name
+    #:  * value[2]: default model
+    #:  * value[3]: shared data read signal
+    #:  * value[4]: shared data write signal
+    #:
+    #: As example, to add PANIC as extra panel use:
+    #: EXTRA_PANELS['PANIC'] = ('PANIC','panic.gui.AlarmGUI','',{},{'HighlightInstruments':'devicesSelected'})
     EXTRA_PANELS = EXTRA_PANELS
 
     if EXTRA_PANELS:
@@ -275,7 +333,7 @@ try:
             elif len(pargs)==3: return PanelDescription(pargs[0],classname=pargs[1],model=pargs[2])
             else: return PanelDescription(pargs[0],classname=pargs[1],model=pargs[2],sharedDataRead=pargs[3],sharedDataWrite=pargs[4])
 
-        for k,p in EXTRA_PANELS.items(): # if k not in (1,2,3,4,5):
+        for k,p in EXTRA_PANELS.items():
             try:
                 vars()[k] = get_panel(k)
             except:
@@ -291,24 +349,20 @@ try:
         toolbar = toolbars[-1]
     
     #===============================================================================
-    # Adding other widgets to the catalog of the "new panel" dialog.
-    # pass a tuple of (classname,screenshot)
-    # -classname may contain the module name.
-    # -screenshot can either be a file name relative to the application dir or
-    # a resource URL or None
-    #===============================================================================
-
-
-
     #: EXTRA_WIDGETS: The Dictionary of EXTRA_WIDGETS Panels
     #:
-    #:('vacca.properties.VaccaPropTable',wdir('vacca/image/widgets/Properties.png')),
-    #:('vacca.panel.VaccaPanel',wdir('vacca/image/widgets/Panel.png')),
+    #: Adding other widgets to the catalog of the "new panel" dialog.
+    #: pass a tuple of (classname,screenshot)
+    #:
+    #: - classname may contain the module name.
+    #: - screenshot can either be a file name relative to the application dir or
+    #:   a resource URL or None
+    #:
+    #: examples:
+    #:
+    #:    ('vacca.properties.VaccaPropTable',wdir('vacca/image/widgets/Properties.png')),
+    #:    ('vacca.panel.VaccaPanel',wdir('vacca/image/widgets/Panel.png')),
     EXTRA_WIDGETS = EXTRA_WIDGETS
-
-
-
-
 
     #: EXTRA_CATALOG_WIDGETS: The Dictionary of EXTRA_CATALOG_WIDGETS Panels to Show by
     #: default.
