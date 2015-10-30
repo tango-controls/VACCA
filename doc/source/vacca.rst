@@ -1,6 +1,0 @@
-
-vacca
-=====
-
-.. automodule:: vacca
-
