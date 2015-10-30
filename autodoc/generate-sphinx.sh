@@ -11,3 +11,5 @@ CMD="sphinx-apidoc -F -e -o $TARGET vacca"
 $CMD
 cd $TARGET
 make html
+ln -s _build/html
+
