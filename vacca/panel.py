@@ -23,12 +23,7 @@
 ##
 #############################################################################
 
-__doc__ = """
-
-.. automodule vacca.panel
-   :members:
-
-"""
+__doc__ = """Custom widgets for panels, forms and buttons in Vacca"""
 
 import re,os,traceback,time,sys
 import fandango,vacca
@@ -217,7 +212,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     """
 
     :param parent:
-    :param model:
+    :param model: a device name or an state attribute
     :param palette:
     :param bound:
     :param filters:

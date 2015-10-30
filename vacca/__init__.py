@@ -26,7 +26,28 @@
 print '#'*80
 print 'vacca.__init__'
 
-__doc__ = """This is vacca"""
+__doc__ = """
+-------------------------------------------------------------
+VACCA, the Viewer and Commander Control Application for TANGO
+-------------------------------------------------------------
+
+The *vacca* library is divided in different submodules:
+
+ * config : the vacca MAIN file, a config setup to highly customize TaurusGUI instances
+ * doc : helper methods to build documentation
+ * setup :  script to download and install vacca and its dependencies from sourceforge
+ * utils : miscellaneous methods to manage folders, config files, look&feel 
+
+Several other modules contain the widget catalog: 
+
+ * alarms
+ * grid : grid-like synoptics
+ * panel : device/attribute panels and forms
+ * plot : trends and plots
+ * properties : property editor widget
+ * synoptics
+ 
+"""
 
 from vacca.doc import get_autodoc
 from vacca.panel import *

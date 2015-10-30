@@ -85,24 +85,24 @@ def get_vars_docs(module_name,module_vars,title='Variables',subtitle=True):
 def get_function_docs(module_name,module_vars,title='Functions',subtitle=True):
   functions = [(f,v) for f,v in module_vars.items() 
                if inspect.isfunction(v) and v.__module__==module_name]
-  defs = [(get_rest_title(f[0],*TM2) if subtitle else '')+DEFAULT_FUNCTION%(module_name,f[0]) 
+  defs = [(get_rest_title(f[0],*TM3) if subtitle else '')+DEFAULT_FUNCTION%(module_name,f[0]) 
           for f in functions]
   if defs:
-    return '\n'+get_rest_title(title,*TM1)+'\n'.join(defs)
+    return '\n'+get_rest_title(title,*TM2)+'\n'.join(defs)
   else:
     return ''
 
 def get_class_docs(module_name,module_vars,title='Classes',subtitle=True):
   classes = [(f,v) for f,v in module_vars.items() 
              if inspect.isclass(v) and v.__module__==module_name]
-  defs = [(get_rest_title(f[0],*TM2) if subtitle else '')+DEFAULT_CLASS%(module_name,f[0]) 
+  defs = [(get_rest_title(f[0],*TM3) if subtitle else '')+DEFAULT_CLASS%(module_name,f[0]) 
           for f in classes]
   if defs:
-    return '\n'+get_rest_title(title,*TM1)+'\n'.join(defs)
+    return '\n'+get_rest_title(title,*TM2)+'\n'.join(defs)
   else:
     return ''
 
-def get_autodoc(module_name,module_scope,module_vars=[],module_doc='',module_postdoc=''):
+def get_autodoc(module_name,module_scope,module_vars=[],module_doc='',module_postdoc='\n----\n'):
     module_doc = module_doc or module_scope.get('__doc__','') or ''
     #if not module_doc:
         #module_doc = get_rest_title(module_name,'=',double_line=True)
