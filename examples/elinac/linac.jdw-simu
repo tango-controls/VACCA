@@ -1,0 +1,3946 @@
+JDFile v11 {
+  Global {
+background:208,231,252  }
+  JDLabel {
+    summit:677,48,769,70
+    origin:722.8454,58.8672
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"section 2"
+    vAlignment:1
+  }
+  JDRectangle {
+    summit:886,36,914,293
+    origin:902,165
+    foreground:131,166,166
+    background:178,213,213
+    fillStyle:1
+    lineWidth:0
+    isShadowed:true
+    invertShadow:true
+    shadowThickness:2
+    name:"Rectangle"
+  }
+  JDPolyline {
+    summit:244,116,244,184,546,184
+    origin:387,145
+    lineWidth:2
+    name:"Polyline"
+    isClosed:false
+  }
+  JDLine {
+    summit:434,294,783,293
+    origin:608,292
+    lineWidth:2
+    name:"Line"
+  }
+  JDPolyline {
+    summit:493,283,455,283,455,248
+    origin:465,269
+    lineWidth:2
+    name:"Polyline"
+    isClosed:false
+  }
+  JDGroup {
+    summit:692,218,718,262
+    origin:293,51
+    name:"JDGroup"
+    children: {
+      JDLine {
+        summit:718,218,718,262
+        origin:718,240
+        lineWidth:2
+        name:"Line"
+      }
+      JDLine {
+        summit:692,233,717,233
+        origin:704,233
+        name:"Line"
+      }
+      JDLine {
+        summit:692,249,717,249
+        origin:704,249
+        name:"Line"
+      }
+      JDLine {
+        summit:693,218,693,262
+        origin:693,240
+        lineWidth:2
+        name:"Line"
+      }
+    }
+  }
+  JDPolyline {
+    summit:730,116,730,226,705,226
+    origin:715,179
+    lineWidth:2
+    name:"Polyline"
+    isClosed:false
+  }
+  JDPolyline {
+    summit:545,116,546,226,527,226
+    origin:531,179
+    lineWidth:2
+    name:"Polyline"
+    isClosed:false
+  }
+  JDGroup {
+    summit:509,218,535,262
+    origin:110,51
+    name:"JDGroup"
+    children: {
+      JDLine {
+        summit:535,218,535,262
+        origin:535,240
+        lineWidth:2
+        name:"Line"
+      }
+      JDLine {
+        summit:509,233,534,233
+        origin:521,233
+        name:"Line"
+      }
+      JDLine {
+        summit:509,249,534,249
+        origin:521,249
+        name:"Line"
+      }
+      JDLine {
+        summit:510,218,510,262
+        origin:510,240
+        lineWidth:2
+        name:"Line"
+      }
+    }
+  }
+  JDPolyline {
+    summit:729,283,766,283,766,246
+    origin:757,269
+    lineWidth:2
+    name:"Polyline"
+    isClosed:false
+  }
+  JDGroup {
+    summit:556,243.2,679,289.2
+    origin:150.5,40
+    lineWidth:0
+    shadowThickness:1
+    name:"timing"
+    children: {
+      JDPolyline {
+        summit:679,284,655,284,655,250,598,250
+        origin:663,267
+        lineWidth:2
+        name:"Polyline"
+        isClosed:false
+      }
+      JDPolyline {
+        summit:556,284,572,284,572,252,588,252
+        origin:579,268
+        lineWidth:2
+        name:"Polyline"
+        isClosed:false
+      }
+      JDRectangle {
+        summit:581,243.2,607,261.2
+        origin:594,252.2
+        background:188,143,143
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+      JDLine {
+        summit:594,262,594,289.2
+        origin:594,275.2
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+    }
+  }
+  JDPolyline {
+    summit:491,288,491,283,492,279,494,276,497,274,501,273,506,273,506,263,517,257,517,226,507,222,507,198,511,198,511,193,516,193,516,198,529,198,529,193,534,193,534,198,539,198,539,221,528,226,528,256,540,263,540,273,545,273,549,274,552,276,554,279,555,283,555,288,555,297,555,302,554,306,552,309,549,311,545,312,540,312,506,312,501,312,497,311,494,309,492,306,491,302,491,297
+    origin:523,297
+    background:153,153,153
+    fillStyle:1
+    lineWidth:2
+    name:"elin/mod1/run/State"
+    extensions:{
+      className:"linacPanels.CommonFrame"
+      classParam:""
+    }
+  }
+  JDPolyline {
+    summit:674,288,674,283,675,279,677,276,680,274,684,273,689,273,689,263,700,257,700,226,690,222,690,198,694,198,694,193,699,193,699,198,712,198,712,193,717,193,717,198,722,198,722,221,711,226,711,256,723,263,723,273,728,273,732,274,735,276,737,279,738,283,738,288,738,297,738,302,737,306,735,309,732,311,728,312,723,312,689,312,684,312,680,311,677,309,675,306,674,302,674,297
+    origin:706,297
+    background:153,153,153
+    fillStyle:1
+    lineWidth:2
+    name:"elin/mod2/run/State"
+    extensions:{
+      className:"linacPanels.CommonFrame"
+      classParam:""
+    }
+  }
+  JDLine {
+    summit:391,117,391,183
+    origin:391,144.45
+    lineWidth:2
+    shadowThickness:1
+    name:""
+  }
+  JDLine {
+    summit:45,165,45,129
+    origin:93.5,156
+    fillStyle:1
+    lineWidth:2
+    shadowThickness:1
+    name:""
+  }
+  JDPolyline {
+    summit:65,93.04,338,93.04,351,97,364,93.04,447,93.04,462,97,476,93.04,637,93.04,652,97,667,93.04,776,93.04,791,97,806,93.04,819,93.04,819,100.96,806,100.96,791,97,776,100.96,667,100.96,652,97,637,100.96,476,100.96,463,97,447,100.96,364,100.96,351,97,338,100.96,65,100.96
+    origin:627,97
+    background:188,143,143
+    fillStyle:1
+    lineWidth:0
+    name:"beam"
+  }
+  JDLabel {
+    summit:496,45,587,66
+    origin:541.8454,55.8672
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"section 1"
+    vAlignment:1
+  }
+  JDLabel {
+    summit:360,2,427,23
+    origin:402.4412,12.8438
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"buncher"
+    vAlignment:1
+  }
+  JDGroup {
+    summit:341,79,361,115
+    origin:92,-10
+    shadowThickness:1
+    name:"elin/v-rv/1"
+    extensions:{
+      className:"fr.tango.tangopanels.classpanels.valves.SimpleValveFrame"
+      classParam:""
+    }
+    children: {
+      JDPolyline {
+        summit:341,79,351,97,361,79,341,79,341,79
+        origin:351,88
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:361,115,351,97,341,115,361,115,361,115
+        origin:351,106
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+    }
+  }
+  JDGroup {
+    summit:453,79,473,115
+    origin:22,-8
+    shadowThickness:1
+    name:"elin/v-rv/2"
+    extensions:{
+      className:"fr.tango.tangopanels.classpanels.valves.SimpleValveFrame"
+      classParam:""
+    }
+    children: {
+      JDPolyline {
+        summit:453,79,463,97,473,79,453,79,453,79
+        origin:463,88
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:473,115,463,97,453,115,473,115,473,115
+        origin:463,106
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+    }
+  }
+  JDGroup {
+    summit:642,79.25,662,115.05
+    origin:-26,-7.1
+    shadowThickness:1
+    name:"elin/v-rv/3"
+    extensions:{
+      className:"fr.tango.tangopanels.classpanels.valves.SimpleValveFrame"
+      classParam:""
+    }
+    children: {
+      JDPolyline {
+        summit:642,79.25,652,97.25,662,79.25,642,79.25,642,79.25
+        origin:652,88.25
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:662,115.05,652,97.05,642,115.05,662,115.05,662,115.05
+        origin:652,106.05
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+    }
+  }
+  JDGroup {
+    summit:781.25,79,801.25,115
+    origin:-99,-6
+    shadowThickness:1
+    name:"elin/v-rv/4"
+    extensions:{
+      className:"fr.tango.tangopanels.classpanels.valves.SimpleValveFrame"
+      classParam:""
+    }
+    children: {
+      JDPolyline {
+        summit:781.25,79,791.25,97,801.25,79,781.25,79,781.25,79
+        origin:791.25,88
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:801.25,115,791.25,97,781.25,115,801.25,115,801.25,115
+        origin:791.25,106
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+    }
+  }
+  JDGroup {
+    summit:602,78,630,118
+    origin:-9,-5
+    shadowThickness:1
+    name:"elin/focus/triplet/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/focus/beam1"
+    }
+    children: {
+      JDPolyline {
+        summit:630,90,630,78,626,82,622,78,622,90,630,90,630,90
+        origin:626,84
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:620,90,620,82,616,78,612,82,612,90,620,90,620,90
+        origin:616,84
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:610,90,610,78,606,82,602,78,602,90,610,90,610,90
+        origin:606,84
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:602,106,602,118,606,114,610,118,610,106,602,106,602,106
+        origin:606,112
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:612,106,612,114,616,118,620,114,620,106,612,106,612,106
+        origin:616,112
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:622,106,622,118,626,114,630,118,630,106,622,106,622,106
+        origin:626,112
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+    }
+  }
+  JDPolyline {
+    summit:28,62,59,62,63,66,63,81,89,81,89,91,63,91,63,107,89,107,89,117,63,117,63,130,58,135,27,135,24,130,24,66
+    origin:65.5,92
+    background:153,153,153
+    fillStyle:1
+    lineWidth:2
+    shadowThickness:1
+    name:"elin/beam/run/State"
+    extensions:{
+      className:"linacPanels.GunFrame"
+      classParam:""
+    }
+  }
+  JDRectangle {
+    summit:611,39,660,69
+    origin:637.5,54
+    background:153,153,153
+    fillStyle:1
+    lineWidth:2
+    shadowThickness:1
+    name:"elin/cool/1/State"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:""
+    }
+  }
+  JDLabel {
+    summit:606,16,664,37
+    origin:634.1494,27.4844
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"cooling"
+    vAlignment:1
+  }
+  JDLabel {
+    summit:383,311,434,333
+    origin:416.9033,322.1172
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"mod1"
+    vAlignment:1
+  }
+  JDLabel {
+    summit:475,313,573,334
+    origin:522.4227,324.2172
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"modulator 1"
+    vAlignment:1
+  }
+  JDLabel {
+    summit:569,218,620,239
+    origin:593.4395,229.4844
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"timing"
+    vAlignment:1
+  }
+  JDGroup {
+    summit:497,279,548,306
+    origin:122.5,42.5
+    name:"elin/mod1/aux/State"
+    extensions:{
+      className:"linacPanels.ModAuxFrame"
+      classParam:""
+    }
+    children: {
+      JDRoundRectangle {
+        summit:497,279,548,306
+        origin:536,285
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:""
+        cornerWidth:10
+      }
+      JDGroup {
+        summit:501,305,544,280
+        origin:118.5,16.5
+        name:"IgnoreRepaint"
+        children: {
+          JDSpline {
+            summit:543.7628,292.1622,543.7628,280,530.9506,280.6757,530.9506,292.8378,530.9506,305,537.1841,305,537.1841,292.8378
+            origin:525.6763,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:537.1841,292.8378,537.1841,280.6757,523.2789,280.6757,523.2789,292.8378,523.2789,305,529.5122,305,529.5122,292.8378
+            origin:518.0044,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:529.5122,292.8378,529.5122,280.6757,515.607,280.6757,515.607,292.8378,515.607,305,521.8403,305,521.8403,292.8378
+            origin:510.3326,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:521.8403,292.8378,521.8403,280.6757,507.9352,280.6757,507.9352,292.8378,507.9352,305,514.1685,305,514.1685,292.8378
+            origin:502.6608,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:514.2917,292.8378,514.2917,280.6757,501,280,501,291.4865
+            origin:495.1121,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDLine {
+            summit:544,292.0803,544,303.0559
+            origin:544,304.2424
+            name:"Line"
+          }
+          JDLine {
+            summit:501,291.4046,501,303.5667
+            origin:501.5156,304.2424
+            name:"Line"
+          }
+        }
+      }
+    }
+  }
+  JDGroup {
+    summit:419.975,34.25,448.025,59
+    origin:166.675,28.375
+    name:"taco:elin/v-ip/bunch"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:""
+    }
+    children: {
+      JDRoundRectangle {
+        summit:419.975,34.25,448.025,59
+        origin:434,46.25
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"RoundRectangle"
+        cornerWidth:10
+      }
+      JDLine {
+        summit:422.95,40,443.9875,40
+        origin:433.7875,40
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:422.95,44.75,443.9875,44.75
+        origin:433.7875,44.75
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:422.95,48.5,443.9875,48.5
+        origin:433.7875,48.5
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:422.95,52.25,443.9875,52.25
+        origin:433.7875,52.25
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDGroup {
+    summit:440.975,226.25,469.025,251
+    origin:164.725,41.375
+    name:"taco:elin/v-ip/kly1"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:""
+    }
+    children: {
+      JDRoundRectangle {
+        summit:440.975,226.25,469.025,251
+        origin:455,238.25
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"RoundRectangle"
+        cornerWidth:10
+      }
+      JDLine {
+        summit:443.95,232,464.9875,232
+        origin:454.7875,232
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:443.95,236.75,464.9875,236.75
+        origin:454.7875,236.75
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:443.95,240.5,464.9875,240.5
+        origin:454.7875,240.5
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:443.95,244.25,464.9875,244.25
+        origin:454.7875,244.25
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDLabel {
+    summit:772,309,820,331
+    origin:821.9033,320.1172
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"mod2"
+    vAlignment:1
+  }
+  JDGroup {
+    summit:680,279,731,306
+    origin:126.5,42.5
+    name:"elin/mod2/aux/State"
+    extensions:{
+      className:"linacPanels.ModAuxFrame"
+      classParam:""
+    }
+    children: {
+      JDRoundRectangle {
+        summit:680,279,731,306
+        origin:719,285
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:""
+        cornerWidth:10
+      }
+      JDGroup {
+        summit:684,305,727,280
+        origin:178,680
+        name:"IgnoreRepaint"
+        children: {
+          JDSpline {
+            summit:726.7628,292.1622,726.7628,280,713.9506,280.6757,713.9506,292.8378,713.9506,305,720.1841,305,720.1841,292.8378
+            origin:708.6763,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:720.1841,292.8378,720.1841,280.6757,706.2789,280.6757,706.2789,292.8378,706.2789,305,712.5122,305,712.5122,292.8378
+            origin:701.0044,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:712.5122,292.8378,712.5122,280.6757,698.607,280.6757,698.607,292.8378,698.607,305,704.8403,305,704.8403,292.8378
+            origin:693.3326,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:704.8403,292.8378,704.8403,280.6757,690.9352,280.6757,690.9352,292.8378,690.9352,305,697.1685,305,697.1685,292.8378
+            origin:685.6608,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:697.2917,292.8378,697.2917,280.6757,684,280,684,291.4865
+            origin:678.1121,286.7568
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDLine {
+            summit:727,292.0803,727,303.0559
+            origin:727,304.2424
+            name:"Line"
+          }
+          JDLine {
+            summit:684,291.4046,684,303.5667
+            origin:684.5156,304.2424
+            name:"Line"
+          }
+        }
+      }
+    }
+  }
+  JDGroup {
+    summit:752.975,226.25,781.025,251
+    origin:214.925,41.375
+    name:"taco:elin/v-ip/kly2"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:""
+    }
+    children: {
+      JDRoundRectangle {
+        summit:752.975,226.25,781.025,251
+        origin:767,238.25
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"RoundRectangle"
+        cornerWidth:10
+      }
+      JDLine {
+        summit:755.95,232,776.9875,232
+        origin:766.7875,232
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:755.95,236.75,776.9875,236.75
+        origin:766.7875,236.75
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:755.95,240.5,776.9875,240.5
+        origin:766.7875,240.5
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:755.95,244.25,776.9875,244.25
+        origin:766.7875,244.25
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDLabel {
+    summit:662,312,759,334
+    origin:723.4227,323.2172
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"modulator 2"
+    vAlignment:1
+  }
+  JDGroup {
+    summit:57,72,30,123
+    origin:-77.5,-188.5
+    name:"elin/gun/aux/State"
+    extensions:{
+      className:"linacPanels.GunAuxPanel"
+      classParam:""
+    }
+    children: {
+      JDRoundRectangle {
+        summit:57,72,30,123
+        origin:51,84
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:""
+        cornerWidth:10
+      }
+      JDGroup {
+        summit:56,119,31,76
+        origin:251.5,-180.5
+        name:"IgnoreRepaint"
+        children: {
+          JDSpline {
+            summit:43.8378,76.2372,56,76.2372,55.3243,89.0494,43.1622,89.0494,31,89.0494,31,82.8159,43.1622,82.8159
+            origin:49.2432,94.3237
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:43.1622,82.8159,55.3243,82.8159,55.3243,96.7211,43.1622,96.7211,31,96.7211,31,90.4878,43.1622,90.4878
+            origin:49.2432,101.9956
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:43.1622,90.4878,55.3243,90.4878,55.3243,104.393,43.1622,104.393,31,104.393,31,98.1597,43.1622,98.1597
+            origin:49.2432,109.6674
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:43.1622,98.1597,55.3243,98.1597,55.3243,112.0648,43.1622,112.0648,31,112.0648,31,105.8315,43.1622,105.8315
+            origin:49.2432,117.3392
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDSpline {
+            summit:43.1622,105.7083,55.3243,105.7083,56,119,44.5135,119
+            origin:49.2432,124.8879
+            name:"Spline"
+            step:6
+            isClosed:false
+          }
+          JDLine {
+            summit:43.9197,76,32.9441,76
+            origin:31.7576,76
+            name:"Line"
+          }
+          JDLine {
+            summit:44.5954,119,32.4333,119
+            origin:31.7576,118.4844
+            name:"Line"
+          }
+        }
+      }
+    }
+  }
+  JDGroup {
+    summit:302,163,326,203
+    origin:135,48
+    name:"elin/rf/pbun-ph/State"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:""
+    }
+    children: {
+      JDRoundRectangle {
+        summit:302,163,326,203
+        origin:319.9394,179.2
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"RoundRectangle"
+        step:4
+        cornerWidth:11
+      }
+      JDEllipse {
+        summit:305.0606,169.1896,322.2121,188
+        origin:352.3409,231.015
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:306,186,324.4242,168.2288
+        origin:313.8788,180.2
+        lineWidth:2
+        name:"IgnoreRepaint"
+        arrowWidth:4
+        arrowMode:2
+      }
+      JDSpline {
+        summit:310.0606,194.4,313.0909,201.28,313.0909,201.28,316.1212,194.4,319.1515,187.52,319.1515,187.52,322.1818,194.4
+        origin:316.1212,194.4
+        name:"IgnoreRepaint"
+        step:3
+        isClosed:false
+      }
+      JDEllipse {
+        summit:307.0606,171,321,185
+        origin:354.3409,234.015
+        background:153,153,153
+        fillStyle:1
+        name:"Ellipse"
+      }
+      JDSpline {
+        summit:307.0606,194.4,310.0909,201.28,310.0909,201.28,313.1212,194.4,316.1515,187.52,316.1515,187.52,319.1818,194.4
+        origin:313.1212,194.4
+        name:"IgnoreRepaint"
+        step:3
+        isClosed:false
+      }
+    }
+  }
+  JDGroup {
+    summit:430,160,454,200
+    origin:97,45
+    name:"elin/rf/bun-ph/State"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:""
+    }
+    children: {
+      JDRoundRectangle {
+        summit:430,160,454,200
+        origin:447.9394,176.2
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"RoundRectangle"
+        step:4
+        cornerWidth:11
+      }
+      JDEllipse {
+        summit:433.0606,166.1896,450.2121,185
+        origin:480.3409,228.015
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:434,183,452.4242,165.2288
+        origin:441.8788,177.2
+        lineWidth:2
+        name:"IgnoreRepaint"
+        arrowWidth:4
+        arrowMode:2
+      }
+      JDSpline {
+        summit:438.0606,191.4,441.0909,198.28,441.0909,198.28,444.1212,191.4,447.1515,184.52,447.1515,184.52,450.1818,191.4
+        origin:444.1212,191.4
+        name:"IgnoreRepaint"
+        step:3
+        isClosed:false
+      }
+      JDEllipse {
+        summit:435.0606,168,449,182
+        origin:482.3409,231.015
+        background:153,153,153
+        fillStyle:1
+        name:"Ellipse"
+      }
+      JDSpline {
+        summit:435.0606,191.4,438.0909,198.28,438.0909,198.28,441.1212,191.4,444.1515,184.52,444.1515,184.52,447.1818,191.4
+        origin:441.1212,191.4
+        name:"IgnoreRepaint"
+        step:3
+        isClosed:false
+      }
+    }
+  }
+  JDGroup {
+    summit:623,274,647,314
+    origin:105,49
+    name:"elin/rf/sec-ph-dac/State"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:""
+    }
+    children: {
+      JDRoundRectangle {
+        summit:623,274,647,314
+        origin:640.9394,290.2
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"RoundRectangle"
+        step:4
+        cornerWidth:11
+      }
+      JDEllipse {
+        summit:626.0606,280.1896,643.2121,299
+        origin:673.3409,342.015
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDLine {
+        summit:627,297,645.4242,279.2288
+        origin:634.8788,291.2
+        lineWidth:2
+        name:"IgnoreRepaint"
+        arrowWidth:4
+        arrowMode:2
+      }
+      JDSpline {
+        summit:631.0606,305.4,634.0909,312.28,634.0909,312.28,637.1212,305.4,640.1515,298.52,640.1515,298.52,643.1818,305.4
+        origin:637.1212,305.4
+        name:"IgnoreRepaint"
+        step:3
+        isClosed:false
+      }
+      JDEllipse {
+        summit:628.0606,282,642,296
+        origin:675.3409,345.015
+        background:153,153,153
+        fillStyle:1
+        name:"Ellipse"
+      }
+      JDSpline {
+        summit:628.0606,305.4,631.0909,312.28,631.0909,312.28,634.1212,305.4,637.1515,298.52,637.1515,298.52,640.1818,305.4
+        origin:634.1212,305.4
+        name:"IgnoreRepaint"
+        step:3
+        isClosed:false
+      }
+    }
+  }
+  JDGroup {
+    summit:20,160,69,189
+    origin:39.5,25.5
+    lineWidth:0
+    shadowThickness:1
+    name:"elin/gun/hv/State"
+    extensions:{
+      className:"linacPanels.CommonFrame"
+      classParam:""
+    }
+    children: {
+      JDPolyline {
+        summit:20,164,25,160,64,160,69,164,69,185,64,189,25,189,20,185
+        origin:45,175
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"RoundRectangle"
+      }
+      JDLabel {
+        summit:23,164,52,189
+        origin:36,175
+        lineWidth:0
+        name:"IgnoreRepaint"
+        font:"Dialog",1,16
+        text:"HV"
+      }
+      JDPolyline {
+        summit:54.68,180.81,57.17,186.45,61.98,183.3,59.66,182.47,62.98,169.85,57.17,169.85,60.49,161.55,54.51,161.72,53.02,173.17,58.83,173.17,57.17,180.64
+        origin:57.17,173.17
+        background:255,255,0
+        fillStyle:1
+        antiAlias:true
+        name:"ignoreRepaint"
+      }
+    }
+  }
+  JDSlider {
+    summit:950,35,970,291
+    origin:962,163
+    lineWidth:0
+    name:"elin/master/op/SRCT_Limit"
+    maxSlider:300.0
+    valueSlider:200.0
+            background:204,0,0
+            fillStyle:1
+            lineWidth:0
+            isShadowed:true
+            shadowThickness:2
+            name:"Polyline"
+          }
+          JDLabel {
+            summit:934.5,112.3334,1010.5,133.3334
+            origin:970.5,123.3334
+            lineWidth:0
+            name:"Label"
+            font:"Dialog",0,14
+            text:"Beam Stop"
+          }
+        }
+      }
+  }
+  JDBar {
+    summit:886,37,912,293
+    origin:905,164
+    foreground:51,255,0
+    background:82,252,82
+    fillStyle:1
+    lineWidth:0
+    isShadowed:true
+    shadowThickness:2
+    name:"elin/master/op/CT_Current"
+    maxBar:300.0
+    valueBar:6.0
+    outLineVisible:false
+  }
+  JDPolyline {
+    summit:887,292,887,37
+    origin:880,164
+    lineWidth:2
+    name:"Polyline"
+    isClosed:false
+  }
+  JDAxis {
+    summit:834,36,886,292
+    origin:859,83
+    lineWidth:0
+    name:"Axis"
+    font:"dialog",1,14
+    tickSpacing:50
+    tickLength:-10
+    max:300.0
+  }
+  JDGroup {
+    summit:835,20,1013,306
+    origin:206,151
+    name:"JDGroup"
+    children: {
+      JDRectangle {
+        summit:835,20,1012.0825,304.9712
+        origin:921.2474,163
+        foreground:153,153,153
+        name:"Rectangle"
+      }
+      JDRectangle {
+        summit:835.9175,21.0288,1013,306
+        origin:922.1649,164.0288
+        foreground:255,255,255
+        name:"Rectangle"
+      }
+    }
+  }
+  JDPolyline {
+    summit:86.2468,128,90.8038,123.0912,90.8038,125.5456,107.1962,125.5456,107.1962,123.0912,111.7532,128,107.1962,132.9088,107.1962,130.4544,90.8038,130.4544,90.8038,132.9088
+    origin:99,128
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/gh1/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/gun"
+    }
+  }
+  JDPolyline {
+    summit:99,86.7532,94.0912,82.1962,96.5456,82.1962,96.5456,65.8038,94.0912,65.8038,99,61.2468,103.9088,65.8038,101.4544,65.8038,101.4544,82.1962,103.9088,82.1962
+    origin:99,74
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/gv1/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/gun"
+    }
+  }
+  JDPolyline {
+    summit:366.7974,129,370.443,124.0912,370.443,126.5456,383.557,126.5456,383.557,124.0912,387.2026,129,383.557,133.9088,383.557,131.4544,370.443,131.4544,370.443,133.9088
+    origin:377,129
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/bh1/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:393.7974,129,397.443,124.0912,397.443,126.5456,410.557,126.5456,410.557,124.0912,414.2026,129,410.557,133.9088,410.557,131.4544,397.443,131.4544,397.443,133.9088
+    origin:404,129
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/bh2/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:377,74.7532,372.0912,70.1962,374.5456,70.1962,374.5456,53.8038,372.0912,53.8038,377,49.2468,381.9088,53.8038,379.4544,53.8038,379.4544,70.1962,381.9088,70.1962
+    origin:377,62
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/bv1/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:399,74.7532,394.0912,70.1962,396.5456,70.1962,396.5456,53.8038,394.0912,53.8038,399,49.2468,403.9088,53.8038,401.4544,53.8038,401.4544,70.1962,403.9088,70.1962
+    origin:399,62
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/bv2/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:498,72.7532,493.0912,68.1962,495.5456,68.1962,495.5456,51.8038,493.0912,51.8038,498,47.2468,502.9088,51.8038,500.4544,51.8038,500.4544,68.1962,502.9088,68.1962
+    origin:498,60
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/s1v1/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:588,72.7532,583.0912,68.1962,585.5456,68.1962,585.5456,51.8038,583.0912,51.8038,588,47.2468,592.9088,51.8038,590.4544,51.8038,590.4544,68.1962,592.9088,68.1962
+    origin:588,60
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/s1v2/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:493.2468,129,497.8038,124.0912,497.8038,126.5456,514.1962,126.5456,514.1962,124.0912,518.7532,129,514.1962,133.9088,514.1962,131.4544,497.8038,131.4544,497.8038,133.9088
+    origin:506,129
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/s1h1/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:567.2468,129,571.8038,124.0912,571.8038,126.5456,588.1962,126.5456,588.1962,124.0912,592.7532,129,588.1962,133.9088,588.1962,131.4544,571.8038,131.4544,571.8038,133.9088
+    origin:580,129
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/s1h2/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:603.2468,129,607.8038,124.0912,607.8038,126.5456,624.1962,126.5456,624.1962,124.0912,628.7532,129,624.1962,133.9088,624.1962,131.4544,607.8038,131.4544,607.8038,133.9088
+    origin:616,129
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/triplet/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:676,72.7532,671.0912,68.1962,673.5456,68.1962,673.5456,51.8038,671.0912,51.8038,676,47.2468,680.9088,51.8038,678.4544,51.8038,678.4544,68.1962,680.9088,68.1962
+    origin:676,60
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/s2v1/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:766,72.7532,761.0912,68.1962,763.5456,68.1962,763.5456,51.8038,761.0912,51.8038,766,47.2468,770.9088,51.8038,768.4544,51.8038,768.4544,68.1962,770.9088,68.1962
+    origin:766,60
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/s2v2/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:744.2468,129,748.8038,124.0912,748.8038,126.5456,765.1962,126.5456,765.1962,124.0912,769.7532,129,765.1962,133.9088,765.1962,131.4544,748.8038,131.4544,748.8038,133.9088
+    origin:757,129
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/s2h2/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDPolyline {
+    summit:671.2468,129,675.8038,124.0912,675.8038,126.5456,692.1962,126.5456,692.1962,124.0912,696.7532,129,692.1962,133.9088,692.1962,131.4544,675.8038,131.4544,675.8038,133.9088
+    origin:684,129
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/s2h1/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/1"
+    }
+  }
+  JDGroup {
+    summit:385,279,434,308
+    origin:404.5,144.5
+    lineWidth:0
+    shadowThickness:1
+    name:"elin/mod1/hv/State"
+    extensions:{
+      className:"linacPanels.CommonFrame"
+      classParam:""
+    }
+    children: {
+      JDPolyline {
+        summit:385,283,390,279,429,279,434,283,434,304,429,308,390,308,385,304
+        origin:410,294
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"RoundRectangle"
+      }
+      JDLabel {
+        summit:388,283,417,308
+        origin:401,294
+        lineWidth:0
+        name:"IgnoreRepaint"
+        font:"Dialog",1,16
+        text:"HV"
+      }
+      JDPolyline {
+        summit:419.68,299.81,422.17,305.45,426.98,302.3,424.66,301.47,427.98,288.85,422.17,288.85,425.49,280.55,419.51,280.72,418.02,292.17,423.83,292.17,422.17,299.64
+        origin:422.17,292.17
+        background:255,255,0
+        fillStyle:1
+        antiAlias:true
+        name:"ignoreRepaint"
+      }
+    }
+  }
+  JDGroup {
+    summit:771,278,820,307
+    origin:790.5,143.5
+    lineWidth:0
+    shadowThickness:1
+    name:"elin/mod2/hv/State"
+    extensions:{
+      className:"linacPanels.CommonFrame"
+      classParam:""
+    }
+    children: {
+      JDPolyline {
+        summit:771,282,776,278,815,278,820,282,820,303,815,307,776,307,771,303
+        origin:796,293
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"RoundRectangle"
+      }
+      JDLabel {
+        summit:774,282,803,307
+        origin:787,293
+        lineWidth:0
+        name:"IgnoreRepaint"
+        font:"Dialog",1,16
+        text:"HV"
+      }
+      JDPolyline {
+        summit:805.68,298.81,808.17,304.45,812.98,301.3,810.66,300.47,813.98,287.85,808.17,287.85,811.49,279.55,805.51,279.72,804.02,291.17,809.83,291.17,808.17,298.64
+        origin:808.17,291.17
+        background:255,255,0
+        fillStyle:1
+        antiAlias:true
+        name:"ignoreRepaint"
+      }
+    }
+  }
+  JDLabel {
+    summit:579,305,607,330
+    origin:591.6927,316.0078
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"RF"
+    vAlignment:1
+  }
+  JDGroup {
+    summit:91,41,109,154
+    origin:12,-90.5
+    name:"elin/focus/b1coil/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/focus/gun"
+    }
+    children: {
+      JDRectangle {
+        summit:91,41,109,58
+        origin:100,52
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:91,41,108,58
+        origin:98,48
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:108,41,91,58
+        origin:101,48
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:91,137,109,154
+        origin:100,148
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:91,137,108,154
+        origin:98,144
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:108,137,91,154
+        origin:101,144
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDGroup {
+    summit:142,41,160,154
+    origin:63,-90.5
+    name:"elin/focus/b2coil/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/focus/gun"
+    }
+    children: {
+      JDRectangle {
+        summit:142,41,160,58
+        origin:151,52
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:142,41,159,58
+        origin:149,48
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:159,41,142,58
+        origin:152,48
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:142,137,160,154
+        origin:151,148
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:142,137,159,154
+        origin:149,144
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:159,137,142,154
+        origin:152,144
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDGroup {
+    summit:454,55,472,138
+    origin:97,50.5
+    name:"elin/focus/lens/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/focus/beam1"
+    }
+    children: {
+      JDRectangle {
+        summit:454,55,472,72
+        origin:463,66
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:454,55,471,72
+        origin:461,62
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:471,55,454,72
+        origin:464,62
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:454,121,472,138
+        origin:463,132
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:454,121,471,138
+        origin:461,128
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:471,121,454,138
+        origin:464,128
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDGroup {
+    summit:370,24,408,158
+    origin:203,78
+    name:"elin/focus/buncher/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/focus/beam1"
+    }
+    children: {
+      JDRectangle {
+        summit:370,24,408,41
+        origin:373.4898,35
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:376.5918,24,370,41
+        origin:373.8776,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:383.1837,24,376.5918,41
+        origin:380.4694,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:390.1633,24,383.5714,41
+        origin:387.449,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:396.7551,24,390.1633,41
+        origin:394.0408,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:402.9592,24,396.3673,41
+        origin:400.2449,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:407.6122,28,402.5714,41
+        origin:406.449,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:370,141,408,158
+        origin:373.4898,152
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:376.5918,141,370,158
+        origin:373.8776,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:383.1837,141,376.5918,158
+        origin:380.4694,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:390.1633,141,383.5714,158
+        origin:387.449,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:396.7551,141,390.1633,158
+        origin:394.0408,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:402.9592,141,396.3673,158
+        origin:400.2449,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:407.6122,145,402.5714,158
+        origin:406.449,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDGroup {
+    summit:493,24,591,158
+    origin:323,77
+    name:"elin/focus/sect1/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/focus/beam2"
+    }
+    children: {
+      JDRectangle {
+        summit:493,24,591,41
+        origin:502,35
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:510,24,493,41
+        origin:503,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:527,24,510,41
+        origin:520,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:545,24,528,41
+        origin:538,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:562,24,545,41
+        origin:555,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:578,24,561,41
+        origin:571,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:590,28,577,41
+        origin:587,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:493,141,591,158
+        origin:502,152
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:510,141,493,158
+        origin:503,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:527,141,510,158
+        origin:520,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:545,141,528,158
+        origin:538,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:562,141,545,158
+        origin:555,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:578,141,561,158
+        origin:571,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:590,145,577,158
+        origin:587,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDGroup {
+    summit:674,24,772,158
+    origin:504,77
+    name:"elin/focus/sect2/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/focus/beam2"
+    }
+    children: {
+      JDRectangle {
+        summit:674,24,772,41
+        origin:683,35
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:691,24,674,41
+        origin:684,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:708,24,691,41
+        origin:701,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:726,24,709,41
+        origin:719,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:743,24,726,41
+        origin:736,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:759,24,742,41
+        origin:752,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:771,28,758,41
+        origin:768,31
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:674,141,772,158
+        origin:683,152
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:691,141,674,158
+        origin:684,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:708,141,691,158
+        origin:701,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:726,141,709,158
+        origin:719,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:743,141,726,158
+        origin:736,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:759,141,742,158
+        origin:752,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:771,145,758,158
+        origin:768,148
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDSwingObject {
+    summit:918,34,998,56
+    origin:955,44
+    fillStyle:1
+    lineWidth:0
+    name:"elin/master/op/CT_Current"
+    extensions:{
+      unitVisible:"true"
+      userFormat:""
+      alarmEnabled:"true"
+      validBackground:"208,231,252"
+      invalidText:"-----"
+    }
+    className:"fr.esrf.tangoatk.widget.attribute.SimpleScalarViewer"
+    font:"dialog",1,14
+  }
+  JDRectangle {
+    summit:7,200,114,242
+    origin:54,223
+    foreground:153,153,153
+    name:"Rectangle"
+  }
+  JDSwingObject {
+    summit:68,214,108,232
+    origin:116,223
+    background:204,204,204
+    fillStyle:1
+    lineWidth:0
+    name:"elin/beam/run/On"
+    gradX2:0.0
+    gradY2:-1.0
+    gradCyclic:true
+    gradC1:213,234,255
+    extensions:{
+      text:"On"
+    }
+    className:"fr.esrf.tangoatk.widget.command.VoidVoidCommandViewer"
+    font:"Dialog",1,12
+    border:2
+  }
+  JDSwingObject {
+    summit:13,214,53,232
+    origin:61,223
+    background:204,204,204
+    fillStyle:1
+    lineWidth:0
+    name:"elin/beam/run/Off"
+    extensions:{
+      text:"Off"
+    }
+    className:"fr.esrf.tangoatk.widget.command.VoidVoidCommandViewer"
+    font:"Dialog",1,12
+    border:2
+  }
+  JDRectangle {
+    summit:8,201,115,243
+    origin:55,223
+    foreground:255,255,255
+    name:"Rectangle"
+  }
+  JDLabel {
+    summit:45,191,74,210
+    origin:56.2,208.5986
+    background:208,231,252
+    fillStyle:1
+    lineWidth:0
+    shadowThickness:1
+    name:""
+    font:"helvetica",1,14
+    text:"gun"
+    vAlignment:1
+  }
+  JDGroup {
+    summit:486,236,559,253
+    origin:84.5,26.5
+    name:"elin/focus/klystron1/State"
+    extensions:{
+      className:"linacPanels.FocusKlysPanel"
+    }
+    children: {
+      JDRectangle {
+        summit:486,236,504,253
+        origin:495,247
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:486,236,503,253
+        origin:493,243
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:503,236,486,253
+        origin:496,243
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:541,236,559,253
+        origin:550,247
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:541,236,558,253
+        origin:548,243
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:558,236,541,253
+        origin:551,243
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDGroup {
+    summit:669,236,742,253
+    origin:84.5,26.5
+    name:"elin/focus/klystron2/State"
+    extensions:{
+      className:"linacPanels.FocusKlysPanel"
+    }
+    children: {
+      JDRectangle {
+        summit:669,236,687,253
+        origin:678,247
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:669,236,686,253
+        origin:676,243
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:686,236,669,253
+        origin:679,243
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:724,236,742,253
+        origin:733,247
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:724,236,741,253
+        origin:731,243
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:741,236,724,253
+        origin:734,243
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDGroup {
+    summit:107,79,127,115
+    origin:-142,-10
+    shadowThickness:1
+    name:"elin/v-rv/0"
+    extensions:{
+      className:"fr.tango.tangopanels.classpanels.valves.SimpleValveFrame"
+      classParam:""
+    }
+    children: {
+      JDPolyline {
+        summit:107,79,117,97,127,79,107,79,107,79
+        origin:117,88
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+      JDPolyline {
+        summit:127,115,117,97,107,115,127,115,127,115
+        origin:117,106
+        background:153,153,153
+        fillStyle:1
+        shadowThickness:1
+        name:""
+      }
+    }
+  }
+  JDPolyline {
+    summit:151,86.7532,146.0912,82.1962,148.5456,82.1962,148.5456,65.8038,146.0912,65.8038,151,61.2468,155.9088,65.8038,153.4544,65.8038,153.4544,82.1962,155.9088,82.1962
+    origin:151,74
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/gv2/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/gun"
+    }
+  }
+  JDPolyline {
+    summit:138.2468,128,142.8038,123.0912,142.8038,125.5456,159.1962,125.5456,159.1962,123.0912,163.7532,128,159.1962,132.9088,159.1962,130.4544,142.8038,130.4544,142.8038,132.9088
+    origin:151,128
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/gh2/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/gun"
+    }
+  }
+  JDRectangle {
+    summit:132,80,140,114
+    origin:134,92
+    fillStyle:11
+    shadowThickness:1
+    name:"CurrentT1"
+    gradX2:0.0
+    gradY2:18.0
+    gradCyclic:true
+    gradC1:255,255,255
+    gradC2:0,0,0
+  }
+  JDRectangle {
+    summit:200,79,208,113
+    origin:202,91
+    fillStyle:11
+    shadowThickness:1
+    name:"CurrentT2"
+    gradX2:0.0
+    gradY2:18.0
+    gradCyclic:true
+    gradC1:255,255,255
+    gradC2:0,0,0
+  }
+  JDGroup {
+    summit:210,41,228,154
+    origin:131,-90.5
+    name:"elin/focus/b3coil/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/focus/gun"
+    }
+    children: {
+      JDRectangle {
+        summit:210,41,228,58
+        origin:219,52
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:210,41,227,58
+        origin:217,48
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:227,41,210,58
+        origin:220,48
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:210,137,228,154
+        origin:219,148
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:210,137,227,154
+        origin:217,144
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:227,137,210,154
+        origin:220,144
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDPolyline {
+    summit:219,86.7532,214.0912,82.1962,216.5456,82.1962,216.5456,65.8038,214.0912,65.8038,219,61.2468,223.9088,65.8038,221.4544,65.8038,221.4544,82.1962,223.9088,82.1962
+    origin:219,74
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/gv3/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/gun"
+    }
+  }
+  JDPolyline {
+    summit:206.2468,128,210.8038,123.0912,210.8038,125.5456,227.1962,125.5456,227.1962,123.0912,231.7532,128,227.1962,132.9088,227.1962,130.4544,210.8038,130.4544,210.8038,132.9088
+    origin:219,128
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/gh3/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/gun"
+    }
+  }
+  JDGroup {
+    summit:258,40,276,153
+    origin:179,-91.5
+    name:"elin/focus/b4coil/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/focus/gun"
+    }
+    children: {
+      JDRectangle {
+        summit:258,40,276,57
+        origin:267,51
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:258,40,275,57
+        origin:265,47
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:275,40,258,57
+        origin:268,47
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+      JDRectangle {
+        summit:258,136,276,153
+        origin:267,147
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:258,136,275,153
+        origin:265,143
+        name:"IgnoreRepaint"
+      }
+      JDPolyline {
+        summit:275,136,258,153
+        origin:268,143
+        background:153,153,153
+        name:"IgnoreRepaint"
+      }
+    }
+  }
+  JDPolyline {
+    summit:267,85.7532,262.0912,81.1962,264.5456,81.1962,264.5456,64.8038,262.0912,64.8038,267,60.2468,271.9088,64.8038,269.4544,64.8038,269.4544,81.1962,271.9088,81.1962
+    origin:267,73
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/gv4/State"
+    gradY2:-70.0
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/pbunch"
+    }
+  }
+  JDPolyline {
+    summit:254.2468,127,258.8038,122.0912,258.8038,124.5456,275.1962,124.5456,275.1962,122.0912,279.7532,127,275.1962,131.9088,275.1962,129.4544,258.8038,129.4544,258.8038,131.9088
+    origin:267,127
+    background:153,153,153
+    fillStyle:1
+    name:"elin/steer/gh4/State"
+    extensions:{
+      className:"linacPanels.BrukerMultiChannelPanel"
+      classParam:"elin/steer/pbunch"
+    }
+  }
+  JDGroup {
+    summit:232,79.75,774,305
+    origin:271,112.625
+    name:"elin/rf/run/State"
+    extensions:{
+      className:"linacPanels.CommonFrame"
+    }
+    children: {
+      JDRectangle {
+        summit:232,79.75,256,89.75
+        origin:255.5,84.75
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+      JDRectangle {
+        summit:371.3,79.75,411,89.75
+        origin:437.05,84.75
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+      JDRectangle {
+        summit:492.4,79.75,591,89.75
+        origin:555.6,84.75
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+      JDRectangle {
+        summit:492.4,104.75,591,114.75
+        origin:555.6,109.75
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+      JDRectangle {
+        summit:674,79.75,774,90
+        origin:743.6,84.75
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+      JDRectangle {
+        summit:674,104.75,774,115
+        origin:743.6,109.75
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+      JDRectangle {
+        summit:584.2832,278.75,611,305
+        origin:601.0155,293.75
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+      JDSpline {
+        summit:588.0606,292.5,592.7955,304,592.7955,304,597.5303,292.5,602.2651,281,602.2651,281,607,292.5
+        origin:597.5303,292.5
+        name:"IgnoreRepaint"
+        step:5
+        isClosed:false
+      }
+      JDRectangle {
+        summit:232,104.75,256,114.75
+        origin:255.5,109.75
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+      JDRectangle {
+        summit:371.3,105.75,411,115.75
+        origin:437.05,110.75
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        shadowThickness:1
+        name:""
+      }
+    }
+  }
+  JDPolyline {
+    summit:408,80,408,47,419,47
+    origin:424,52
+    lineWidth:2
+    name:"Polyline"
+    gradX2:-70.0
+    isClosed:false
+  }
+  JDGroup {
+    summit:138.896,9,167,27
+    origin:-272.948,-200
+    name:"Gun Delay Generator StanfordDG645"
+    extensions:{
+      className:"atkpanel.MainPanel"
+    }
+    children: {
+      JDRectangle {
+        summit:138.896,9,167,27
+        origin:155.744,17.66
+        background:153,153,153
+        fillStyle:1
+        lineWidth:2
+        name:"Rectangle"
+      }
+      JDPolyline {
+        summit:143,24,149.56,24.3,150,12,156,12,156.04,24.3,163,24
+        origin:248.704,68.29
+        lineWidth:2
+        name:"IgnoreRepaint"
+        isClosed:false
+      }
+      JDLine {
+        summit:140,17,165,17
+        origin:162,17
+        name:"IgnoreRepaint"
+        arrowWidth:3
+        arrowMode:3
+      }
+    }
+  }
+  JDGroup {
+    summit:339.12,45.88,279.4192,104.8
+    origin:891.1496,-334.54
+    maxvalue:13
+    initvalue:13
+    name:"elin/gun/ccdjack/State"
+    extensions:{
+      className:"linacPanels.GunCcdFrame"
+    }
+    children: {
+      JDGroup {
+        summit:339.12,71.52,306.0192,104.8
+        origin:1045.4496,-346.36
+        lineWidth:0
+        shadowThickness:1
+        visible:false
+        maxvalue:13
+        initvalue:13
+        name:"INSERT"
+        gradX2:10.0
+        gradY2:10.0
+        gradC1:255,255,255
+        gradC2:0,0,0
+        visibilitymapper:{
+          mapping_type:3
+          mode:0
+          default:false
+          map:4,4,true
+        }
+        children: {
+          JDPolyline {
+            summit:326.64,95.84,334.64,95.84,334.64,89.12,308.08,75.04,308.08,71.52,339.12,87.52,339.12,99.68,326.96,99.68
+            origin:323.6,85.6
+            foreground:51,51,51
+            fillStyle:1
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Polyline"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+          }
+          JDGroup {
+            summit:331.44,89.44,306.0192,104.8
+            origin:392.0096,0.48
+            background:255,153,51
+            lineWidth:0
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Group"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+            children: {
+              JDPolyline {
+                summit:331.44,92,325.04,89.44,313.52,89.44,318.64,92
+                origin:322.48,90.72
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:331.44,104.8,331.44,92,318.64,92,318.64,104.8
+                origin:325.04,98.4
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:318.64,92,313.52,89.44,313.52,102.24,318.64,104.8
+                origin:316.08,97.12
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDGroup {
+                summit:317.36,92.32,306.0192,102.28
+                origin:399.0496,-2.22
+                background:255,153,51
+                lineWidth:0
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Group"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+                children: {
+                  JDSpline {
+                    summit:307.568,92.32,311.1008,92.84,311.8944,92.96,314.6208,94.24,317.36,93.52,317.2448,101.08,314.6208,100.32,311.2544,100.96,310.896,102.24,307.568,102.16
+                    origin:312.464,97.28
+                    background:255,153,51
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Polyline"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    step:10
+                  }
+                  JDEllipse {
+                    summit:309.616,92.64,306.0192,102.28
+                    origin:307.8176,97.46
+                    background:255,153,51
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Ellipse"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    arc_type:2
+                  }
+                }
+              }
+              JDLine {
+                summit:323.76,95.84,321.2,95.84
+                origin:322.48,95.84
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:323.76,97.12,321.2,97.12
+                origin:322.48,97.12
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:328.88,94.56,328.88,102.24
+                origin:328.88,98.4
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:327.6,94.56,327.6,102.24
+                origin:327.6,98.4
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:326.32,94.56,326.32,102.24
+                origin:326.32,98.4
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDRectangle {
+                summit:323.76,99.68,321.2,102.24
+                origin:322.48,100.96
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Rectangle"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+            }
+          }
+        }
+      }
+      JDGroup {
+        summit:324.68,45.88,279.4192,83.96
+        origin:898.3696,-389.96
+        lineWidth:0
+        shadowThickness:1
+        visible:false
+        maxvalue:13
+        initvalue:13
+        name:"EXTRACT"
+        gradX2:10.0
+        gradY2:10.0
+        gradC1:255,255,255
+        gradC2:0,0,0
+        visibilitymapper:{
+          mapping_type:3
+          mode:0
+          default:false
+          map:5,5,true
+        }
+        children: {
+          JDPolyline {
+            summit:301.32,53.56,310.28,53.56,310.28,73.4,324.68,80.44,324.68,83.96,307.08,75.32,307.08,57.08,301,57.08
+            origin:312.84,68.76
+            foreground:51,51,51
+            fillStyle:1
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Polyline"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+          }
+          JDGroup {
+            summit:304.84,45.88,279.4192,61.24
+            origin:391.0096,-0.52
+            background:0,255,0
+            lineWidth:0
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Group"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+            children: {
+              JDPolyline {
+                summit:304.84,48.44,298.44,45.88,286.92,45.88,292.04,48.44
+                origin:295.88,47.16
+                background:0,255,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:304.84,61.24,304.84,48.44,292.04,48.44,292.04,61.24
+                origin:298.44,54.84
+                background:0,255,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:292.04,48.44,286.92,45.88,286.92,58.68,292.04,61.24
+                origin:289.48,53.56
+                background:0,255,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDGroup {
+                summit:290.76,48.76,279.4192,58.72
+                origin:398.0496,-3.22
+                background:0,255,0
+                lineWidth:0
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Group"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+                children: {
+                  JDSpline {
+                    summit:280.968,48.76,284.5008,49.28,285.2944,49.4,288.0208,50.68,290.76,49.96,290.6448,57.52,288.0208,56.76,284.6544,57.4,284.296,58.68,280.968,58.6
+                    origin:285.864,53.72
+                    background:0,255,0
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Polyline"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    step:10
+                  }
+                  JDEllipse {
+                    summit:283.016,49.08,279.4192,58.72
+                    origin:281.2176,53.9
+                    background:0,255,0
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Ellipse"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    arc_type:2
+                  }
+                }
+              }
+              JDLine {
+                summit:297.16,52.28,294.6,52.28
+                origin:295.88,52.28
+                background:0,255,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:297.16,53.56,294.6,53.56
+                origin:295.88,53.56
+                background:0,255,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:302.28,51,302.28,58.68
+                origin:302.28,54.84
+                background:0,255,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:301,51,301,58.68
+                origin:301,54.84
+                background:0,255,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:299.72,51,299.72,58.68
+                origin:299.72,54.84
+                background:0,255,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDRectangle {
+                summit:297.16,56.12,294.6,58.68
+                origin:295.88,57.4
+                background:0,255,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Rectangle"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+            }
+          }
+        }
+      }
+      JDGroup {
+        summit:324.68,45.88,279.4192,83.96
+        origin:1156.3696,-291.96
+        lineWidth:0
+        shadowThickness:1
+        visible:false
+        maxvalue:13
+        initvalue:13
+        name:"ALARM"
+        gradX2:10.0
+        gradY2:10.0
+        gradC1:255,255,255
+        gradC2:0,0,0
+        visibilitymapper:{
+          mapping_type:3
+          mode:0
+          default:false
+          map:11,11,true
+        }
+        children: {
+          JDPolyline {
+            summit:301.32,53.56,310.28,53.56,310.28,73.4,324.68,80.44,324.68,83.96,307.08,75.32,307.08,57.08,301,57.08
+            origin:312.84,68.76
+            foreground:51,51,51
+            fillStyle:1
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Polyline"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+          }
+          JDGroup {
+            summit:304.84,45.88,279.4192,61.24
+            origin:391.0096,-0.52
+            lineWidth:0
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Group"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+            children: {
+              JDPolyline {
+                summit:304.84,48.44,298.44,45.88,286.92,45.88,292.04,48.44
+                origin:295.88,47.16
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:304.84,61.24,304.84,48.44,292.04,48.44,292.04,61.24
+                origin:298.44,54.84
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:292.04,48.44,286.92,45.88,286.92,58.68,292.04,61.24
+                origin:289.48,53.56
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDGroup {
+                summit:290.76,48.76,279.4192,58.72
+                origin:398.0496,-3.22
+                lineWidth:0
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Group"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+                children: {
+                  JDSpline {
+                    summit:280.968,48.76,284.5008,49.28,285.2944,49.4,288.0208,50.68,290.76,49.96,290.6448,57.52,288.0208,56.76,284.6544,57.4,284.296,58.68,280.968,58.6
+                    origin:285.864,53.72
+                    background:255,153,51
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Polyline"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    step:10
+                  }
+                  JDEllipse {
+                    summit:283.016,49.08,279.4192,58.72
+                    origin:281.2176,53.9
+                    background:255,153,51
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Ellipse"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    arc_type:2
+                  }
+                }
+              }
+              JDLine {
+                summit:297.16,52.28,294.6,52.28
+                origin:295.88,52.28
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:297.16,53.56,294.6,53.56
+                origin:295.88,53.56
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:302.28,51,302.28,58.68
+                origin:302.28,54.84
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:301,51,301,58.68
+                origin:301,54.84
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:299.72,51,299.72,58.68
+                origin:299.72,54.84
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDRectangle {
+                summit:297.16,56.12,294.6,58.68
+                origin:295.88,57.4
+                background:255,153,51
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Rectangle"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+            }
+          }
+        }
+      }
+      JDGroup {
+        summit:324.68,45.88,279.4192,83.96
+        origin:1213.3696,-344.96
+        lineWidth:0
+        shadowThickness:1
+        visible:false
+        maxvalue:13
+        initvalue:13
+        name:"FAULT"
+        gradX2:10.0
+        gradY2:10.0
+        gradC1:255,255,255
+        gradC2:0,0,0
+        visibilitymapper:{
+          mapping_type:3
+          mode:0
+          default:false
+          map:8,8,true
+        }
+        children: {
+          JDPolyline {
+            summit:301.32,53.56,310.28,53.56,310.28,73.4,324.68,80.44,324.68,83.96,307.08,75.32,307.08,57.08,301,57.08
+            origin:312.84,68.76
+            foreground:51,51,51
+            fillStyle:1
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Polyline"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+          }
+          JDGroup {
+            summit:304.84,45.88,279.4192,61.24
+            origin:391.0096,-0.52
+            lineWidth:0
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Group"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+            children: {
+              JDPolyline {
+                summit:304.84,48.44,298.44,45.88,286.92,45.88,292.04,48.44
+                origin:295.88,47.16
+                background:255,0,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:304.84,61.24,304.84,48.44,292.04,48.44,292.04,61.24
+                origin:298.44,54.84
+                background:255,0,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:292.04,48.44,286.92,45.88,286.92,58.68,292.04,61.24
+                origin:289.48,53.56
+                background:255,0,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDGroup {
+                summit:290.76,48.76,279.4192,58.72
+                origin:398.0496,-3.22
+                lineWidth:0
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Group"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+                children: {
+                  JDSpline {
+                    summit:280.968,48.76,284.5008,49.28,285.2944,49.4,288.0208,50.68,290.76,49.96,290.6448,57.52,288.0208,56.76,284.6544,57.4,284.296,58.68,280.968,58.6
+                    origin:285.864,53.72
+                    background:255,0,0
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Polyline"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    step:10
+                  }
+                  JDEllipse {
+                    summit:283.016,49.08,279.4192,58.72
+                    origin:281.2176,53.9
+                    background:255,0,0
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Ellipse"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    arc_type:2
+                  }
+                }
+              }
+              JDLine {
+                summit:297.16,52.28,294.6,52.28
+                origin:295.88,52.28
+                background:255,0,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:297.16,53.56,294.6,53.56
+                origin:295.88,53.56
+                background:255,0,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:302.28,51,302.28,58.68
+                origin:302.28,54.84
+                background:255,0,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:301,51,301,58.68
+                origin:301,54.84
+                background:255,0,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:299.72,51,299.72,58.68
+                origin:299.72,54.84
+                background:255,0,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDRectangle {
+                summit:297.16,56.12,294.6,58.68
+                origin:295.88,57.4
+                background:255,0,0
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Rectangle"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+            }
+          }
+        }
+      }
+      JDGroup {
+        summit:324.68,45.88,279.4192,83.96
+        origin:898.3696,-344.96
+        lineWidth:0
+        shadowThickness:1
+        maxvalue:13
+        initvalue:13
+        name:"UNKNOWN"
+        gradX2:10.0
+        gradY2:10.0
+        gradC1:255,255,255
+        gradC2:0,0,0
+        visibilitymapper:{
+          mapping_type:3
+          mode:0
+          default:true
+          map:4,4,false
+          map:5,5,false
+          map:6,6,false
+          map:8,8,false
+          map:11,11,false
+        }
+        children: {
+          JDPolyline {
+            summit:301.32,53.56,310.28,53.56,310.28,73.4,324.68,80.44,324.68,83.96,307.08,75.32,307.08,57.08,301,57.08
+            origin:312.84,68.76
+            foreground:51,51,51
+            fillStyle:1
+            shadowThickness:1
+            maxvalue:13
+            initvalue:13
+            name:"Polyline"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+          }
+          JDGroup {
+            summit:304.84,45.88,279.4192,61.24
+            origin:391.0096,-0.52
+            lineWidth:0
+            shadowThickness:1
+            maxvalue:13
+            initvalue:13
+            name:"Group"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+            children: {
+              JDPolyline {
+                summit:304.84,48.44,298.44,45.88,286.92,45.88,292.04,48.44
+                origin:295.88,47.16
+                background:153,153,153
+                fillStyle:1
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:304.84,61.24,304.84,48.44,292.04,48.44,292.04,61.24
+                origin:298.44,54.84
+                background:153,153,153
+                fillStyle:1
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:292.04,48.44,286.92,45.88,286.92,58.68,292.04,61.24
+                origin:289.48,53.56
+                background:153,153,153
+                fillStyle:1
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDGroup {
+                summit:290.76,48.76,279.4192,58.72
+                origin:398.0496,-3.22
+                lineWidth:0
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Group"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+                children: {
+                  JDSpline {
+                    summit:280.968,48.76,284.5008,49.28,285.2944,49.4,288.0208,50.68,290.76,49.96,290.6448,57.52,288.0208,56.76,284.6544,57.4,284.296,58.68,280.968,58.6
+                    origin:285.864,53.72
+                    background:153,153,153
+                    fillStyle:1
+                    shadowThickness:1
+                    maxvalue:13
+                    initvalue:13
+                    name:"Polyline"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    step:10
+                  }
+                  JDEllipse {
+                    summit:283.016,49.08,279.4192,58.72
+                    origin:281.2176,53.9
+                    background:153,153,153
+                    fillStyle:1
+                    shadowThickness:1
+                    maxvalue:13
+                    initvalue:13
+                    name:"Ellipse"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    arc_type:2
+                  }
+                }
+              }
+              JDLine {
+                summit:297.16,52.28,294.6,52.28
+                origin:295.88,52.28
+                background:153,153,153
+                fillStyle:1
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:297.16,53.56,294.6,53.56
+                origin:295.88,53.56
+                background:153,153,153
+                fillStyle:1
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:302.28,51,302.28,58.68
+                origin:302.28,54.84
+                background:153,153,153
+                fillStyle:1
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:301,51,301,58.68
+                origin:301,54.84
+                background:153,153,153
+                fillStyle:1
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:299.72,51,299.72,58.68
+                origin:299.72,54.84
+                background:153,153,153
+                fillStyle:1
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDRectangle {
+                summit:297.16,56.12,294.6,58.68
+                origin:295.88,57.4
+                background:153,153,153
+                fillStyle:1
+                shadowThickness:1
+                maxvalue:13
+                initvalue:13
+                name:"Rectangle"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+            }
+          }
+        }
+      }
+      JDGroup {
+        summit:338.12,71.52,305.0192,104.8
+        origin:1044.4496,-286.36
+        lineWidth:0
+        shadowThickness:1
+        visible:false
+        maxvalue:13
+        initvalue:13
+        name:"MOVING"
+        gradX2:10.0
+        gradY2:10.0
+        gradC1:255,255,255
+        gradC2:0,0,0
+        visibilitymapper:{
+          mapping_type:3
+          mode:0
+          default:false
+          map:6,6,true
+        }
+        children: {
+          JDPolyline {
+            summit:325.64,95.84,333.64,95.84,333.64,89.12,307.08,75.04,307.08,71.52,338.12,87.52,338.12,99.68,325.96,99.68
+            origin:322.6,85.6
+            foreground:51,51,51
+            fillStyle:1
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Polyline"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+          }
+          JDGroup {
+            summit:330.44,89.44,305.0192,104.8
+            origin:391.0096,0.48
+            lineWidth:0
+            shadowThickness:1
+            visible:false
+            maxvalue:13
+            initvalue:13
+            name:"Group"
+            gradX2:10.0
+            gradY2:10.0
+            gradC1:255,255,255
+            gradC2:0,0,0
+            children: {
+              JDPolyline {
+                summit:330.44,92,324.04,89.44,312.52,89.44,317.64,92
+                origin:321.48,90.72
+                background:71,71,255
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:330.44,104.8,330.44,92,317.64,92,317.64,104.8
+                origin:324.04,98.4
+                background:71,71,255
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDPolyline {
+                summit:317.64,92,312.52,89.44,312.52,102.24,317.64,104.8
+                origin:315.08,97.12
+                background:71,71,255
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Polyline"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDGroup {
+                summit:316.36,92.32,305.0192,102.28
+                origin:398.0496,-2.22
+                lineWidth:0
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Group"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+                children: {
+                  JDSpline {
+                    summit:306.568,92.32,310.1008,92.84,310.8944,92.96,313.6208,94.24,316.36,93.52,316.2448,101.08,313.6208,100.32,310.2544,100.96,309.896,102.24,306.568,102.16
+                    origin:311.464,97.28
+                    background:71,71,255
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Polyline"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    step:10
+                  }
+                  JDEllipse {
+                    summit:308.616,92.64,305.0192,102.28
+                    origin:306.8176,97.46
+                    background:71,71,255
+                    fillStyle:1
+                    shadowThickness:1
+                    visible:false
+                    maxvalue:13
+                    initvalue:13
+                    name:"Ellipse"
+                    gradX2:10.0
+                    gradY2:10.0
+                    gradC1:255,255,255
+                    gradC2:0,0,0
+                    arc_type:2
+                  }
+                }
+              }
+              JDLine {
+                summit:322.76,95.84,320.2,95.84
+                origin:321.48,95.84
+                background:71,71,255
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:322.76,97.12,320.2,97.12
+                origin:321.48,97.12
+                background:71,71,255
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:327.88,94.56,327.88,102.24
+                origin:327.88,98.4
+                background:71,71,255
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:326.6,94.56,326.6,102.24
+                origin:326.6,98.4
+                background:71,71,255
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDLine {
+                summit:325.32,94.56,325.32,102.24
+                origin:325.32,98.4
+                background:71,71,255
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Line"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+              JDRectangle {
+                summit:322.76,99.68,320.2,102.24
+                origin:321.48,100.96
+                background:71,71,255
+                fillStyle:1
+                shadowThickness:1
+                visible:false
+                maxvalue:13
+                initvalue:13
+                name:"Rectangle"
+                gradX2:10.0
+                gradY2:10.0
+                gradC1:255,255,255
+                gradC2:0,0,0
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  JDGroup {
+    summit:164,10,194,173
+    origin:15,81.5
+    name:"JDGroup"
+    children: {
+      JDGroup {
+        summit:164,68,194,123
+        origin:-61.5,59.5
+        background:217,217,217
+        shadowThickness:1
+        maxvalue:5
+        name:"CleaningStripLine"
+        children: {
+          JDRectangle {
+            summit:169.0279,73.5,188.5373,117.5
+            origin:178.7826,95.5
+            background:217,217,217
+            shadowThickness:1
+            maxvalue:5
+            name:"ignoreRepaint"
+          }
+          JDRectangle {
+            summit:164,88.9,165.5607,102.1
+            origin:164.7804,95.5
+            background:217,217,217
+            fillStyle:11
+            shadowThickness:1
+            maxvalue:5
+            name:"ignoreRepaint"
+            gradX2:0.0
+            gradY2:9.0
+            gradCyclic:true
+          }
+          JDRectangle {
+            summit:192.4393,88.9,194,102.1
+            origin:193.2196,95.5
+            background:217,217,217
+            fillStyle:11
+            shadowThickness:1
+            maxvalue:5
+            name:"ignoreRepaint"
+            gradX2:0.0
+            gradY2:9.0
+            gradCyclic:true
+          }
+          JDRectangle {
+            summit:166.6867,98.25,190.8785,109.25
+            origin:178.7826,103.75
+            background:204,204,204
+            fillStyle:1
+            shadowThickness:1
+            maxvalue:5
+            name:""
+          }
+          JDRectangle {
+            summit:165.7391,68,192.4393,123
+            origin:178.7826,95.5
+            background:217,217,217
+            shadowThickness:1
+            maxvalue:5
+            name:"ignoreRepaint"
+          }
+          JDRectangle {
+            summit:166.6867,81.1178,190.8785,92.1178
+            origin:178.7826,86.6178
+            background:204,204,204
+            fillStyle:1
+            shadowThickness:1
+            maxvalue:5
+            name:""
+          }
+          JDRectangle {
+            summit:172.9298,109.25,176.0513,120.25
+            origin:174.4905,114.75
+            background:204,204,204
+            fillStyle:1
+            shadowThickness:1
+            maxvalue:5
+            name:""
+          }
+          JDRectangle {
+            summit:181.514,70.75,184.6354,81.75
+            origin:183.0747,76.25
+            background:204,204,204
+            fillStyle:1
+            shadowThickness:1
+            maxvalue:5
+            name:""
+          }
+          JDRectangle {
+            summit:172.9298,70.75,176.0513,81.75
+            origin:174.4905,76.25
+            background:204,204,204
+            fillStyle:1
+            shadowThickness:1
+            maxvalue:5
+            name:""
+          }
+          JDRectangle {
+            summit:181.514,109.25,184.6354,120.25
+            origin:183.0747,114.75
+            background:204,204,204
+            fillStyle:1
+            shadowThickness:1
+            maxvalue:5
+            name:""
+          }
+        }
+      }
+      JDGroup {
+        summit:176,10,194,28
+        origin:-19.5,-13
+        name:"HvPulser"
+        children: {
+          JDRectangle {
+            summit:176,10,194,25.5455
+            origin:177.8947,19.8182
+            background:188,143,143
+            fillStyle:1
+            lineWidth:2
+            shadowThickness:1
+            name:"CurrentT1"
+            gradX2:0.0
+            gradY2:18.0
+            gradCyclic:true
+            gradC1:255,255,255
+            gradC2:0,0,0
+          }
+          JDLabel {
+            summit:178.8421,10.8182,194,28
+            origin:186.4211,19.8182
+            lineWidth:0
+            name:"Label"
+            text:"V"
+          }
+        }
+      }
+      JDGroup {
+        summit:169,133,191,173
+        origin:6,18
+        name:"Deflexion DC power supply"
+        children: {
+          JDRoundRectangle {
+            summit:169,133,191,173
+            origin:186.9394,149.2
+            background:188,143,143
+            fillStyle:1
+            lineWidth:2
+            name:"RoundRectangle"
+            step:4
+            cornerWidth:11
+          }
+          JDEllipse {
+            summit:172.0606,141,186,155
+            origin:219.3409,204.015
+            background:188,143,143
+            fillStyle:1
+            name:"Ellipse"
+          }
+          JDLine {
+            summit:171,156,189.4242,138.2288
+            origin:178.8788,150.2
+            lineWidth:2
+            name:"IgnoreRepaint"
+            arrowWidth:4
+            arrowMode:2
+          }
+          JDLine {
+            summit:172,163,187,163
+            origin:180,163
+            lineWidth:2
+            name:"Line"
+          }
+          JDLine {
+            summit:172,167,187,167
+            origin:180,167
+            lineWidth:2
+            name:"Line"
+          }
+        }
+      }
+      JDLine {
+        summit:166,18,176,18
+        origin:173,18
+        lineWidth:2
+        name:"Line"
+      }
+      JDLine {
+        summit:183,26,183,67
+        origin:183,57
+        lineWidth:2
+        name:"Line"
+      }
+    }
+  }
+}
