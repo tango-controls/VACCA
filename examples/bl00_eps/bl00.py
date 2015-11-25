@@ -78,7 +78,8 @@ except: traceback.print_exc()
 
 try:
   import sys
-  sys.path.insert(0,'/homelocal/srubio/PROJECTS/PLCs/EPS-BL09/trunk/PLC_GUI')
+  #sys.path.insert(0,'/homelocal/srubio/PROJECTS/PLCs/EPS-BL09/trunk/PLC_GUI')
+  sys.path.insert(0,'/homelocal/sicilia/applications/EPS_GUI/PLC_GUI')
   import gui_alfa
   EXTRA_APPS['EPS']= {'class' : gui_alfa.epsgui,
                       'icon' : '/homelocal/sicilia/lib/python/site-packages/AlbaPLC/tools/icon/Plc_equipment.jpg',

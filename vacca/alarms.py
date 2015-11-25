@@ -53,7 +53,7 @@ class VaccaPanic(AlarmGUI):
         """
         :return: The Default Icon Path.
         """
-        path = 'image/icons/panic.gif'
+        path = vpath('image/icons/panic.gif')
         return path
 
     @classmethod
