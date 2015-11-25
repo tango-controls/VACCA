@@ -20,7 +20,7 @@
 
 echo "Usage: vaccagui [CONFIG.py]"
 
-if [ "$HOSTNAME" == "controls02" ] ; then
+if [ "echo $HOSTNAME | grep controls02" ] ; then
     export TANGO_HOST="$(tango_host_chooser.sh)"
 fi
 
