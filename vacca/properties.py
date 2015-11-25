@@ -90,13 +90,15 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
         :param model:
         :return:
         """
-        model = fandango.tango.parse_tango_model(str(model))['device']
-        self.setTable(model)
+        try:
+          self.setTable(model)
+        except:
+          traceback.print_exc()
         
     def setTable(self,model):
         try:
-            model = fandango.tango.parse_tango_model(str(model))['device']
-            print('VaccaPropTable.setTable(%s(%s))'%(type(model),model))
+            self.debug('VaccaPropTable.setTable(%s(%s))'%(type(model),model))
+            model = model and fandango.tango.parse_tango_model(str(model))['device']
             TaurusPropTable.setTable(self,model)
         except:
             traceback.print_exc()
