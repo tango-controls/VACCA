@@ -535,7 +535,8 @@ class VaccaGraphicsScene(TaurusGraphicsScene):
 
 ###############################################################################
 
-__doc__ = vacca.get_autodoc(__name__,vars())
+import doc
+__doc__ = doc.get_autodoc(__name__,vars())
 
 def test(model,filters='',debug=False):
     

@@ -35,17 +35,19 @@ use default.py for your common options and whatever.py for your in-place customi
 
 import os,fandango,imp,vacca.utils
 from taurus.qt.qtgui.button import TaurusLauncherButton
-from vacca.utils import wdir
-from fandango import matchCl,searchCl,replaceCl,CaselessDict,CaselessList,get_matching_devices,get_matching_attributes
+from vacca.utils import *
+from fandango import matchCl,searchCl,replaceCl,CaselessDict,CaselessList,\
+    get_matching_devices,get_matching_attributes,get_all_devices
 
-print '>'*20+' Loading Default.py'
+print '>'*20+' Loading default.py.ini'
 
 #ALL these variables can be re-defined in CONFIG FILE
 GUI_NAME = 'VACCA'
-WDIR = vacca.utils.WORKING_DIR #imp.find_module('vacca')[1]+'/'
-URL_HELP = 'http://www.tango-controls.org/Members/srubio/vacca'
+WDIR = VACCA_DIR #imp.find_module('vacca')[1]+'/'
+URL_HELP = 'http://computing.cells.es/services/controls/vacuum'
 URL_LOGBOOK = 'http://logbook.cells.es/'
-VACCA_LOGO = WDIR+'image/icons/nggshow.php.png'
+VACCA_LOGO = vpath('image/icons/nggshow.php.png')
+ORGANIZATION = 'VACCA'
 ORGANIZATION_LOGO = WDIR+'image/icons/AlbaLogo.png'
 
 ###############################################################################
@@ -69,7 +71,7 @@ TARGET = DOMAIN
 USE_DEVICE_TREE = True
 
 #Devices not in JDraw or regular expression to be added to the tree
-EXTRA_DEVICES = get_matching_devices(DOMAIN) #map(bool,set(['%s/VC/ALL'%TARGET,'%s/CT/ALARMS'%TARGET,DEVICE,COMPOSER]))
+EXTRA_DEVICES = get_all_devices() #map(bool,set(['%s/VC/ALL'%TARGET,'%s/CT/ALARMS'%TARGET,DEVICE,COMPOSER]))
 
 #Custom tree branches are built using nested dictionaries and regular expressions (if empty a jive-like tree is built).
 CUSTOM_TREE = {} 
@@ -168,6 +170,10 @@ xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'/image/icons/
 EXTRA_APPS = {
     #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
     }
+EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
+#EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
+#EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }
+#EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }    
     
 from vacca.panel import VaccaAction
     
@@ -175,7 +181,8 @@ from vacca.panel import VaccaAction
 # model=["Archiving",wdir('vacca/image/widgets/ProfilePlot.png'),'mambo'],)
 #xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaNewPanel',
 # model=['Alarms',wdir('vacca/image/icons/panic.gif'),'panic.gui.AlarmGUI'])
-xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction', model=['Snap',wdir('vacca/image/widgets/VerticalGrid.jpg'),'ctsnaps'])
+xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction', model=['Snap',vpath('image/widgets/VerticalGrid.jpg'),'ctsnaps'])
+xfinder = AppletDescription('xFinder',classname='vacca.panel.VaccaAction', model=['Attribute Finder',':actions/system-search.svg','ctfinder'])
 
 
 #button =  TaurusLauncherButton(widget =

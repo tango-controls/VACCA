@@ -94,6 +94,28 @@ class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree,TaurusBas
         print map(str,mimeData.formats())
         return mimeData            
     
+    def setNodeTree(self,parent,diction,alias=False):
+        """ OVERRIDEN TO ADD try/except CATCHES
+        It has parent as argument to allow itself to be recursive
+        Initializes the node tree from a dictionary {'Node0.0':{'Node1.0':None,'Node1.1':None}}
+        """
+        self.debug('In setNodeTree(%d,alias=%s) ...'%(len(diction),alias))
+        if not hasattr(diction,'keys'): diction = dict.fromkeys(diction)
+        for node in sorted(diction.keys()):
+            assert int(self.index)<10000000000,'TooManyIterations!'
+            try:
+                self.index = self.index + 1
+                dev_alias = alias and str(node).count('/')==2 and get_alias_for_device(node)
+                text = '%s (%s)'%(node,dev_alias) if dev_alias else node
+                if diction[node] and any(diction[node]):
+                    item = self.createItem(parent,node,text)
+                    self.setNodeTree(item,diction[node],alias)
+                else:
+                    item = self.createItem(parent,node,text)
+            except:
+                self.warning('setNodeTree(%s,%s) failed!: %s'%(parent,node,traceback.format_exc()))
+    
+    
 class VaccaTree(TaurusSearchTree):
     """
     It is a class that inherits from TaurusSearchTree.
@@ -110,7 +132,10 @@ class VaccaTree(TaurusSearchTree):
     def setModelCheck(self,*a,**k):  self.tree.setModelCheck(*a,**k)
     def setTree(self,*a,**k):  self.tree.setTree(*a,**k)
     def expandAll(self,*a,**k):  self.tree.expandAll(*a,**k)
-    def loadTree(self,*a,**k):  self.tree.loadTree(*a,**k)
+    def loadTree(self,*a,**k):  
+        print('VaccaTree.loadTree(...)')
+        self.tree.loadTree(*a,**k)
+            
     @staticmethod
     def setDefaultPanelClass(*a, **k):
         TaurusDevTree.setDefaultPanelClass(*a, **k)

@@ -33,6 +33,15 @@ from taurus.qt.qtgui.panel import TaurusDevicePanel
 from PyQt4 import Qwt5
 from fandango.qt import Draggable
 
+__doc__ = """
+Plots in VACCA have several setups:
+
+ * ApplyConfig is disabled, to avoid previous configs to override trend behavior
+ * Default Trend length has several hours instead of seconds.
+ * Archiving is still disabled, but also Scale change warnings when re-enabled.
+ 
+"""
+
 
 class PressureTrend(TaurusTrend):
         
@@ -41,8 +50,16 @@ class PressureTrend(TaurusTrend):
             setup_pressure_trend(self)
             setattr(self, '_tuned', True)
         TaurusTrend.showEvent(self, event)
+        
+class VaccaTrend(TaurusTrend):
+    
+    def showEvent(self, event):
+        if not getattr(self, '_tuned', False):
+            setup_pressure_trend(self,log=False,length=4*3600)
+            setattr(self, '_tuned', True)
+        TaurusTrend.showEvent(self, event)
 
-def setup_pressure_trend(tt, length=12*3600): #,models):
+def setup_pressure_trend(tt,log=True,length=12*3600):
     print '*'*80
     print 'in setup_pressure_trend(%s,length=%s s)' % (tt, length)
     from PyQt4 import Qwt5
@@ -55,19 +72,16 @@ def setup_pressure_trend(tt, length=12*3600): #,models):
         rg = length #abs(self.str2deltatime(str(self.ui.xRangeCB.currentText())))
         xMin = xMax-rg
         tt.setAxisScale(Qwt5.QwtPlot.xBottom, xMin, xMax)
-        tt.setAxisScaleType(Qwt5.QwtPlot.yLeft,
-                            Qwt5.QwtScaleTransformation.Log10
-                            )
-        #tt.setAxisScale(Qwt5.QwtPlot.yLeft,1e-11,1e-2)
+        if log:
+            tt.setAxisScaleType(Qwt5.QwtPlot.yLeft,
+                Qwt5.QwtScaleTransformation.Log10)
+            #tt.setAxisScale(Qwt5.QwtPlot.yLeft,1e-11,1e-2)
         tt.setUseArchiving(False)
         tt.setModelInConfig(False)
-        tt.disconnect(tt.axisWidget(tt.xBottom), Qt.SIGNAL("scaleDivChanged ("
-                                                           ")"),
-                      tt._scaleChangeWarning)
-
+        tt.disconnect(tt.axisWidget(tt.xBottom), 
+            Qt.SIGNAL("scaleDivChanged ()"),tt._scaleChangeWarning)
         #tt.setCurvesYAxis([tcs],tt.yRight)
-        #tt.addModels(models)
-        #Disabling loading of configuration from file; to avoid a faulty setup to continuously crash the application.
+        #: Disabling loading of configuration from file; to avoid a faulty setup to continuously crash the application.
         setattr(tt, 'applyConfig', (lambda *k, **kw: None))
     except:
         print 'Exception in set_pressure_trend(%s)' % tt
@@ -353,8 +367,9 @@ def pickPlotPoint(self, pos, scope=20, showMarker=True,
             Qt.QTimer.singleShot(5000, popup.hide)
         
     return picked,pickedCurveName,pickedIndex
-        
-__doc__ = vacca.get_autodoc(__name__,vars())
+
+import doc
+__doc__ = doc.get_autodoc(__name__,vars())
 
 if __name__ == '__main__':
     import taurus.qt.qtgui.application

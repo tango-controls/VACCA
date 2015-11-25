@@ -17,30 +17,39 @@
 #Source your own environment variables from here:
 #source alba_blissrc
 
+
 echo "Usage: vaccagui [CONFIG.py]"
 
-if [ ! "$VACCA_CONFIG" ] && [ "$1" ] ; then
+if [ "$HOSTNAME" == "controls02" ] ; then
+    export TANGO_HOST="$(tango_host_chooser.sh)"
+fi
+
+if [ "$1" ] ; then
     export VACCA_CONFIG="$1"
 else
     export VACCA_CONFIG=$VACCA_CONFIG
 fi
 
 if [ ! "$VACCA_PATH" ] ; then
-    if [ "$WORKING_DIR" ] ; then
-        export VACCA_PATH=$WORKING_DIR
-    else
-        #Getting current script folder
-        export VACCA_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
-    fi
+    #Getting current script folder
+    export VACCA_PATH=$(python -c "import imp;print(imp.find_module('vacca')[1]+'/../')")
     echo "VACCA_PATH environment variable not set, trying $VACCA_PATH instead ..."
 fi
 
 #Exporting the folder for config files
-export WORKING_DIR=$VACCA_PATH #For compatibility with old vacca launchers/scripts
+if [ ! "$VACCA_DIR" ] ; then
+    #     export WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
+    if [ "$WORKING_DIR" ] ; then
+      #For compatibility with old vacca launchers/scripts
+      export VACCA_DIR=$WORKING_DIR
+    else
+      export VACCA_DIR=$(python -c "import fandango as f;f.printf(f.get_database().get_property('VACCA','VACCA_DIR').values()[0][0])")
+    fi
+fi
 export PYTHONPATH=$VACCA_PATH:$PYTHONPATH
 
 #launcher, may use taurusgui or vacca_run (that strips must of taurusgui application setup)
-
-cd $WORKING_DIR
+echo "$VACCA_DIR/bin/vacca_run.py"
+cd $VACCA_DIR
 #taurusgui --taurus-log-level=DEBUG vaccagui &
 python bin/vacca_run.py

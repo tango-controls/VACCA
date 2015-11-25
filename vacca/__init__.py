@@ -55,7 +55,7 @@ from vacca.tree import *
 from vacca.utils import *
 from vacca.properties import *
 from vacca.grid import *
-from vacca.vaccaPanic import *
+from vacca.alarms import *
 
 ## THIS DIDNT WORKED!!
 #print('Autogenerating VACCA docs')

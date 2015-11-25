@@ -78,7 +78,7 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
         :param model: Model for the panel
         :return:
         """
-        return PanelDescription(name,'vacca.properties.VaccaPropTable',model)
+        return PanelDescription(name,classname='vacca.properties.VaccaPropTable',model=model)
     
     def getModelClass(self):
         return TaurusDevice

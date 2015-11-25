@@ -29,7 +29,7 @@ import re,os,traceback,time,sys
 import fandango,vacca
 import fandango.functional as fun
 
-from vacca.utils import wdir,get_White_palette,get_fullWhite_palette,get_halfWhite_palette
+from vacca.utils import *
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 
 import taurus
@@ -38,9 +38,10 @@ from taurus.qt import Qt
 from taurus.qt.qtgui.container import TaurusWidget as WIDGET_CLASS
 from taurus.qt.qtgui.panel import TaurusForm as FORM_CLASS
 from taurus.qt.qtgui.panel.taurusdevicepanel import TaurusDevicePanel,get_regexp_dict,searchCl,matchCl,str_to_filter,get_White_palette,get_eqtype
-import taurus.qt.qtgui.resource
+from taurus.qt.qtgui.resource import getPixmap
 from taurus.core import TaurusAttribute,TaurusDevice,TaurusDatabase
 from taurus.qt.qtgui.container import TaurusWidget
+from taurus.qt.qtgui.panel.taurusform import TaurusCommandsForm
 
 ###############################################################################
 # Help Methods
@@ -207,7 +208,30 @@ class SimplePanel(WIDGET_CLASS):
     def getModel(self):
         i = self.getInnerPanel()
         return i.getModel() if i else None
-            
+
+class VaccaDocker(Qt.QMainWindow):
+    
+    def __init__(self,*args):
+        Qt.QMainWindow(self,*args)
+        self.setDockNestingEnabled(True)
+        
+    @staticmethod
+    def getDefaultIcon():
+        """
+        :return: The Default Icon Path.
+        """
+        path = 'image/widgets/DevicePanel.png'
+        return path
+
+    @staticmethod
+    def getPanelDescription(name='VaccaDocker',model=''):
+        """
+        :param name: Name for the Panel
+        :param model: Model for the panel
+        :return:
+        """
+        return PanelDescription(name,'vacca.panel.VaccaDocker')
+        
 class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     """
 
@@ -265,6 +289,26 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self._label.setDragEventCallback(self._label.text)
         self.setToolTip(getattr(self,'__help__',self.__doc__))
         
+    @classmethod
+    def getAttributeFilters(klass,dev_class=None):
+        if dev_class is not None and dev_class not in klass._attribute_filter:
+            filters = get_class_property(dev_class,'AttributeFilters',extract=False)
+            if filters:
+                filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
+                klass._attribute_filter[dev_class] = filters
+                return {'.*':filters}
+        return klass._attribute_filter
+        
+    @classmethod
+    def getCommandFilters(klass,dev_class=None):
+        if dev_class is not None and dev_class not in klass._attribute_filter:
+            filters = get_class_property(dev_class,'CommandFilters',extract=False)
+            if filters:
+                filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
+                klass._attribute_filter[dev_class] = filters
+                return {'.*':filters}
+        return klass._command_filter        
+        
     def setModel(self,model,pixmap=None):
         """
         Set Model is the callback used in shareDataManager to manage device
@@ -277,11 +321,11 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         try:    
           model,modelclass,raw = str(model).strip(),'',model
           model = fandango.tango.parse_tango_model(str(model))['device']
-          self.warning('VaccaPanel(%s).setModel(%s,%s)'%(id(self),model,pixmap))
+          self.info('VaccaPanel(%s).setModel(%s,%s)'%(id(self),model,pixmap))
           if model: 
             model = model and model.split()[0] or ''
             modelclass = taurus.Factory().findObjectClass(model)
-          self.warning('In TaurusDevicePanel.setModel(%s(%s),%s)'%(raw,modelclass,pixmap))
+          self.debug('In TaurusDevicePanel.setModel(%s(%s),%s)'%(raw,modelclass,pixmap))
           if model == self.getModel():
             return
           elif raw is None or not model or not modelclass: 
@@ -295,7 +339,6 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
             return
         except:
           traceback.print_exc()
-        print('panel 2 ........................')
         try:
             taurus.Device(model).ping()
             if self.getModel(): self.detach() #Do not dettach previous model before pinging the new one (fail message will be shown at except: clause)
@@ -316,7 +359,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 if qpixmap.height()>.9*IMAGE_SIZE[1]: qpixmap=qpixmap.scaledToHeight(.9*IMAGE_SIZE[1])
                 if qpixmap.width()>.9*IMAGE_SIZE[0]: qpixmap=qpixmap.scaledToWidth(.9*IMAGE_SIZE[0])
             else:
-                qpixmap = taurus.qt.qtgui.resource.getPixmap(':/logo.png')
+                qpixmap = getPixmap(':/logo.png')
             
             self._image.setPixmap(qpixmap)
             self._state.setModel(model+'/state')
@@ -324,7 +367,13 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
             self._status.setModel(model+'/status')
             try:
                 self._attrsframe.clear()
-                filters = get_regexp_dict(TaurusDevicePanel._attribute_filter,model,['.*'])
+                dev_class = fandango.get_device_info(model).dev_class
+                filters = type(self).getAttributeFilters(dev_class=dev_class)
+                #filters = get_class_property(dev_class,'AttributeFilters',extract=False)
+                #if filters:
+                    #filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
+                #else:
+                filters = get_regexp_dict(self._attribute_filter,model,['.*'])
                 if hasattr(filters,'keys'): filters = filters.items() #Dictionary!
                 if filters and isinstance(filters[0],(list,tuple)): #Mapping
                     self._attrs = []
@@ -350,13 +399,42 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
             qmsg.show()
         self.setWindowTitle(self.getModel())
         return
+    
+    def get_comms_form(self,device,form=None,parent=None):
+        self.trace( 'In TaurusDevicePanel.get_comms_form(%s)'%device)
+        dev_class = fandango.get_device_info(device).dev_class
+        filters = type(self).getCommandFilters(dev_class)
+        params = get_regexp_dict(filters,device,[])
+        if filters and not params: #If filters are defined only listed devices will show commands
+            self.debug('TaurusDevicePanel.get_comms_form(%s): By default an unknown device type will display no commands'% device)
+            return None 
+        if not form: 
+            form = TaurusCommandsForm(parent)
+        elif hasattr(form,'setModel'): 
+            form.setModel('')
+        try:
+            form.setModel(device)
+            if params: 
+                form.setSortKey(lambda x,vals=[s[0].lower() for s in params]: vals.index(x.cmd_name.lower()) if str(x.cmd_name).lower() in vals else 100)
+                form.setViewFilters([lambda c: str(c.cmd_name).lower() not in ('state','status') and any(searchCl(s[0],str(c.cmd_name)) for s in params)])
+                form.setDefaultParameters(dict((k,v) for k,v in (params if not hasattr(params,'items') else params.items()) if v))
+            for wid in form._cmdWidgets:
+                if not hasattr(wid,'getCommand') or not hasattr(wid,'setDangerMessage'): continue
+                if re.match('.*(on|off|init|open|close).*',str(wid.getCommand().lower())):
+                    wid.setDangerMessage('This action may affect other systems!')
+            #form._splitter.setStretchFactor(1,70)
+            #form._splitter.setStretchFactor(0,30)
+            form._splitter.setSizes([80,20])
+        except Exception: 
+            self.warning('Unable to setModel for TaurusDevicePanel.comms_form!!: %s'%traceback.format_exc())
+        return form
 
     @staticmethod
     def getDefaultIcon():
         """
         :return: The Default Icon Path.
         """
-        path = 'image/widgets/DevicePanel.png'
+        path = vpath('image/widgets/DevicePanel.png')
         return path
 
     @staticmethod
@@ -366,7 +444,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         :param model: Model for the panel
         :return:
         """
-        return PanelDescription(name,'vacca.panel.VaccaPanel',model)
+        return PanelDescription(name,classname='vacca.panel.VaccaPanel',model=model)
 
         
 def configure_form(dev,form=None):

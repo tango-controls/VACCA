@@ -25,7 +25,7 @@ Contents:
    vacca.properties
    vacca.synoptics
    vacca.tree
-   vacca.vaccaPanic
+   vacca.alarms
    vacca.grid
 
    

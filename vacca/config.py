@@ -28,7 +28,7 @@ TaurusGUI configuration file used to convert Taurus into VACCA
 
 This file should be NOT modified.
 
-.. toc::
+.. toctree::
    :maxdepth: 4
 
 h2. Usage
@@ -82,7 +82,7 @@ Described below
 # Import section. You probably want to keep this line. Don't edit this block 
 # unless you know what you are doing
 
-import time,os,sys,traceback,imp
+import time,os,sys,traceback,imp,inspect
 from PyQt4.QtCore import SIGNAL
 import fandango,taurus
 import vacca
@@ -91,8 +91,7 @@ from fandango import partial,FakeLogger as FL
 from taurus.qt import Qt
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
 from vacca.panel import VaccaAction,VaccaSplash
-from vacca.utils import WORKING_DIR,wdir,VACCA_PATH,vpath,DB_HOST,\
-    DEFAULT_PATH,get_config_file
+from vacca.utils import *
 
 # (end of import section)
 #==============================================================================
@@ -101,27 +100,33 @@ from vacca.utils import WORKING_DIR,wdir,VACCA_PATH,vpath,DB_HOST,\
 print 'In vacca.config(%s)'%globals().get('CONFIG_DONE',None)
 #print ('*'*80+'\n')*1
 
-WDIR = WORKING_DIR
-print 'WORKING_DIR: %s:%s'%(WORKING_DIR,wdir(''))
+WDIR = VACCA_DIR
+print 'VACCA_DIR: %s:%s'%(VACCA_DIR,wdir(''))
 print 'VACCA_PATH: %s:%s'%(VACCA_PATH,vpath(''))
 
 try:
 
     try:
-        assert Qt.QApplication.instance(),'QApplication not running!'
+        app = Qt.QApplication.instance()
+        assert app,'QApplication not running!'
         splash = VaccaSplash()
     except:
         print "QApplication Instance do not exist!"
+        app = None
 
     try:
         import default
     except:
-        traceback.print_exc()        
+        try:
+            default = get_config_file(imp.find_module('vacca')[1]+'/default.py.ini')
+        except:
+            traceback.print_exc()
 
     #===============================================================================
     # Loading of Config Files
     #===============================================================================
 
+    #: Config file where perspectives will be saved
     SETTINGS = '/home/$USER/.config/$ORGANIZATION/$GUI_NAME'
 
     #: Default options are set in default.py file and later customized in a config file.
@@ -147,28 +152,40 @@ try:
     
     if CONFIG:
         for op in OPTIONS:
+            limit = 800
             if hasattr(CONFIG,op):
                 v = getattr(CONFIG,op)
-                print '\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v)[:80])
+                print '\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v)[:limit])
                 setattr(default,op,v)
         
         if hasattr(CONFIG,'COMPOSER') and not hasattr(CONFIG,'DEVICE'):
             default.DEVICE = default.COMPOSER
             
         #Trying to Load rith-toolbar apps from dictionary (NOTE: this doesn't work)
-        if hasattr(CONFIG,'EXTRA_APPS'): 
-            print 'Loading %s apps from %s'%(str(CONFIG.EXTRA_APPS.keys()),CONFIG.__name__)
-            [setattr(default,X,AppletDescription(**app)) for X,app in CONFIG.EXTRA_APPS.items()]
+        #if hasattr(CONFIG,'EXTRA_APPS'): 
+            #print 'Loading %s apps from %s'%(str(CONFIG.EXTRA_APPS.keys()),CONFIG.__name__)
+            #[setattr(default,X,AppletDescription(**app)) for X,app in CONFIG.EXTRA_APPS.items()]
     
-    #Adding Variables to Namespace where taurusgui can found them
-    from default import *
+    #Adding all variables to Namespace where taurusgui can found them
+    try:
+        for k,v in vars(default).items():
+            if not any((k.startswith('_'),inspect.ismodule(v))): #inspect.isfunction(v)
+                vars()[k] = v
+    except:
+        traceback.print_exc()
     
     #===============================================================================
     # General info.
     #===============================================================================
+    #: GUI_NAME will be used on application title and settings filenames
     GUI_NAME = '%s-%s at %s'%(GUI_NAME,getattr(CONFIG,'__name__',TARGET),DB_HOST)
-    ORGANIZATION = 'VACCA'
+    #: Name to be shown in right-side bar
+    ORGANIZATION = ORGANIZATION
+    #: Logo to be shown in right-side bar
     ORGANIZATION_LOGO = ORGANIZATION_LOGO
+    
+    print('SETTINGS: Perspectives will be saved/loaded from %s'%(
+        SETTINGS.replace('$USER',get_env_variable('USER')).replace('$ORGANIZATION',ORGANIZATION).replace('$GUI_NAME',GUI_NAME)))
     
     SINGLE_INSTANCE = False
 
@@ -178,7 +195,7 @@ try:
 
     #: You can provide an URI for a manual in html format
     #: (comment out or make MANUAL_URI=None to skip creating a Manual panel)
-    MANUAL_URI = '' #URL_HELP #'http://packages.python.org/taurus'
+    MANUAL_URI = URL_HELP #'http://packages.python.org/taurus'
 
     #===============================================================================
     # Define panels to be shown.
@@ -187,17 +204,24 @@ try:
     #===============================================================================
     
     print '>'*20+'Loading Trend panel ... %s'%','.join(GAUGES)
-    trend = PanelDescription('Gauges',
-                        classname = 'vacca.plot.PressureTrend',
-                        model = GAUGES)
+    
+    #: If defined, the default trend will be shown in logarithmic scale
+    GAUGES=GAUGES
+    if GAUGES:
+        trend = PanelDescription('Gauges',
+            classname = 'vacca.plot.PressureTrend',
+            model = GAUGES)
+
+    trends = PanelDescription('Trends',
+        classname = 'vacca.plot.VaccaTrend',
+        model = '')
 
     #: USE_DEVICE_PANEL:  True or False, To Show by default the DevicePanel
     USE_DEVICE_PANEL = USE_DEVICE_PANEL
-
     if USE_DEVICE_PANEL:
-        print '>'*20+'Loading Device panel ...'
+        print '>'*20+'Loading Device panel (%s)...' % DEVICE
         from vacca.panel import VaccaPanel
-        panel = VaccaPanel.getPanelDescription('Device')
+        panel = VaccaPanel.getPanelDescription('Device',model=DEVICE)
 
     #: USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree
     USE_DEVICE_TREE = USE_DEVICE_TREE
@@ -248,9 +272,6 @@ try:
     if JDRAW_FILE:
         print '>'*20+'Loading Synoptic panel new ... %s, %s, %s'%(JDRAW_FILE,
                                                          JDRAW_HOOK, JDRAW_TREE)
-        print '>'*20
-        print '>'*20
-        print '>'*20
         from vacca.synoptics import VaccaSynoptic
         try:
             synoptic = VaccaSynoptic.getPanelDescription('Synoptic',JDRAW_FILE,JDRAW_HOOK,JDRAW_TREE)
@@ -260,7 +281,6 @@ try:
 
     #: GRID:  True/False to show by default ehe GRID Panel.
     GRID = GRID
-
 
     if GRID:
         print '>'*20+'Loading Grid panels ...'
@@ -277,11 +297,12 @@ try:
         except:
             print 'Unable to create Grid'
 
-        try:
-            assert Qt.QApplication.instance(),'QApplication not running!'
-            vgrid = VaccaVerticalGrid.getVerticalGridPanelDescription(GRID)
-        except:
-            print 'Unable to create VerticalGrid'
+        ##VGRID disabled, the Vertical layout should be added as option to common GRID
+        #try:
+            #assert Qt.QApplication.instance(),'QApplication not running!'
+            #vgrid = VaccaVerticalGrid.getVerticalGridPanelDescription(GRID)
+        #except:
+            #print 'Unable to create VerticalGrid'
 
     #: COMPOSER:  True/False to show by default the COMPOSER Panel.
     COMPOSER = COMPOSER
@@ -373,7 +394,7 @@ try:
         #('vacca.plot.PressureTrend',WDIR+'image/PressureTrend.jpg'),
         #('vacca.VacuumGrid',WDIR+'image/BLGrid.jpg'),
         #('vacca.VerticalGrid',WDIR+'image/VerticalGrid.jpg'),
-        ('vacca.properties.VaccaPropTable',wdir('vacca/image/widgets/Properties.png')),
+        ('vacca.properties.VaccaPropTable',vpath('image/widgets/Properties.png')),
         ('fandango.qt.QEvaluator',':/snapshot/large/snapshot/TaurusShell.png'),
         ]
 
@@ -451,55 +472,28 @@ try:
     
     #===============================================================================
 
+    #: 
+    from PyQt4 import Qt
 
+    EXTRA_APPS = EXTRA_APPS
+    """ The Vacca Panels to show in the JogsBar. Use EXTRA_APPS to add launchers to the toolbar.
+    It will create new AppletDescription objects to add elements to the right-side toolbar.
 
-
-
-    #: The Vacca Panels to show in the JogsBar
-    EXTRA_PANELS = {}
-
-    EXTRA_PANELS['Properties'] = {'class' : vacca.VaccaPropTable}
-    EXTRA_PANELS['DevicePanel'] = {'class' : vacca.VaccaPanel}
-    EXTRA_PANELS['Panic']= {'class' : vacca.VaccaPanic       }
-
-    vacca.addCustomPanel2Gui(EXTRA_PANELS)
-
-    # from fandango.qt import Qt
-    # app = Qt.QApplication.instance()
-    # button = TaurusLauncherButton(widget =
-    #                            vacca.properties.VaccaPropTable.getPanelDescription('Properties2'))
-    #
-    # widgets = app.allWidgets()
-    # print widgets
-    # taurusgui = None
-    # for widget in widgets:
-    #     print type(widget)
-    #     widgetType = str(type(widget))
-    #     if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
-    #         taurusgui = widget
-    # taurusgui.jorgsBar.addWidget(button)
-    #
-    # from taurus.external.qt import QtGui
-    # exitAction = QtGui.QAction(QtGui.QIcon(WDIR+'vacca/image/icons/panic.gif'),
-    #                            'vacca.properties.VaccaPropTable.getPanelDescription', app)
-    # #print WDIR
-    # #exitAction.setShortcut('Ctrl+Q')
-    #
-    # def launchProp():
-    #     print "LaunchProp"
-    #     #c = vacca.properties.VaccaPropTable.getPanelDescription('test')
-    #     taurusgui = None
-    #     for widget in widgets:
-    #         widgetType = str(type(widget))
-    #         if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
-    #             taurusgui = widget
-    #     taurusgui.createCustomPanel(vacca.properties.VaccaPropTable.getPanelDescription())
-    #
-    # Qt.QObject.connect(exitAction, SIGNAL("triggered()"),
-    #         launchProp)
-    #
-    # #exitAction.triggered.connect(QtGui.qApp.quit)
-    # taurusgui.jorgsBar.addAction(exitAction)
+    Examples:
+     * EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
+     * EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
+     * EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }
+     * EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }
+    """
+    adder = vacca.addCustomPanel2Gui(EXTRA_APPS)
+    
+    #Forcing nesting of dock widgets
+    if app:
+        try:
+            main = fandango.first((a for a in app.allWidgets() if isinstance(a,Qt.QMainWindow)),default=None)
+            main.setDockNestingEnabled(True)
+        except:
+            traceback.print_exc()
 
     print '>'*20+'Config Finished ...'
     globals()['CONFIG_DONE'] = True

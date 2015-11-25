@@ -39,13 +39,14 @@ class VaccaPanic(AlarmGUI):
     """
 
     @staticmethod
-    def getPanelDescription(name='Panic',model=''):
+    def getPanelDescription(name='PANIC',model=''):
         """
         :param name: Name for Panel
         :param model: Model for the Panel
         :return: Panel Descritption Object
         """
-        return PanelDescription(name,'vacca.vaccaPanic.VaccaPanic',model)
+        return PanelDescription(name,'vacca.alarms.VaccaPanic',
+            model,sharedDataWrite={'HighlightInstruments':'devicesSelected'})
 
     @staticmethod
     def getDefaultIcon():
@@ -64,7 +65,8 @@ class VaccaPanic(AlarmGUI):
         print klass
         i.show()
 
-__doc__ = vacca.get_autodoc(__name__,vars())
+from doc import get_autodoc
+__doc__ = get_autodoc(__name__,vars())
         
 if __name__ == '__main__':
     import sys
