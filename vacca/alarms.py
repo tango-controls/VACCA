@@ -24,6 +24,7 @@
 #############################################################################
 
 import fandango,vacca,traceback
+from vacca.utils import vpath,wdir
 #from panic.gui import AlarmGUI
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 from panic.gui.gui import AlarmGUI
