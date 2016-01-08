@@ -1,0 +1,20 @@
+(dp0
+S'row_labels'
+p1
+S'Vacuum ctrl station 3: (bl11/vc/vgct-04/(P2|State)),Vacuum ctrl station 2: (bl11/vc/vgct-04/(P1|State))|(bl11/vc/ipct-05/(P2|State)),Photon Shutter: (bl11/vc/vgct-03/(P2|State))|(bl11/vc/ipct-05/(P1|State)),Differential Pump 2: (bl11/vc/vgct-03/(P1|State))|(bl11/vc/ipct-04/(P2|State)),Mirrors: (bl11/vc/vgct-02/(P2|State))|(bl11/vc/ipct-04/(P1|State)),Differential Pump 1: (bl11/vc/vgct-02/(P1|State))|(bl11/vc/ipct-03/(P2|State)),Attenuators: (bl11/vc/ipct-03/(P1|State)),DCM: (bl11/vc/vgct-01/(P2|State))|(bl11/vc/ipct-02/(P2|State)),Pumping Station 2: (bl11/vc/ipct-02/(P1|State)),Fixed Mask: (bl11/vc/ipct-01/(P2|State)),Pumping station 1: (bl11/vc/ipct-01/(P1|State)),Vacuum ctrl station 1: (bl11/vc/vgct-01/(P1|State)),Trigger Unit: (fe11/vc/vgct-01/(P1|State))|(fe11/vc/ipct-01/(P1|State))'
+p2
+sS'frames'
+p3
+I00
+sS'model'
+p4
+S'*/VC/(IPCT|VGCT)*/(P[12]|State)'
+p5
+sS'delayed'
+p6
+I00
+sS'column_labels'
+p7
+S'IonPumps(mbar):*IPCT*, VcGauges(mbar):*VGCT*'
+p8
+s.

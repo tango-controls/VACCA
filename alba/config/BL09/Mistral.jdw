@@ -1,0 +1,24 @@
+JDFile v11 {
+  Global {
+  }
+  JDGroup {
+    summit:3,4,1149,368
+    origin:573,182
+    name:"JDGroup"
+    children: {
+      JDRectangle {
+        summit:3,4,1149,368
+        origin:507,177
+        fillStyle:1
+        name:"BL09/VC/ALL"
+      }
+      JDImage {
+        summit:14,13,1141,357
+        origin:773,238
+        lineWidth:0
+        name:"Image"
+        file_name:"image/Mistral.jpg"
+      }
+    }
+  }
+}

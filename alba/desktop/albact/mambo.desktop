@@ -1,0 +1,11 @@
+[Desktop Entry]
+Comment=Mambo, the Archiving Viewer
+Name=Mambo Viewer
+GenericName=Mambo Viewer
+Path=/data/mambo
+Exec=mambo
+Icon=Mambo-icon
+Terminal=false
+Type=Application
+Categories=X-albact;X-albact-general;
+StartupNotify=true

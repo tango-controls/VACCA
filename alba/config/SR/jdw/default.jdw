@@ -1,0 +1,37 @@
+JDFile v11 {
+  Global {
+  }
+  JDGroup {
+    summit:4,5,746,545
+    origin:371,270
+    name:"JDGroup"
+    children: {
+      JDRectangle {
+        summit:4,5,746,545
+        origin:375,275
+        name:"Rectangle"
+      }
+      JDRectangle {
+        summit:11,12,733,534
+        origin:372,273
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:49,207,691,274
+        origin:135,218
+        lineWidth:0
+        name:"Label"
+        font:"Dialog",0,54
+        text:"NO SYNOPTIC SELECTED"
+      }
+      JDLabel {
+        summit:129,285,555,306
+        origin:367,296
+        lineWidth:0
+        name:"Label"
+        text:"please, edit default.rc.py or install a Vacca_XX config package"
+      }
+    }
+  }
+}

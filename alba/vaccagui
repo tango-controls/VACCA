@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# VACuum Control Application for ALBA
+# Usage:
+#    vaccagui [CONFIG] ; tries to open config file with absolute path or relative to the vacca module.
+#
+# With no argument the file default.py or TANGO_HOST.py will be launched as config
+# Both vacca and vaccagui modules must be in PYTHONPATH
+
+source /homelocal/sicilia/etc/SICILIA.rc
+source alba_blissrc
+
+if [ "x$VACCA_CONFIG" = "x" ] && [ "x$1" != "x" ] ; then
+    export VACCA_CONFIG="$1"
+else
+    export VACCA_CONFIG=$VACCA_CONFIG
+fi
+
+#Exporting the folder for config files
+export WORKING_DIR=/homelocal/sicilia/applications/vacca
+export PYTHONPATH=$WORKING_DIR:$PYTHONPATH
+cd $WORKING_DIR
+
+#launcher, may use taurusgui or vacca_run (that strips must of taurusgui application setup)
+#taurusgui --taurus-log-level=DEBUG vaccagui &
+
+python vacca_run.py

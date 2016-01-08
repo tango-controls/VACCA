@@ -1,0 +1,11 @@
+[Desktop Entry]
+Comment=Vacuum Controls Application for ALBA
+Name=Vacuum Controls
+GenericName=Vacuum Controls
+Path=$SICILIA/applications/vacca
+Exec=vacca
+Icon=vacca
+Terminal=false
+Type=Application
+Categories=X-albact;X-albact-vc;
+StartupNotify=true

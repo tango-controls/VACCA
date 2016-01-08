@@ -1,0 +1,227 @@
+JDFile v11 {
+  Global {
+background:255,255,255  }
+  JDRectangle {
+    summit:3,4,361,507
+    origin:221,134
+    name:"Rectangle"
+  }
+  JDGroup {
+    summit:120,239,246,265
+    origin:155.5,45.5
+    name:"LT/VC/IPCT-01"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:"LT/VC/IPCT-01"
+      valuesList:"0 1 0 1"
+    }
+    children: {
+      JDRectangle {
+        summit:120,239,246,265
+        origin:183.4737,252.4815
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:126.6316,243.8148,232.7368,264.037
+        origin:183.4737,254.4074
+        lineWidth:0
+        name:"Label"
+        extensions:{
+          ExtensionsList:"ignoreRepaint"
+        }
+        text:"LT/VC/IPCT-01"
+      }
+    }
+  }
+  JDGroup {
+    summit:32,129,165,156
+    origin:-74.5,-64.5
+    name:"LT/VC/VGCT-01"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:"LT/VC/VGCT-01"
+      valuesList:"0 1 0 1"
+    }
+    children: {
+      JDRectangle {
+        summit:32,129,165,156
+        origin:99,143
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:39,134,159,155
+        origin:99,145
+        lineWidth:0
+        name:"Label"
+        extensions:{
+          ExtensionsList:"ignoreRepaint"
+        }
+        text:"LT/VC/VGCT-01"
+      }
+    }
+  }
+  JDGroup {
+    summit:197,128,330,155
+    origin:90.5,-96.5
+    name:"LT/VC/VGCT-02"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:"LT/VC/VGCT-02"
+      valuesList:"0 1 0 1"
+    }
+    children: {
+      JDRectangle {
+        summit:197,128,330,155
+        origin:264,142
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:204,132,324,153
+        origin:264,143
+        lineWidth:0
+        name:"Label"
+        extensions:{
+          ExtensionsList:"ignoreRepaint"
+        }
+        text:"LT/VC/VGCT-02"
+      }
+    }
+  }
+  JDLabel {
+    summit:30,8,324,33
+    origin:101,19
+    lineWidth:0
+    name:"Label"
+    font:"Dialog",0,18
+    text:"Vacuum Controllers - RKA04A05"
+  }
+  JDImage {
+    summit:144,167,218,230
+    origin:294,95
+    lineWidth:0
+    name:"Image"
+    file_name:"image/VarianDUAL.jpg"
+  }
+  JDImage {
+    summit:44,69,137,121
+    origin:169,52
+    lineWidth:0
+    name:"Image"
+    file_name:"image/mks937.jpg"
+  }
+  JDImage {
+    summit:218,69,311,121
+    origin:343,52
+    lineWidth:0
+    name:"Image"
+    file_name:"image/mks937.jpg"
+  }
+  JDImage {
+    summit:45,404,148,475
+    origin:120,427
+    lineWidth:0
+    name:"Image"
+    file_name:"image/byrplc.jpg"
+  }
+  JDGroup {
+    summit:162,430,326,457
+    origin:68,13.5
+    name:"SR04/VC/EPS-PLC-01"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:"SR04/VC/EPS-PLC-01"
+      valuesList:"0 1 0 1"
+    }
+    children: {
+      JDRectangle {
+        summit:162,430,326,457
+        origin:229,444
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:169,435,322,455
+        origin:229,446
+        lineWidth:0
+        name:"Label"
+        extensions:{
+          ExtensionsList:"ignoreRepaint"
+        }
+        text:"SR04/VC/EPS-PLC-01"
+      }
+    }
+  }
+  JDGroup {
+    summit:32,346,165,373
+    origin:-80.5,142.5
+    name:"LT/VC/SPBX-01"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:"LT/VC/SPBX-01"
+      valuesList:"0 1 0 1"
+    }
+    children: {
+      JDRectangle {
+        summit:32,346,165,373
+        origin:99,360
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:39,351,153,372
+        origin:99,362
+        lineWidth:0
+        name:"Label"
+        extensions:{
+          ExtensionsList:"ignoreRepaint"
+        }
+        text:"LT/VC/SPBX-01"
+      }
+    }
+  }
+  JDGroup {
+    summit:197,345,330,372
+    origin:79.5,44.5
+    name:"LT/VC/SPBX-02"
+    extensions:{
+      className:"atkpanel.MainPanel"
+      classParam:"LT/VC/SPBX-02"
+      valuesList:"0 1 0 1"
+    }
+    children: {
+      JDRectangle {
+        summit:197,345,330,372
+        origin:264,359
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:204,350,318,371
+        origin:264,361
+        lineWidth:0
+        name:"Label"
+        extensions:{
+          ExtensionsList:"ignoreRepaint"
+        }
+        text:"LT/VC/SPBX-02"
+      }
+    }
+  }
+  JDImage {
+    summit:11,279,175,332
+    origin:340,213
+    lineWidth:0
+    name:"Image"
+    file_name:"image/SplitterFront.jpg"
+  }
+  JDImage {
+    summit:183,279,347,332
+    origin:512,213
+    lineWidth:0
+    name:"Image"
+    file_name:"image/SplitterFront.jpg"
+  }
+}

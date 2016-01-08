@@ -1,0 +1,1506 @@
+JDFile v11 {
+  Global {
+background:255,255,255  }
+  JDGroup {
+    summit:2,2,915,588
+    origin:456.5,293
+    name:""
+    children: {
+      JDRectangle {
+        summit:2,2,915,588
+        origin:145.6821,550.6738
+        fillStyle:8
+        name:"SR/VC/ALL"
+        extensions:{
+          className:"noPanel"
+          ExtensionsList:"noTooltip"
+        }
+      }
+      JDRectangle {
+        summit:10,8,907,580
+        origin:429.2983,313.8556
+        fillStyle:1
+        name:""
+      }
+      JDImage {
+        summit:151,8,738,578
+        origin:168,48
+        lineWidth:0
+        name:""
+        file_name:"/homelocal/sicilia/applications/vacca/image/ALBA_VC_ESH2.jpg"
+      }
+    }
+  }
+  JDLabel {
+    summit:15.4705,11,128.4705,32
+    origin:132.5269,19.5027
+    fillStyle:1
+    lineWidth:0
+    name:"SR/VC/ALL"
+    font:"Dialog",3,14
+    text:"Vacuum Status"
+  }
+  JDGroup {
+    summit:138,553,780,576
+    origin:440,547.5
+    name:"JDGroup"
+    children: {
+      JDRectangle {
+        summit:138,556,153,571
+        origin:146,564
+        background:0,255,0
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:156,554,230,575
+        origin:169,565
+        lineWidth:0
+        name:"Label"
+        text:"On/Ready"
+      }
+      JDLabel {
+        summit:304,554,411,575
+        origin:317,565
+        lineWidth:0
+        name:"Label"
+        text:"Fault/Interlock"
+      }
+      JDRectangle {
+        summit:286,556,301,571
+        origin:294,564
+        background:255,0,0
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:253,555,281,576
+        origin:266,566
+        lineWidth:0
+        name:"Label"
+        text:"Off"
+      }
+      JDRectangle {
+        summit:235,557,250,572
+        origin:243,565
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:558,554,654,575
+        origin:571,565
+        lineWidth:0
+        name:"Label"
+        text:"Comms Error"
+      }
+      JDRectangle {
+        summit:540,556,555,571
+        origin:548,564
+        background:204,204,204
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:430,554,540,575
+        origin:443,565
+        lineWidth:0
+        name:"Label"
+        text:"Alarm/Warning"
+      }
+      JDRectangle {
+        summit:412,556,427,571
+        origin:420,564
+        background:255,153,0
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:673,554,716,575
+        origin:686,565
+        lineWidth:0
+        name:"Label"
+        text:"Open"
+      }
+      JDRectangle {
+        summit:655,556,670,571
+        origin:663,564
+        foreground:255,0,255
+        background:0,255,0
+        fillStyle:1
+        name:"Rectangle"
+      }
+      JDLabel {
+        summit:736,553,780,574
+        origin:749,564
+        lineWidth:0
+        name:"Label"
+        text:"Close"
+      }
+      JDRectangle {
+        summit:718,555,733,570
+        origin:726,563
+        foreground:255,0,255
+        fillStyle:1
+        name:"Rectangle"
+      }
+    }
+  }
+  JDPolyline {
+    summit:258,172,269,157,265,154,255,169,257,172
+    origin:263,164
+    fillStyle:1
+    name:"SR14/VC/ALL/SR14_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:283.5944,139.0672,279,136,265,153,268.7204,156.916,268.7204,156.916
+    origin:274.67,147
+    fillStyle:1
+    name:"SR14/VC/ALL/SR14_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:258,172,255,169,238,197,241,199,243,200
+    origin:249,186
+    fillStyle:1
+    name:"SR14/VC/ALL/SR14_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:294,128,290,125,280,136,284,139,284,139
+    origin:288,133
+    fillStyle:1
+    name:"SR14/VC/ALL/SR14_VC_CCG-04"
+  }
+  JDPolyline {
+    summit:291,128,294,128,322,107,319,103,290,125
+    origin:307,116
+    fillStyle:1
+    name:"SR15/VC/ALL/SR15_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:354,89,352,84,318,103,319,104,322,106
+    origin:337,96
+    fillStyle:1
+    name:"SR15/VC/ALL/SR15_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:368,78,370,82,355,89,354,88,352,84
+    origin:361,84
+    fillStyle:1
+    name:"SR15/VC/ALL/SR15_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:396,76,395,71,368,78,370,82,370,82
+    origin:383,77
+    fillStyle:1
+    name:"SR16/VC/ALL/SR16_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:441,70,440,65,395,71,396,74,396,76
+    origin:418,70
+    fillStyle:1
+    name:"SR16/VC/ALL/SR16_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:463,65,463,70,441,70,439,67,441,65
+    origin:452,68
+    fillStyle:1
+    name:"SR16/VC/ALL/SR16_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:526,86,527,82,503,74,502,76,501,78
+    origin:515,80
+    fillStyle:1
+    name:"SR01/VC/ALL/SR01_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:462,65,462,70,501,78,502,76,503,74
+    origin:483,71
+    fillStyle:1
+    name:"SR01/VC/ALL/SR01_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:535,90,536,86,527,82,525,83,525,86
+    origin:531,87
+    fillStyle:1
+    name:"SR01/VC/ALL/SR01_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:564,107,567,103,537,86,534,88,535,90
+    origin:551,97
+    fillStyle:1
+    name:"SR02/VC/ALL/SR02_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:574,114,576,110,567,104,563,107,564,107
+    origin:570,109
+    fillStyle:1
+    name:"SR02/VC/ALL/SR02_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:598,135,601,132,578,112,578,114,575,115
+    origin:588,123
+    fillStyle:1
+    name:"SR02/VC/ALL/SR02_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:607,144,611,141,602,132,602,132,597,134
+    origin:604,138
+    fillStyle:1
+    name:"SR02/VC/ALL/SR02_VC_CCG-04"
+  }
+  JDPolyline {
+    summit:454,148,454,153,467,154,481,157,492,161,503,166,514,171,527,180,535,186,544,195,548,200,557,212,558,212,561,209,554,199,549,193,540,184,529,175,520,168,508,162,496,157,482,152,465,149,454,148
+    origin:508,180
+    fillStyle:1
+    name:"BO/VC/ALL/BO01_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:583,295,588,294,588,286,587,276,585,265,583,257,581,250,578,240,573,228,566,216,561,209,557,212,562,219,565,225,568,230,572,239,575,248,577,255,579,262,581,270,583,284,583,294
+    origin:573,253
+    fillStyle:1
+    name:"BO/VC/ALL/BO01_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:526,256,530,253,545,267,544,270,543,271
+    origin:536,262
+    fillStyle:1
+    name:"LT/VC/ALL/LT01_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:564,290,567,287,545,267,541,271,542,270
+    origin:555,279
+    fillStyle:1
+    name:"LT/VC/ALL/LT01_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:584,302,584,308,564,291,565,289,567,287
+    origin:575,297
+    fillStyle:1
+    name:"LT/VC/ALL/LT01_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:551,296,552,295,546,274,541,270,548,297
+    origin:547,283
+    fillStyle:1
+    name:"LT/VC/ALL/LT02_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:583,295,588,296,588,317,583,317,583,305
+    origin:585,301
+    fillStyle:1
+    name:"BO/VC/ALL/BO01_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:539,401,542,405,548,399,557,389,563,381,569,371,572,366,575,359,578,352,581,345,585,333,587,322,587,317,586,317,583,317,582,324,581,329,578,340,575,348,571,357,566,367,560,377,549,391
+    origin:563,360
+    fillStyle:1
+    name:"BO/VC/ALL/BO02_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:444,440,444,445,464,444,474,442,491,437,507,430,515,426,525,419,534,412,542,405,539,401,531,409,522,416,514,421,502,427,492,432,482,435,473,437,464,439,452,440
+    origin:492,422
+    fillStyle:1
+    name:"BO/VC/ALL/BO02_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:341,401,344,396,350,402,360,411,373,420,384,426,392,430,402,434,417,438,433,440,443,440,443,439,444,445,433,445,421,444,411,442,403,440,395,436,386,432,374,426,362,419,353,412,347,407,343,403
+    origin:392,421
+    fillStyle:1
+    name:"BO/VC/ALL/BO03_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:300,294,304,295,304,306,305,322,307,331,308,336,313,349,316,357,321,367,336,388,345,397,341,401,333,392,326,383,315,366,309,352,304,338,302,332,300,323,299,314,299,308,299,302,299,299
+    origin:322,348
+    fillStyle:1
+    name:"BO/VC/ALL/BO03_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:332,200,335,204,328,214,322,224,317,234,313,243,310,251,307,262,305,276,304,288,304,296,299,295,299,286,300,275,302,260,305,250,310,238,314,230,318,221,326,209,330,204,330,204
+    origin:317,248
+    fillStyle:1
+    name:"BO/VC/ALL/BO04_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:351,182,353,184,355,185,348,191,341,198,336,204,331,202,339,193,346,186,351,182
+    origin:342,193
+    fillStyle:1
+    name:"BO/VC/ALL/BO04_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:393,158,395,161,381,168,374,172,365,178,360,182,354,186,351,182,356,178,364,173,377,165,383,162,389,159
+    origin:373,171
+    fillStyle:1
+    name:"BO/VC/ALL/BO04_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:436,148,436,153,455,153,454,148,440,148
+    origin:445,150
+    fillStyle:1
+    name:"BO/VC/ALL/BO04_VC_CCG-05"
+  }
+  JDPolyline {
+    summit:393,157,396,161,406,158,418,155,433,153,436,153,436,148,425,149,409,152,405,153,401,154
+    origin:415,154
+    fillStyle:1
+    name:"BO/VC/ALL/BO04_VC_CCG-04"
+  }
+  JDPolyline {
+    summit:419,101,424,105,369,170,368,169,352,181
+    origin:395,135
+    fillStyle:1
+    name:"BT/VC/ALL/BT_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:450,73,445,70,418,102,422,103,424,105
+    origin:434,87
+    fillStyle:1
+    name:"BT/VC/ALL/BT_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:494,66,494,69,484,69,474,68,463,67
+    origin:479,68
+    fillStyle:1
+    name:"FE01/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:537,66,535,70,494,69,494,66,494,66
+    origin:515,68
+    fillStyle:1
+    name:"FE01/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:491,45,491,50,444,61,441,60,442,57
+    origin:467,54
+    fillStyle:1
+    name:"FE34/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:395,71,423,67,445,61,444,60,443,57
+    origin:421,66
+    fillStyle:1
+    name:"FE34/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:287.56,121.56,296,130
+    origin:293.48,126
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR14/VC/ALL/SR14_VC_SPNV-04"
+  }
+  JDEllipse {
+    summit:349.56,82.56,356.96,89.96
+    origin:355.48,87
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR15/VC/ALL/SR15_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:363.56,75.56,373,84
+    origin:369.48,80
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR15/VC/ALL/SR15_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:436,64,443,71
+    origin:441,69
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR16/VC/ALL/SR16_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:457,63,466,72
+    origin:464,68
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR16/VC/ALL/SR16_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:520.56,79.56,529.44,86.96
+    origin:526.48,84
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR01/VC/ALL/SR01_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:530.56,82.56,540,92
+    origin:533.52,87
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR01/VC/ALL/SR01_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:560.56,100.56,569.44,107.96
+    origin:566.48,105
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR02/VC/ALL/SR02_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:252.56,166.56,259.96,173.96
+    origin:258.48,171
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR14/VC/ALL/SR14_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:262.56,151.56,269.96,158.96
+    origin:268.48,156
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR14/VC/ALL/SR14_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:277.56,133.56,284.96,140.96
+    origin:283.48,138
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR14/VC/ALL/SR14_VC_SPNV-03"
+  }
+  JDEllipse {
+    summit:448,145,457,154
+    origin:452,148
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BO/VC/ALL/BO01_VC_PNV-01"
+  }
+  JDEllipse {
+    summit:581,290,589.96,298.96
+    origin:588.48,296
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BO/VC/ALL/BO01_VC_PNV-02"
+  }
+  JDEllipse {
+    summit:578,300.56,586.96,309
+    origin:585.48,305
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"LT/VC/ALL/LT01_VC_PNV-04"
+  }
+  JDEllipse {
+    summit:561.56,284.56,570,293
+    origin:567.48,289
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"LT/VC/ALL/LT01_VC_PNV-03"
+  }
+  JDEllipse {
+    summit:539.56,264.56,548,273
+    origin:545.48,269
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"LT/VC/ALL/LT01_VC_PNV-02"
+  }
+  JDEllipse {
+    summit:522.56,248.56,531,257
+    origin:528.48,253
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"LT/VC/ALL/LT01_VC_PNV-01"
+  }
+  JDEllipse {
+    summit:389,154,398,163
+    origin:393,157
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BO/VC/ALL/BO04_VC_PNV-02"
+  }
+  JDEllipse {
+    summit:361,164,370,173
+    origin:368,170
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BT/VC/ALL/BT_VC_PNV-01"
+  }
+  JDEllipse {
+    summit:328,197,338,206
+    origin:332,200
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BO/VC/ALL/BO04_VC_PNV-01"
+  }
+  JDEllipse {
+    summit:295.56,291,305,300
+    origin:301.48,297
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BO/VC/ALL/BO03_VC_PNV-01"
+  }
+  JDEllipse {
+    summit:439,438,448,446.96
+    origin:447.48,444
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BO/VC/ALL/BO02_VC_PNV-02"
+  }
+  JDEllipse {
+    summit:581,313,589,321
+    origin:587.48,318
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BO/VC/ALL/BO02_VC_PNV-01"
+  }
+  JDEllipse {
+    summit:443.08,66,453,75.44
+    origin:449,69.52
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BT/VC/ALL/BT_VC_PNV-02"
+  }
+  JDEllipse {
+    summit:486.44,43.44,495.56,51.04
+    origin:492.52,48
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"FE34/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:530.56,64.56,539.44,71.96
+    origin:536.48,69
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"FE01/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:438.375,55.5,449.625,55.5,444,63,440.25,58.5
+    origin:444,60
+    background:51,255,51
+    fillStyle:1
+    lineWidth:0
+    name:"FE34/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:489.375,63.965,500.625,63.965,495,73.19,491.25,67.655
+    origin:495,69.5
+    background:51,255,51
+    fillStyle:1
+    lineWidth:0
+    name:"FE01/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:571.56,107.56,580.44,114.96
+    origin:577.48,112
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR02/VC/ALL/SR02_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:594.56,128.56,603.44,135.96
+    origin:600.48,133
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR02/VC/ALL/SR02_VC_SPNV-03"
+  }
+  JDPolyline {
+    summit:606,143,613,150,620,159,626,168,630,165,620,152,609,141,609,141
+    origin:618,155
+    fillStyle:1
+    name:"SR03/VC/ALL/SR03_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:632,179,637,176,630,165,626,168,626,168
+    origin:632,172
+    fillStyle:1
+    name:"SR03/VC/ALL/SR03_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:645,203,650,201,637,176,632,179,633,180
+    origin:641,190
+    fillStyle:1
+    name:"SR03/VC/ALL/SR03_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:651,219,656,218,650,201,645,203,645,203
+    origin:651,211
+    fillStyle:1
+    name:"SR03/VC/ALL/SR03_VC_CCG-04"
+  }
+  JDPolyline {
+    summit:659,251,664,250,656,218,651,220,655,234
+    origin:657,235
+    fillStyle:1
+    name:"SR04/VC/ALL/SR04_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:663,283,668,283,664,250,659,251,659,251
+    origin:664,267
+    fillStyle:1
+    name:"SR04/VC/ALL/SR04_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:664,300,668,300,668,283,663,283,663,283
+    origin:666,292
+    fillStyle:1
+    name:"SR04/VC/ALL/SR04_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:663,315,667,315,668,300,664,300,664,300
+    origin:666,307
+    fillStyle:1
+    name:"SR04/VC/ALL/SR04_VC_CCG-04"
+  }
+  JDPolyline {
+    summit:655,356,659,358,664,337,667,316,663,315,661,331,655,356
+    origin:661,337
+    fillStyle:1
+    name:"SR05/VC/ALL/SR05_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:650,373,654,375,659,358,655,356,651,368
+    origin:655,366
+    fillStyle:1
+    name:"SR05/VC/ALL/SR05_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:648,390,648,390,653,375,650,373,644,388
+    origin:648,382
+    fillStyle:1
+    name:"SR05/VC/ALL/SR05_VC_CCG-03"
+  }
+  JDEllipse {
+    summit:603,137.56,612.44,146
+    origin:609.48,142
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR02/VC/ALL/SR02_VC_SPNV-04"
+  }
+  JDEllipse {
+    summit:622.56,162.56,631.44,169.96
+    origin:628.48,167
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR03/VC/ALL/SR03_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:629.56,174.56,638.44,181.96
+    origin:635.48,179
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR03/VC/ALL/SR03_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:641.56,197.56,650.44,204.96
+    origin:647.48,202
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR03/VC/ALL/SR03_VC_SPNV-03"
+  }
+  JDEllipse {
+    summit:648,212.56,657.44,221
+    origin:654.48,217
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR03/VC/ALL/SR03_VC_SPNV-04"
+  }
+  JDEllipse {
+    summit:660.56,278.56,669.44,285.96
+    origin:666.48,283
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR04/VC/ALL/SR04_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:660,310.56,669.44,319
+    origin:666.48,315
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR04/VC/ALL/SR04_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:647.56,368.56,656.44,375.96
+    origin:653.48,373
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR05/VC/ALL/SR05_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:430,145,439,154
+    origin:436,148
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"BO/VC/ALL/BO04_VC_PNV-03"
+  }
+  JDPolyline {
+    summit:630,415,634,417,648,391,644,389,630,414,634,417
+    origin:639,403
+    fillStyle:1
+    name:"SR06/VC/ALL/SR06_VC_CCG-01"
+  }
+  JDEllipse {
+    summit:641,386,650.44,394.96
+    origin:647.48,392
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR05/VC/ALL/SR05_VC_SPNV-02"
+  }
+  JDPolyline {
+    summit:620,428,624,431,634,417,630,414,630,414
+    origin:627,423
+    fillStyle:1
+    name:"SR06/VC/ALL/SR06_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:603,449,607,453,624,431,620,428,603,449
+    origin:614,441
+    fillStyle:1
+    name:"SR06/VC/ALL/SR06_VC_CCG-05"
+  }
+  JDPolyline {
+    summit:590,461,594,465,607,453,603,449,599,452
+    origin:599,457
+    fillStyle:1
+    name:"SR06/VC/ALL/SR06_VC_CCG-06"
+  }
+  JDPolyline {
+    summit:556,487,559,492,594,465,590,461,556,487,558,490,559,492
+    origin:575,477
+    fillStyle:1
+    name:"SR07/VC/ALL/SR07_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:533,500,536,504,559,492,556,487,556,487
+    origin:546,496
+    fillStyle:1
+    name:"SR07/VC/ALL/SR07_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:514,507,517,513,535,504,533,500,533,500
+    origin:525,507
+    fillStyle:1
+    name:"SR07/VC/ALL/SR07_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:482,516,483,521,516,513,513,507,513,508
+    origin:499,514
+    fillStyle:1
+    name:"SR08/VC/ALL/SR08_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:451,519,452,525,482,521,482,515,482,515
+    origin:467,520
+    fillStyle:1
+    name:"SR08/VC/ALL/SR08_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:421,519,421,525,451,525,451,519,451,519
+    origin:436,522
+    fillStyle:1
+    name:"SR08/VC/ALL/SR08_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:393,514,392,519,421,525,421,518,421,518
+    origin:407,520
+    fillStyle:1
+    name:"SR09/VC/ALL/SR09_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:366,506,364,511,392,519,393,514,393,514
+    origin:379,513
+    fillStyle:1
+    name:"SR09/VC/ALL/SR09_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:349,499,347,504,364,511,365,506,365,506
+    origin:356,505
+    fillStyle:1
+    name:"SR09/VC/ALL/SR09_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:322,484,320,489,347,504,349,499,349,499
+    origin:335,494
+    fillStyle:1
+    name:"SR10/VC/ALL/SR10_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:304,477,308,473,322,484,320,489,320,489
+    origin:313,481
+    fillStyle:1
+    name:"SR10/VC/ALL/SR10_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:285,461,290,457,308,473,304,477,287,462
+    origin:297,467
+    fillStyle:1
+    name:"SR10/VC/ALL/SR10_VC_CCG-05"
+  }
+  JDPolyline {
+    summit:275,449,279,446,290,457,285,461,285,461
+    origin:283,454
+    fillStyle:1
+    name:"SR10/VC/ALL/SR10_VC_CCG-06"
+  }
+  JDPolyline {
+    summit:252,420,258,417,278,445,275,449,253,421
+    origin:265,433
+    fillStyle:1
+    name:"SR11/VC/ALL/SR11_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:236,389,242,387,258,417,252,420,252,420
+    origin:247,404
+    fillStyle:1
+    name:"SR11/VC/ALL/SR11_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:229,371,234,369,242,387,236,389,236,389
+    origin:236,379
+    fillStyle:1
+    name:"SR11/VC/ALL/SR11_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:218,325,223,325,234,369,229,371,229,371
+    origin:226,348
+    fillStyle:1
+    name:"SR12/VC/ALL/SR12_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:215,294,222,294,223,326,218,325,218,325
+    origin:219,310
+    fillStyle:1
+    name:"SR12/VC/ALL/SR12_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:217,274,224,274,222,294,216,294,217,279
+    origin:220,284
+    fillStyle:1
+    name:"SR12/VC/ALL/SR12_VC_CCG-03"
+  }
+  JDPolyline {
+    summit:222,241,227,242,224,274,218,274,221,254
+    origin:223,258
+    fillStyle:1
+    name:"SR13/VC/ALL/SR13_VC_CCG-01"
+  }
+  JDPolyline {
+    summit:231,210,236,213,227,242,222,241,222,241
+    origin:229,2260
+    fillStyle:1
+    name:"SR13/VC/ALL/SR13_VC_CCG-02"
+  }
+  JDPolyline {
+    summit:237,198,242,200,236,213,231,210,235,202
+    origin:237,207
+    fillStyle:1
+    name:"SR13/VC/ALL/SR13_VC_CCG-03"
+  }
+  JDEllipse {
+    summit:234.56,193.56,243,202
+    origin:240.48,198
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR13/VC/ALL/SR13_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:617.56,425.56,624.96,432.96
+    origin:623.48,430
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR06/VC/ALL/SR06_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:600.56,446.56,607.96,453.96
+    origin:606.48,451
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR06/VC/ALL/SR06_VC_SPNV-03"
+  }
+  JDEllipse {
+    summit:586,459,594.96,467.96
+    origin:593.48,465
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR06/VC/ALL/SR06_VC_SPNV-04"
+  }
+  JDEllipse {
+    summit:530.56,497.56,537.96,504.96
+    origin:536.48,502
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR07/VC/ALL/SR07_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:511,504.56,519.96,513
+    origin:518.48,509
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR07/VC/ALL/SR07_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:447.56,517.56,454.96,524.96
+    origin:453.48,522
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR08/VC/ALL/SR08_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:417,517,426,526
+    origin:423.48,522
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR08/VC/ALL/SR08_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:361.56,504.56,368.96,511.96
+    origin:367.48,509
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR09/VC/ALL/SR09_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:344,497,353.96,506.96
+    origin:352.48,504
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR09/VC/ALL/SR09_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:316.56,481.56,323.96,488.96
+    origin:322.48,486
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR10/VC/ALL/SR10_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:302.56,471.56,309.96,478.96
+    origin:308.48,476
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR10/VC/ALL/SR10_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:283.56,455.56,290.96,462.96
+    origin:289.48,460
+    background:255,0,0
+    fillStyle:1
+    name:"SR10/VC/ALL/SR10_VC_SPNV-03"
+  }
+  JDEllipse {
+    summit:272.56,442.56,282,452
+    origin:278.48,447
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR10/VC/ALL/SR10_VC_SPNV-04"
+  }
+  JDEllipse {
+    summit:234.56,383.56,241.96,390.96
+    origin:240.48,388
+    background:255,0,0
+    fillStyle:1
+    name:"SR11/VC/ALL/SR11_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:226.56,364.56,236,374
+    origin:232.48,369
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR11/VC/ALL/SR11_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:214.56,290.56,221.96,297.96
+    origin:220.48,295
+    background:255,0,0
+    fillStyle:1
+    name:"SR12/VC/ALL/SR12_VC_SPNV-01"
+  }
+  JDEllipse {
+    summit:215.56,268.56,225,278
+    origin:221.48,273
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR12/VC/ALL/SR12_VC_SPNV-02"
+  }
+  JDEllipse {
+    summit:229.56,207.56,236.96,214.96
+    origin:235.48,212
+    background:255,0,0
+    fillStyle:1
+    name:"SR13/VC/ALL/SR13_VC_SPNV-01"
+  }
+  JDLabel {
+    summit:499,211,542,232
+    origin:521,222
+    lineWidth:0
+    name:"BO01/VC/ALL"
+    text:"BO01"
+  }
+  JDLabel {
+    summit:353,212,421,233
+    origin:375,223
+    lineWidth:0
+    name:"BO04/VC/ALL"
+    text:"BO04-RF"
+  }
+  JDLabel {
+    summit:500,369,543,390
+    origin:522,380
+    lineWidth:0
+    name:"BO02/VC/ALL"
+    text:"BO02"
+  }
+  JDLabel {
+    summit:350,369,393,390
+    origin:372,380
+    lineWidth:0
+    name:"BO03/VC/ALL"
+    text:"BO03"
+  }
+  JDLabel {
+    summit:514,278,537,299
+    origin:536,289
+    lineWidth:0
+    name:"LT/VC/ALL"
+    text:"LT"
+  }
+  JDLabel {
+    summit:474,91,515,112
+    origin:496,102
+    lineWidth:0
+    name:"SR01/VC/ALL"
+    text:"SR01"
+  }
+  JDLabel {
+    summit:611,267,652,288
+    origin:633,278
+    lineWidth:0
+    name:"SR04/VC/ALL"
+    text:"SR04"
+  }
+  JDLabel {
+    summit:599,335,640,356
+    origin:621,346
+    lineWidth:0
+    name:"SR05/VC/ALL"
+    text:"SR05"
+  }
+  JDLabel {
+    summit:533,130,574,151
+    origin:555,141
+    lineWidth:0
+    name:"SR02/VC/ALL"
+    text:"SR02"
+  }
+  JDLabel {
+    summit:575,187,616,208
+    origin:597,198
+    lineWidth:0
+    name:"SR03/VC/ALL"
+    text:"SR03"
+  }
+  JDLabel {
+    summit:556,393,621,414
+    origin:578,404
+    lineWidth:0
+    name:"SR06/VC/ALL"
+    text:"SR06-RF"
+  }
+  JDLabel {
+    summit:511,447,552,468
+    origin:533,458
+    lineWidth:0
+    name:"SR07/VC/ALL"
+    text:"SR07"
+  }
+  JDLabel {
+    summit:443,469,484,490
+    origin:465,480
+    lineWidth:0
+    name:"SR08/VC/ALL"
+    text:"SR08"
+  }
+  JDLabel {
+    summit:376,464,417,485
+    origin:398,475
+    lineWidth:0
+    name:"SR09/VC/ALL"
+    text:"SR09"
+  }
+  JDLabel {
+    summit:313,434,378,455
+    origin:335,445
+    lineWidth:0
+    name:"SR10/VC/ALL"
+    text:"SR10-RF"
+  }
+  JDLabel {
+    summit:248,305,289,326
+    origin:270,316
+    lineWidth:0
+    name:"SR12/VC/ALL"
+    text:"SR12"
+  }
+  JDLabel {
+    summit:251,238,292,259
+    origin:273,249
+    lineWidth:0
+    name:"SR13/VC/ALL"
+    text:"SR13"
+  }
+  JDLabel {
+    summit:276,177,341,198
+    origin:298,188
+    lineWidth:0
+    name:"SR14/VC/ALL"
+    text:"SR14-RF"
+  }
+  JDLabel {
+    summit:328,126,369,147
+    origin:350,137
+    lineWidth:0
+    name:"SR15/VC/ALL"
+    text:"SR15"
+  }
+  JDLabel {
+    summit:376,87,417,108
+    origin:398,98
+    lineWidth:0
+    name:"SR16/VC/ALL"
+    text:"SR16"
+  }
+  JDLabel {
+    summit:267,381,308,402
+    origin:289,392
+    lineWidth:0
+    name:"SR11/VC/ALL"
+    text:"SR11"
+  }
+  JDLabel {
+    summit:406,123,429,144
+    origin:428,134
+    lineWidth:0
+    name:"BT/VC/ALL"
+    text:"BT"
+  }
+  JDLabel {
+    summit:528,23,567,44
+    origin:550,34
+    lineWidth:0
+    name:"FE34/EPS/PLC-01"
+    text:"FE34"
+  }
+  JDLabel {
+    summit:559,45,598,66
+    origin:581,56
+    lineWidth:0
+    name:"FE34/EPS/PLC-01"
+    text:"FE01"
+  }
+  JDLabel {
+    summit:684,192,723,213
+    origin:706,203
+    lineWidth:0
+    name:"FE04/EPS/PLC-01"
+    text:"FE04"
+  }
+  JDLabel {
+    summit:673,416,712,437
+    origin:695,427
+    lineWidth:0
+    name:"FE09/EPS/PLC-01"
+    text:"FE09"
+  }
+  JDLabel {
+    summit:620,481,659,502
+    origin:642,492
+    lineWidth:0
+    name:"FE11/EPS/PLC-01"
+    text:"FE11"
+  }
+  JDLabel {
+    summit:582,527,621,548
+    origin:604,538
+    lineWidth:0
+    name:"FE13/EPS/PLC-01"
+    text:"FE13"
+  }
+  JDLabel {
+    summit:149,385,188,406
+    origin:171,396
+    lineWidth:0
+    name:"FE22/EPS/PLC-01"
+    text:"FE22"
+  }
+  JDLabel {
+    summit:140,266,179,287
+    origin:162,277
+    lineWidth:0
+    name:"FE24/EPS/PLC-01"
+    text:"FE24"
+  }
+  JDLabel {
+    summit:218,90,257,111
+    origin:240,101
+    lineWidth:0
+    name:"FE29/EPS/PLC-01"
+    text:"FE29"
+  }
+  JDPolyline {
+    summit:620,152,629,162,657,188,660,184,621,153,621,153
+    origin:640,170
+    fillStyle:1
+    name:"FE04/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:621.375,150.965,632.625,150.965,627,160.19,623.25,154.655
+    origin:627,156.5
+    background:51,255,51
+    fillStyle:1
+    name:"FE04/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:653.56,181.56,662.44,188.96
+    origin:659.48,186
+    background:255,0,0
+    fillStyle:1
+    name:"FE04/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:664,337,660,352,655,405,661,405,663,346
+    origin:660,371
+    fillStyle:1
+    name:"FE09/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:652.56,401.56,663,411
+    origin:658.48,406
+    background:255,0,0
+    fillStyle:1
+    name:"FE09/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:657.375,354.965,668.625,354.965,663,364.19,659.25,358.655
+    origin:663,360.5
+    background:51,255,51
+    fillStyle:1
+    name:"FE09/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:618,458,625,460,644,398,635,415,635,415
+    origin:631,429
+    fillStyle:1
+    name:"FE11/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:616.56,455.56,626,465
+    origin:622.48,460
+    background:255,0,0
+    fillStyle:1
+    name:"FE11/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:627.56,410.56,634.96,417.96
+    origin:633.48,415
+    background:255,0,0
+    fillStyle:1
+    lineWidth:0
+    name:"SR06/VC/ALL/SR06_VC_SPNV-01"
+  }
+  JDPolyline {
+    summit:630.375,421.965,641.625,421.965,636,431.19,632.25,425.655
+    origin:636,427.5
+    background:51,255,51
+    fillStyle:1
+    name:"FE11/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:530,521,535,526,586,471,566,486,566,486
+    origin:558,499
+    name:"FE13/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:563.375,486.965,574.625,486.965,569,496.19,565.25,490.655
+    origin:569,492.5
+    background:51,255,51
+    fillStyle:1
+    name:"FE13/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:526,519.56,537.44,529
+    origin:534.48,524
+    background:255,0,0
+    fillStyle:1
+    name:"FE13/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:215,393,218,389,261,431,270,443,270,443
+    origin:243,416
+    fillStyle:1
+    name:"FE22/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:249.375,424.965,260.625,424.965,255,434.19,251.25,428.655
+    origin:255,430.5
+    background:51,255,51
+    fillStyle:1
+    name:"FE22/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:210.56,384.56,219.44,391.96
+    origin:216.48,389
+    background:255,0,0
+    fillStyle:1
+    name:"FE22/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:225,357,221,338,203,290,197,293,226,362
+    origin:211,325
+    fillStyle:1
+    name:"FE24/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:209.375,325.965,220.625,325.965,215,335.19,211.25,329.655
+    origin:215,331.5
+    background:51,255,51
+    fillStyle:1
+    name:"FE24/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:195.56,287.56,204.44,294.96
+    origin:201.48,292
+    background:255,0,0
+    fillStyle:1
+    name:"FE24/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:260,116,267,118,248,180,240,193,260,117
+    origin:254,155
+    fillStyle:1
+    name:"FE29/EPS/PLC-01"
+  }
+  JDPolyline {
+    summit:244.375,156.965,255.625,156.965,250,166.19,246.25,160.655
+    origin:250,162.5
+    background:51,255,51
+    fillStyle:1
+    name:"FE29/EPS/PLC-01"
+  }
+  JDEllipse {
+    summit:258.56,114.56,267.44,121.96
+    origin:264.48,119
+    background:255,0,0
+    fillStyle:1
+    name:"FE29/EPS/PLC-01"
+  }
+  JDLabel {
+    summit:607,365,646,386
+    origin:629,376
+    lineWidth:0
+    name:"ID11/VC/ALL"
+    font:"Dialog",0,14
+    text:"ID11"
+  }
+  JDLabel {
+    summit:566,428,605,449
+    origin:588,439
+    lineWidth:0
+    name:"ID13/VC/ALL"
+    font:"Dialog",0,14
+    text:"ID13"
+  }
+  JDLabel {
+    summit:593,113,669,134
+    origin:615,124
+    lineWidth:0
+    name:"ID04/VC/ALL"
+    font:"Dialog",0,14
+    text:"ID04-SCW"
+  }
+  JDSwingObject {
+    summit:779,64,846,79
+    origin:813,72
+    fillStyle:1
+    lineWidth:0
+    name:"BO/DI/DCCT/AverageCurrent"
+    extensions:{
+      unitVisible:"true"
+      userFormat:""
+      alarmEnabled:"true"
+      validBackground:"0,255,0"
+      invalidText:"-----"
+    }
+    className:"fr.esrf.tangoatk.widget.attribute.SimpleScalarViewer"
+    font:"SansSerif",0,12
+  }
+  JDSwingObject {
+    summit:778,103,845,118
+    origin:812,111
+    fillStyle:1
+    lineWidth:0
+    name:"SR/DI/DCCT/AverageCurrent"
+    extensions:{
+      unitVisible:"true"
+      userFormat:""
+      alarmEnabled:"true"
+      validBackground:"0,255,0"
+      invalidText:"-----"
+    }
+    className:"fr.esrf.tangoatk.widget.attribute.SimpleScalarViewer"
+    font:"SansSerif",0,12
+  }
+  JDLabel {
+    summit:776,45,857,66
+    origin:817,56
+    lineWidth:0
+    name:"Label"
+    text:"BO Current"
+  }
+  JDLabel {
+    summit:776,84,855,105
+    origin:816,95
+    lineWidth:0
+    name:"Label"
+    text:"SR Current"
+  }
+}

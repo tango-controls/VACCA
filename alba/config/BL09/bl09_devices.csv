@@ -1,0 +1,559 @@
+server	class	device	property	value
+AlbaPLC/BL09_CT_EPS	AlbaPLC	bl09/ct/eps-plc-01	ModbusTimeWait	200
+			Retries	3
+			_Location	BL09-CT-PLC-RKX09A01-01
+			_Requires	BL09/CT/EPS-PLC-01-MBUS
+			Offsets	
+			DynamicAttributes	#Alberto, arubio@cells.es 
+				#BL09 MISTRAL, Equipment Protection System
+				#Main Lists to be accessed from the PLC
+				
+				#Individual Attributes
+				PLC_CONFIG_Status=DevString(READ and Denary2Binary(DigitalsREAD[0]) or WRITE and WriteInt(1,Binary2Denary(VALUE)))
+				PLC_CONFIG_RESET = (WRITE and WriteFlag(1,0,VALUE))
+				PLC_CONFIG_WARN = Bit(DigitalsREAD[0],4)
+				PLC_CONFIG_ALRM = Bit(DigitalsREAD[0],2)
+				
+				# CONTROL FRONT END
+				fe_close_first_valve=Bit(DigitalsREAD[52],1)
+				fe_control_disabled=Bit(DigitalsREAD[53],1)
+				fe_interlock=Bit(DigitalsREAD[51],1)
+				fe_open=Bit(DigitalsREAD[50],1)
+				BL_READY=Bit(DigitalsREAD[54],1)
+				OPEN_FE = DevBoolean(READ and Bit(DigitalsREAD[0],5) or WRITE and WriteFlag(1,5,VALUE))
+				CLOSE_FE = DevBoolean(READ and Bit(DigitalsREAD[0],6) or WRITE and WriteFlag(1,6,VALUE))
+				RESET_FE = DevBoolean(READ and Bit(DigitalsREAD[0],7) or WRITE and WriteFlag(1,7,VALUE))
+				
+				#RGA
+				mir_oh01_01_rga=DevBoolean(READ and Bit(DigitalsREAD[49],0) or WRITE and WriteFlag(49,0,VALUE))
+				mir_oh01_02_rga=DevBoolean(READ and Bit(DigitalsREAD[49],1) or WRITE and WriteFlag(49,1,VALUE))
+				mono_rga=DevBoolean(READ and Bit(DigitalsREAD[49],2) or WRITE and WriteFlag(49,2,VALUE))
+				
+				
+				# AIR
+				paas_in=IeeeFloat([int(a) for a in AnalogRealsREAD[1:1+2]])
+				paas_out=IeeeFloat([int(a) for a in AnalogRealsREAD[4:4+2]])
+				paas_do=DevBoolean(READ and Bit(DigitalsREAD[70],5) or WRITE and WriteFlag(410,5,(VALUE)))
+				
+				#MISTRAL MIRROR 1 LIMIT SWITCHES 
+				mir_oh01_01_roll_neg=Bit(DigitalsREAD[84],1)
+				mir_oh01_01_roll_pos=Bit(DigitalsREAD[85],1)
+				mir_oh01_01_yaw_neg=Bit(DigitalsREAD[86],1)
+				mir_oh01_01_yaw_pos=Bit(DigitalsREAD[87],1)
+				mir_oh01_01_pitch_neg=Bit(DigitalsREAD[82],1)
+				mir_oh01_01_pitch_pos=Bit(DigitalsREAD[83],1)
+				#MISTRAL ICEPAP INTERLOCKS
+				Ipap_Ena_01=DevBoolean(READ and Bit(DigitalsREAD[88],5) or WRITE and WriteFlag(428,5,(VALUE)))
+				Ipap_Itlk_01=Bit(DigitalsREAD[89],1)
+				
+				#MISTRAL MIRROR 2 LIMIT SWITCHES 
+				mir_oh01_02_roll_neg=Bit(DigitalsREAD[93],1)
+				mir_oh01_02_roll_pos=Bit(DigitalsREAD[94],1)
+				mir_oh01_02_yaw_neg=Bit(DigitalsREAD[95],1)
+				mir_oh01_02_yaw_pos=Bit(DigitalsREAD[96],1)
+				mir_oh01_02_pitch_neg=Bit(DigitalsREAD[91],1)
+				mir_oh01_02_pitch_pos=Bit(DigitalsREAD[92],1)
+				#MISTRAL ICEPAP INTERLOCKS
+				Ipap_Ena_02=DevBoolean(READ and Bit(DigitalsREAD[97],5) or WRITE and WriteFlag(437,5,(VALUE)))
+				Ipap_Itlk_02=Bit(DigitalsREAD[98],1)
+				
+				#MISTRAL MIRROR 4 LIMIT SWITCHES 
+				mir_eh01_01_roll_neg=Bit(DigitalsREAD[102],1)
+				mir_eh01_01_roll_pos=Bit(DigitalsREAD[103],1)
+				mir_eh01_01_yaw_neg=Bit(DigitalsREAD[104],1)
+				mir_eh01_01_yaw_pos=Bit(DigitalsREAD[105],1)
+				mir_eh01_01_pitch_neg=Bit(DigitalsREAD[100],1)
+				mir_eh01_01_pitch_pos=Bit(DigitalsREAD[101],1)
+				#MISTRAL ICEPAP INTERLOCKS
+				Ipap_Ena_04=DevBoolean(READ and Bit(DigitalsREAD[106],5) or WRITE and WriteFlag(446,5,(VALUE)))
+				Ipap_Itlk_04=Bit(DigitalsREAD[107],1)
+				
+				#MISTRAL MONO SWITCHES
+				mono_collision=Bit(DigitalsREAD[109],1)
+				mono_grating=Bit(DigitalsREAD[110],1)
+				mono_mirror=Bit(DigitalsREAD[111],1)
+				#MISTRAL ICEPAP INTERLOCKS
+				Ipap_Ena_03=DevBoolean(READ and Bit(DigitalsREAD[112],5) or WRITE and WriteFlag(452,5,(VALUE)))
+				Ipap_Itlk_03=Bit(DigitalsREAD[113],1)
+				
+				#Temperature
+				THERMOCOUPLES=DevVarDoubleArray([AnalogIntsREAD[i]/10.0 for i in range(1,22,2)])
+				ambient_eh01_01_pt =float(AnalogIntsREAD[19]/10.0)
+				ambient_eh01_02_pt =float(AnalogIntsREAD[21]/10.0)
+				ambient_oh01_01_pt =float(AnalogIntsREAD[15]/10.0)
+				ambient_oh01_02_pt =float(AnalogIntsREAD[17]/10.0)
+				diset_oh01_01_tc =float(AnalogIntsREAD[9]/10.0)
+				mir_eh01_01_tc1 =float(AnalogIntsREAD[11]/10.0)
+				mir_eh01_01_tc2 =float(AnalogIntsREAD[13]/10.0)
+				mir_oh01_01_pt =float(AnalogIntsREAD[1]/10.0)
+				mir_oh01_01_tc1 =float(AnalogIntsREAD[3]/10.0)
+				mir_oh01_01_tc2 =float(AnalogIntsREAD[5]/10.0)
+				mir_oh01_02_pt =float(AnalogIntsREAD[7]/10.0)
+				
+				
+				# SLIT POSITION 
+				slie_eh01_01 =Bit(DigitalsREAD[73],1)
+				sliex_eh01_01 =Bit(DigitalsREAD[74],1)
+				
+				# COOLING
+				fm_eh01_01 =IeeeFloat([int(a) for a in AnalogRealsREAD[16:16+2]])
+				fm_eh01_02 =IeeeFloat([int(a) for a in AnalogRealsREAD[19:19+2]])
+				fm_oh01_01 =IeeeFloat([int(a) for a in AnalogRealsREAD[13:13+2]])
+				
+				was_in =IeeeFloat([int(a) for a in AnalogRealsREAD[7:7+2]])
+				was_out =IeeeFloat([int(a) for a in AnalogRealsREAD[10:10+2]])
+				was_in_do =DevBoolean(READ and Bit(DigitalsREAD[71],5) or WRITE and WriteFlag(411,5,(VALUE)))
+				was_out_do =DevBoolean(READ and Bit(DigitalsREAD[72],5) or WRITE and WriteFlag(412,5,(VALUE)))
+				
+				fsw_eh01_01 =Bit(DigitalsREAD[63],1)
+				fsw_oh01_01=Bit(DigitalsREAD[64],1)
+				fsw_oh01_02=Bit(DigitalsREAD[65],1)
+				fsw_oh01_03=Bit(DigitalsREAD[66],1)
+				
+				#ALARM
+				em_xmic =Bit(DigitalsREAD[75],1)
+				empb =Bit(DigitalsREAD[60],1)
+				fdcu =Bit(DigitalsREAD[61],1)
+				"wsen =Bit(DigitalsREAD[62],1)	"
+				
+				#VACUUM VALVES OPEN
+				#OH VALVES
+				TRU_VL =PNV(READ and DigitalsREAD[115] or WRITE and 455,VALUE)
+				PNV_OH01_01 =PNV(READ and DigitalsREAD[119] or WRITE and 459,VALUE)
+				PNV_OH01_02 =PNV(READ and DigitalsREAD[123] or WRITE and 463,VALUE)
+				PNV_OH01_03 =PNV(READ and DigitalsREAD[127] or WRITE and 467,VALUE)
+				PNV_OH01_04 =PNV(READ and DigitalsREAD[131] or WRITE and 471,VALUE)
+				
+				#EH VALVES
+				PNV_EH01_01 =PNV(READ and DigitalsREAD[135] or WRITE and 475,VALUE)
+				PNV_EH01_02 =PNV(READ and DigitalsREAD[139] or WRITE and 479,VALUE)
+				PNV_EH01_03 =PNV(READ and DigitalsREAD[143] or WRITE and 483,VALUE)
+				PNV_EH01_04 =PNV(READ and DigitalsREAD[147] or WRITE and 487,VALUE)
+				PNV_EH01_05 =PNV(READ and DigitalsREAD[151] or WRITE and 491,VALUE)
+				"VFCS =PNV(READ and DigitalsREAD[155] or WRITE and 495,VALUE)	"
+				
+				# Analogs Float COLD CATHODE GAUGE 
+				CCG_MIR_EH0101 =IeeeFloat([int(a) for a in AnalogRealsREAD[46:46+2]])
+				CCG_MIR_OH0101 =IeeeFloat([int(a) for a in AnalogRealsREAD[28:28+2]])
+				CCG_MIR_OH0102 =IeeeFloat([int(a) for a in AnalogRealsREAD[34:34+2]])
+				CCG_MONO_EH0101 =IeeeFloat([int(a) for a in AnalogRealsREAD[40:40+2]])
+				CCG_SLIT_OH0101 =IeeeFloat([int(a) for a in AnalogRealsREAD[52:52+2]])
+				CCG_TRU_01 =IeeeFloat([int(a) for a in AnalogRealsREAD[22:22+2]])
+				CCG_XMIC_EH0101 =IeeeFloat([int(a) for a in AnalogRealsREAD[58:58+2]])
+				
+				# Ion Pump Self proptection and Interlock
+				IP_DISET_EH01_01_DO =DevBoolean(READ and Bit(DigitalsREAD[172],5) or WRITE and WriteFlag(512,5,(VALUE)))
+				IP_DISET_EH01_02_DO =DevBoolean(READ and Bit(DigitalsREAD[182],5) or WRITE and WriteFlag(522,5,(VALUE)))
+				IP_DISET_OH01_01_DO =DevBoolean(READ and Bit(DigitalsREAD[166],5) or WRITE and WriteFlag(506,5,(VALUE)))
+				IP_IP100_EH01_01_DO =DevBoolean(READ and Bit(DigitalsREAD[178],5) or WRITE and WriteFlag(518,5,(VALUE)))
+				IP_MIR_EH01_01_DO =DevBoolean(READ and Bit(DigitalsREAD[180],5) or WRITE and WriteFlag(520,5,(VALUE)))
+				IP_MIR_OH01_01_DO =DevBoolean(READ and Bit(DigitalsREAD[168],5) or WRITE and WriteFlag(508,5,(VALUE)))
+				IP_MIR_OH01_02_DO =DevBoolean(READ and Bit(DigitalsREAD[170],5) or WRITE and WriteFlag(510,5,(VALUE)))
+				IP_MONO_EH01_01_DO =DevBoolean(READ and Bit(DigitalsREAD[176],5) or WRITE and WriteFlag(516,5,(VALUE)))
+				IP_TRU_F09_01_DO =DevBoolean(READ and Bit(DigitalsREAD[164],5) or WRITE and WriteFlag(504,5,(VALUE)))
+				IP_SLIT_OH01_01_DO=DevBoolean(READ and Bit(DigitalsREAD[174],5) or WRITE and WriteFlag(514,5,(VALUE)))
+				
+				IP_DISET_EH01_01_DI =Bit(DigitalsREAD[171],1)
+				IP_DISET_EH01_02_DI =Bit(DigitalsREAD[181],1)
+				IP_DISET_OH01_01_DI =Bit(DigitalsREAD[165],1)
+				IP_IP100_EH01_01_DI =Bit(DigitalsREAD[177],1)
+				IP_MIR_EH01_01_DI =Bit(DigitalsREAD[179],1)
+				IP_MIR_OH01_01_DI =Bit(DigitalsREAD[167],1)
+				IP_MIR_OH01_02_DI =Bit(DigitalsREAD[169],1)
+				IP_MONO_EH01_01_DI =Bit(DigitalsREAD[175],1)
+				IP_TRU_F09_01_DI =Bit(DigitalsREAD[163],1)
+				IP_SLIT_OH01_01_DI=Bit(DigitalsREAD[173],1)
+				
+				# TSP
+				TSP_MIR_OH01_01_DO =DevBoolean(READ and Bit(DigitalsREAD[76],5) or WRITE and WriteFlag(416,5,(VALUE)))
+				TSP_MIR_OH01_02_DO =DevBoolean(READ and Bit(DigitalsREAD[78],5) or WRITE and WriteFlag(418,5,(VALUE)))
+				TSP_MONO_EH01_01_DO =DevBoolean(READ and Bit(DigitalsREAD[80],5) or WRITE and WriteFlag(420,5,(VALUE)))
+			Mapping	DigitalsREAD=0,+280
+				DigitalsWRITE=390,+280
+				AnalogIntsREAD=835,+120
+				AnalogIntsWRITE=1155,+280
+				AnalogRealsREAD=2135,+150
+				AnalogRealsWRITE=2455,+260
+			ForcePolling	3000
+				DigitalsREAD
+				AnalogIntsREAD
+				AnalogRealsREAD
+				PLC_CONFIG_Status
+				POLL
+				CPUStatus
+			Modbus_name	BL09/CT/EPS-PLC-01-MBUS
+			ModbusCacheConfig	0
+Modbus	Modbus	#CLASS	cvs_tag	
+Modbus/BL09_CT_EPS	Modbus	bl09/ct/eps-plc-01-mbus	_Location	BL09-CT-PLC-RKX09A01-01
+			Protocol	TCP
+			Serialline	TCP
+			Mapping	DigitalsREAD:7000,7175
+			SocketConnectionSleep	5000
+			ModbusID	1
+			TCPport	502
+			TCPTimeout	3
+			IpHost	84.89.225.29
+VacuumController/BL09_FCV	VacuumGauge	bl09/eh/ccg-fcv-01	_Location	BL09-VC-CCG-EH01-01
+			PollingCycle	5000
+			_UsedBy	VC
+			GaugeController	BL09/VC/VFCS-01
+			LowRange	1e-12
+			Channel	P1
+VacuumController/BL09_CCG	VacuumGauge	bl09/eh/ccg-mir-01	_Location	BL09-OP-MIR-EH01-01
+			PollingCycle	5000
+			_UsedBy	VC
+			GaugeController	BL09/VC/VGCT-02
+			LowRange	1e-12
+			Channel	P2
+				ChannelState
+				State
+VacuumController/BL09_CCG	VacuumGauge	bl09/eh/ccg-mono-01	_Location	BL09-OP-MONO-EH01-01
+			PollingCycle	5000
+			_UsedBy	VC
+			GaugeController	BL09/VC/VGCT-02
+			LowRange	1e-12
+			Channel	P1
+VacuumController/BL09_CCG	VacuumGauge	bl09/eh/ccg-xmic-01	_Location	BL09-EX-XMIC-EH01-01
+			PollingCycle	5000
+			_UsedBy	VC
+			GaugeController	BL09/VC/VGCT-03
+			LowRange	1e-12
+			Channel	P2
+				ChannelState
+				State
+VacuumController/BL09_PUMPS	IonPump	bl09/eh/ip-diset-01	_Location	BL09-DI-DISET-EH01-01
+			PollingCycle	3000
+			_UsedBy	VC
+			IonPumpController	BL09/VC/IPCT-02
+			UseEvents	
+			LowRange	1e-12
+			Channel	P2
+				HV2Status
+				State
+VacuumController/BL09_PUMPS	IonPump	bl09/eh/ip-diset-02	_Location	BL09-DI-DISET-EH01-02
+			PollingCycle	3000
+			_UsedBy	VC
+			IonPumpController	BL09/VC/IPCT-04
+			UseEvents	
+			LowRange	1e-12
+			Channel	P2
+				HV2Status
+				State
+VacuumController/BL09_PUMPS	IonPump	bl09/eh/ip-ip100-01	_Location	BL09-VC-IP100-EH01-01
+			PollingCycle	3000
+			_UsedBy	VC
+			IonPumpController	BL09/VC/IPCT-03
+			UseEvents	
+			LowRange	1e-12
+			Channel	P2
+				HV2Status
+				State
+VacuumController/BL09_PUMPS	IonPump	bl09/eh/ip-mir-01	_Location	BL09-OP-MIR-EH01-01
+			PollingCycle	3000
+			_UsedBy	VC
+			IonPumpController	BL09/VC/IPCT-04
+			UseEvents	
+			LowRange	1e-12
+			Channel	P1
+				HV1Status
+				State
+VacuumController/BL09_PUMPS	IonPump	bl09/eh/ip-mono-01	_Location	BL09-OP-MONO-EH01-01
+			PollingCycle	3000
+			_UsedBy	VC
+			IonPumpController	BL09/VC/IPCT-03
+			UseEvents	
+			LowRange	1e-12
+			Channel	P1
+				HV1Status
+				State
+AlbaPLC/BL09_PNV	PLCValve	bl09/eh/pnv-01	PLCAttributes	PNV_EH01_01
+			_Location	BL09-VC-PNV-EH01-01
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+AlbaPLC/BL09_PNV	PLCValve	bl09/eh/pnv-02	PLCAttributes	PNV_EH01_02
+			_Location	BL09-VC-PNV-EH01-02
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+AlbaPLC/BL09_PNV	PLCValve	bl09/eh/pnv-03	PLCAttributes	PNV_EH01_03
+			_Location	BL09-VC-PNV-EH01-03
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+AlbaPLC/BL09_PNV	PLCValve	bl09/eh/pnv-04	PLCAttributes	PNV_EH01_04
+			_Location	BL09-VC-PNV-EH01-04
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+AlbaPLC/BL09_PNV	PLCValve	bl09/eh/pnv-05	PLCAttributes	PNV_EH01_05
+			_Location	BL09-VC-PNV-EH01-05
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+VacuumController/BL09_CCG	VacuumGauge	bl09/oh/ccg-mir-01	_Location	BL09-OP-MIR-OH01-01
+			PollingCycle	5000
+			_UsedBy	VC
+			GaugeController	BL09/VC/VGCT-01
+			LowRange	1e-12
+			Channel	P1
+VacuumController/BL09_CCG	VacuumGauge	bl09/oh/ccg-mir-02	_Location	BL09-OP-MIR-OH01-02
+			PollingCycle	5000
+			_UsedBy	VC
+			GaugeController	BL09/VC/VGCT-01
+			LowRange	1e-12
+			Channel	P2
+				ChannelState
+				State
+VacuumController/BL09_CCG	VacuumGauge	bl09/oh/ccg-slit-01	_Location	BL09-OP-SLIT-OH01-01
+			PollingCycle	5000
+			_UsedBy	VC
+			GaugeController	BL09/VC/VGCT-03
+			LowRange	1e-12
+			Channel	P1
+VacuumController/BL09_PUMPS	IonPump	bl09/oh/ip-diset-01	_Location	BL09-DI-DISET-OH01-01
+			PollingCycle	3000
+			_UsedBy	VC
+			IonPumpController	BL09/VC/IPCT-01
+			UseEvents	
+			LowRange	1e-12
+			Channel	P1
+				HV1Status
+				State
+VacuumController/BL09_PUMPS	IonPump	bl09/oh/ip-mir-01	_Location	BL09-OP-MIR-OH01-01
+			PollingCycle	3000
+			_UsedBy	VC
+			IonPumpController	BL09/VC/IPCT-01
+			UseEvents	
+			LowRange	1e-12
+			Channel	P2
+				HV2Status
+				State
+VacuumController/BL09_PUMPS	IonPump	bl09/oh/ip-mir-02	_Location	BL09-OP-MIR-OH01-02
+			PollingCycle	3000
+			_UsedBy	VC
+			IonPumpController	BL09/VC/IPCT-02
+			UseEvents	
+			LowRange	1e-12
+			Channel	P1
+				HV1Status
+				State
+AlbaPLC/BL09_PNV	PLCValve	bl09/oh/pnv-01	PLCAttributes	PNV_OH01_01
+			_Location	BL09-VC-PNV-OH01-01
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+AlbaPLC/BL09_PNV	PLCValve	bl09/oh/pnv-02	PLCAttributes	PNV_OH01_02
+			_Location	BL09-VC-PNV-OH01-02
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+AlbaPLC/BL09_PNV	PLCValve	bl09/oh/pnv-03	PLCAttributes	PNV_OH01_03
+			_Location	BL09-VC-PNV-OH01-03
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+AlbaPLC/BL09_PNV	PLCValve	bl09/oh/pnv-04	PLCAttributes	PNV_OH01_04
+			_Location	BL09-VC-PNV-OH01-04
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+PyStateComposer/BL09_VC	PyStateComposer	bl09/vc/all	KeepTime	1000
+			CheckDependencies	False
+			DynamicAttributes	CCGAxxis=DevVarDoubleArray([0,2,4,5,6,7])
+				#CCGPressures=DevVarDoubleArray([XAttr(dev+'/Pressure') or 1e-12 for dev in DEVICES if 'ccg-' in dev])
+				CCGPressures=DevVarDoubleArray([XAttr('BL09/VC/VGCT-%02d/P%d'%(j,i)) or 1e-12 for j in (3,2,1) for i in (2,1)])
+				#
+				IPAxxis=DevVarDoubleArray(range(len(IPPressures)))
+				#IPPressures=DevVarDoubleArray([XAttr(dev+'/Pressure') or 1e-12 for dev in DEVICES if 'ip-' in dev])
+				IPPressures=DevVarDoubleArray([XAttr('BL09/VC/IPCT-%02d/P%d'%(j,i)) or 1e-12 for j in (4,3,2,1) for i in (2,1)])
+				#
+				MaxPressure=DevDouble(max(CCGPressures))
+				#Thermocouples=DevVarDoubleArray([float(t.split(':')[-1]) if 3000>float(t.split(':')[-1]) else 0 for t in sorted([x for x in XAttr('SR/VC/ALL/ThermoNames') if 'S01' in x])])
+				ThermoAxxis=DevVarDoubleArray([0,2,4,6])
+				Thermocouples=DevVarDoubleArray([(-300<t<1000 and t or 0) for t in [XAttr('BL09/CT/EPS-PLC-01/PT100_%s%02d'%(s,i)) for s in ('EH','OH') for i in (2,1)]])
+				AxxisLabels=DevVarStringArray(['EH','OH'])
+				AxxisPositions=DevVarLongArray([0,4])
+			StatePolicy	EXTRACT,0
+				ON,0
+				OPEN,0
+				STANDBY,0
+				MOVING,8
+				RUNNING,8
+				CLOSE,10
+				INSERT,10
+				DISABLE,11
+				OFF,11
+				UNKNOWN,12
+				ALARM,13
+				INIT,13
+				FAULT,14
+			IgnoreList	*RGA*
+				*MBUS*
+				*SERIAL*
+			KeepAttributes	yes
+			DevicesList	BL09/VC/IP-*
+				BL09/VC/IPCT*
+				BL09/VC/VGCT*
+				FE09/VC/IPCT*
+				FE09/VC/VGCT*
+				BL09/VC/SPBX*
+				BL09/VC/CCG*
+				BL09/VC/PIR*
+				BL09/CT/EPS-PLC-01
+				BL09/VC/PNV*
+				BL09/VC/SPNV*
+				BL09/VC/RGA*
+			UseEvents	['False']
+			PollingCycle	5000
+BakeOutControlDS/Bakeout	BakeOutControlDS	bl09/vc/elotech-01	TemperatureSetPoint	200.0
+			ControllerType	elotech
+			PessureSetPoint	2e-4
+			_SubDevices	bl09/vc/vgct-bakeout
+			CommsDevice	/dev/ttyR15
+			PressureSetPoint	0.0002
+			PressureAttribute	bl09/vc/vgct-bakeout/p1
+VacuumController/BL09_DUAL	VarianDUAL	bl09/vc/ipct-01	DefaultStatus	
+			ForceStep	NO
+			SerialLine	bl09/vc/serial-06
+			ForceLocal	YES
+			ForceProtect	NO
+			Refresh	0.5
+			StartSequence	#LOCAL/SERIAL, START/PROTECT, FIXED/STEP, ON1,ON2
+VacuumController/BL09_DUAL	VarianDUAL	bl09/vc/ipct-02	DefaultStatus	
+			ForceStep	NO
+			SerialLine	bl09/vc/serial-07
+			ForceLocal	YES
+			ForceProtect	NO
+			Refresh	0.5
+			StartSequence	#LOCAL/SERIAL, START/PROTECT, FIXED/STEP, ON1,ON2
+VacuumController/BL09_DUAL	VarianDUAL	bl09/vc/ipct-03	DefaultStatus	
+			ForceStep	NO
+			SerialLine	bl09/vc/serial-08
+			ForceLocal	YES
+			ForceProtect	NO
+			Refresh	0.5
+			StartSequence	#LOCAL/SERIAL, START/PROTECT, FIXED/STEP, ON1,ON2
+VacuumController/BL09_DUAL	VarianDUAL	bl09/vc/ipct-04	DefaultStatus	
+			ForceStep	NO
+			SerialLine	bl09/vc/serial-09
+			ForceLocal	YES
+			ForceProtect	NO
+			Refresh	0.5
+			StartSequence	#LOCAL/SERIAL, START/PROTECT, FIXED/STEP, ON1,ON2
+Serial/ibl0901	Serial	bl09/vc/serial-01	parity	even
+			baudrate	9600
+			SerialLine	/dev/ttyR0
+			newline	13
+			timeout	500
+			stopbits	1
+			charlength	8
+Serial/ibl0901	Serial	bl09/vc/serial-02	parity	even
+			baudrate	9600
+			SerialLine	/dev/ttyR1
+			newline	13
+			timeout	500
+			stopbits	1
+			charlength	8
+Serial/ibl0901	Serial	bl09/vc/serial-03	parity	even
+			baudrate	9600
+			SerialLine	/dev/ttyR2
+			newline	13
+			timeout	500
+			stopbits	1
+			charlength	8
+Serial/ibl0901	Serial	bl09/vc/serial-04	parity	even
+			baudrate	9600
+			SerialLine	/dev/ttyR3
+			newline	13
+			timeout	500
+			stopbits	1
+			charlength	8
+Serial/ibl0901	Serial	bl09/vc/serial-05	parity	
+			baudrate	9600
+			SerialLine	/dev/ttyR4
+			newline	13
+			timeout	500
+			stopbits	1
+			charlength	8
+Serial/ibl0901	Serial	bl09/vc/serial-06	parity	
+			baudrate	9600
+			SerialLine	/dev/ttyR5
+			newline	13
+			timeout	500
+			stopbits	1
+			charlength	8
+Serial/ibl0901	Serial	bl09/vc/serial-07	parity	
+			baudrate	9600
+			SerialLine	/dev/ttyR6
+			newline	13
+			timeout	500
+			stopbits	1
+			charlength	8
+Serial/ibl0901	Serial	bl09/vc/serial-08	parity	
+			baudrate	9600
+			SerialLine	/dev/ttyR7
+			newline	13
+			timeout	500
+			stopbits	1
+			charlength	8
+Serial/ibl0901	Serial	bl09/vc/serial-09	parity	
+			baudrate	9600
+			SerialLine	/dev/ttyR8
+			newline	13
+			timeout	500
+			stopbits	1
+			charlength	8
+VacuumController/BL09_VGCT	MKSGaugeController	bl09/vc/vgct-01	DefaultStatus	
+			Protocol	232
+			NChannels	5
+			LogLevel	INFO
+			Refresh	3.0
+			SerialLine	BL09/VC/SERIAL-02
+			NCombChannels	2
+			StartSequence	#CC_On(CC1),CC_On(CC2),CC_On(ALL)
+VacuumController/BL09_VGCT	MKSGaugeController	bl09/vc/vgct-02	DefaultStatus	
+			Protocol	232
+			NChannels	5
+			LogLevel	INFO
+			Refresh	3.0
+			SerialLine	BL09/VC/SERIAL-03
+			NCombChannels	2
+			StartSequence	#CC_On(CC1),CC_On(CC2),CC_On(ALL)
+VacuumController/BL09_VGCT	MKSGaugeController	bl09/vc/vgct-03	DefaultStatus	
+			Protocol	232
+			NChannels	5
+			LogLevel	INFO
+			Refresh	3.0
+			SerialLine	BL09/VC/SERIAL-04
+			NCombChannels	2
+			StartSequence	#CC_On(CC1),CC_On(CC2),CC_On(ALL)
+VacuumController/BL09_Bakeout	MKSGaugeController	bl09/vc/vgct-bakeout	Protocol	232
+			NChannels	5
+			LogLevel	INFO
+			SerialLine	bl09test/di/serial-15
+			NCombChannels	2
+			StartSequence	#CC_On(CC1),CC_On(CC2),CC_On(ALL)
+VacuumController/BL09_DUAL	VarianDUAL	fe09/vc/ipct-01	DefaultStatus	on,on
+			ForceStep	NO
+			SerialLine	bl09/vc/serial-05
+			ForceLocal	YES
+			ForceProtect	NO
+			Refresh	0.5
+			StartSequence	#LOCAL/SERIAL, START/PROTECT, FIXED/STEP, ON1,ON2
+AlbaPLC/FE09_PNV	PLCValve	fe09/vc/pnv-tru-01	PLCAttributes	TRU_VL
+			_Location	FE09-FE-TRU-F09-01
+			PLC	BL09/CT/EPS-PLC-01
+			DeviceType	PNV
+			PLCName	BL09/CT/EPS-PLC-01
+VacuumController/BL09_VGCT	MKSGaugeController	fe09/vc/vgct-01	DefaultStatus	
+			Protocol	232
+			NChannels	5
+			LogLevel	INFO
+			Refresh	3.0
+			SerialLine	BL09/VC/SERIAL-01
+			NCombChannels	2
+			StartSequence	#CC_On(CC1),CC_On(CC2),CC_On(ALL)
+				
+				
+				

@@ -1,0 +1,200 @@
+#
+# Resource backup , created Fri Nov 12 17:50:20 CET 2010
+#
+
+#---------------------------------------------------------
+# SERVER PyStateComposer/SR01_VC_ALL, PyStateComposer device declaration
+#---------------------------------------------------------
+
+PyStateComposer/SR01_VC_ALL/DEVICE/PyStateComposer: "SR01/VC/ALL"
+
+
+# --- SR01/VC/ALL properties
+
+SR01/VC/ALL->DevicesList: "SR01/VC/IP-*",\ 
+                          "SR01/VC/IPCT*",\ 
+                          "SR01/VC/VGCT*",\ 
+                          "SR01/VC/SPBX*",\ 
+                          "SR01/VC/CCG*",\ 
+                          "SR01/VC/PIR*",\ 
+                          "SR01/VC/EPS*",\ 
+                          "SR01/VC/PNV*",\ 
+                          "SR01/VC/SPNV*",\ 
+                          "SR01/VC/RGA*"
+SR01/VC/ALL->DynamicAttributes: "CCGPressures=DevVarDoubleArray([XAttr(dev+'/Pressure') or 0 for dev in sorted(DEVICES) if 'CCG-' in dev])",\ 
+                                "IPPressures=DevVarDoubleArray([XAttr(dev+'/Pressure') or 0 for dev in sorted(DEVICES) if 'IP-' in dev])",\ 
+                                MaxPressure=DevDouble(max(CCGPressures)),\ 
+                                SR01_VC_CCG-01_Pressure=DevDouble(CCGPressures[0]),\ 
+                                SR01_VC_CCG-02_Pressure=DevDouble(CCGPressures[1]),\ 
+                                SR01_VC_CCG-03_Pressure=DevDouble(CCGPressures[2]),\ 
+                                "Thermocouples=DevVarDoubleArray(XAttr('%s/VC/EPS-PLC-01/THERMOCOUPLES'))",\ 
+                                "Thermocouples=DevVarDoubleArray(XAttr('SR01/VC/EPS-PLC-01/THERMOCOUPLES'))",\ 
+                                "Thermocouples=DevVarDoubleArray(XAttr('SR01/VC/EPS-PLC-01/THERMOCOUPLES'))",\ 
+                                "Thermocouples=DevVarDoubleArray(XAttr('SR01/VC/EPS-PLC-01/THERMOCOUPLES'))"
+SR01/VC/ALL->IgnoreList: *IP-*,\ 
+                         *CCG*,\ 
+                         *PIR*,\ 
+                         *PNV*,\ 
+                         *RGA*,\ 
+                         *EPS*
+SR01/VC/ALL->PollingCycle: 5000
+SR01/VC/ALL->StatePolicy: OFF,11,\ 
+                          INSERT,10,\ 
+                          STANDBY,0,\ 
+                          FAULT,14,\ 
+                          ALARM,13,\ 
+                          MOVING,8,\ 
+                          OPEN,0,\ 
+                          ON,0,\ 
+                          RUNNING,8,\ 
+                          INIT,13,\ 
+                          DISABLE,11,\ 
+                          UNKNOWN,12,\ 
+                          CLOSE,10,\ 
+                          EXTRACT,0
+SR01/VC/ALL->UseEvents: False
+SR01/VC/ALL->__SubDevices: "sr01/vc/ip-01",\ 
+                           "sr01/vc/ip-02",\ 
+                           "sr01/vc/ip-03",\ 
+                           "sr01/vc/ip-04",\ 
+                           "sr01/vc/ip-05",\ 
+                           "sr01/vc/ip-06",\ 
+                           "sr01/vc/ip-07",\ 
+                           "sr01/vc/ip-08",\ 
+                           "sr01/vc/ip-09",\ 
+                           "sr01/vc/ip-10",\ 
+                           "sr01/vc/ip-11",\ 
+                           "sr01/vc/ip-12",\ 
+                           "sr01/vc/ipct-01a08-01",\ 
+                           "sr01/vc/ipct-01a08-02",\ 
+                           "sr01/vc/ipct-02a01-01",\ 
+                           "sr01/vc/vgct-01a08-01",\ 
+                           "sr01/vc/vgct-02a01-01",\ 
+                           "sr01/vc/spbx-01a08-01",\ 
+                           "sr01/vc/spbx-01a08-02",\ 
+                           "sr01/vc/spbx-02a01-01",\ 
+                           "sr01/vc/ccg-01",\ 
+                           "sr01/vc/ccg-02",\ 
+                           "sr01/vc/ccg-03",\ 
+                           "sr01/vc/pir-01",\ 
+                           "sr01/vc/pir-02",\ 
+                           "sr01/vc/eps-plc-01",\ 
+                           "sr01/vc/eps-plc-01-mbus",\ 
+                           "sr01/vc/pnv-01",\ 
+                           "sr01/vc/spnv-01",\ 
+                           "sr01/vc/spnv-02",\ 
+                           "alba03:10000/sr01/vc/ip-01",\ 
+                           "tango://alba03.cells.es:10000/dserver/vacuumcontroller/sr01_vc_pumps",\ 
+                           "alba03:10000/sr01/vc/ip-02",\ 
+                           "alba03:10000/sr01/vc/ip-03",\ 
+                           "alba03:10000/sr01/vc/ip-04",\ 
+                           "alba03:10000/sr01/vc/ip-05",\ 
+                           "alba03:10000/sr01/vc/ip-06",\ 
+                           "alba03:10000/sr01/vc/ip-07",\ 
+                           "alba03:10000/sr01/vc/ip-08",\ 
+                           "alba03:10000/sr01/vc/ip-09",\ 
+                           "alba03:10000/sr01/vc/ip-10",\ 
+                           "alba03:10000/sr01/vc/ip-11",\ 
+                           "alba03:10000/sr01/vc/ip-12",\ 
+                           "alba03:10000/sr01/vc/ccg-01",\ 
+                           "tango://alba03.cells.es:10000/dserver/vacuumcontroller/sr01_vc_gauges",\ 
+                           "alba03:10000/sr01/vc/ccg-02",\ 
+                           "alba03:10000/sr01/vc/ccg-03",\ 
+                           "alba03:10000/sr01/vc/eps-plc-01",\ 
+                           "tango://alba03.cells.es:10000/dserver/albaplc/sr01_vc_eps"
+
+# --- SR01/VC/ALL attribute properties
+
+SR01/VC/ALL/StatesList->description: "States of subscribed devices."
+SR01/VC/ALL/StatesList->event_period: 1000
+SR01/VC/ALL/DevicesList->description: "Devices actually subscribed."
+SR01/VC/ALL/DevicesList->event_period: 1000
+SR01/VC/ALL/DevStates->description: "A list with device/state pairs ."
+SR01/VC/ALL/DevStates->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-01->label: IP-01
+SR01/VC/ALL/SR01_VC_IP-02->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-02->label: IP-02
+SR01/VC/ALL/SR01_VC_IP-03->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-03->label: IP-03
+SR01/VC/ALL/SR01_VC_IP-04->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-04->label: IP-04
+SR01/VC/ALL/SR01_VC_IP-05->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-05->label: IP-05
+SR01/VC/ALL/SR01_VC_IP-06->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-06->label: IP-06
+SR01/VC/ALL/SR01_VC_IP-07->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-07->label: IP-07
+SR01/VC/ALL/SR01_VC_IP-08->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-08->label: IP-08
+SR01/VC/ALL/SR01_VC_IP-09->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-09->label: IP-09
+SR01/VC/ALL/SR01_VC_IP-10->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-10->label: IP-10
+SR01/VC/ALL/SR01_VC_IP-11->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-11->label: IP-11
+SR01/VC/ALL/SR01_VC_IP-12->event_period: 1000
+SR01/VC/ALL/SR01_VC_IP-12->label: IP-12
+SR01/VC/ALL/SR01_VC_IPCT-01A08-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_IPCT-01A08-01->label: IPCT-01A08-01
+SR01/VC/ALL/SR01_VC_IPCT-01A08-02->event_period: 1000
+SR01/VC/ALL/SR01_VC_IPCT-01A08-02->label: IPCT-01A08-02
+SR01/VC/ALL/SR01_VC_IPCT-02A01-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_IPCT-02A01-01->label: IPCT-02A01-01
+SR01/VC/ALL/SR01_VC_VGCT-01A08-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_VGCT-01A08-01->label: VGCT-01A08-01
+SR01/VC/ALL/SR01_VC_VGCT-02A01-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_VGCT-02A01-01->label: VGCT-02A01-01
+SR01/VC/ALL/SR01_VC_SPBX-01A08-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_SPBX-01A08-01->label: SPBX-01A08-01
+SR01/VC/ALL/SR01_VC_SPBX-01A08-02->event_period: 1000
+SR01/VC/ALL/SR01_VC_SPBX-01A08-02->label: SPBX-01A08-02
+SR01/VC/ALL/SR01_VC_SPBX-02A01-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_SPBX-02A01-01->label: SPBX-02A01-01
+SR01/VC/ALL/SR01_VC_CCG-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_CCG-01->label: CCG-01
+SR01/VC/ALL/SR01_VC_CCG-02->event_period: 1000
+SR01/VC/ALL/SR01_VC_CCG-02->label: CCG-02
+SR01/VC/ALL/SR01_VC_CCG-03->event_period: 1000
+SR01/VC/ALL/SR01_VC_CCG-03->label: CCG-03
+SR01/VC/ALL/SR01_VC_PIR-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_PIR-01->label: PIR-01
+SR01/VC/ALL/SR01_VC_PIR-02->event_period: 1000
+SR01/VC/ALL/SR01_VC_PIR-02->label: PIR-02
+SR01/VC/ALL/SR01_VC_EPS-PLC-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_EPS-PLC-01->label: EPS-PLC-01
+SR01/VC/ALL/SR01_VC_EPS-PLC-01-MBUS->event_period: 1000
+SR01/VC/ALL/SR01_VC_EPS-PLC-01-MBUS->label: EPS-PLC-01-MBUS
+SR01/VC/ALL/SR01_VC_PNV-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_PNV-01->label: PNV-01
+SR01/VC/ALL/SR01_VC_SPNV-01->event_period: 1000
+SR01/VC/ALL/SR01_VC_SPNV-01->label: SPNV-01
+SR01/VC/ALL/SR01_VC_SPNV-02->event_period: 1000
+SR01/VC/ALL/SR01_VC_SPNV-02->label: SPNV-02
+SR01/VC/ALL/CCGPressures->event_period: 1000
+SR01/VC/ALL/CCGPressures->format: %1.2e
+SR01/VC/ALL/CCGPressures->label: CCGs
+SR01/VC/ALL/CCGPressures->unit: mbar
+SR01/VC/ALL/IPPressures->event_period: 1000
+SR01/VC/ALL/IPPressures->format: %1.2e
+SR01/VC/ALL/IPPressures->label: IPs
+SR01/VC/ALL/IPPressures->unit: mbar
+SR01/VC/ALL/MaxPressure->event_period: 1000
+SR01/VC/ALL/MaxPressure->format: %1.2e
+SR01/VC/ALL/MaxPressure->label: SR01
+SR01/VC/ALL/MaxPressure->unit: mbar
+SR01/VC/ALL/SR01_VC_CCG-01_Pressure->event_period: 1000
+SR01/VC/ALL/SR01_VC_CCG-01_Pressure->format: %1.2e
+SR01/VC/ALL/SR01_VC_CCG-01_Pressure->label: CCG-01
+SR01/VC/ALL/SR01_VC_CCG-01_Pressure->unit: mbar
+SR01/VC/ALL/SR01_VC_CCG-02_Pressure->event_period: 1000
+SR01/VC/ALL/SR01_VC_CCG-02_Pressure->format: %1.2e
+SR01/VC/ALL/SR01_VC_CCG-02_Pressure->label: CCG-02
+SR01/VC/ALL/SR01_VC_CCG-02_Pressure->unit: mbar
+SR01/VC/ALL/SR01_VC_CCG-03_Pressure->event_period: 1000
+SR01/VC/ALL/SR01_VC_CCG-03_Pressure->format: %1.2e
+SR01/VC/ALL/SR01_VC_CCG-03_Pressure->label: CCG-03
+SR01/VC/ALL/SR01_VC_CCG-03_Pressure->unit: mbar
+SR01/VC/ALL/Thermocouples->event_period: 1000
+SR01/VC/ALL/Thermocouples->label: TCs
+

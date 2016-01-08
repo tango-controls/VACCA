@@ -1,0 +1,375 @@
+JDFile v11 {
+  Global {
+  }
+  JDRectangle {
+    summit:3,522,1226,3
+    origin:615,263
+    fillStyle:1
+    name:"BL11/VC/ALL"
+  }
+  JDImage {
+    summit:11,12.1281,1216,512
+    origin:613.9074,262.3769
+    lineWidth:0
+    name:"Image"
+    file_name:"bl11-3d.jpg"
+  }
+  JDEllipse {
+    summit:1166.3009,9,1192.3725,26.5174
+    origin:1176.8925,17.7587
+    background:153,153,255
+    fillStyle:10
+    name:"fe11/vc/vgct-01"
+  }
+  JDRectangle {
+    summit:1186.6694,36.5274,1211.1116,63.4291
+    origin:1218.4442,68.4341
+    background:153,153,255
+    fillStyle:10
+    name:"fe11/vc/ipct-01"
+  }
+  JDPolyline {
+    summit:1101.1217,55.296,1106.8249,62.1779,1180.1515,35.9017,1175.263,30.8968,1100.307,55.9216
+    origin:1140.2292,46.5373
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/vgct-01"
+  }
+  JDPolyline {
+    summit:1072.6058,102.2177,1101.1217,92.8333,1104.3807,114.1045,1087.2711,120.9863,1073.4206,114.7301,1073.4206,100.9664
+    origin:1088.9006,107.2226
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-01"
+  }
+  JDPolyline {
+    summit:1027.7951,117.2326,1054.6815,107.2226,1057.9405,130.9963,1039.2015,137.2525,1027.7951,129.745,1026.1657,116.607
+    origin:1042.4604,122.2376
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-01"
+  }
+  JDPolyline {
+    summit:1009.8709,119.7351,1013.1298,144.1343,994.3908,151.0162,981.355,144.76,980.5402,127.2425,1009.8709,119.7351
+    origin:996.835,135.3756
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-02"
+  }
+  JDPolyline {
+    summit:848.5524,110.9764,898.2515,130.3706,912.9168,142.8831,912.9168,153.5187,908.0284,169.7848,897.4368,182.2973,881.9567,191.6816,864.8472,192.3072,850.1819,186.6766,805.3712,171.6617,795.5943,162.903,791.5206,148.5137,795.5943,129.745,808.6302,118.4838,828.1839,110.9764,842.8492,109.0995,854.2556,112.2276
+    origin:852.6261,151.0162
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/vgct-01"
+  }
+  JDPolyline {
+    summit:803.7417,191.056,823.2955,183.5485,852.6261,196.0609,852.6261,224.2139,831.4429,232.9726,804.5565,223.5883,803.7417,192.3072
+    origin:828.1839,208.5734
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-02"
+  }
+  JDPolyline {
+    summit:719.0088,230.4701,733.6741,225.4652,732.8594,210.4502,705.973,218.5833,705.973,226.0908,716.5646,229.2189
+    origin:719.8235,220.4602
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-03"
+  }
+  JDPolyline {
+    summit:600.8715,241.1057,615.5368,237.9776,617.9811,255.495,601.6863,261.1256,589.4652,255.495,588.6504,237.9776,600.8715,241.7313
+    origin:603.3158,249.8644
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-03"
+  }
+  JDPolyline {
+    summit:603.3158,212.9527,617.9811,219.8346,616.3516,234.2239,600.0568,238.6032,586.2062,232.9726,586.2062,219.209,606.5747,212.9527
+    origin:602.501,226.0908
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/vgct-02"
+  }
+  JDPolyline {
+    summit:555.2461,217.9577,582.1325,228.5933,576.4293,234.2239,578.8736,261.7512,472.1427,297.4117,446.071,288.653,441.9973,255.495,558.5051,219.209,558.5051,219.209
+    origin:512.0649,257.9975
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/vgct-02"
+  }
+  JDPolyline {
+    summit:490.0669,294.9092,526.7302,281.7711,541.3955,287.4017,542.2103,301.1654,514.5091,311.1754,488.4375,301.1654,490.0669,294.9092
+    origin:515.3239,296.7861
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-04"
+  }
+  JDPolyline {
+    summit:415.1109,304.9192,431.4057,298.0373,433.0352,317.4316,418.3698,322.4366,405.334,316.1803,402.8898,298.6629,415.9256,304.2935
+    origin:418.3698,310.5498
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-04"
+  }
+  JDPolyline {
+    summit:418.3698,276.1405,432.2204,281.7711,431.4057,297.4117,416.7404,301.1654,402.0751,296.1604,402.8898,282.3968,421.6288,274.8893
+    origin:417.5551,288.0274
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/vgct-03"
+  }
+  JDPolyline {
+    summit:261.1251,364.3532,276.6051,368.7326,295.3442,364.3532,302.6768,368.107,303.4915,386.8756,280.6788,393.7575,262.7546,386.8756,261.9398,365.6045
+    origin:282.3083,379.3682
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-05"
+  }
+  JDPolyline {
+    summit:262.7546,318.0572,292.8999,317.4316,292.0852,340.5796,276.6051,344.959,265.1988,342.4565,263.5693,318.6828
+    origin:278.2346,331.1953
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/vgct-03"
+  }
+  JDPolyline {
+    summit:85.9561,425.0386,108.7688,416.2799,111.213,431.9204,97.3624,437.551,85.9561,430.0435,85.9561,426.2898
+    origin:98.9919,426.9154
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/ipct-05"
+  }
+  JDPolyline {
+    summit:92.474,384.3731,93.2887,403.1418,104.6951,403.1418,103.8803,385.6244,92.474,385.6244
+    origin:98.9919,393.7575
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/vgct-04"
+  }
+  JDPolyline {
+    summit:62.3286,397.5112,79.4381,397.5112,78.6234,408.7724,69.6613,410.6493,61.5139,401.8905,62.3286,398.1368
+    origin:70.476,404.393
+    background:153,153,255
+    fillStyle:10
+    name:"bl11/vc/vgct-04"
+  }
+  JDGroup {
+    summit:110.3074,373.2569,137.1096,396.3704
+    origin:-156.5989,300.5567
+    name:"bl11/vc/pnv-05"
+    children: {
+      JDPolyline {
+        summit:110.3074,380.618,115.7314,396.3704,125.0459,386.8703,137.1096,389.0093,131.6856,373.2569,123.4962,382.3696,110.3074,380.618
+        origin:124,385
+        fillStyle:1
+        lineWidth:2
+        name:"Polyline"
+      }
+    }
+  }
+  JDGroup {
+    summit:377.3074,283.2569,404.1096,306.3704
+    origin:110.4011,210.5567
+    name:"bl11/vc/fcv-01"
+    children: {
+      JDPolyline {
+        summit:377.3074,290.618,382.7314,306.3704,392.0459,296.8703,404.1096,299.0093,398.6856,283.2569,390.4962,292.3696,377.3074,290.618
+        origin:391,295
+        fillStyle:1
+        lineWidth:2
+        name:"Polyline"
+      }
+    }
+  }
+  JDGroup {
+    summit:420.3074,269.2569,447.1096,292.3704
+    origin:153.4011,196.5567
+    name:"bl11/vc/pnv-04"
+    children: {
+      JDPolyline {
+        summit:420.3074,276.618,425.7314,292.3704,435.0459,282.8703,447.1096,285.0093,441.6856,269.2569,433.4962,278.3696,420.3074,276.618
+        origin:434,281
+        fillStyle:1
+        lineWidth:2
+        name:"Polyline"
+      }
+    }
+  }
+  JDGroup {
+    summit:564.3074,225.2569,591.1096,248.3704
+    origin:297.4011,152.5567
+    name:"bl11/vc/pnv-03"
+    children: {
+      JDPolyline {
+        summit:564.3074,232.618,569.7314,248.3704,579.0459,238.8703,591.1096,241.0093,585.6856,225.2569,577.4962,234.3696,564.3074,232.618
+        origin:578,237
+        fillStyle:1
+        lineWidth:2
+        name:"Polyline"
+      }
+    }
+  }
+  JDGroup {
+    summit:772.3074,153.2569,799.1096,176.3704
+    origin:505.4011,80.5567
+    name:"bl11/vc/pnv-02"
+    children: {
+      JDPolyline {
+        summit:772.3074,160.618,777.7314,176.3704,787.0459,166.8703,799.1096,169.0093,793.6856,153.2569,785.4962,162.3696,772.3074,160.618
+        origin:786,165
+        fillStyle:1
+        lineWidth:2
+        name:"Polyline"
+      }
+    }
+  }
+  JDGroup {
+    summit:894.3074,114.2569,921.1096,137.3704
+    origin:627.4011,41.5567
+    name:"bl11/vc/pnv-01"
+    children: {
+      JDPolyline {
+        summit:894.3074,121.618,899.7314,137.3704,909.0459,127.8703,921.1096,130.0093,915.6856,114.2569,907.4962,123.3696,894.3074,121.618
+        origin:908,126
+        fillStyle:1
+        lineWidth:2
+        name:"Polyline"
+      }
+    }
+  }
+  JDGroup {
+    summit:1168.3074,20.2569,1195.1096,43.3704
+    origin:901.4011,-52.4433
+    name:"fe11/vc/pnv-01"
+    children: {
+      JDPolyline {
+        summit:1168.3074,27.618,1173.7314,43.3704,1183.0459,33.8703,1195.1096,36.0093,1189.6856,20.2569,1181.4962,29.3696,1168.3074,27.618
+        origin:1182,32
+        fillStyle:1
+        lineWidth:2
+        name:"Polyline"
+      }
+    }
+  }
+  JDImage {
+    summit:1049.278,295.574,1108.686,343.606
+    origin:973.438,198.246
+    lineWidth:0
+    name:"Image"
+    file_name:"image/equips/icon-eps.gif"
+  }
+  JDRectangle {
+    summit:1122.854,307.478,1144.342,331.494
+    origin:1193.638,306.214
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/CT/EPS-PLC-01"
+  }
+  JDRectangle {
+    summit:1122.486,421.558,1143.974,445.574
+    origin:1193.27,420.294
+    background:204,204,204
+    fillStyle:1
+    name:"FE11/VC/IPCT-01"
+  }
+  JDRectangle {
+    summit:1122.75,364.678,1144.238,388.694
+    origin:1193.534,363.414
+    background:204,204,204
+    fillStyle:1
+    name:"FE11/VC/VGCT-01"
+  }
+  JDRectangle {
+    summit:1088.75,364.678,1110.238,388.694
+    origin:1159.534,363.414
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/VGCT-01"
+  }
+  JDRectangle {
+    summit:1083.486,421.558,1104.974,445.574
+    origin:1154.27,420.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-01"
+  }
+  JDRectangle {
+    summit:1045.486,421.558,1066.974,445.574
+    origin:1116.27,420.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-02"
+  }
+  JDRectangle {
+    summit:1052.75,364.678,1074.238,388.694
+    origin:1123.534,363.414
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/VGCT-02"
+  }
+  JDRectangle {
+    summit:1014.75,364.678,1036.238,388.694
+    origin:1085.534,363.414
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/VGCT-03"
+  }
+  JDRectangle {
+    summit:1006.486,421.558,1027.974,445.574
+    origin:1077.27,420.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-03"
+  }
+  JDRectangle {
+    summit:965.486,421.558,986.974,445.574
+    origin:1036.27,420.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-04"
+  }
+  JDRectangle {
+    summit:979.75,364.678,1001.238,388.694
+    origin:1050.534,363.414
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/VGCT-04"
+  }
+  JDRectangle {
+    summit:926.486,421.558,947.974,445.574
+    origin:997.27,420.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-05"
+  }
+  JDImage {
+    summit:883.006,351.718,957.582,397.222
+    origin:1041.006,311.27
+    lineWidth:0
+    name:"Image"
+    file_name:"image/equips/icon-vgct.gif"
+  }
+  JDImage {
+    summit:845.974,406,908,461.742
+    origin:1035.574,301.214
+    lineWidth:0
+    name:"Image"
+    file_name:"image/equips/icon-ipct.gif"
+  }
+  JDLabel {
+    summit:63,57,216,89
+    origin:107,68
+    lineWidth:0
+    name:"Label"
+    font:"Dialog",3,24
+    text:"BL11 - NCD"
+  }
+  JDRectangle {
+    summit:366,271,416,318
+    origin:396,283
+    foreground:255,0,255
+    lineWidth:4
+    name:"Rectangle"
+  }
+}

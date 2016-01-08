@@ -1,0 +1,219 @@
+<html>
+<head>
+<title>VACuum Control Application for ALBA, srubio@cells.es</title>
+    <link rel="author"
+          href="http://www.cells.es/author/srubio"
+          title="Author information" />
+</head>
+<body>
+
+<h3>Overview of the application</h3>
+<p>The Vacuum Control Application for ALBA is based in the interaction between 4 main panels:</p>
+<h4>The Tree</h4>
+<ul><li>The device tree in the left-side allows to search for any vacuum device in the machine and to access their attributes values.</li>
+<li>Writing just part of a name (e.g. 'eh pnv 02') in the Search field (or Ctrl+f) you can go directly to any element.</li>
+<li>Right-button click on any device name open the attribute list, to add attributes to plots or see the archived values.</li>
+</ul>
+<h4>The central panel</h4><ul>
+<li>When a device is selected in the tree or in the synoptics its most common attributes and commands will be accessible here.</li>
+<li>To visualize more than one element, you can push in the device image to move it to a new window.</li></ul>
+<h4>The Synoptic</h4><ul>
+<li>It shows the state of all the devices and its pressure readings; clicking on any device it will be selected in both tree and central panel.</li>
+<li>The synoptic can be hidden at any time going to Menu->View->ShowSynoptic , that will reduce the size of the application to fit in small screens.</li>
+<li>The small-screen version of the application (without synoptic) can be launched using:<br> <b># vacca --fast</b></li>
+</ul>
+<h4>Plotting area</h4><ul>
+<li>There are different tabs showing the pressure profiles from all the sectors of the machine and a Trends (taurus) tab that allows to plot any variable from the tree.<br /></li>
+<li>The Trends tab will display last values and also archived values if past dates are selected in the "Plot Configuration" dialog.
+<li>Attributes can be added to "Trends" tab using righ-click on attribute nodes in the tree or doing drag-and-drop from the attribute names in the central panel.</li>
+</ul>
+<hr>
+<p>&nbsp;</p>
+<h3>Device Names</h3>
+<p>Every device is identified by a code like:</p>
+<blockquote>DOMAIN / FAMILY / EQUIPMENT_TYPE - [RACK] - Number<br /></blockquote>
+<ul><li>
+Domain is a cabling system: LI, LT, BO*, BT, SR*, FE*
+</li><li>, ...</li><li>Family is a cabling subsystem: VC, RF, CT, ...</li><li>Equipment type defines a code for each type of device: Gauge=CCG, Controller=VGCT, ...</li><li>RACK and Number allow the operator to identify a unique device in the machine.</li></ul>
+<p>All devices related to the vacuum control system are available in the left-side tree of the application, and can be easily searched.</p>
+<p>&nbsp;</p>
+<h3>Searching for a device</h3>
+<p>The "search" button allows to find any name in the Vacca device list. Any space in the search field acts as a "*" wildcard.</p>
+<p>It means that a search like "bo vgct" will return any name containing "bo" and "vgct" codes in the given order (all the gauge controllers of the booster).</p>
+<p>&nbsp;</p>
+<h3>Equipment Types that are accessible from Vacca</h3>
+<p>CCG: Cold Cathode Gauges</p>
+<p>PIR: Pirani Gauges</p>
+<p>VGCT: MKS 937 Gauge Controller</p>
+<p>&nbsp;</p>
+<p>IP: Ion Pump</p>
+<p>IPCT: Varian DUAL Ion Pump Controller</p>
+<p>SPBX: Ion Pump Splitter Box unit</p>
+<p>&nbsp;</p>
+<p>PNV: Pneumatic Valve (Booster/FrontEnds)</p>
+<p>SPNV: Pneumatic Valve (Storage Ring)</p>
+<p>EPS-PLC: Equipment Protection System PLC</p>
+<p>&nbsp;</p>
+<p>MicrovisionIP: Residual Gas Analyzer</p>
+<p>&nbsp;</p>
+<p>Modbus/Serial/Socket: Communication devices</p>
+<p>Composer/ALL/ALL-IPs: Control system devices calculating pressure profiles for each sector</p>
+<p>Alarms:</p>
+<p>&nbsp;</p>
+<h3>Showing attributes and archived values</h3>
+<ul><li>Clicking on a device in the tree or in synoptic panel will show the device status in the central panel.</li><li>Most common attributes and commands from the device will appear in two tabs.</li><li>Other attributes can be obtained by clicking with the right button over the device name in the tree.</li><li>The menu option "Show Attributes" will display the available attributes.</li></ul>
+<p>&nbsp;</p>
+<p>The attribute values history can be visualized in two ways:</p>
+<ul><li>dragging the attribute name from the tree to the TauTrend tab, if the attribute is readable it will be plot in the graph.</li><li>if there's a clock icon next to the attribute name it means that the values are being archived; you can click with the right button and select "Show History" option.</li></ul>
+<p>&nbsp;</p>
+<h3>Application TroubleShooting<br /></h3>
+<p>&nbsp;</p>
+<table class="plain">
+<thead>
+<tr>
+<th>Application</th>
+<th>Problem<br /></th>
+<th>PressureValues<br /></th>
+<th>Color<br /></th>
+<th>JavaError<br /></th>
+<th>Causes / Solution<br /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vacca</td>
+<td>Values not shown <br /></td>
+<td>NO <br /></td>
+<td>WHITE</td>
+<td>NO <br /></td>
+<td>You have no access to Tango database ... check your network <br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td>Pressures not shown <br /></td>
+<td>NO <br /></td>
+<td>ORANGE <br /></td>
+<td>NO <br /></td>
+<td>Devices are out of range or under interlock conditions ... check the EPS status <br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td>Nothing is shown<br /></td>
+<td>NO <br /></td>
+<td>GREY <br /></td>
+<td>NO <br /></td>
+<td>It's possible to connect to Tango but not to the devices ... check if the Vacuum Rack is powered<br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td>Events Error Message <br /></td>
+<td>YES/NO <br /></td>
+<td>? <br /></td>
+<td>YES<br /></td>
+<td>contact your controls engineer Only if pressure values doesn't appear on screen<br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td>Other Error Message <br /></td>
+<td>YES/NO <br /></td>
+<td>? <br /></td>
+<td>YES <br /></td>
+<td>contact your controls engineer Only if pressure values doesn't appear on screen<br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td>Nothing is shown <br /></td>
+<td>NO <br /></td>
+<td>RED <br /></td>
+<td>NO <br /></td>
+<td>The serial communications are failing!!! ... Check cable connections and contact your engineer.<br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+</tr>
+<tr>
+<td>&nbsp;ControllersPanel<br /></td>
+<td>Devices and controllers show different colors <br /></td>
+<td>YES</td>
+<td>? <br /></td>
+<td>NO <br /></td>
+<td>The controller devices could be under maintenance or upgrade...
+close all panels and wait some minutes before restarting the
+application.<br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td>The controller panel show&nbsp; attributes and commands mixed w/out order<br /></td>
+<td>&nbsp;YES</td>
+<td>? <br /></td>
+<td>NO <br /></td>
+<td>Your software is not up to date, contact your engineer to do an upgrade. <br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td>&nbsp;There's commands missing in the commands list<br /></td>
+<td>YES/NO <br /></td>
+<td>? <br /></td>
+<td>NO <br /></td>
+<td>Probably you are not allowed to run these commands ... contact your engineer if you think you should.<br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+</tr>
+<tr>
+<td>SynopticTree</td>
+<td>Devices doesn't show the attribute list <br /></td>
+<td>?<br /></td>
+<td>GREEN <br /></td>
+<td>NO <br /></td>
+<td>The application needs some time to load all the attribute lists, wait some seconds and try again.<br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td><br /></td>
+<td>NO</td>
+<td>RED/ORANGE<br /></td>
+<td>NO <br /></td>
+<td>The device is not working properly, contact your controls engineer <br /></td>
+</tr>
+<tr>
+<td><br /></td>
+<td><br /></td>
+<td>NO</td>
+<td>WHITE/GREY <br /></td>
+<td>YES <br /></td>
+<td>The application is not able to connect the Tango Database or&nbsp; needs
+some critical update, contact your controls engineer Only if pressure
+or colors doesn't appear on screen</td>
+</tr>
+<tr>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+<td><br /></td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<h3>Serial Cabling verification</h3>
+<ul><li>The RJ-45 serial cables are quite similar to Ethernet cables
+and sometimes they are connected to the wrong switch (the serial ports
+switch is always in the bottom side of the rack, whilst the network is
+in the top).<br /></li><li>All the cables must be connected to a port
+which lights are 'beeping' continuously. Not all the ports are being
+used all the time and is a common error to connect the device to an
+unused port.</li><li>Ports are not exchangeable!!! The port that is configured to a device cannot be happily changed to be used with other.</li></ul>
+</body>
+</html>

@@ -1,0 +1,20 @@
+(dp0
+S'row_labels'
+p1
+S'VcGauges(mbar):*VGCT*,IonPumps(mbar):*IPCT*'
+p2
+sS'frames'
+p3
+I00
+sS'model'
+p4
+S'*/VC/(IPCT|VGCT)*/(P[12]|State)'
+p5
+sS'delayed'
+p6
+I00
+sS'column_labels'
+p7
+S'Tango State:*/*/*/State,LAUE:(BL13/VC/VGCT-01/P(1|4))|(BL13/VC/IPCT-01/(P|V|I)1),MONO:(BL13/VC/VGCT-02/P(1|4))|(BL13/VC/IPCT-02/(P|V|I)1),VFM:(BL13/VC/VGCT-02/P(2|5))|(BL13/VC/IPCT-02/(P|V|I)2),HFM:(BL13/VC/VGCT-03/P(1|4))|(BL13/VC/IPCT-03/(P|V|I)1),PSHU:(BL13/VC/VGCT-03/P(2|5))|(BL13/VC/IPCT-03/(P|V|I)2)'
+p8
+s.
