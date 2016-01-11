@@ -41,7 +41,7 @@ if test -e ${VACCA_DIR}/alba ; then
   cp -vrf ${VACCA_DIR}/alba/config/* ${PREFIX}/applications/vacca/
   vcp alba/vacca bin/vacca
   vcp alba/vaccagui bin/vaccagui
-  vcp alba/doc applications/doc
+  vcp alba/doc doc/vacca
   vcp alba/extra_vacca ${VACCA_LIB}/extra
   vcp alba/desktop ${VACCA_LIB}/desktop
   
