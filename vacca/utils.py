@@ -142,6 +142,9 @@ def _joiner(a,s,b):
 
 if not VACCA_DIR.endswith('/'): VACCA_DIR += '/'
 WORKING_DIR = VACCA_DIR #For compatibility with previous versions
+#Needed for backwards compatibility
+DEFAULT_PATH =  WORKING_DIR #'/homelocal/sicilia/applications/vacca/'
+
 wdir = lambda s: _joiner(VACCA_DIR,'/',s)
 vpath = lambda s: _joiner(VACCA_PATH+'/vacca','/',s)
 

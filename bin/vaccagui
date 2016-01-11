@@ -14,15 +14,10 @@
 
 # S.Rubio-Manrique, srubio@cells.es, 2006-2015
 
-#Source your own environment variables from here:
-#source alba_blissrc
-
-
 echo "Usage: vaccagui [CONFIG.py]"
 
-if [ "echo $HOSTNAME | grep controls02" ] ; then
-    export TANGO_HOST="$(tango_host_chooser.sh)"
-fi
+#Source your own environment variables from here:
+#source alba_blissrc
 
 if [ "$1" ] ; then
     export VACCA_CONFIG="$1"
@@ -49,7 +44,7 @@ fi
 export PYTHONPATH=$VACCA_PATH:$PYTHONPATH
 
 #launcher, may use taurusgui or vacca_run (that strips must of taurusgui application setup)
-echo "$VACCA_DIR/bin/vacca_run.py"
+echo "$VACCA_DIR/vacca_run.py"
 cd $VACCA_DIR
 #taurusgui --taurus-log-level=DEBUG vaccagui &
-python bin/vacca_run.py
+python vacca_run.py

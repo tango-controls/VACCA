@@ -48,14 +48,19 @@ Several other modules contain the widget catalog:
  * synoptics
  
 """
+import traceback
 
-from vacca.doc import get_autodoc
+try:
+  from vacca.doc import get_autodoc
+except Exception,e: print('vacca.doc not loadable')
 from vacca.panel import *
 from vacca.tree import *
 from vacca.utils import *
 from vacca.properties import *
 from vacca.grid import *
-from vacca.alarms import *
+try:
+  from vacca.alarms import *
+except Exception,e: print('vacca.alarms not loadable')
 
 ## THIS DIDNT WORKED!!
 #print('Autogenerating VACCA docs')

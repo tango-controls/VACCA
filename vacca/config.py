@@ -345,7 +345,7 @@ try:
 
     if EXTRA_PANELS:
         print '>'*20+'Loading Extra panels ... %s'%str(EXTRA_PANELS)
-        if not fandango.isMapping(EXTRA_PANELS):
+        if not hasattr(EXTRA_PANELS,'items'):
             EXTRA_PANELS = dict(('extra%d'%(i+1),p) for i,p in enumerate(EXTRA_PANELS))
             
         def get_panel(i):
