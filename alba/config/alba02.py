@@ -78,7 +78,8 @@ EXTRA_WIDGETS = [
 # {'$VarName':{'name':'$AppName','classname':'VaccaAction','model':['$Test','$/path/to/icon.png','$launcher']}}
 #xrga = AppletDescription('RGA',classname = 'VaccaAction',model=['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01'])
 EXTRA_APPS = {
-    'xrga':{'name':'RGA','classname':'vacca.panel.VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
+    'xrga':{'name':'RGA','classname':'vacca.panel.VaccaAction',
+            'model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
     }
     
 AttributeFilters = {}

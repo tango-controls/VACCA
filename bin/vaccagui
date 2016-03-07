@@ -41,10 +41,21 @@ if [ ! "$VACCA_DIR" ] ; then
       export VACCA_DIR=$(python -c "import fandango as f;f.printf(f.get_database().get_property('VACCA','VACCA_DIR').values()[0][0])")
     fi
 fi
+if [ ! "$VACCA_DIR" ] ; then
+    export VACCA_DIR=$VACCA_PATH
+fi
+
 export PYTHONPATH=$VACCA_PATH:$PYTHONPATH
 
 #launcher, may use taurusgui or vacca_run (that strips must of taurusgui application setup)
-echo "$VACCA_DIR/vacca_run.py"
 cd $VACCA_DIR
+
 #taurusgui --taurus-log-level=DEBUG vaccagui &
-python vacca_run.py
+if [ -e "$VACCA_DIR/vacca_run.py" ] ; then
+  LAUNCHER=vacca_run.py
+else
+  LAUNCHER=bin/vacca_run.py
+fi
+
+echo $VACCA_DIR/$LAUNCHER
+python $LAUNCHER

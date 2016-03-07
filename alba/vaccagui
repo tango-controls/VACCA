@@ -17,10 +17,9 @@
 echo "Usage: vaccagui [CONFIG.py]"
 
 #Source your own environment variables from here:
-source /homelocal/sicilia/etc/SICILIA.rc
 source alba_blissrc
 
-if [ "echo $HOSTNAME | grep controls02" ] ; then
+if [ "$(echo $HOSTNAME | grep controls02)" ] ; then
     export TANGO_HOST="$(tango_host_chooser.sh)"
 fi
 
