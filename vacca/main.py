@@ -4,14 +4,45 @@ Vacca runner; this file emulates this call:
  >taurusgui vacca
 """
 
-import sys
+import sys,os,re,time,imp,traceback
 import taurus
-import re
 from taurus.core.util import argparse
 from taurus.qt.qtgui.application import TaurusApplication
 from taurus.qt.qtgui.taurusgui import TaurusGui
 
-args = sys.argv()
+args = sys.argv[1:]
+
+import vacca 
+import vacca.utils as vu
+
+
+vacca_path = imp.find_module('vacca')[1]
+os.environ['VACCA_PATH'] = vacca_path
+
+options = [a for a in args if a.startswith('-')]
+files = [a for a in args if a not in options]
+configs = vu.get_vacca_property('VaccaConfigs',False)
+if not configs:
+    print('Creating default VACCA properties')
+    configs = ['DEFAULT']
+    vu.get_database().put_property('VACCA',{
+        'VaccaConfigs':configs},False)
+    vu.get_database().put_property('VACCA',{
+        'DEFAULT':['VACCA_CONFIG='+vacca_path+'/default.py']},False)
+if not files: files = [configs[0]]
+
+if files[0] in configs:
+    print('Loading %s'%files[0])
+    data = vu.get_vacca_property(files[0],False)
+    print(data)
+    data = dict(l.split('=',1) for l in data)
+    config = data.get('VACCA_CONFIG',files[0])
+else: config = files[0]    
+
+os.environ['VACCA_CONFIG'] = config
+os.environ['VACCA_DIR'] = os.path.dirname(config)
+os.chdir(os.environ['VACCA_DIR'])
+print(dict((k,v) for k,v in os.environ.items() if 'VACCA' in k))
 
 def remove_last_config(filename):
     print('vacca.remove_last_config(%s)'%filename)

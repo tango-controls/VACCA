@@ -1,18 +1,35 @@
 #!/bin/sh
 
-# VACuum Control Application for ALBA
-# Usage:
-#    vaccagui [CONFIG] ; tries to open config file with absolute path or relative to the vacca module.
-#
-# With no argument the file default.py or TANGO_HOST.py will be launched as config
-#
-# The VACCA_PATH environment variable should be used to set the path to vacca modules
-# To use vacca widgets in other GUI's, both vacca and vaccagui modules must be in PYTHONPATH
+"""
 
-# NOTE: It's better to not modify this file to allow setup.py to work properly, 
-# to write your custom launcher better copy it to vaccagui.sh and continue editing there.
+VACuum Control Application for ALBA
 
-# S.Rubio-Manrique, srubio@cells.es, 2006-2015
+Usage:
+   vaccagui [CONFIG] ; tries to open config file with absolute path or relative to the vacca module.
+
+With no argument the file default.py or TANGO_HOST.py will be launched as config
+
+The VACCA_PATH environment variable should be used to set the path to vacca modules
+To use vacca widgets in other GUI's, both vacca and vaccagui modules must be in PYTHONPATH
+
+NOTE: It's better to not modify this file to allow setup.py to work properly, 
+to write your custom launcher better copy it to vaccagui.sh and continue editing there.
+
+----
+
+The configuration variables:
+
+* VACCA_PATH: folder of vacca module, to find data files relative to it.
+
+* VACCA_CONFIG: the configuration file to be  loaded. If not defined then the default.py file will be used. When VACCA.VaccaConfigs is defined with multiple configs; then the first one will be used as default.
+
+* VACCA_DIR: local folder with custom images and synoptics to be loaded by the configuration files. If not defined, the folder of the VACCA_CONFIG will be used.
+
+
+
+S.Rubio-Manrique, srubio@cells.es, 2006-2015
+
+"""
 
 echo "Usage: vaccagui [CONFIG.py]"
 
@@ -21,41 +38,41 @@ echo "Usage: vaccagui [CONFIG.py]"
 
 if [ "$1" ] ; then
     export VACCA_CONFIG="$1"
-else
-    export VACCA_CONFIG=$VACCA_CONFIG
 fi
 
 if [ ! "$VACCA_PATH" ] ; then
     #Getting current script folder
-    export VACCA_PATH=$(python -c "import imp;print(imp.find_module('vacca')[1]+'/../')")
+    export VACCA_PATH=$(python -c "import imp;print(imp.find_module('vacca')[1]")
     echo "VACCA_PATH environment variable not set, trying $VACCA_PATH instead ..."
 fi
 
-#Exporting the folder for config files
-if [ ! "$VACCA_DIR" ] ; then
-    #     export WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
-    if [ "$WORKING_DIR" ] ; then
-      #For compatibility with old vacca launchers/scripts
-      export VACCA_DIR=$WORKING_DIR
-    else
-      export VACCA_DIR=$(python -c "import fandango as f;f.printf(f.get_database().get_property('VACCA','VACCA_DIR').values()[0][0])")
-    fi
-fi
-if [ ! "$VACCA_DIR" ] ; then
-    export VACCA_DIR=$VACCA_PATH
-fi
-
-export PYTHONPATH=$VACCA_PATH:$PYTHONPATH
-
-#launcher, may use taurusgui or vacca_run (that strips must of taurusgui application setup)
-cd $VACCA_DIR
-
-#taurusgui --taurus-log-level=DEBUG vaccagui &
-if [ -e "$VACCA_DIR/vacca_run.py" ] ; then
-  LAUNCHER=vacca_run.py
-else
-  LAUNCHER=bin/vacca_run.py
-fi
-
-echo $VACCA_DIR/$LAUNCHER
+LAUNCHER=$VACCA_PATH/main.py
 python $LAUNCHER
+
+# #Exporting the folder for config files
+# if [ ! "$VACCA_DIR" ] ; then
+#     #     export WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
+#     if [ "$WORKING_DIR" ] ; then
+#       #For compatibility with old vacca launchers/scripts
+#       export VACCA_DIR=$WORKING_DIR
+#     else
+#         VACCA_DIR=$(dirname $VACCA_CONFIG)
+#     fi
+# fi
+# 
+# #launcher, may use taurusgui or vacca_run (that strips must of taurusgui application setup)
+# if [ "$VACCA_DIR" ] ; then
+#     cd $VACCA_DIR
+# else
+#     cd $VACCA_PATH
+# fi
+# 
+# #taurusgui --taurus-log-level=DEBUG vaccagui &
+# if [ -e "$VACCA_DIR/vacca_run.py" ] ; then
+#   LAUNCHER=vacca_run.py
+# else
+#   LAUNCHER=bin/vacca_run.py
+# fi
+# 
+# echo $VACCA_DIR/$LAUNCHER
+# python $LAUNCHER

@@ -52,6 +52,8 @@ VACCA_DIR: *wdir('path/to/icon')*
     the application will be relative to it. It includes all custom icons 
     that are not part of the vacca package.
     
+    Extra modules or plugins to be imported will be loaded from this directory.
+    
     e.g. /homelocal/sicilia/applications/vacca/
     
 VACCA_PATH: *vpath('path/to/icon')*
@@ -62,8 +64,9 @@ VACCA_PATH: *vpath('path/to/icon')*
 
 """
 
-import os,sys,traceback,imp,time
+import os,sys,traceback,imp,time,re
 import fandango
+from fandango import printf,get_database
 from fandango.qt import Qt
 from taurus.qt.qtgui.base import TaurusBaseComponent
 from taurus.core.util.eventfilters import ONLY_CHANGE_AND_PERIODIC
@@ -90,7 +93,7 @@ def get_class_property(dev_class,prop,extract=False):
         return v
     return []
    
-def get_vacca_property(prop,extract=True):
+def get_vacca_property(prop,extract=False):
     db = fandango.get_database()
     props = db.get_property('VACCA',prop)
     if prop in props:
@@ -104,7 +107,13 @@ def get_vacca_property(prop,extract=True):
 
 DB_HOST = fandango.tango.get_tango_host().split(':')[0]
 
-VACCA_PATH = get_env_variable('VACCA_PATH', imp.find_module('vacca')[1]+'/../')
+
+def replace_env(text,var,value):
+    e = '[$][(]?'+var+'[)]?(?![a-zA-Z_0-9])'
+    return re.sub(e,str(value),text)
+
+global VACCA_PATH
+VACCA_PATH = get_env_variable('VACCA_PATH', imp.find_module('vacca')[1])
 """
 VACCA_PATH: *vpath('path/to/icon')*
 
@@ -114,7 +123,9 @@ VACCA_PATH: *vpath('path/to/icon')*
     e.g. VACCA_PATH = /homelocal/sicilia/lib/python/site-packages
     e.g. vpath = /homelocal/sicilia/lib/python/site-packages/vacca
 """
-VACCA_DIR = get_env_variable('VACCA_DIR', get_env_variable('WORKING_DIR',VACCA_PATH))
+
+global VACCA_DIR
+VACCA_DIR = get_env_variable('VACCA_DIR', get_env_variable('WORKING_DIR',''))
 """
 VACCA_DIR: *wdir('path/to/icon')* 
 
@@ -122,11 +133,15 @@ VACCA_DIR: *wdir('path/to/icon')*
     the application will be relative to it. It includes all custom icons 
     that are not part of the vacca package.
     
+    Extra modules or plugins to be imported will be loaded from this directory.
+    
     e.g. /homelocal/sicilia/applications/vacca/
 """
 
+global VACCA_CONFIG
 VACCA_CONFIG = get_env_variable('VACCA_CONFIG',DB_HOST+'.py')
-VACCA_CONFIG = VACCA_CONFIG.replace('$VACCA_DIR',VACCA_DIR).replace('$VACCA_PATH',VACCA_PATH)
+VACCA_CONFIG = replace_env(replace_env(VACCA_CONFIG,'VACCA_DIR',VACCA_DIR),
+                           'VACCA_PATH',VACCA_PATH)
 """
 VACCA_CONFIG: 
 
@@ -137,19 +152,60 @@ VACCA_CONFIG:
     e.g. /homelocal/sicilia/applications/vacca/tbl2401.py
 """
 
+def load_config_properties(config,export=True):
+    """
+    It will load env variables from VACCA.$config property
+    """
+    props = get_vacca_property(config)
+    props = [l.split('#')[0].strip() for l in props]
+    props = dict(l.split('=',1) for l in props if l)
+    if export:
+        global VACCA_CONFIG,VACCA_DIR,VACCA_PATH
+
+        if 'VACCA_DIR' in props:
+            VACCA_DIR=props['VACCA_DIR']
+
+        if 'VACCA_PATH' in props:
+            VACCA_CONFIG=props['VACCA_PATH']            
+
+        if 'VACCA_CONFIG' in props:
+            
+            l=props['VACCA_CONFIG']
+            for p in ('VACCA_DIR','VACCA_PATH'):
+                l=replace_env(l,p,globals()[p])
+            VACCA_CONFIG = props['VACCA_CONFIG'] = l
+            
+        if not VACCA_DIR and '/' in VACCA_CONFIG:
+            VACCA_DIR=os.path.dirname(VACCA_CONFIG)
+            
+    return props
+
 def _joiner(a,s,b):
     return '%s%s%s'%(a,s if a and b and s not in (a[-1],b[0]) else '',b)
 
-if not VACCA_DIR.endswith('/'): VACCA_DIR += '/'
-WORKING_DIR = VACCA_DIR #For compatibility with previous versions
 #Needed for backwards compatibility
-DEFAULT_PATH =  WORKING_DIR #'/homelocal/sicilia/applications/vacca/'
+WORKING_DIR = VACCA_DIR
+DEFAULT_PATH =  WORKING_DIR
 
-wdir = lambda s: _joiner(VACCA_DIR,'/',s)
-vpath = lambda s: _joiner(VACCA_PATH+'/vacca','/',s)
+def wdir(s):
+    #It tries to convert all paths to absolute
+    d = VACCA_DIR
+    if not d and not os.path.exists(s): 
+        d = os.path.dirname(VACCA_CONFIG)
+    return _joiner(d,'/',s)
+
+def vpath(s):
+    #It tries to convert all paths to absolute
+    return _joiner(VACCA_PATH+'/vacca','/',s)
 
 def get_config_file(config=None):
-    CONFIG_FILE = config or VACCA_CONFIG
+    global VACCA_CONFIG
+    if not config:
+        VACCA_CONFIG = get_env_variable('VACCA_CONFIG',DB_HOST+'.py')
+        VACCA_CONFIG = VACCA_CONFIG.replace('$VACCA_DIR',VACCA_DIR).replace('$VACCA_PATH',VACCA_PATH)
+        CONFIG_FILE = VACCA_CONFIG
+    else:
+        CONFIG_FILE = config
     print('get_config_file(%s)'%CONFIG_FILE)
 
     if not CONFIG_FILE.startswith('/'):

@@ -71,7 +71,7 @@ TARGET = DOMAIN
 USE_DEVICE_TREE = True
 
 #Devices not in JDraw or regular expression to be added to the tree
-EXTRA_DEVICES = [d for d in get_all_devices() if not matchCl('^(tango|dserver)/*')]#map(bool,set(['%s/VC/ALL'%TARGET,'%s/CT/ALARMS'%TARGET,DEVICE,COMPOSER]))
+EXTRA_DEVICES = [d for d in get_all_devices() if not matchCl('^(tango|dserver)/*',d)]#map(bool,set(['%s/VC/ALL'%TARGET,'%s/CT/ALARMS'%TARGET,DEVICE,COMPOSER]))
 
 #Custom tree branches are built using nested dictionaries and regular expressions (if empty a jive-like tree is built).
 CUSTOM_TREE = {} 
