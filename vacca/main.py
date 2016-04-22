@@ -18,6 +18,8 @@ import vacca.utils as vu
 
 vacca_path = imp.find_module('vacca')[1]
 os.environ['VACCA_PATH'] = vacca_path
+#Adding default vaccagui at the end of pythonpath
+sys.path.append(vacca_path+'/ini') 
 
 options = [a for a in args if a.startswith('-')]
 files = [a for a in args if a not in options]
