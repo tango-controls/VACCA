@@ -1,0 +1,65 @@
+
+vacca.setup module
+******************
+
+
+Functions
+=========
+
+
+reset_config
+------------
+
+vacca.setup.reset_config(confirm='')
+
+
+cleanup
+-------
+
+vacca.setup.cleanup(prefix)
+
+
+main
+----
+
+vacca.setup.main(args)
+
+
+check_package
+-------------
+
+vacca.setup.check_package(package, prefix='', trace=True)
+
+
+update
+------
+
+vacca.setup.update(prefix, package='')
+
+
+check_repo
+----------
+
+vacca.setup.check_repo(folder)
+
+
+install
+-------
+
+vacca.setup.install(prefix, package='')
+
+======================================================================
+
+vacca.setup.check_package(package, prefix='', trace=True)
+
+vacca.setup.check_repo(folder)
+
+vacca.setup.cleanup(prefix)
+
+vacca.setup.install(prefix, package='')
+
+vacca.setup.main(args)
+
+vacca.setup.reset_config(confirm='')
+
+vacca.setup.update(prefix, package='')

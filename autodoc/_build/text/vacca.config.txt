@@ -1,0 +1,464 @@
+
+vacca.config module
+*******************
+
+TaurusGUI configuration file used to convert Taurus into VACCA
+
+This file should be NOT modified.
+
+
+h2. Usage
+=========
+
+This configuration file determines the default, permanent, pre-defined
+contents of the GUI. While the user may add/remove more elements at
+run time and those customizations will also be stored, this file
+defines what a user will find when launching the GUI for the first
+time.
+
+Don't modify this file, use default.py to do a simple setup of your
+facility and paths and a CONFIG.py file (based on default.py format)
+to  construct a VACCA gui for each subsystem.
+
+
+h3. Contents
+------------
+
+This file mainly defines two kinds of objects:
+
+   * Panel descriptors: the panels to be shown. To define a panel,
+     instantiate a PanelDescription object (see documentation for the
+     gblgui_utils module)
+
+   * Panels will be TREE, JDRAW_FILE, DEVICE, ...
+
+   * QSignals (managed by Taurus Shared Data Manager):
+
+      * SelectedInstrument: goes from taurusgui and tree into
+        panel/synoptic
+
+      * SelectionMultiple: goes from panic/finder/... to synoptic to
+        display multiple elements
+
+      * JDrawIn/JDrawOut: used only if JDRAW_HOOK defined, to
+        transform data between synoptic and selection
+
+      * lastWindowClosed: signal will close all opened widgets and
+        dialogs on application exit
+
+
+h3. Extending Taurus
+--------------------
+
+Use EXTRA_WIDGETS to add new widgets to the catalog and the right-side
+toolbar.
+
+Use EXTRA_PANELS to force new Panels always at startup.
+
+Use EXTRA_APPS to add launchers to the toolbar.
+
+Create new AppletDescription objects to add elements to the right-side
+toolbar.
+
+
+h1. Config Variables
+--------------------
+
+Described below
+
+
+General Info Options
+====================
+
+vacca.config.GUI_NAME
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+vacca.config.URL_HELP
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+vacca.config.URL_LOGBOOK
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+vacca.config.VACCA_LOGO
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+vacca.config.ORGANIZATION
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+vacca.config.ORGANIZATION_LOGO
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+
+Installation Options
+====================
+
+vacca.config.WDIR
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+vacca.config.SETTINGS
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+
+Sub systems Options
+===================
+
+vacca.config.DOMAIN
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+vacca.config.TARGET
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+vacca.config.COMPOSER
+
+   COMPOSER:  True/False to show by default the COMPOSER Panel.
+
+
+Device Tree Options
+===================
+
+vacca.config.USE_DEVICE_TREE
+
+   USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree
+
+vacca.config.CUSTOM_TREE
+
+   dict() -> new empty dictionary dict(mapping) -> new dictionary
+   initialized from a mapping object's
+
+      (key, value) pairs
+
+   dict(iterable) -> new dictionary initialized as if via:
+      d = {} for k, v in iterable:
+
+         d[k] = v
+
+   dict(>>**<<kwargs) -> new dictionary initialized with the
+   name=value pairs
+      in the keyword argument list.  For example:  dict(one=1, two=2)
+
+vacca.config.EXTRA_DEVICES
+
+   list() -> new empty list list(iterable) -> new list initialized
+   from iterable's items
+
+
+Synoptics Options
+=================
+
+vacca.config.JDRAW_FILE
+
+   JDRAW_FILE:  The JDRAW file to create the Synoptic, it can be .jdw
+   or .svg but the second option will require the svgsynoptic module
+   from maxlab.
+
+vacca.config.JDRAW_TREE
+
+   bool(x) -> bool
+
+   Returns True when the argument x is true, False otherwise. The
+   builtins True and False are the only two instances of the class
+   bool. The class bool is a subclass of the class int, and cannot be
+   subclassed.
+
+vacca.config.JDRAW_HOOK
+
+vacca.config.GRID
+
+   GRID:  True/False to show by default ehe GRID Panel.
+
+
+Device Panel Options
+====================
+
+vacca.config.USE_DEVICE_PANEL
+
+   USE_DEVICE_PANEL:  True or False, To Show by default the
+   DevicePanel
+
+vacca.config.DEVICE
+
+vacca.config.PANEL_COMMAND
+
+   str(object='') -> string
+
+   Return a nice string representation of the object. If the argument
+   is a string, the return value is the same object.
+
+vacca.config.AttributeFilters
+
+   dict() -> new empty dictionary dict(mapping) -> new dictionary
+   initialized from a mapping object's
+
+      (key, value) pairs
+
+   dict(iterable) -> new dictionary initialized as if via:
+      d = {} for k, v in iterable:
+
+         d[k] = v
+
+   dict(>>**<<kwargs) -> new dictionary initialized with the
+   name=value pairs
+      in the keyword argument list.  For example:  dict(one=1, two=2)
+
+vacca.config.CommandFilters
+
+   dict() -> new empty dictionary dict(mapping) -> new dictionary
+   initialized from a mapping object's
+
+      (key, value) pairs
+
+   dict(iterable) -> new dictionary initialized as if via:
+      d = {} for k, v in iterable:
+
+         d[k] = v
+
+   dict(>>**<<kwargs) -> new dictionary initialized with the
+   name=value pairs
+      in the keyword argument list.  For example:  dict(one=1, two=2)
+
+vacca.config.IconMap
+
+   dict() -> new empty dictionary dict(mapping) -> new dictionary
+   initialized from a mapping object's
+
+      (key, value) pairs
+
+   dict(iterable) -> new dictionary initialized as if via:
+      d = {} for k, v in iterable:
+
+         d[k] = v
+
+   dict(>>**<<kwargs) -> new dictionary initialized with the
+   name=value pairs
+      in the keyword argument list.  For example:  dict(one=1, two=2)
+
+
+Plot Options
+============
+
+vacca.config.GAUGES
+
+   list() -> new empty list list(iterable) -> new list initialized
+   from iterable's items
+
+
+Widgets Options
+===============
+
+vacca.config.EXTRA_WIDGETS
+
+   EXTRA_WIDGETS: The Dictionary of EXTRA_WIDGETS Panels
+
+   Adding other widgets to the catalog of the "new panel" dialog. pass
+   a tuple of (classname,screenshot)
+
+   * classname may contain the module name.
+
+   * screenshot can either be a file name relative to the
+     application dir or a resource URL or None
+
+   examples:
+
+      ('vacca.properties.VaccaPropTable',wdir('vacca/image/widgets/Pr
+      operties.png')), ('vacca.panel.VaccaPanel',wdir('vacca/image/wi
+      dgets/Panel.png')),
+
+vacca.config.EXTRA_PANELS
+
+   EXTRA_PANELS:  dictionary of Extra Panels to be shown by default.
+   Each element may be a PanelDescription object or a tuple with its
+   arguments.
+
+   The dictionary will be defined like:
+      * key: Panel name
+
+      * value: list of arguments to PanelDescription
+
+      * value[0]: panel name
+
+      * value[1]: class name
+
+      * value[2]: default model
+
+      * value[3]: shared data read signal
+
+      * value[4]: shared data write signal
+
+   As example, to add PANIC as extra panel use: EXTRA_PANELS['PANIC']
+   = ('PANIC','panic.gui.AlarmGUI','',{},{'HighlightInstruments':'dev
+   icesSelected'})
+
+vacca.config.TOOLBARS
+
+   list() -> new empty list list(iterable) -> new list initialized
+   from iterable's items
+
+vacca.config.EXTRA_APPS
+
+   The Vacca Panels to show in the JogsBar. Use EXTRA_APPS to add
+   launchers to the toolbar. It will create new AppletDescription
+   objects to add elements to the right-side toolbar.
+
+   Examples:
+      * EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
+
+      * EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
+
+      * EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }
+
+      * EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }
+
+vacca.config.EXTRA_CATALOG_WIDGETS
+
+   EXTRA_CATALOG_WIDGETS: The Dictionary of EXTRA_CATALOG_WIDGETS
+   Panels to Show by default. Is the Sum of EXTRA_WIDGETS and the
+   custom Widgets defined in config.py
+
+vacca.config.COMPOSER = ''
+
+   COMPOSER:  True/False to show by default the COMPOSER Panel.
+
+vacca.config.CONFIG = <module '' from '/home/srubio/STORAGE/LIBS/python/vacca/'>
+
+   Default options are set in default.py file and later customized in
+   a config file. This CONFIG can be a .py file passed as argument or
+   a TANGO_HOST.py file in vacca folder.
+
+vacca.config.CUSTOM_LOGO = '/home/srubio/STORAGE/LIBS/python/vacca/image/icons/nggshow.php.png'
+
+   CUSTOM_LOGO. It can be an absolute path,or relative to the app dir
+   or a resource path. If commented out, ":/taurus.png" will be used
+
+vacca.config.EXTRA_APPS = {'Properties': {'class': <class 'vacca.properties.VaccaPropTable'>}}
+
+   The Vacca Panels to show in the JogsBar. Use EXTRA_APPS to add
+   launchers to the toolbar. It will create new AppletDescription
+   objects to add elements to the right-side toolbar.
+
+   Examples:
+      * EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
+
+      * EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
+
+      * EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }
+
+      * EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }
+
+vacca.config.EXTRA_CATALOG_WIDGETS = [('panic.gui.AlarmGUI', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/icons/panic.gif'), ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/widgets/Archiving.png'), ('vacca.properties.VaccaPropTable', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/widgets/Properties.png'), ('fandango.qt.QEvaluator', ':/snapshot/large/snapshot/TaurusShell.png')]
+
+   EXTRA_CATALOG_WIDGETS: The Dictionary of EXTRA_CATALOG_WIDGETS
+   Panels to Show by default. Is the Sum of EXTRA_WIDGETS and the
+   custom Widgets defined in config.py
+
+vacca.config.EXTRA_PANELS = {}
+
+   EXTRA_PANELS:  dictionary of Extra Panels to be shown by default.
+   Each element may be a PanelDescription object or a tuple with its
+   arguments.
+
+   The dictionary will be defined like:
+      * key: Panel name
+
+      * value: list of arguments to PanelDescription
+
+      * value[0]: panel name
+
+      * value[1]: class name
+
+      * value[2]: default model
+
+      * value[3]: shared data read signal
+
+      * value[4]: shared data write signal
+
+   As example, to add PANIC as extra panel use: EXTRA_PANELS['PANIC']
+   = ('PANIC','panic.gui.AlarmGUI','',{},{'HighlightInstruments':'dev
+   icesSelected'})
+
+vacca.config.EXTRA_WIDGETS = [('panic.gui.AlarmGUI', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/icons/panic.gif'), ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/widgets/Archiving.png')]
+
+   EXTRA_WIDGETS: The Dictionary of EXTRA_WIDGETS Panels
+
+   Adding other widgets to the catalog of the "new panel" dialog. pass
+   a tuple of (classname,screenshot)
+
+   * classname may contain the module name.
+
+   * screenshot can either be a file name relative to the
+     application dir or a resource URL or None
+
+   examples:
+
+      ('vacca.properties.VaccaPropTable',wdir('vacca/image/widgets/Pr
+      operties.png')), ('vacca.panel.VaccaPanel',wdir('vacca/image/wi
+      dgets/Panel.png')),
+
+vacca.config.GRID = {'row_labels': 'VcGauges(mbar):(VGCT|PEN), IonPumps(mbar):(IPCT|VARIP)', 'column_labels': '', 'labels': False, 'delayed': False, 'units': False, 'frames': False, 'model': []}
+
+   GRID:  True/False to show by default ehe GRID Panel.
+
+vacca.config.JDRAW_FILE = ''
+
+   JDRAW_FILE:  The JDRAW file to create the Synoptic, it can be .jdw
+   or .svg but the second option will require the svgsynoptic module
+   from maxlab.
+
+vacca.config.MANUAL_URI = 'http://www.tango-controls.org/Members/srubio/vacca'
+
+   You can provide an URI for a manual in html format (comment out or
+   make MANUAL_URI=None to skip creating a Manual panel)
+
+vacca.config.OPTION_LISTS = [('General Info', ['GUI_NAME', 'URL_HELP', 'URL_LOGBOOK', 'VACCA_LOGO', 'ORGANIZATION', 'ORGANIZATION_LOGO']), ('Installation', ['WDIR', 'SETTINGS']), ('Sub systems', ['DOMAIN', 'TARGET', 'COMPOSER']), ('Device Tree', ['USE_DEVICE_TREE', 'CUSTOM_TREE', 'EXTRA_DEVICES']), ('Synoptics', ['JDRAW_FILE', 'JDRAW_TREE', 'JDRAW_HOOK', 'GRID']), ('Device Panel', ['USE_DEVICE_PANEL', 'DEVICE', 'PANEL_COMMAND', 'AttributeFilters', 'CommandFilters', 'IconMap']), ('Plot', ['GAUGES']), ('Widgets', ['EXTRA_WIDGETS', 'EXTRA_PANELS', 'TOOLBARS', 'EXTRA_APPS', 'EXTRA_CATALOG_WIDGETS'])]
+
+   ALL Variables that can be defined in CONFIG FILE
+
+vacca.config.USE_DEVICE_PANEL = True
+
+   USE_DEVICE_PANEL:  True or False, To Show by default the
+   DevicePanel
+
+vacca.config.USE_DEVICE_TREE = True
+
+   USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree
+
+vacca.config.filterMatching(a, dct={'V-PEN': ['pressure', 'channelstatus', 'controller'], 'EPS': [('Status', ['_READY', 'OPEN_', 'CLOSE_']), ('Signals', ['.*_PT.*', 'was_', 'paas_', '*RGA*'])]}, p=<bound method Logger.info of <fandango.log.Logger object at 0x7fdaff917250>>)

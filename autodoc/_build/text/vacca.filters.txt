@@ -1,0 +1,7 @@
+
+vacca.filters module
+********************
+
+vacca.filters.cleanup(k)
+
+vacca.filters.getDefaultIcon(k=None)

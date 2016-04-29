@@ -1,0 +1,696 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vacca.tree module &mdash; vacca  documentation</title>
+    
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="vacca  documentation" href="index.html" />
+    <link rel="next" title="vacca.alarms module" href="vacca.alarms.html" />
+    <link rel="prev" title="vacca.synoptics module" href="vacca.synoptics.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">vacca  documentation</a></div>
+        <div class="rel">
+          <a href="vacca.synoptics.html" title="vacca.synoptics module"
+             accesskey="P">previous</a> |
+          <a href="vacca.alarms.html" title="vacca.alarms module"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-vacca.tree">
+<span id="vacca-tree-module"></span><h1>vacca.tree module<a class="headerlink" href="#module-vacca.tree" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="vaccadevtree">
+<h3>VaccaDevTree<a class="headerlink" href="#vaccadevtree" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="vacca.tree.VaccaDevTree">
+<em class="property">class </em><tt class="descclassname">vacca.tree.</tt><tt class="descname">VaccaDevTree</tt><big>(</big><em>parent=None</em>, <em>designMode=False</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaDevTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaDevTree" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="vacca.tree.VaccaDevTree.getModelMimeData">
+<tt class="descname">getModelMimeData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaDevTree.getModelMimeData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaDevTree.getModelMimeData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a MimeData object containing the model data. The default implementation 
+fills the <cite>TAURUS_MODEL_MIME_TYPE</cite>. If the widget&#8217;s Model class is
+Attribute or Device, it also fills <cite>TAURUS_ATTR_MIME_TYPE</cite> or
+<cite>TAURUS_DEV_MIME_TYPE</cite>, respectively</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="vaccatree">
+<h3>VaccaTree<a class="headerlink" href="#vaccatree" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="vacca.tree.VaccaTree">
+<em class="property">class </em><tt class="descclassname">vacca.tree.</tt><tt class="descname">VaccaTree</tt><big>(</big><em>parent=None</em>, <em>designMode=False</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>It is a class that inherits from TaurusSearchTree.
+Allow show the devices and start/stop it with the right button (
+expandable menu)</p>
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.device_info">
+<tt class="descname">device_info</tt><big>(</big><em>device=None</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.device_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.device_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a the Device Info
+:param device: DeviceName
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.tree.VaccaTree.getDefaultIcon">
+<em class="property">static </em><tt class="descname">getDefaultIcon</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.getDefaultIcon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.getDefaultIcon" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Default Icon Path.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.start_server">
+<tt class="descname">start_server</tt><big>(</big><em>device=None</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.start_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.start_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow start Servers.
+:param device: DeviceName
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.stop_server">
+<tt class="descname">stop_server</tt><big>(</big><em>device=None</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.stop_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.stop_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow stop Servers
+:param device: DeviceName
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="class">
+<dt id="vacca.tree.TaurusDevTree">
+<em class="property">class </em><tt class="descclassname">vacca.tree.</tt><tt class="descname">TaurusDevTree</tt><big>(</big><em>parent=None</em>, <em>designMode=False</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.tree.taurusdevicetree.TaurusTreeNodeContainer</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">PyQt4.QtGui.QTreeWidget</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.base.taurusbase.TaurusBaseWidget</span></tt></p>
+<p>This widget displays a list of servers, devices or instances.
+To set a new Model use either setModel(filters), addModels(list), setFilters(...) or loadTree(filters)
+setModel and loadTree are equivalent; adding a new branch to the tree
+addModels merges the tree with new models
+setFilters clears previous models and adds new one</p>
+<dl class="attribute">
+<dt id="vacca.tree.TaurusDevTree.Expander">
+<tt class="descname">Expander</tt><a class="headerlink" href="#vacca.tree.TaurusDevTree.Expander" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.tree.TaurusDevTree.Loader">
+<tt class="descname">Loader</tt><a class="headerlink" href="#vacca.tree.TaurusDevTree.Loader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.tree.TaurusDevTree.TRACE_ALL">
+<tt class="descname">TRACE_ALL</tt><em class="property"> = False</em><a class="headerlink" href="#vacca.tree.TaurusDevTree.TRACE_ALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.addAttrToDev">
+<tt class="descname">addAttrToDev</tt><big>(</big><em>my_device</em>, <em>expert=False</em>, <em>allow_types=None</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.addAttrToDev" title="Permalink to this definition">¶</a></dt>
+<dd><p>This command returns the list of attributes of a given device applying display level and type filters.
+&#64;argin expert If False only PyTango.DispLevel.OPERATOR attributes are displayed
+&#64;argin allow_types Only those types included in the list will be displayed (e.g. may be restricted to numeric types only)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.addAttrToNode">
+<tt class="descname">addAttrToNode</tt><big>(</big><em>node=None</em>, <em>full=False</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.addAttrToNode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.addModels">
+<tt class="descname">addModels</tt><big>(</big><em>modelNames</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.addModels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds models to the existing ones:
+:param modelNames:  (sequence&lt;str&gt;) the names of the models to be added
+.. seealso:: <tt class="xref py py-meth docutils literal"><span class="pre">removeModels()</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.checkHeaderClicked">
+<tt class="descname">checkHeaderClicked</tt><big>(</big><em>position</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.checkHeaderClicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.collapseNode">
+<tt class="descname">collapseNode</tt><big>(</big><em>ALL=False</em>, <em>filters=''</em>, <em>fun=None</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.collapseNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collapses the whole tree or from a given node.
+&#64;argin ALL tells whether to collapse from current item or the whole tree
+&#64;argin filters Allows to set a list of nodes to not be filtered</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.contextMenuEvent">
+<tt class="descname">contextMenuEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.contextMenuEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called when right clicking on TaurusDevTree area.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.tree.TaurusDevTree.defaultAttrFilter">
+<em class="property">static </em><tt class="descname">defaultAttrFilter</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.defaultAttrFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.defineStyle">
+<tt class="descname">defineStyle</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.defineStyle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.deviceClicked">
+<tt class="descname">deviceClicked</tt><big>(</big><em>item</em>, <em>column</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.deviceClicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.deviceSelected">
+<tt class="descname">deviceSelected</tt><big>(</big><em>device_name=''</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.deviceSelected" title="Permalink to this definition">¶</a></dt>
+<dd><p>QSIGNAL: this method is used to emit deviceSelected(QString) signal</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.dropEvent">
+<tt class="descname">dropEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.dropEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>reimplemented to support dropping of modelnames in forms</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.expandAll">
+<tt class="descname">expandAll</tt><big>(</big><em>queue=True</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.expandAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.expandNode">
+<tt class="descname">expandNode</tt><big>(</big><em>node=None</em>, <em>expand=True</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.expandNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Needed to do threaded expansion of the tree</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.findDialog">
+<tt class="descname">findDialog</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.findDialog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.findInTree">
+<tt class="descname">findInTree</tt><big>(</big><em>regexp</em>, <em>collapseAll=None</em>, <em>exclude=None</em>, <em>select=True</em>, <em>queue=True</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.findInTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getAllNodes">
+<tt class="descname">getAllNodes</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getAllNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list with all node objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getAttrFilter">
+<tt class="descname">getAttrFilter</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getAttrFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getConfig">
+<tt class="descname">getConfig</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getMatchingNodes">
+<tt class="descname">getMatchingNodes</tt><big>(</big><em>regexp</em>, <em>limit=0</em>, <em>all=False</em>, <em>exclude=None</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getMatchingNodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns all nodes matching the given expression.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getModel">
+<tt class="descname">getModel</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getModel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getModelClass">
+<tt class="descname">getModelClass</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getModelClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getModelMimeData">
+<tt class="descname">getModelMimeData</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getModelMimeData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a MimeData object containing the model data. The default implementation 
+fills the <cite>TAURUS_MODEL_MIME_TYPE</cite>. If the widget&#8217;s Model class is
+Attribute or Device, it also fills <cite>TAURUS_ATTR_MIME_TYPE</cite> or
+<cite>TAURUS_DEV_MIME_TYPE</cite>, respectively</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getNode">
+<tt class="descname">getNode</tt><big>(</big><em>target=None</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets currrent node or node by name or by regexp</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getNodeByName">
+<tt class="descname">getNodeByName</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getNodeByName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getNodeList">
+<tt class="descname">getNodeList</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getNodeList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="vacca.tree.TaurusDevTree.getQtDesignerPluginInfo">
+<em class="property">classmethod </em><tt class="descname">getQtDesignerPluginInfo</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getQtDesignerPluginInfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getSelectedNodes">
+<tt class="descname">getSelectedNodes</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getSelectedNodes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.getTangoDict">
+<tt class="descname">getTangoDict</tt><big>(</big><em>filters</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.getTangoDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.initConfig">
+<tt class="descname">initConfig</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.initConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializing the attributes that will be kept persitent as Qt settings.
+e.g. for Filters property, the following attributes are created:</p>
+<blockquote>
+<div><ul class="simple">
+<li>self.filters</li>
+<li>self._filters</li>
+<li>self.setFilters</li>
+<li>self.getFilters</li>
+<li>self.resetFilters</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.loadTree">
+<tt class="descname">loadTree</tt><big>(</big><em>filters</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.loadTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.matchAttrFilter">
+<tt class="descname">matchAttrFilter</tt><big>(</big><em>target</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.matchAttrFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.mimeTypes">
+<tt class="descname">mimeTypes</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.mimeTypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.minimumSizeHint">
+<tt class="descname">minimumSizeHint</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.minimumSizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.mouseMoveEvent">
+<tt class="descname">mouseMoveEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.mouseMoveEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>copied from TaurusBaseWidget to provide drag events
+It had to be rewritten as QTreeWidget does not allow drag events</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.refreshTree">
+<tt class="descname">refreshTree</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.refreshTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.setAttrFilter">
+<tt class="descname">setAttrFilter</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.setAttrFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.tree.TaurusDevTree.setDefaultAttrFilter">
+<em class="property">static </em><tt class="descname">setDefaultAttrFilter</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.setDefaultAttrFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.setIcons">
+<tt class="descname">setIcons</tt><big>(</big><em>dct={}</em>, <em>root_name=None</em>, <em>regexps=True</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.setIcons" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method change the icons depending of the status of the devices
+Dict is a dictionary with name of device and colors such as {name_device:color,name_device2:color2}
+An alternative may be an icon name!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.setModel">
+<tt class="descname">setModel</tt><big>(</big><em>model</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.setModel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.setModelCheck">
+<tt class="descname">setModelCheck</tt><big>(</big><em>model</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.setModelCheck" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.setNodeTree">
+<tt class="descname">setNodeTree</tt><big>(</big><em>parent</em>, <em>diction</em>, <em>alias=False</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.setNodeTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>It has parent as argument to allow itself to be recursive
+Initializes the node tree from a dictionary {&#8216;Node0.0&#8217;:{&#8216;Node1.0&#8217;:None,&#8217;Node1.1&#8217;:None}}</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.setStateIcon">
+<tt class="descname">setStateIcon</tt><big>(</big><em>child</em>, <em>color</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.setStateIcon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.setTangoHost">
+<tt class="descname">setTangoHost</tt><big>(</big><em>tango_host=None</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.setTangoHost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.setTree">
+<tt class="descname">setTree</tt><big>(</big><em>diction</em>, <em>clear=False</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.setTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the tree from a dictionary {&#8216;Node0.0&#8217;:{&#8216;Node1.0&#8217;:None,&#8217;Node1.1&#8217;:None}}</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.showNodeContextMenu">
+<tt class="descname">showNodeContextMenu</tt><big>(</big><em>node</em>, <em>event</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.showNodeContextMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>A pop up menu will be shown with the available options. 
+Menus are managed using two tuple lists for each node: node.ContextMenu and node.ExpertMenu</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.sizeHint">
+<tt class="descname">sizeHint</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.sortCustom">
+<tt class="descname">sortCustom</tt><big>(</big><em>order</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.sortCustom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.trace">
+<tt class="descname">trace</tt><big>(</big><em>msg</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.trace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTree.unpackChildren">
+<tt class="descname">unpackChildren</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTree.unpackChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes all nodes from the tree and returns them in a list, used for resorting</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="vacca.tree.TaurusSearchTree">
+<em class="property">class </em><tt class="descclassname">vacca.tree.</tt><tt class="descname">TaurusSearchTree</tt><big>(</big><em>parent=None</em>, <em>designMode=False</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusSearchTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.container.tauruswidget.TaurusWidget</span></tt></p>
+<p>This Class is a mere wrapper providing a TaurusDevTree connected with an options panel and some optional checkboxes.</p>
+<dl class="attribute">
+<dt id="vacca.tree.TaurusSearchTree.addModels">
+<tt class="descname">addModels</tt><a class="headerlink" href="#vacca.tree.TaurusSearchTree.addModels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.TaurusSearchTree.defineStyle">
+<tt class="descname">defineStyle</tt><big>(</big><big>)</big><a class="headerlink" href="#vacca.tree.TaurusSearchTree.defineStyle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.tree.TaurusSearchTree.expandAll">
+<tt class="descname">expandAll</tt><a class="headerlink" href="#vacca.tree.TaurusSearchTree.expandAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.tree.TaurusSearchTree.findInTree">
+<tt class="descname">findInTree</tt><a class="headerlink" href="#vacca.tree.TaurusSearchTree.findInTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.tree.TaurusSearchTree.loadTree">
+<tt class="descname">loadTree</tt><a class="headerlink" href="#vacca.tree.TaurusSearchTree.loadTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.tree.TaurusSearchTree.method_forwarder">
+<em class="property">static </em><tt class="descname">method_forwarder</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusSearchTree.method_forwarder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.tree.TaurusSearchTree.setDefaultAttrFilter">
+<em class="property">static </em><tt class="descname">setDefaultAttrFilter</tt><big>(</big><em>c</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusSearchTree.setDefaultAttrFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.tree.TaurusSearchTree.setDefaultPanelClass">
+<em class="property">static </em><tt class="descname">setDefaultPanelClass</tt><big>(</big><em>c</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusSearchTree.setDefaultPanelClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.tree.TaurusSearchTree.setModelCheck">
+<tt class="descname">setModelCheck</tt><a class="headerlink" href="#vacca.tree.TaurusSearchTree.setModelCheck" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.tree.TaurusSearchTree.setTangoHost">
+<tt class="descname">setTangoHost</tt><a class="headerlink" href="#vacca.tree.TaurusSearchTree.setTangoHost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.tree.TaurusSearchTree.setTree">
+<tt class="descname">setTree</tt><a class="headerlink" href="#vacca.tree.TaurusSearchTree.setTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="vacca.tree.TaurusDevTreeOptions">
+<em class="property">class </em><tt class="descclassname">vacca.tree.</tt><tt class="descname">TaurusDevTreeOptions</tt><big>(</big><em>parent=None</em>, <em>icon=None</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTreeOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PyQt4.QtGui.QWidget</span></tt></p>
+<p>This class provides a search(QString) signal to be connected to TaurusDevTree.findInTree slot</p>
+<dl class="method">
+<dt id="vacca.tree.TaurusDevTreeOptions.connectWithTree">
+<tt class="descname">connectWithTree</tt><big>(</big><em>tree</em><big>)</big><a class="headerlink" href="#vacca.tree.TaurusDevTreeOptions.connectWithTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">vacca.tree.</tt><tt class="descname">VaccaTree</tt><big>(</big><em>parent=None</em>, <em>designMode=False</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.tree.taurusdevicetree.TaurusSearchTree</span></tt></p>
+<p>It is a class that inherits from TaurusSearchTree.
+Allow show the devices and start/stop it with the right button (
+expandable menu)</p>
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.addModels">
+<tt class="descname">addModels</tt><big>(</big><em>*a</em>, <em>**k</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.addModels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.addModels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.defineStyle">
+<tt class="descname">defineStyle</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.defineStyle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.defineStyle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">device_info</tt><big>(</big><em>device=None</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.device_info"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Show a the Device Info
+:param device: DeviceName
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.expandAll">
+<tt class="descname">expandAll</tt><big>(</big><em>*a</em>, <em>**k</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.expandAll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.expandAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt>
+<em class="property">static </em><tt class="descname">getDefaultIcon</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.getDefaultIcon"><span class="viewcode-link">[source]</span></a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Default Icon Path.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.loadTree">
+<tt class="descname">loadTree</tt><big>(</big><em>*a</em>, <em>**k</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.loadTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.loadTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.tree.VaccaTree.setDefaultAttrFilter">
+<em class="property">static </em><tt class="descname">setDefaultAttrFilter</tt><big>(</big><em>*a</em>, <em>**k</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.setDefaultAttrFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.setDefaultAttrFilter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.tree.VaccaTree.setDefaultPanelClass">
+<em class="property">static </em><tt class="descname">setDefaultPanelClass</tt><big>(</big><em>*a</em>, <em>**k</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.setDefaultPanelClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.setDefaultPanelClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="vacca.tree.VaccaTree.setIconMap">
+<em class="property">classmethod </em><tt class="descname">setIconMap</tt><big>(</big><em>klass</em>, <em>iconMap</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.setIconMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.setIconMap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.setModel">
+<tt class="descname">setModel</tt><big>(</big><em>*a</em>, <em>**k</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.setModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.setModel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.setModelCheck">
+<tt class="descname">setModelCheck</tt><big>(</big><em>*a</em>, <em>**k</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.setModelCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.setModelCheck" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.setTangoHost">
+<tt class="descname">setTangoHost</tt><big>(</big><em>*a</em>, <em>**k</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.setTangoHost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.setTangoHost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.tree.VaccaTree.setTree">
+<tt class="descname">setTree</tt><big>(</big><em>*a</em>, <em>**k</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.setTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.tree.VaccaTree.setTree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">start_server</tt><big>(</big><em>device=None</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.start_server"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Allow start Servers.
+:param device: DeviceName
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">stop_server</tt><big>(</big><em>device=None</em><big>)</big><a class="reference internal" href="_modules/vacca/tree.html#VaccaTree.stop_server"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Allow stop Servers
+:param device: DeviceName
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Welcome to vacca&#8217;s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.html">vacca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.config.html">vacca.config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.utils.html">vacca.utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.setup.html">vacca.setup module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.doc.html">vacca.doc module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.default.html">vacca.default module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.panel.html">vacca.panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.plot.html">vacca.plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.properties.html">vacca.properties module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.synoptics.html">vacca.synoptics module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">vacca.tree module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vaccadevtree">VaccaDevTree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vaccatree">VaccaTree</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.alarms.html">vacca.alarms module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.grid.html">vacca.grid module</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="vacca.synoptics.html" title="vacca.synoptics module"
+             >previous</a> |
+          <a href="vacca.alarms.html" title="vacca.alarms module"
+             >next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+            <br/>
+            <a href="_sources/vacca.tree.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2015, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

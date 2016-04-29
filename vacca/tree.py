@@ -60,6 +60,10 @@ class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree,TaurusBas
     
     ## @TODO: SAME CHANGE MUST BE ADDED TO TAURUSJDRAWGRAPHICS SELECTGRAPHICITEM!!!
     
+    def trace(self,msg):
+        if self.TRACE_ALL or self.getLogLevel() in ('DEBUG',40,):
+            print 'TaurusDevTree.%s: %s'%(self.getLogLevel(),msg[:80]+'...') #@TODO: use the taurus logger instead! ~~cpascual 20121121    
+    
     def findInTree(self,*a,**k):
         try:
             #Added to avoid recursion

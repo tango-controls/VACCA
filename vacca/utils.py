@@ -66,7 +66,8 @@ VACCA_PATH: *vpath('path/to/icon')*
 
 import os,sys,traceback,imp,time,re
 import fandango
-from fandango import printf,get_database
+from fandango import printf,get_database,first
+from fandango.dicts import SortedDict
 from fandango.qt import Qt
 from taurus.qt.qtgui.base import TaurusBaseComponent
 from taurus.core.util.eventfilters import ONLY_CHANGE_AND_PERIODIC
@@ -162,13 +163,13 @@ def load_config_properties(config,export=True):
     if export:
         global VACCA_CONFIG,VACCA_DIR,VACCA_PATH
 
-        if 'VACCA_DIR' in props:
+        if not VACCA_DIR and 'VACCA_DIR' in props:
             VACCA_DIR=props['VACCA_DIR']
 
-        if 'VACCA_PATH' in props:
+        if not VACCA_PATH and 'VACCA_PATH' in props:
             VACCA_CONFIG=props['VACCA_PATH']            
 
-        if 'VACCA_CONFIG' in props:
+        if not VACCA_CONFIG and 'VACCA_CONFIG' in props:
             
             l=props['VACCA_CONFIG']
             for p in ('VACCA_DIR','VACCA_PATH'):
@@ -192,18 +193,48 @@ def wdir(s):
     d = VACCA_DIR
     if not d and not os.path.exists(s): 
         d = os.path.dirname(VACCA_CONFIG)
-    return _joiner(d,'/',s)
+    d = _joiner(d,'/',s)
+    return d
 
 def vpath(s):
     #It tries to convert all paths to absolute
-    return _joiner(VACCA_PATH+'/vacca','/',s)
+    return _joiner(VACCA_PATH,'/',s)
+  
+global VACCA_PROFILES
+VACCA_PROFILES=[]
+"""
+VACCA_PROFILES: 
+
+    Sets of environment variables declared as free properties
+    in the Tango Database.
+    
+"""
+  
+def get_config_properties(config=''):
+    global VACCA_PROFILES
+    if not VACCA_PROFILES:
+        VACCA_PROFILES = SortedDict()
+        for k in get_vacca_property('VaccaConfigs',False):
+          VACCA_PROFILES[k] = {}
+    if not config:
+        return VACCA_PROFILES
+    else:
+        if not VACCA_PROFILES.get(config):
+          VACCA_PROFILES[config] = [l.split('#')[0].strip() \
+            for l in get_vacca_property(config,False)]
+        config = VACCA_PROFILES[config]
+        return dict(l.split('=',1) for l in config if l)
 
 def get_config_file(config=None):
-    global VACCA_CONFIG
+    global VACCA_CONFIG,VACCA_DIR
     if not config:
-        VACCA_CONFIG = get_env_variable('VACCA_CONFIG',DB_HOST+'.py')
-        VACCA_CONFIG = VACCA_CONFIG.replace('$VACCA_DIR',VACCA_DIR).replace('$VACCA_PATH',VACCA_PATH)
-        CONFIG_FILE = VACCA_CONFIG
+        VACCA_CONFIG = get_env_variable('VACCA_CONFIG',DB_HOST)
+        configs = get_config_properties()
+        if VACCA_CONFIG in configs:
+          CONFIG_FILE = get_config_properties(VACCA_CONFIG).get('CONFIG_FILE',VACCA_CONFIG)
+        else:
+          CONFIG_FILE = VACCA_CONFIG
+        CONFIG_FILE = CONFIG_FILE.replace('$VACCA_DIR',VACCA_DIR).replace('$VACCA_PATH',VACCA_PATH)
     else:
         CONFIG_FILE = config
     print('get_config_file(%s)'%CONFIG_FILE)
@@ -226,6 +257,33 @@ def get_config_file(config=None):
         print traceback.format_exc()
         raise Exception,'Unable to load %s' % CONFIG_FILE
     return CONFIG
+  
+def get_main_window(app=None):
+    from PyQt4 import Qt
+    app = app or Qt.QApplication.instance()
+    main = fandango.first((a for a in app.allWidgets() if isinstance(a,Qt.QMainWindow)),default=None)
+    return main
+
+def get_taurus_gui(app=None):
+    try:
+        #find actual Taurusgui Instance
+        app = app or Qt.QApplication.instance()
+        assert app
+    except:
+        traceback.print_exc()
+        return
+    
+    try:
+        taurusgui = None
+        widgets = app.allWidgets()
+        for widget in widgets:
+            widgetType = str(type(widget))
+            if widgetType.endswith('TaurusGui'):
+                taurusgui = widget  
+        return taurusgui
+    except:
+        traceback.print_exc()
+        return
 
 def get_shared_data_manager():
     """
@@ -256,6 +314,39 @@ def get_shared_data_signals():
     except:
         traceback.print_exc()
         return {}
+      
+def add_menu(menuname,actions):
+    '''
+    The arguments must be a list of tuples with action names and action methods.
+    
+    e.g.:
+    EXTRA_MENUS = [
+    ('Tools',[
+        ('LTB Gui',lambda:os.system('vacca_LTB &'),None),
+        ('Jive',lambda:os.system('jive &'),None),
+        ('Astor',lambda:os.system('astor &'),None),
+        ('EPS Gui',lambda:os.system('alba_EPS &'),None),
+        ('Valves',lambda:valves.ValvesChooser().show(),None),
+        ('TaurusTrend',lambda:os.system('taurustrend -a &'),None),
+        ]),
+    '''
+    print 'Adding new menu %s'%menuname
+    self = get_main_window()
+    MenuBar = self.menuBar()
+    newmenu = Qt.QMenu(MenuBar)
+    newmenu.setTitle(menuname)
+    newmenu.setObjectName(menuname)
+    newaction = Qt.QAction(MenuBar)
+    for name,method,mnemonic in actions:
+        act = Qt.QAction(newmenu)
+        act.setObjectName(name)
+        act.setText(name)
+        newmenu.addAction(act)
+        Qt.QObject.connect(act,Qt.SIGNAL("triggered()"),method)            
+
+    #self.MenuBar.addAction(newmenu.menuAction())
+    MenuBar.insertMenu(newaction,newmenu)
+    return
                 
 ###############################################################################
 # Methods for managing palettes
@@ -541,12 +632,13 @@ class addCustomPanel2Gui(object):
             return
         
         try:
-            taurusgui = None
-            widgets = app.allWidgets()
-            for widget in widgets:
-                widgetType = str(type(widget))
-                if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
-                    taurusgui = widget
+            #taurusgui = None
+            #widgets = app.allWidgets()
+            #for widget in widgets:
+                #widgetType = str(type(widget))
+                #if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
+                    #taurusgui = widget
+            taurusgui = get_main_window()
 
             #Launch method
             def _launchPanel(panelName, panelClass, *args):
@@ -576,24 +668,49 @@ class addCustomPanel2Gui(object):
                 return lambda args: _launchPanel(panelName, panelClass, args)
 
             for panel in extra_panels.keys():
-                class_Panel = extra_panels[panel]['class']
+              action = None
+              try:
+                d = extra_panels[panel]
+                class_Panel = d.get('class',d.get('classname'))
+                print panel,class_Panel,d
                 try:
                     icon = extra_panels[panel].get('icon',None) or class_Panel.getDefaultIcon()
                 except Exception,e:
                     print('Icon exception in addCustomPanel2Gui: %s'%traceback.format_exc())
                     icon = ':/places/network-server.svg'
                 final_icon_url = icon if fandango.matchCl('^[\:/]',icon) else wdir('vacca/'+icon)
+
                 #button = TaurusLauncherButton(
                 #    widget=class_Panel.getPanelDescription(panel))
                 #taurusgui.jorgsBar.addWidget(button)
-                action = Qt.QAction(Qt.QIcon(final_icon_url),
-                    panel, taurusgui)
-                #func = launchPanel(panel, class_Panel)
-                func = lambda args,panelName=panel,panelClass=class_Panel: \
-                    _launchPanel(panelName,panelClass, args)
-                Qt.QObject.connect(action, Qt.SIGNAL("triggered(bool)"), func)
+                FUNCTION_TYPE = type(launchPanel)
+                METHOD_TYPE = type(MyTaurusComponent.fireEvent)
+                
+                if 'VaccaAction' in str(class_Panel):
+                    import vacca.panel
+                    action = vacca.panel.VaccaAction(parent=taurusgui)
+                else:
+                    action = Qt.QAction(Qt.QIcon(final_icon_url),
+                        panel, taurusgui)
+                    if d.get('name'): action.setText(d['name'])
+                    
+                if isinstance(action,Qt.QAction):
+                    #func = launchPanel(panel, class_Panel)
+                    if isinstance(class_Panel,(FUNCTION_TYPE,METHOD_TYPE)):
+                        func = class_Panel
+                    else:
+                        func = lambda args,panelName=panel,panelClass=class_Panel: \
+                            _launchPanel(panelName,panelClass, args)
+                    Qt.QObject.connect(action, Qt.SIGNAL("triggered(bool)"), func)
+                    taurusgui.jorgsBar.addAction(action)
+                else:
+                    if d.get('model'): action.setModel(d['model'])
+                    taurusgui.jorgsBar.addWidget(action)
+
                 print "%s Added in jorgsBar"%(panel)
-                taurusgui.jorgsBar.addAction(action)
+              except:
+                print('Error creating %s: %s,%s'%(panel,extra_panels[panel],action))
+                traceback.print_exc()
         except:
             traceback.print_exc()
 

@@ -1,0 +1,65 @@
+
+vacca.grid module
+*****************
+
+
+Classes
+=======
+
+
+VaccaVerticalGrid
+-----------------
+
+class class vacca.grid.VaccaVerticalGrid(parent=None, designMode=False)
+
+
+VaccaGrid
+---------
+
+class class vacca.grid.VaccaGrid(parent=None, designMode=False)
+
+   TaurusGrid enhanced to provide default PanelDescription
+
+
+Functions
+=========
+
+
+get_vertical_grid
+-----------------
+
+vacca.grid.get_vertical_grid(grid)
+
+
+get_empty_grid
+--------------
+
+vacca.grid.get_empty_grid()
+
+
+get_grid
+--------
+
+vacca.grid.get_grid(grid)
+
+======================================================================
+
+class class vacca.grid.VaccaGrid(parent=None, designMode=False)
+
+   Bases: "taurus.qt.qtgui.table.taurusgrid.TaurusGrid"
+
+   TaurusGrid enhanced to provide default PanelDescription
+
+   static getGridPanelDescription(grid)
+
+class class vacca.grid.VaccaVerticalGrid(parent=None, designMode=False)
+
+   Bases: "taurus.qt.qtgui.table.taurusgrid.TaurusGrid"
+
+   static getVerticalGridPanelDescription(grid)
+
+vacca.grid.get_empty_grid()
+
+vacca.grid.get_grid(grid)
+
+vacca.grid.get_vertical_grid(grid)

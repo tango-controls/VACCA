@@ -108,8 +108,9 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
         """
         :return: The Default Icon Path.
         """
+        import vacca.utils
         path = 'image/widgets/Properties.png'
-        return path
+        return vacca.utils.vpath(path)
 
     @classmethod
     def __test__(klass,arg=None):

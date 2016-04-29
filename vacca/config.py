@@ -59,20 +59,37 @@ This file mainly defines two kinds of objects:
   * JDrawIn/JDrawOut: used only if JDRAW_HOOK defined, to transform data between synoptic and selection
   * lastWindowClosed: signal will close all opened widgets and dialogs on application exit
 
-h3. Extending Taurus
---------------------
+h3. Extending Taurus GUI
+------------------------
+
+We will differentiate between:
+
+ - Tools (applications launched in a separate process)
+ - Panels (widgets embeddable in the application)
+ - Applets (widgets or applications launched from the right-side bar)
+ - Widgets (widgets not instantiated, but added to the catalog when adding a new panel).
+ 
+The config variables to include new Tools/Panels/Apps/Widgets are:
 
 Use EXTRA_WIDGETS to add new widgets to the catalog and the right-side toolbar.
+They will be added to EXTRA_CATALOG_WIDGETS, that contains default extra widgets.
 
 Use EXTRA_PANELS to force new Panels always at startup.
+They will be instantiated and running in background.
 
 Use EXTRA_APPS to add launchers to the toolbar.
+Creates new AppletDescription objects to add elements to the right-side toolbar.
 
-Create new AppletDescription objects to add elements to the right-side toolbar.
+Use EXTRA_TOOLS to add launchers to the "External Apps" toolbar.
+Creates new ExternalApp objects to add elements to the top menu and toolbar.
+
+Use TOOLBARS to add new Toolbars: 
+  TOOLBARS = [('Sectors','SR.sector.get_sectors_toolbar')]
+Creates new ToolBarDescription objects.
 
 
-h1. Config Variables
---------------------
+h2. Config Variables
+====================
 
 Described below
 
@@ -85,11 +102,12 @@ Described below
 import time,os,sys,traceback,imp,inspect
 from PyQt4.QtCore import SIGNAL
 import fandango,taurus
-import vacca
+import vacca,vacca.utils
 from .doc import get_autodoc,get_vars_docs
 from fandango import partial,FakeLogger as FL
 from taurus.qt import Qt
-from taurus.qt.qtgui.taurusgui.utils import PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
+from taurus.qt.qtgui.taurusgui.utils import \
+  PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
 from vacca.panel import VaccaAction,VaccaSplash
 from vacca.utils import *
 
@@ -100,11 +118,16 @@ from vacca.utils import *
 print 'In vacca.config(%s)'%globals().get('CONFIG_DONE',None)
 #print ('*'*80+'\n')*1
 
+VACCA_DIR = get_config_properties(os.getenv('VACCA_CONFIG')).get('VACCA_DIR',VACCA_DIR)
+vacca.utils.VACCA_DIR = VACCA_DIR
 WDIR = VACCA_DIR
-print 'VACCA_DIR: %s:%s'%(VACCA_DIR,wdir(''))
-print 'VACCA_PATH: %s:%s'%(VACCA_PATH,vpath(''))
 
 try:
+
+    if VACCA_DIR:
+        print('Changing directory to VACCA_DIR:%s,%s' %(VACCA_DIR,os.environ['VACCA_DIR' ]))
+        os.chdir(os.environ['VACCA_DIR'])
+        sys.path.append(os.environ['VACCA_DIR'])
 
     try:
         app = Qt.QApplication.instance()
@@ -143,7 +166,7 @@ try:
         ('Synoptics', ['JDRAW_FILE','JDRAW_TREE','JDRAW_HOOK','GRID',]),
         ('Device Panel', ['USE_DEVICE_PANEL','DEVICE','PANEL_COMMAND','AttributeFilters','CommandFilters','IconMap',]),
         ('Plot', ['GAUGES']),
-        ('Widgets', ['EXTRA_WIDGETS','EXTRA_PANELS','TOOLBARS','EXTRA_APPS','EXTRA_CATALOG_WIDGETS']),]
+        ('Widgets', ['EXTRA_WIDGETS','EXTRA_PANELS','TOOLBARS','MENUS','EXTRA_APPS','EXTRA_CATALOG_WIDGETS']),]
 
     OPTIONS = [o for c,l in OPTION_LISTS for o in l]
     
@@ -360,15 +383,6 @@ try:
             except:
                 traceback.print_exc()
 
-    toolbars = []
-    for name,obj in (TOOLBARS or []):
-        toolbars.append(ToolBarDescription(name,
-            classname = obj.split('.')[-1],
-            modulename = obj.rsplit('.',1)[0],
-            #sharedDataWrite={'selectedPerspective':'blabla'}
-            ))
-        toolbar = toolbars[-1]
-    
     #===============================================================================
     #: EXTRA_WIDGETS: The Dictionary of EXTRA_WIDGETS Panels
     #:
@@ -399,8 +413,10 @@ try:
         ]
 
     #===============================================================================
-    # Define custom toolbars to be shown. To define a toolbar, instantiate a
-    # ToolbarDescription object (see documentation for the gblgui_utils module)
+    #: TOOLBARS
+    #:
+    #: Define custom toolbars to be shown. To define a toolbar, instantiate a
+    #: ToolbarDescription object (see documentation for the gblgui_utils module)
     #===============================================================================
     
     #dummytoolbar = ToolBarDescription('Empty Toolbar',
@@ -411,22 +427,31 @@ try:
     #                        classname = 'PanicToolbar',
     #                        modulename = 'tangopanic')
     
+    toolbars = []
+    for name,obj in (TOOLBARS or []):
+        toolbars.append(ToolBarDescription(name,
+            classname = obj.split('.')[-1],
+            modulename = obj.rsplit('.',1)[0],
+            #sharedDataWrite={'selectedPerspective':'blabla'}
+            ))
+        toolbar = toolbars[-1]
+        
+    try:
+        for menu,actions in MENUS:
+            vacca.utils.add_menu(menu,actions)
+    except:
+        traceback.print_exc()
+        
     #===============================================================================
     # Define custom applets to be shown in the applets bar (the wide bar that
     # contains the logos). To define an applet, instantiate an AppletDescription
     # object (see documentation for the gblgui_utils module)
     #===============================================================================
     
-    #mon2 = AppletDescription('Dummy Monitor',
-                            #classname = 'TaurusMonitorTiny',
-                            #model='eval://1000*rand(2)')
-    #import os
-    #xmambo = AppletDescription('ctarchiving',
-                            #classname = 'vacca.panel.VaccaAction',
-                            #model=["Archiving",WDIR+'image/PressureTrend.jpg','ctarchiving'],
-                            #)
-    
     # ALREADY LOADED FROM vacca.default.EXTRA_APPS
+    
+    #xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',
+    # model=["Archiving",wdir('vacca/image/widgets/ProfilePlot.png'),'mambo'],)
     
     #===============================================================================
     # Define which External Applications are to be inserted.
@@ -434,31 +459,27 @@ try:
     # See TaurusMainWindow.addExternalAppLauncher for valid values of ExternalApp
     #===============================================================================
 
-    xvacca = ExternalApp(cmdargs=['konqueror',URL_HELP], text="Alba VACuum Controls Application", icon=WDIR+'image/icons/cow-tux.png')
-    xjive = ExternalApp(cmdargs=['jive'], text="Jive")#, icon=WDIR+'image/icons/cow-tux.png')
-    xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'image/icons/cow-tux.png')
+    # ALREADY LOADED FROM vacca.default.EXTRA_TOOLS
+    
+    #xvacca = ExternalApp(cmdargs=['konqueror',URL_HELP], text="Alba VACuum Controls Application", icon=WDIR+'image/icons/cow-tux.png')
+    #DEFAULT_APPS = 
+    
+    EXTRA_TOOLS = EXTRA_TOOLS
+    for name,cmdargs,icon in EXTRA_TOOLS:
+        locals()['x'+name] = ExternalApp(cmdargs=cmdargs,text=name,icon=icon or None)
+    
+    #xjive = ExternalApp(cmdargs=['jive'], text="Jive")#, icon=WDIR+'image/icons/cow-tux.png')
+    #xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'image/icons/cow-tux.png')
     
     #===============================================================================
     # POOL RELATED OPTIONS
     #===============================================================================
     
-    #===============================================================================
-    # Macro execution configuration
-    # (comment out or make MACRO_SERVER=None to skip creating a macro execution 
-    # infrastructure)
-    #===============================================================================
+    # Set INSTRUMENTS_FROM_POOL to True for enabling auto-creation of
+    # instrument panels based on the Pool Instrument info
     #MACROSERVER_NAME = 
     #DOOR_NAME = 
     #MACROEDITORS_PATH = 
-    
-    #===============================================================================
-    # Monitor widget (This is obsolete now, you can get the same result defining a
-    # custom applet with classname='TaurusMonitorTiny')
-    #===============================================================================
-    # MONITOR = ['sys/tg_test/1/double_scalar_rww']
-    
-    # Set INSTRUMENTS_FROM_POOL to True for enabling auto-creation of
-    # instrument panels based on the Pool Instrument info
     INSTRUMENTS_FROM_POOL = False
     
     #===============================================================================
@@ -490,7 +511,7 @@ try:
     #Forcing nesting of dock widgets
     if app:
         try:
-            main = fandango.first((a for a in app.allWidgets() if isinstance(a,Qt.QMainWindow)),default=None)
+            main = vacca.utils.get_main_window(app)
             main.setDockNestingEnabled(True)
         except:
             traceback.print_exc()

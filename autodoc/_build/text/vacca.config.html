@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.12: http://docutils.sourceforge.net/" />
+<title>vacca.config module</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7614 2013-02-21 15:55:51Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="vacca-config-module">
+<h1 class="title">vacca.config module</h1>
+
+<p>TaurusGUI configuration file used to convert Taurus into VACCA</p>
+<p>This file should be NOT modified.</p>
+<div class="section" id="h2-usage">
+<h1>h2. Usage</h1>
+<p>This configuration file determines the default, permanent, pre-defined
+contents of the GUI. While the user may add/remove more elements at
+run time and those customizations will also be stored, this file
+defines what a user will find when launching the GUI for the first
+time.</p>
+<p>Don't modify this file, use default.py to do a simple setup of your
+facility and paths and a CONFIG.py file (based on default.py format)
+to  construct a VACCA gui for each subsystem.</p>
+<div class="section" id="h3-contents">
+<h2>h3. Contents</h2>
+<p>This file mainly defines two kinds of objects:</p>
+<blockquote>
+<ul>
+<li><p class="first">Panel descriptors: the panels to be shown. To define a panel,
+instantiate a PanelDescription object (see documentation for the
+gblgui_utils module)</p>
+</li>
+<li><p class="first">Panels will be TREE, JDRAW_FILE, DEVICE, ...</p>
+</li>
+<li><p class="first">QSignals (managed by Taurus Shared Data Manager):</p>
+<blockquote>
+<ul class="simple">
+<li>SelectedInstrument: goes from taurusgui and tree into
+panel/synoptic</li>
+<li>SelectionMultiple: goes from panic/finder/... to synoptic to
+display multiple elements</li>
+<li>JDrawIn/JDrawOut: used only if JDRAW_HOOK defined, to
+transform data between synoptic and selection</li>
+<li>lastWindowClosed: signal will close all opened widgets and
+dialogs on application exit</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="h3-extending-taurus">
+<h2>h3. Extending Taurus</h2>
+<p>Use EXTRA_WIDGETS to add new widgets to the catalog and the right-side
+toolbar.</p>
+<p>Use EXTRA_PANELS to force new Panels always at startup.</p>
+<p>Use EXTRA_APPS to add launchers to the toolbar.</p>
+<p>Create new AppletDescription objects to add elements to the right-side
+toolbar.</p>
+</div>
+<div class="section" id="h1-config-variables">
+<h2>h1. Config Variables</h2>
+<p>Described below</p>
+</div>
+</div>
+<div class="section" id="general-info-options">
+<h1>General Info Options</h1>
+<p>vacca.config.GUI_NAME</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+<p>vacca.config.URL_HELP</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+<p>vacca.config.URL_LOGBOOK</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+<p>vacca.config.VACCA_LOGO</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+<p>vacca.config.ORGANIZATION</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+<p>vacca.config.ORGANIZATION_LOGO</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+</div>
+<div class="section" id="installation-options">
+<h1>Installation Options</h1>
+<p>vacca.config.WDIR</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+<p>vacca.config.SETTINGS</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+</div>
+<div class="section" id="sub-systems-options">
+<h1>Sub systems Options</h1>
+<p>vacca.config.DOMAIN</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+<p>vacca.config.TARGET</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+<p>vacca.config.COMPOSER</p>
+<blockquote>
+COMPOSER:  True/False to show by default the COMPOSER Panel.</blockquote>
+</div>
+<div class="section" id="device-tree-options">
+<h1>Device Tree Options</h1>
+<p>vacca.config.USE_DEVICE_TREE</p>
+<blockquote>
+USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree</blockquote>
+<p>vacca.config.CUSTOM_TREE</p>
+<blockquote>
+<p>dict() -&gt; new empty dictionary dict(mapping) -&gt; new dictionary
+initialized from a mapping object's</p>
+<blockquote>
+(key, value) pairs</blockquote>
+<dl class="docutils">
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt>
+<dd><p class="first">d = {} for k, v in iterable:</p>
+<blockquote class="last">
+d[k] = v</blockquote>
+</dd>
+</dl>
+<p>dict(&gt;&gt;**&lt;&lt;kwargs) -&gt; new dictionary initialized with the
+name=value pairs</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">vacca.config.txt</tt>, line 177)</p>
+Unexpected indentation.</div>
+<blockquote>
+in the keyword argument list.  For example:  dict(one=1, two=2)</blockquote>
+</blockquote>
+<p>vacca.config.EXTRA_DEVICES</p>
+<blockquote>
+list() -&gt; new empty list list(iterable) -&gt; new list initialized
+from iterable's items</blockquote>
+</div>
+<div class="section" id="synoptics-options">
+<h1>Synoptics Options</h1>
+<p>vacca.config.JDRAW_FILE</p>
+<blockquote>
+JDRAW_FILE:  The JDRAW file to create the Synoptic, it can be .jdw
+or .svg but the second option will require the svgsynoptic module
+from maxlab.</blockquote>
+<p>vacca.config.JDRAW_TREE</p>
+<blockquote>
+<p>bool(x) -&gt; bool</p>
+<p>Returns True when the argument x is true, False otherwise. The
+builtins True and False are the only two instances of the class
+bool. The class bool is a subclass of the class int, and cannot be
+subclassed.</p>
+</blockquote>
+<p>vacca.config.JDRAW_HOOK</p>
+<p>vacca.config.GRID</p>
+<blockquote>
+GRID:  True/False to show by default ehe GRID Panel.</blockquote>
+</div>
+<div class="section" id="device-panel-options">
+<h1>Device Panel Options</h1>
+<p>vacca.config.USE_DEVICE_PANEL</p>
+<blockquote>
+USE_DEVICE_PANEL:  True or False, To Show by default the
+DevicePanel</blockquote>
+<p>vacca.config.DEVICE</p>
+<p>vacca.config.PANEL_COMMAND</p>
+<blockquote>
+<p>str(object='') -&gt; string</p>
+<p>Return a nice string representation of the object. If the argument
+is a string, the return value is the same object.</p>
+</blockquote>
+<p>vacca.config.AttributeFilters</p>
+<blockquote>
+<p>dict() -&gt; new empty dictionary dict(mapping) -&gt; new dictionary
+initialized from a mapping object's</p>
+<blockquote>
+(key, value) pairs</blockquote>
+<dl class="docutils">
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt>
+<dd><p class="first">d = {} for k, v in iterable:</p>
+<blockquote class="last">
+d[k] = v</blockquote>
+</dd>
+</dl>
+<p>dict(&gt;&gt;**&lt;&lt;kwargs) -&gt; new dictionary initialized with the
+name=value pairs</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">vacca.config.txt</tt>, line 241)</p>
+Unexpected indentation.</div>
+<blockquote>
+in the keyword argument list.  For example:  dict(one=1, two=2)</blockquote>
+</blockquote>
+<p>vacca.config.CommandFilters</p>
+<blockquote>
+<p>dict() -&gt; new empty dictionary dict(mapping) -&gt; new dictionary
+initialized from a mapping object's</p>
+<blockquote>
+(key, value) pairs</blockquote>
+<dl class="docutils">
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt>
+<dd><p class="first">d = {} for k, v in iterable:</p>
+<blockquote class="last">
+d[k] = v</blockquote>
+</dd>
+</dl>
+<p>dict(&gt;&gt;**&lt;&lt;kwargs) -&gt; new dictionary initialized with the
+name=value pairs</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">vacca.config.txt</tt>, line 257)</p>
+Unexpected indentation.</div>
+<blockquote>
+in the keyword argument list.  For example:  dict(one=1, two=2)</blockquote>
+</blockquote>
+<p>vacca.config.IconMap</p>
+<blockquote>
+<p>dict() -&gt; new empty dictionary dict(mapping) -&gt; new dictionary
+initialized from a mapping object's</p>
+<blockquote>
+(key, value) pairs</blockquote>
+<dl class="docutils">
+<dt>dict(iterable) -&gt; new dictionary initialized as if via:</dt>
+<dd><p class="first">d = {} for k, v in iterable:</p>
+<blockquote class="last">
+d[k] = v</blockquote>
+</dd>
+</dl>
+<p>dict(&gt;&gt;**&lt;&lt;kwargs) -&gt; new dictionary initialized with the
+name=value pairs</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">vacca.config.txt</tt>, line 273)</p>
+Unexpected indentation.</div>
+<blockquote>
+in the keyword argument list.  For example:  dict(one=1, two=2)</blockquote>
+</blockquote>
+</div>
+<div class="section" id="plot-options">
+<h1>Plot Options</h1>
+<p>vacca.config.GAUGES</p>
+<blockquote>
+list() -&gt; new empty list list(iterable) -&gt; new list initialized
+from iterable's items</blockquote>
+</div>
+<div class="section" id="widgets-options">
+<h1>Widgets Options</h1>
+<p>vacca.config.EXTRA_WIDGETS</p>
+<blockquote>
+<p>EXTRA_WIDGETS: The Dictionary of EXTRA_WIDGETS Panels</p>
+<p>Adding other widgets to the catalog of the &quot;new panel&quot; dialog. pass
+a tuple of (classname,screenshot)</p>
+<ul class="simple">
+<li>classname may contain the module name.</li>
+<li>screenshot can either be a file name relative to the
+application dir or a resource URL or None</li>
+</ul>
+<p>examples:</p>
+<blockquote>
+('vacca.properties.VaccaPropTable',wdir('vacca/image/widgets/Pr
+operties.png')), ('vacca.panel.VaccaPanel',wdir('vacca/image/wi
+dgets/Panel.png')),</blockquote>
+</blockquote>
+<p>vacca.config.EXTRA_PANELS</p>
+<blockquote>
+<p>EXTRA_PANELS:  dictionary of Extra Panels to be shown by default.
+Each element may be a PanelDescription object or a tuple with its
+arguments.</p>
+<dl class="docutils">
+<dt>The dictionary will be defined like:</dt>
+<dd><ul class="first last simple">
+<li>key: Panel name</li>
+<li>value: list of arguments to PanelDescription</li>
+<li>value[0]: panel name</li>
+<li>value[1]: class name</li>
+<li>value[2]: default model</li>
+<li>value[3]: shared data read signal</li>
+<li>value[4]: shared data write signal</li>
+</ul>
+</dd>
+</dl>
+<p>As example, to add PANIC as extra panel use: EXTRA_PANELS['PANIC']
+= ('PANIC','panic.gui.AlarmGUI','',{},{'HighlightInstruments':'dev
+icesSelected'})</p>
+</blockquote>
+<p>vacca.config.TOOLBARS</p>
+<blockquote>
+list() -&gt; new empty list list(iterable) -&gt; new list initialized
+from iterable's items</blockquote>
+<p>vacca.config.EXTRA_APPS</p>
+<blockquote>
+<p>The Vacca Panels to show in the JogsBar. Use EXTRA_APPS to add
+launchers to the toolbar. It will create new AppletDescription
+objects to add elements to the right-side toolbar.</p>
+<dl class="docutils">
+<dt>Examples:</dt>
+<dd><ul class="first last simple">
+<li>EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}</li>
+<li>EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}</li>
+<li>EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }</li>
+<li>EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }</li>
+</ul>
+</dd>
+</dl>
+</blockquote>
+<p>vacca.config.EXTRA_CATALOG_WIDGETS</p>
+<blockquote>
+EXTRA_CATALOG_WIDGETS: The Dictionary of EXTRA_CATALOG_WIDGETS
+Panels to Show by default. Is the Sum of EXTRA_WIDGETS and the
+custom Widgets defined in config.py</blockquote>
+<p>vacca.config.COMPOSER = ''</p>
+<blockquote>
+COMPOSER:  True/False to show by default the COMPOSER Panel.</blockquote>
+<p>vacca.config.CONFIG = &lt;module '' from '/home/srubio/STORAGE/LIBS/python/vacca/'&gt;</p>
+<blockquote>
+Default options are set in default.py file and later customized in
+a config file. This CONFIG can be a .py file passed as argument or
+a TANGO_HOST.py file in vacca folder.</blockquote>
+<p>vacca.config.CUSTOM_LOGO = '/home/srubio/STORAGE/LIBS/python/vacca/image/icons/nggshow.php.png'</p>
+<blockquote>
+CUSTOM_LOGO. It can be an absolute path,or relative to the app dir
+or a resource path. If commented out, &quot;:/taurus.png&quot; will be used</blockquote>
+<p>vacca.config.EXTRA_APPS = {'Properties': {'class': &lt;class 'vacca.properties.VaccaPropTable'&gt;}}</p>
+<blockquote>
+<p>The Vacca Panels to show in the JogsBar. Use EXTRA_APPS to add
+launchers to the toolbar. It will create new AppletDescription
+objects to add elements to the right-side toolbar.</p>
+<dl class="docutils">
+<dt>Examples:</dt>
+<dd><ul class="first last simple">
+<li>EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}</li>
+<li>EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}</li>
+<li>EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }</li>
+<li>EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }</li>
+</ul>
+</dd>
+</dl>
+</blockquote>
+<p>vacca.config.EXTRA_CATALOG_WIDGETS = [('panic.gui.AlarmGUI', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/icons/panic.gif'), ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/widgets/Archiving.png'), ('vacca.properties.VaccaPropTable', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/widgets/Properties.png'), ('fandango.qt.QEvaluator', ':/snapshot/large/snapshot/TaurusShell.png')]</p>
+<blockquote>
+EXTRA_CATALOG_WIDGETS: The Dictionary of EXTRA_CATALOG_WIDGETS
+Panels to Show by default. Is the Sum of EXTRA_WIDGETS and the
+custom Widgets defined in config.py</blockquote>
+<p>vacca.config.EXTRA_PANELS = {}</p>
+<blockquote>
+<p>EXTRA_PANELS:  dictionary of Extra Panels to be shown by default.
+Each element may be a PanelDescription object or a tuple with its
+arguments.</p>
+<dl class="docutils">
+<dt>The dictionary will be defined like:</dt>
+<dd><ul class="first last simple">
+<li>key: Panel name</li>
+<li>value: list of arguments to PanelDescription</li>
+<li>value[0]: panel name</li>
+<li>value[1]: class name</li>
+<li>value[2]: default model</li>
+<li>value[3]: shared data read signal</li>
+<li>value[4]: shared data write signal</li>
+</ul>
+</dd>
+</dl>
+<p>As example, to add PANIC as extra panel use: EXTRA_PANELS['PANIC']
+= ('PANIC','panic.gui.AlarmGUI','',{},{'HighlightInstruments':'dev
+icesSelected'})</p>
+</blockquote>
+<p>vacca.config.EXTRA_WIDGETS = [('panic.gui.AlarmGUI', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/icons/panic.gif'), ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser', '/home/srubio/STORAGE/LIBS/python/vacca//vacca/image/widgets/Archiving.png')]</p>
+<blockquote>
+<p>EXTRA_WIDGETS: The Dictionary of EXTRA_WIDGETS Panels</p>
+<p>Adding other widgets to the catalog of the &quot;new panel&quot; dialog. pass
+a tuple of (classname,screenshot)</p>
+<ul class="simple">
+<li>classname may contain the module name.</li>
+<li>screenshot can either be a file name relative to the
+application dir or a resource URL or None</li>
+</ul>
+<p>examples:</p>
+<blockquote>
+('vacca.properties.VaccaPropTable',wdir('vacca/image/widgets/Pr
+operties.png')), ('vacca.panel.VaccaPanel',wdir('vacca/image/wi
+dgets/Panel.png')),</blockquote>
+</blockquote>
+<p>vacca.config.GRID = {'row_labels': 'VcGauges(mbar):(VGCT|PEN), IonPumps(mbar):(IPCT|VARIP)', 'column_labels': '', 'labels': False, 'delayed': False, 'units': False, 'frames': False, 'model': []}</p>
+<blockquote>
+GRID:  True/False to show by default ehe GRID Panel.</blockquote>
+<p>vacca.config.JDRAW_FILE = ''</p>
+<blockquote>
+JDRAW_FILE:  The JDRAW file to create the Synoptic, it can be .jdw
+or .svg but the second option will require the svgsynoptic module
+from maxlab.</blockquote>
+<p>vacca.config.MANUAL_URI = '<a class="reference external" href="http://www.tango-controls.org/Members/srubio/vacca">http://www.tango-controls.org/Members/srubio/vacca</a>'</p>
+<blockquote>
+You can provide an URI for a manual in html format (comment out or
+make MANUAL_URI=None to skip creating a Manual panel)</blockquote>
+<p>vacca.config.OPTION_LISTS = [('General Info', ['GUI_NAME', 'URL_HELP', 'URL_LOGBOOK', 'VACCA_LOGO', 'ORGANIZATION', 'ORGANIZATION_LOGO']), ('Installation', ['WDIR', 'SETTINGS']), ('Sub systems', ['DOMAIN', 'TARGET', 'COMPOSER']), ('Device Tree', ['USE_DEVICE_TREE', 'CUSTOM_TREE', 'EXTRA_DEVICES']), ('Synoptics', ['JDRAW_FILE', 'JDRAW_TREE', 'JDRAW_HOOK', 'GRID']), ('Device Panel', ['USE_DEVICE_PANEL', 'DEVICE', 'PANEL_COMMAND', 'AttributeFilters', 'CommandFilters', 'IconMap']), ('Plot', ['GAUGES']), ('Widgets', ['EXTRA_WIDGETS', 'EXTRA_PANELS', 'TOOLBARS', 'EXTRA_APPS', 'EXTRA_CATALOG_WIDGETS'])]</p>
+<blockquote>
+ALL Variables that can be defined in CONFIG FILE</blockquote>
+<p>vacca.config.USE_DEVICE_PANEL = True</p>
+<blockquote>
+USE_DEVICE_PANEL:  True or False, To Show by default the
+DevicePanel</blockquote>
+<p>vacca.config.USE_DEVICE_TREE = True</p>
+<blockquote>
+USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree</blockquote>
+<p>vacca.config.filterMatching(a, dct={'V-PEN': ['pressure', 'channelstatus', 'controller'], 'EPS': [('Status', ['_READY', '<a href="#id1"><span class="problematic" id="id2">OPEN_</span></a>', '<a href="#id3"><span class="problematic" id="id4">CLOSE_</span></a>']), ('Signals', ['.*_PT.*', '<a href="#id5"><span class="problematic" id="id6">was_</span></a>', '<a href="#id7"><span class="problematic" id="id8">paas_</span></a>', '<em>RGA</em>'])]}, p=&lt;bound method Logger.info of &lt;fandango.log.Logger object at 0x7fdaff917250&gt;&gt;)</p>
+</div>
+<div class="system-messages section">
+<h1>Docutils System Messages</h1>
+<div class="system-message" id="id1">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">vacca.config.txt</tt>, line 464); <em><a href="#id2">backlink</a></em></p>
+Unknown target name: &quot;open&quot;.</div>
+<div class="system-message" id="id3">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">vacca.config.txt</tt>, line 464); <em><a href="#id4">backlink</a></em></p>
+Unknown target name: &quot;close&quot;.</div>
+<div class="system-message" id="id5">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">vacca.config.txt</tt>, line 464); <em><a href="#id6">backlink</a></em></p>
+Unknown target name: &quot;was&quot;.</div>
+<div class="system-message" id="id7">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">vacca.config.txt</tt>, line 464); <em><a href="#id8">backlink</a></em></p>
+Unknown target name: &quot;paas&quot;.</div>
+</div>
+</div>
+</body>
+</html>

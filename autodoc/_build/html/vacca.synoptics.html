@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vacca.synoptics module &mdash; vacca  documentation</title>
+    
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="vacca  documentation" href="index.html" />
+    <link rel="next" title="vacca.tree module" href="vacca.tree.html" />
+    <link rel="prev" title="vacca.properties module" href="vacca.properties.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">vacca  documentation</a></div>
+        <div class="rel">
+          <a href="vacca.properties.html" title="vacca.properties module"
+             accesskey="P">previous</a> |
+          <a href="vacca.tree.html" title="vacca.tree module"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-vacca.synoptics">
+<span id="vacca-synoptics-module"></span><h1>vacca.synoptics module<a class="headerlink" href="#module-vacca.synoptics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="vaccasynoptic">
+<h3>VaccaSynoptic<a class="headerlink" href="#vaccasynoptic" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="vacca.synoptics.VaccaSynoptic">
+<em class="property">class </em><tt class="descclassname">vacca.synoptics.</tt><tt class="descname">VaccaSynoptic</tt><big>(</big><em>parent=None</em>, <em>delay=0</em>, <em>designMode=False</em>, <em>updateMode=None</em>, <em>alias=None</em>, <em>resizable=True</em>, <em>panelClass=None</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides TaurusJDrawSynopticsView methods to highlight multiple items in multiple colors.</p>
+<p>It allows to setup a delayed setModel call to reduce &#8220;hungs&#8221; on heavy synoptics.
+But!: This delayed call may cause problems in some versions of taurusGUI. (due to scene not-set yet)</p>
+<dl class="staticmethod">
+<dt id="vacca.synoptics.VaccaSynoptic.getDefaultIcon">
+<em class="property">static </em><tt class="descname">getDefaultIcon</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.getDefaultIcon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic.getDefaultIcon" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Default Icon Path.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.synoptics.VaccaSynoptic.getModelMimeData">
+<tt class="descname">getModelMimeData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.getModelMimeData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic.getModelMimeData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for drag events</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.synoptics.VaccaSynoptic.getPanelDescription">
+<em class="property">static </em><tt class="descname">getPanelDescription</tt><big>(</big><em>NAME='Synoptic'</em>, <em>JDRAW_FILE=''</em>, <em>JDRAW_HOOK=None</em>, <em>JDRAW_TREE=[]</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.getPanelDescription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic.getPanelDescription" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>NAME</strong> &#8211; Name for the Panel</li>
+<li><strong>JDRAW_FILE</strong> &#8211; synoptic configuration file</li>
+<li><strong>JDRAW_HOOK</strong> &#8211; <p>&#8216;&#8217;</p>
+</li>
+<li><strong>JDRAW_TREE</strong> &#8211; None</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">PanelDescription Object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.synoptics.VaccaSynoptic.setHighlightedItems">
+<tt class="descname">setHighlightedItems</tt><big>(</big><em>models=[]</em>, <em>color=7</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.setHighlightedItems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic.setHighlightedItems" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>models</strong> &#8211; List of model to be Highlighted</li>
+<li><strong>color</strong> &#8211; Color, by default Qt.Qt.red</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="vaccasynopticgraphicsfactory">
+<h3>VaccaSynopticGraphicsFactory<a class="headerlink" href="#vaccasynopticgraphicsfactory" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="vacca.synoptics.VaccaSynopticGraphicsFactory">
+<em class="property">class </em><tt class="descclassname">vacca.synoptics.</tt><tt class="descname">VaccaSynopticGraphicsFactory</tt><big>(</big><em>parent</em>, <em>alias=None</em>, <em>delayed=False</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynopticGraphicsFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynopticGraphicsFactory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="vaccagraphicsscene">
+<h3>VaccaGraphicsScene<a class="headerlink" href="#vaccagraphicsscene" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="vacca.synoptics.VaccaGraphicsScene">
+<em class="property">class </em><tt class="descclassname">vacca.synoptics.</tt><tt class="descname">VaccaGraphicsScene</tt><big>(</big><em>parent=None</em>, <em>strt=True</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaGraphicsScene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaGraphicsScene" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="vacca.synoptics.VaccaGraphicsScene.getItemByPosition">
+<tt class="descname">getItemByPosition</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaGraphicsScene.getItemByPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaGraphicsScene.getItemByPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will try first with named objects; if failed then with itemAt</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getclasswithextensions">
+<h3>GetClassWithExtensions<a class="headerlink" href="#getclasswithextensions" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="vacca.synoptics.GetClassWithExtensions">
+<tt class="descclassname">vacca.synoptics.</tt><tt class="descname">GetClassWithExtensions</tt><big>(</big><em>klass</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#GetClassWithExtensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.GetClassWithExtensions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="catched">
+<h3>catched<a class="headerlink" href="#catched" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="vacca.synoptics.catched">
+<tt class="descclassname">vacca.synoptics.</tt><tt class="descname">catched</tt><big>(</big><em>f</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#catched"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.catched" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<hr class="docutils" />
+<dl class="function">
+<dt>
+<tt class="descclassname">vacca.synoptics.</tt><tt class="descname">GetClassWithExtensions</tt><big>(</big><em>klass</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#GetClassWithExtensions"><span class="viewcode-link">[source]</span></a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">vacca.synoptics.</tt><tt class="descname">VaccaGraphicsScene</tt><big>(</big><em>parent=None</em>, <em>strt=True</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaGraphicsScene"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.graphic.taurusgraphic.TaurusGraphicsScene</span></tt></p>
+<dl class="method">
+<dt>
+<tt class="descname">getItemByPosition</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaGraphicsScene.getItemByPosition"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method will try first with named objects; if failed then with itemAt</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.synoptics.VaccaGraphicsScene.getSelectionMark">
+<tt class="descname">getSelectionMark</tt><big>(</big><em>picture=None</em>, <em>w=10</em>, <em>h=10</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaGraphicsScene.getSelectionMark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaGraphicsScene.getSelectionMark" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.synoptics.VaccaGraphicsScene.selectionColor">
+<tt class="descname">selectionColor</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaGraphicsScene.selectionColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaGraphicsScene.selectionColor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.synoptics.VaccaGraphicsScene.setSelectionColor">
+<tt class="descname">setSelectionColor</tt><big>(</big><em>color</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaGraphicsScene.setSelectionColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaGraphicsScene.setSelectionColor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">vacca.synoptics.</tt><tt class="descname">VaccaSynoptic</tt><big>(</big><em>parent=None</em>, <em>delay=0</em>, <em>designMode=False</em>, <em>updateMode=None</em>, <em>alias=None</em>, <em>resizable=True</em>, <em>panelClass=None</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.graphic.jdraw.jdraw_view.TaurusJDrawSynopticsView</span></tt></p>
+<p>Overrides TaurusJDrawSynopticsView methods to highlight multiple items in multiple colors.</p>
+<p>It allows to setup a delayed setModel call to reduce &#8220;hungs&#8221; on heavy synoptics.
+But!: This delayed call may cause problems in some versions of taurusGUI. (due to scene not-set yet)</p>
+<dl class="attribute">
+<dt id="vacca.synoptics.VaccaSynoptic.JDRAW_FILE">
+<tt class="descname">JDRAW_FILE</tt><em class="property"> = None</em><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic.JDRAW_FILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.synoptics.VaccaSynoptic.JDRAW_HOOK">
+<tt class="descname">JDRAW_HOOK</tt><em class="property"> = None</em><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic.JDRAW_HOOK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vacca.synoptics.VaccaSynoptic.JDRAW_TREE">
+<tt class="descname">JDRAW_TREE</tt><em class="property"> = None</em><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic.JDRAW_TREE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt>
+<em class="property">static </em><tt class="descname">getDefaultIcon</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.getDefaultIcon"><span class="viewcode-link">[source]</span></a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Default Icon Path.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.synoptics.VaccaSynoptic.getGraphicsFactory">
+<tt class="descname">getGraphicsFactory</tt><big>(</big><em>delayed=False</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.getGraphicsFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic.getGraphicsFactory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">getModelMimeData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.getModelMimeData"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Used for drag events</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt>
+<em class="property">static </em><tt class="descname">getPanelDescription</tt><big>(</big><em>NAME='Synoptic'</em>, <em>JDRAW_FILE=''</em>, <em>JDRAW_HOOK=None</em>, <em>JDRAW_TREE=[]</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.getPanelDescription"><span class="viewcode-link">[source]</span></a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>NAME</strong> &#8211; Name for the Panel</li>
+<li><strong>JDRAW_FILE</strong> &#8211; synoptic configuration file</li>
+<li><strong>JDRAW_HOOK</strong> &#8211; <p>&#8216;&#8217;</p>
+</li>
+<li><strong>JDRAW_TREE</strong> &#8211; None</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">PanelDescription Object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">setHighlightedItems</tt><big>(</big><em>models=[]</em>, <em>color=7</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.setHighlightedItems"><span class="viewcode-link">[source]</span></a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>models</strong> &#8211; List of model to be Highlighted</li>
+<li><strong>color</strong> &#8211; Color, by default Qt.Qt.red</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.synoptics.VaccaSynoptic.setModel">
+<tt class="descname">setModel</tt><big>(</big><em>model</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynoptic.setModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynoptic.setModel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">vacca.synoptics.</tt><tt class="descname">VaccaSynopticGraphicsFactory</tt><big>(</big><em>parent</em>, <em>alias=None</em>, <em>delayed=False</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynopticGraphicsFactory"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">taurus.qt.qtgui.graphic.jdraw.jdraw.TaurusJDrawGraphicsFactory</span></tt></p>
+<dl class="method">
+<dt id="vacca.synoptics.VaccaSynopticGraphicsFactory.getGraphicsItem">
+<tt class="descname">getGraphicsItem</tt><big>(</big><em>type_</em>, <em>params</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynopticGraphicsFactory.getGraphicsItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynopticGraphicsFactory.getGraphicsItem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="vacca.synoptics.VaccaSynopticGraphicsFactory.getSceneObj">
+<tt class="descname">getSceneObj</tt><big>(</big><em>items</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#VaccaSynopticGraphicsFactory.getSceneObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.VaccaSynopticGraphicsFactory.getSceneObj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">vacca.synoptics.</tt><tt class="descname">catched</tt><big>(</big><em>f</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#catched"><span class="viewcode-link">[source]</span></a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vacca.synoptics.test">
+<tt class="descclassname">vacca.synoptics.</tt><tt class="descname">test</tt><big>(</big><em>model</em>, <em>filters=''</em>, <em>debug=False</em><big>)</big><a class="reference internal" href="_modules/vacca/synoptics.html#test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.synoptics.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Welcome to vacca&#8217;s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.html">vacca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.config.html">vacca.config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.utils.html">vacca.utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.setup.html">vacca.setup module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.doc.html">vacca.doc module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.default.html">vacca.default module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.panel.html">vacca.panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.plot.html">vacca.plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.properties.html">vacca.properties module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">vacca.synoptics module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vaccasynoptic">VaccaSynoptic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vaccasynopticgraphicsfactory">VaccaSynopticGraphicsFactory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vaccagraphicsscene">VaccaGraphicsScene</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getclasswithextensions">GetClassWithExtensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#catched">catched</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.tree.html">vacca.tree module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.alarms.html">vacca.alarms module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.grid.html">vacca.grid module</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="vacca.properties.html" title="vacca.properties module"
+             >previous</a> |
+          <a href="vacca.tree.html" title="vacca.tree module"
+             >next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+            <br/>
+            <a href="_sources/vacca.synoptics.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2015, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -37,18 +37,18 @@ import os,fandango,imp,vacca.utils
 from taurus.qt.qtgui.button import TaurusLauncherButton
 from vacca.utils import *
 from fandango import matchCl,searchCl,replaceCl,CaselessDict,CaselessList,\
-    get_matching_devices,get_matching_attributes,get_all_devices
+    get_matching_devices,get_matching_attributes,get_all_devices,check_device
 
-print '>'*20+' Loading default.py.ini'
+print '>'*20+' Loading default.py'
 
 #ALL these variables can be re-defined in CONFIG FILE
 GUI_NAME = 'VACCA'
 WDIR = VACCA_DIR #imp.find_module('vacca')[1]+'/'
 URL_HELP = 'http://computing.cells.es/services/controls/vacuum'
 URL_LOGBOOK = 'http://logbook.cells.es/'
-VACCA_LOGO = vpath('image/icons/nggshow.php.png')
-ORGANIZATION = 'VACCA'
-ORGANIZATION_LOGO = WDIR+'image/icons/AlbaLogo.png'
+VACCA_LOGO = vpath('image/icons/AlbaLogo.png')
+ORGANIZATION = 'TANGO'
+ORGANIZATION_LOGO = vpath('image/icons/TangoLogo.png')
 
 ###############################################################################
 # Synoptic file
@@ -90,6 +90,8 @@ COMPOSER = '' #'%s/vc/all'%DOMAIN
 
 #Default device to appear in the DevicePanel
 DEVICE = None # 'sys/tg_test/1' ; tg_test caused segfault in some cases!?
+DEVICE = fandango.first(d for d in get_matching_devices('(sys/tg_test|tango)*')
+              if check_device(d))
 USE_DEVICE_PANEL = True
 PANEL_COMMAND = 'taurusdevicepanel --config-file='+WDIR+'default.py'
 
@@ -141,6 +143,11 @@ from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 
 TOOLBARS = [] #[(name,modulename.classname)]
 
+MENUS = []
+"""
+MENUS = [('Tools',[('Jive',lambda:os.system('jive &'),None),])]
+"""
+
 #===============================================================================
 # Define which External Applications are to be inserted.
 # To define an external application, instantiate an ExternalApp object
@@ -149,11 +156,18 @@ TOOLBARS = [] #[(name,modulename.classname)]
 
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
 
-xvacca = ExternalApp(cmdargs=['konqueror',URL_HELP], text="Alba VACuum Controls Application", icon=WDIR+'/image/icons/cow-tux.png')
-xtrend = ExternalApp(cmdargs=['taurustrend','-a'], text="TaurusTrend")
-xjive = ExternalApp(cmdargs=['jive'], text="Jive")#, icon=WDIR+'/image/icons/cow-tux.png')
-xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'/image/icons/cow-tux.png')
+#xvacca = ExternalApp(cmdargs=['konqueror',URL_HELP], text="Alba VACuum Controls Application", icon=WDIR+'/image/icons/cow-tux.png')
 #logbook = ExternalApp(cmdargs=['konqueror %s'%URL_LOGBOOK], text="Logbook", icon=WDIR+"/image/icons/elog.png")
+
+#xtrend = ExternalApp(cmdargs=['taurustrend','-a'], text="Trend")
+#xjive = ExternalApp(cmdargs=['jive'], text="Jive")#, icon=WDIR+'/image/icons/cow-tux.png')
+#xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'/image/icons/cow-tux.png')
+
+EXTRA_TOOLS = [
+  ('Jive',['jive'],vpath('image/icons/TangoLogo.png')),
+  ('Trends',['taurustrend','-a'],vpath('image/widgets/PressureTrend.jpg')),
+  ]
+
 
 #===============================================================================
 # Define custom applets to be shown in the applets bar (the wide bar that
@@ -167,10 +181,16 @@ xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'/image/icons/
 #For ExternalApp/VaccaActions use:
 # {'$VarName':{'name':'$AppName','classname':'VaccaAction','model':['$Test','$/path/to/icon.png','$launcher']}}
 
-EXTRA_APPS = {
+EXTRA_APPS = fandango.dicts.SortedDict()
     #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
-    }
-EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
+
+EXTRA_APPS['PANIC'] = {'name': 'PANIC',
+                'class': vacca.VaccaPanic}
+#EXTRA_APPS['Mambo'] = {'name': 'Mambo',
+                #'class': lambda:os.system('mambo&'),
+                #'icon': wdir('image/icons/Mambo-icon.png')}
+
+
 #EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
 #EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }
 #EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }    
@@ -179,18 +199,14 @@ from vacca.panel import VaccaAction
     
 #xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',
 # model=["Archiving",wdir('vacca/image/widgets/ProfilePlot.png'),'mambo'],)
+
 #xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaNewPanel',
 # model=['Alarms',wdir('vacca/image/icons/panic.gif'),'panic.gui.AlarmGUI'])
-xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction', model=['Snap',vpath('image/widgets/VerticalGrid.jpg'),'ctsnaps'])
-xfinder = AppletDescription('xFinder',classname='vacca.panel.VaccaAction', model=['Attribute Finder',':actions/system-search.svg','ctfinder'])
 
+#xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction', model=['Snap',vpath('image/widgets/VerticalGrid.jpg'),'ctsnaps'])
+#xfinder = AppletDescription('xFinder',classname='vacca.panel.VaccaAction', model=['Attribute Finder',':actions/system-search.svg','ctfinder'])
 
 #button =  TaurusLauncherButton(widget =
-#
-# vacca.properties.VaccaPropTable.getPanelDescription('Properties2'))
-#prop = AppletDescription('proper',
-#                         classname='vacca.properties.VaccaPropTable',
-#                         modulename='getPanelDescription',)
 #button.setModel('a/b/c') #a device name, which will be given to the
 # TaurusAttrForm when clicking
 

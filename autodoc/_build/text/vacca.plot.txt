@@ -1,0 +1,129 @@
+
+vacca.plot module
+*****************
+
+
+Classes
+=======
+
+
+PressureTrend
+-------------
+
+class class vacca.plot.PressureTrend(parent=None, designMode=False)
+
+
+VaccaProfilePlot
+----------------
+
+class class vacca.plot.VaccaProfilePlot(*args, **kwargs)
+
+
+Functions
+=========
+
+
+pickPlotPoint
+-------------
+
+vacca.plot.pickPlotPoint(self, pos, scope=20, showMarker=True, targetCurveNames=None, xlabels=None)
+
+   Finds the pyxel-wise closest data point to the given position. The
+   valid search space is constrained by the scope and targetCurveNames
+   parameters.
+
+   Parameters:
+      * **pos** -- (Qt.QPoint or Qt.QPolygon) the position around
+        which to look for a data point. The position should be passed
+        as a Qt.QPoint (if a Qt.QPolygon is given, the first point of
+        the polygon is used). The position is expected in pixel units,
+        with (0,0) being the top-left corner of the plot canvas.
+
+      * **scope** -- (int) defines the area around the given
+        position to be considered when searching for data points. A
+        data point is considered within scope if its manhattan
+        distance to position (in pixels) is less than the value of the
+        scope parameter. (default=20)
+
+      * **showMarker** -- (bool) If True, a marker will be put on
+        the picked data point. (default=True)
+
+      * **targetCurveNames** -- (sequence<str>) the names of the
+        curves to be searched. If None passed, all curves will be
+        searched
+
+   Returns:
+      (tuple<Qt.QPointF,str,int> or tuple<None,None,None>) if a point
+      was picked within the scope, it returns a tuple containing the
+      picked point (as a Qt.QPointF), the curve name and the index of
+      the picked point in the curve data. If no point was found within
+      the scope, it returns None,None,None
+
+
+setup_profile_plot
+------------------
+
+vacca.plot.setup_profile_plot(tp, composer, picker=True)
+
+   This method configures a tau plot to show pressure/temperature
+   profiles
+
+
+setup_pressure_trend
+--------------------
+
+vacca.plot.setup_pressure_trend(tt, length=43200)
+
+======================================================================
+
+class class vacca.plot.PressureTrend(parent=None, designMode=False)
+
+   Bases: "taurus.qt.qtgui.plot.taurustrend.TaurusTrend"
+
+   showEvent(event)
+
+class class vacca.plot.VaccaProfilePlot(*args, **kwargs)
+
+   Bases: "fandango.qt.DraggableQtKlass"
+
+   setModel(model)
+
+vacca.plot.pickPlotPoint(self, pos, scope=20, showMarker=True, targetCurveNames=None, xlabels=None)
+
+   Finds the pyxel-wise closest data point to the given position. The
+   valid search space is constrained by the scope and targetCurveNames
+   parameters.
+
+   Parameters:
+      * **pos** -- (Qt.QPoint or Qt.QPolygon) the position around
+        which to look for a data point. The position should be passed
+        as a Qt.QPoint (if a Qt.QPolygon is given, the first point of
+        the polygon is used). The position is expected in pixel units,
+        with (0,0) being the top-left corner of the plot canvas.
+
+      * **scope** -- (int) defines the area around the given
+        position to be considered when searching for data points. A
+        data point is considered within scope if its manhattan
+        distance to position (in pixels) is less than the value of the
+        scope parameter. (default=20)
+
+      * **showMarker** -- (bool) If True, a marker will be put on
+        the picked data point. (default=True)
+
+      * **targetCurveNames** -- (sequence<str>) the names of the
+        curves to be searched. If None passed, all curves will be
+        searched
+
+   Returns:
+      (tuple<Qt.QPointF,str,int> or tuple<None,None,None>) if a point
+      was picked within the scope, it returns a tuple containing the
+      picked point (as a Qt.QPointF), the curve name and the index of
+      the picked point in the curve data. If no point was found within
+      the scope, it returns None,None,None
+
+vacca.plot.setup_pressure_trend(tt, length=43200)
+
+vacca.plot.setup_profile_plot(tp, composer, picker=True)
+
+   This method configures a tau plot to show pressure/temperature
+   profiles

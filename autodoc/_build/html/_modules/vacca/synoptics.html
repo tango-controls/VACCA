@@ -1,0 +1,679 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vacca.synoptics &mdash; vacca  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="vacca  documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../../index.html">vacca  documentation</a></div>
+        <div class="rel">
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for vacca.synoptics</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+
+<span class="c">#############################################################################</span>
+<span class="c">##</span>
+<span class="c">## This file is part of Taurus, a Tango User Interface Library</span>
+<span class="c">## </span>
+<span class="c">## http://www.tango-controls.org/static/taurus/latest/doc/html/index.html</span>
+<span class="c">##</span>
+<span class="c">## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain</span>
+<span class="c">## </span>
+<span class="c">## Taurus is free software: you can redistribute it and/or modify</span>
+<span class="c">## it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c">## the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c">## (at your option) any later version.</span>
+<span class="c">## </span>
+<span class="c">## Taurus is distributed in the hope that it will be useful,</span>
+<span class="c">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">## GNU Lesser General Public License for more details.</span>
+<span class="c">## </span>
+<span class="c">## You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c">## along with Taurus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">##</span>
+<span class="c">#############################################################################</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">re</span><span class="o">,</span><span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">fandango</span><span class="o">,</span><span class="nn">fandango.qt</span><span class="o">,</span><span class="nn">taurus</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">Qt</span><span class="p">,</span><span class="n">Qwt5</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.taurusgui.utils</span> <span class="kn">import</span> <span class="n">PanelDescription</span>
+<span class="kn">from</span> <span class="nn">taurus.core.taurusvalidator</span> <span class="kn">import</span> <span class="n">DeviceNameValidator</span><span class="p">,</span> <span class="n">AttributeNameValidator</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtcore.mimetypes</span> <span class="kn">import</span> <span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span> \
+    <span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">,</span> <span class="n">TAURUS_MODEL_LIST_MIME_TYPE</span>
+<span class="kn">from</span> <span class="nn">taurus</span> <span class="kn">import</span> <span class="n">Manager</span>
+
+<span class="kn">from</span> <span class="nn">taurus.qt</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">from</span> <span class="nn">fandango</span> <span class="kn">import</span> <span class="n">partial</span><span class="p">,</span><span class="n">FakeLogger</span> <span class="k">as</span> <span class="n">FL</span>
+
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic</span> <span class="kn">import</span> <span class="n">TaurusJDrawSynopticsView</span><span class="p">,</span><span class="n">TaurusGraphicsScene</span><span class="p">,</span><span class="n">TaurusJDrawGraphicsFactory</span><span class="p">,</span><span class="n">TYPE_TO_GRAPHICS</span>
+<span class="kn">from</span> <span class="nn">taurus.qt.qtgui.graphic.taurusgraphic</span> <span class="kn">import</span> <span class="n">TaurusGroupItem</span>
+
+<span class="kn">import</span> <span class="nn">traceback</span>
+<div class="viewcode-block" id="catched"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.catched">[docs]</a><span class="k">def</span> <span class="nf">catched</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">new_f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+      <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">new_f</span>
+</div>
+<div class="viewcode-block" id="VaccaSynoptic"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynoptic">[docs]</a><span class="k">class</span> <span class="nc">VaccaSynoptic</span><span class="p">(</span><span class="n">TaurusJDrawSynopticsView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Overrides TaurusJDrawSynopticsView methods to highlight multiple items in multiple colors.</span>
+<span class="sd">    </span>
+<span class="sd">    It allows to setup a delayed setModel call to reduce &quot;hungs&quot; on heavy synoptics.</span>
+<span class="sd">    But!: This delayed call may cause problems in some versions of taurusGUI. (due to scene not-set yet)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">JDRAW_FILE</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">JDRAW_HOOK</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">JDRAW_TREE</span> <span class="o">=</span> <span class="bp">None</span>
+
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">designMode</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">updateMode</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">alias</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">resizable</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">panelClass</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delay</span> <span class="o">=</span> <span class="n">delay</span>
+        <span class="n">TaurusJDrawSynopticsView</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span><span class="n">designMode</span><span class="p">,</span><span class="n">updateMode</span><span class="p">,</span><span class="n">alias</span><span class="p">,</span><span class="n">resizable</span><span class="p">,</span><span class="n">panelClass</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setModelInConfig</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+    
+<div class="viewcode-block" id="VaccaSynoptic.setModel"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynoptic.setModel">[docs]</a>    <span class="k">def</span> <span class="nf">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">delay</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;VaccaSynoptic.setModel() delayed </span><span class="si">%d</span><span class="s"> ms&#39;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">delay</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setter</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">delay</span><span class="p">,</span> 
+                <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_setJDrawModel</span><span class="p">,</span> <span class="n">model</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">JDRAW_FILE</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">TaurusJDrawSynopticsView</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+    </div>
+    <span class="k">def</span> <span class="nf">_setJDrawModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;&gt;&#39;</span><span class="o">*</span><span class="mi">80</span>
+        <span class="k">print</span> <span class="s">&#39;setJDrawModel(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">model</span>
+        <span class="n">TaurusJDrawSynopticsView</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+    
+<div class="viewcode-block" id="VaccaSynoptic.getModelMimeData"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynoptic.getModelMimeData">[docs]</a>    <span class="k">def</span> <span class="nf">getModelMimeData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Used for drag events &quot;&quot;&quot;</span>
+
+        <span class="n">model</span><span class="p">,</span><span class="n">mimeData</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span><span class="bp">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c">#model = getattr(self.scene().itemAt(*self.mousePos),&#39;_name&#39;,&#39;&#39;)</span>
+            <span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">_selectedItems</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">selected</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;jdrawView.getModelMimeData(</span><span class="si">%s</span><span class="s">): nothing to drag&#39;</span><span class="o">%</span><span class="n">model</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">selected</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="s">&#39;_name&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)]</span> <span class="ow">or</span> <span class="p">[</span><span class="n">selected</span><span class="p">])[</span><span class="mi">0</span><span class="p">],</span><span class="s">&#39;_name&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;getModelMimeData(</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="n">model</span><span class="p">)</span>
+            <span class="n">mimeData</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QMimeData</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+                <span class="c"># self.debug(&#39;getMimeData(): DeviceModel at %s: %s&#39;,self.mousePos,model)</span>
+                <span class="n">mimeData</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+                <span class="n">mimeData</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">TAURUS_MODEL_MIME_TYPE</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">DeviceNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;getMimeData(): DeviceModel at </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">mousePos</span><span class="p">,</span><span class="n">model</span><span class="p">)</span>
+                    <span class="n">mimeData</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span><span class="n">model</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">AttributeNameValidator</span><span class="p">()</span><span class="o">.</span><span class="n">getParams</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;getMimeData(): AttributeModel at </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">mousePos</span><span class="p">,</span><span class="n">model</span><span class="p">)</span>
+                    <span class="n">mimeData</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">TAURUS_ATTR_MIME_TYPE</span><span class="p">,</span><span class="n">model</span><span class="p">)</span>
+                    <span class="n">mimeData</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">TAURUS_DEV_MIME_TYPE</span><span class="p">,</span><span class="n">model</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;getMimeData(): UnknownModel at </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">mousePos</span><span class="p">,</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;jdrawView.getModelMimeData(</span><span class="si">%s</span><span class="s">): unable to get MimeData&#39;</span><span class="o">%</span><span class="n">model</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">mimeData</span>
+        </div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="VaccaSynoptic.getPanelDescription"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynoptic.getPanelDescription">[docs]</a>    <span class="k">def</span> <span class="nf">getPanelDescription</span><span class="p">(</span><span class="n">NAME</span><span class="o">=</span><span class="s">&#39;Synoptic&#39;</span><span class="p">,</span><span class="n">JDRAW_FILE</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="n">JDRAW_HOOK</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">JDRAW_TREE</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param NAME: Name for the Panel</span>
+<span class="sd">        :param JDRAW_FILE: synoptic configuration file</span>
+<span class="sd">        :param JDRAW_HOOK: &#39;&#39;</span>
+<span class="sd">        :param JDRAW_TREE: None</span>
+<span class="sd">        :return: PanelDescription Object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># CONNECTING FAKELOGGER FOR DEBUGGING</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">vacca</span>
+            <span class="n">sdm</span> <span class="o">=</span> <span class="n">vacca</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_shared_data_manager</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">sdm</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">sdm</span><span class="o">.</span><span class="n">_SharedDataManager__models</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;SelectedInstrument&#39;</span><span class="p">)</span>
+                <span class="c"># An inline instantiated FakeLogger will print selected instrument on each click</span>
+                <span class="n">sdm</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s">&#39;SelectedInstrument&#39;</span><span class="p">,</span> 
+                    <span class="n">FL</span><span class="p">(</span><span class="s">&#39;SDM.SelectedInstrument [</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">]&#39;</span> <span class="o">%</span> 
+                       <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">readerCount</span><span class="p">(),</span><span class="n">v</span><span class="o">.</span><span class="n">writerCount</span><span class="p">()),</span> <span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
+                    <span class="n">readOnConnect</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;#&#39;</span><span class="o">*</span><span class="mi">80</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Shared Data Manager is not available! (no TaurusGUI instance?)&#39;</span><span class="p">)</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="n">sdm</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">print</span> <span class="s">&#39;#&#39;</span><span class="o">*</span><span class="mi">80</span>
+
+
+        <span class="k">print</span> <span class="s">&#39;&gt;&#39;</span><span class="o">*</span><span class="mi">20</span><span class="o">+</span><span class="s">&#39;Loading Synoptic panel new ... </span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span>\
+            <span class="p">(</span><span class="n">JDRAW_FILE</span><span class="p">,</span><span class="n">JDRAW_HOOK</span><span class="p">,</span><span class="n">JDRAW_TREE</span><span class="p">)</span>
+
+        <span class="n">class_name</span><span class="p">,</span><span class="n">rsignal</span><span class="p">,</span><span class="n">wsignal</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,{},{}</span>            
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">JDRAW_FILE</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;.svg&#39;</span><span class="p">):</span> <span class="c">#Assuming a JDraw file</span>
+            <span class="k">print</span> <span class="s">&#39;&gt;&#39;</span><span class="o">*</span><span class="mi">20</span><span class="o">+</span><span class="s">&#39;Creating JDW VaccaSynoptic&#39;</span>
+
+            <span class="k">if</span> <span class="n">JDRAW_HOOK</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&#39;Enabling JDRAW_HOOK = </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">JDRAW_HOOK</span>
+                <span class="kn">from</span> <span class="nn">fandango.qt</span> <span class="kn">import</span> <span class="n">QSignalHook</span>
+                <span class="n">in_hook</span> <span class="o">=</span> <span class="n">QSignalHook</span><span class="p">(</span><span class="n">JDRAW_HOOK</span><span class="p">)</span>
+                <span class="n">out_hook</span> <span class="o">=</span> <span class="n">QSignalHook</span><span class="p">(</span><span class="n">JDRAW_HOOK</span><span class="p">)</span>
+
+                <span class="c">#Synoptic will write this signal</span>
+                <span class="n">wsignal</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;JDrawOut&#39;</span><span class="p">:</span> <span class="s">&#39;graphicItemSelected(QString)&#39;</span><span class="p">,</span> <span class="p">}</span>
+
+                <span class="k">if</span> <span class="n">sdm</span><span class="p">:</span>
+                    <span class="n">sdm</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s">&#39;JDrawOut&#39;</span><span class="p">,</span> <span class="n">FL</span><span class="p">(</span><span class="s">&#39;SDM.JDrawOut&#39;</span><span class="p">,</span>
+                                                     <span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
+                                      <span class="n">readOnConnect</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                    <span class="n">sdm</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s">&#39;JDrawOut&#39;</span><span class="p">,</span> <span class="n">out_hook</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span>
+                                      <span class="n">readOnConnect</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                    <span class="n">sdm</span><span class="o">.</span><span class="n">connectWriter</span><span class="p">(</span><span class="s">&#39;SelectedInstrument&#39;</span><span class="p">,</span> <span class="n">out_hook</span><span class="p">,</span>
+                                      <span class="s">&#39;modelChanged&#39;</span><span class="p">)</span>
+
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">sdm</span><span class="o">.</span><span class="n">_SharedDataManager__models</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;JDrawOut&#39;</span><span class="p">)</span>
+                    <span class="n">sdm</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s">&#39;JDrawOut&#39;</span><span class="p">,</span> <span class="n">FL</span><span class="p">(</span><span class="s">&#39;SDM.JDrawOut DONE [</span><span class="si">%s</span><span class="s">,&#39;</span>
+                                                     <span class="s">&#39;</span><span class="si">%s</span><span class="s">]&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">readerCount</span><span class="p">(),</span>
+                                                            <span class="n">v</span><span class="o">.</span><span class="n">writerCount</span><span class="p">()),</span>
+                                                     <span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
+                                      <span class="n">readOnConnect</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+                    <span class="n">sdm</span><span class="o">.</span><span class="n">connectWriter</span><span class="p">(</span><span class="s">&#39;JDrawIn&#39;</span><span class="p">,</span> <span class="n">in_hook</span><span class="p">,</span><span class="s">&#39;modelChanged&#39;</span><span class="p">)</span>
+                    <span class="n">sdm</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s">&#39;JDrawIn&#39;</span><span class="p">,</span> <span class="n">FL</span><span class="p">(</span><span class="s">&#39;SDM.JDrawIn&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
+                                      <span class="n">readOnConnect</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                    <span class="n">rsignal</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;JDrawIn&#39;</span><span class="p">:</span> <span class="s">&#39;selectGraphicItem&#39;</span><span class="p">,</span> <span class="p">}</span>
+                    <span class="n">sdm</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s">&#39;SelectedInstrument&#39;</span><span class="p">,</span> <span class="n">in_hook</span><span class="o">.</span><span class="n">setModel</span><span class="p">,</span>
+                                      <span class="n">readOnConnect</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">sdm</span><span class="o">.</span><span class="n">_SharedDataManager__models</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;JDrawIn&#39;</span><span class="p">)</span>
+                    <span class="n">sdm</span><span class="o">.</span><span class="n">connectReader</span><span class="p">(</span><span class="s">&#39;JDrawIn&#39;</span><span class="p">,</span> <span class="n">FL</span><span class="p">(</span><span class="s">&#39;SDM.JDrawIn DONE [</span><span class="si">%s</span><span class="s">,&#39;</span>
+                                                    <span class="s">&#39;</span><span class="si">%s</span><span class="s">]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">readerCount</span><span class="p">(),</span>
+                                                           <span class="n">v</span><span class="o">.</span><span class="n">writerCount</span><span class="p">()),</span>
+                                                    <span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
+                                      <span class="n">readOnConnect</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rsignal</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;SelectedInstrument&#39;</span><span class="p">:</span> <span class="s">&#39;selectGraphicItem&#39;</span><span class="p">}</span>
+                <span class="n">rsignal</span><span class="p">[</span><span class="s">&#39;HighlightInstruments&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;setHighlightedItems&#39;</span>
+                <span class="n">wsignal</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;SelectedInstrument&#39;</span><span class="p">:</span> <span class="s">&#39;graphicItemSelected(QString)&#39;</span><span class="p">}</span>
+
+            <span class="k">if</span> <span class="n">JDRAW_TREE</span><span class="p">:</span>
+                <span class="n">wsignal</span><span class="p">[</span><span class="s">&#39;LoadItems&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;modelsChanged&#39;</span>
+
+
+            <span class="n">class_name</span><span class="o">=</span><span class="s">&#39;vacca.synoptics.VaccaSynoptic&#39;</span>
+
+        <span class="k">elif</span> <span class="n">JDRAW_FILE</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;.svg&#39;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">svgsynoptic</span> <span class="kn">import</span> <span class="n">SynopticWidget</span><span class="p">,</span> <span class="n">Registry</span>
+                <span class="n">rsignal</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;SelectedInstrument&#39;</span><span class="p">:</span> <span class="s">&#39;select_devices&#39;</span><span class="p">}</span>
+                <span class="c">#@TODO: rsignal[&#39;HighlightInstruments&#39;] = &#39;setHighlightedItems&#39;</span>
+                <span class="n">wsignal</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;SelectedInstrument&#39;</span><span class="p">:</span> <span class="s">&#39;graphicItemSelected(QString)&#39;</span><span class="p">}</span>
+                <span class="n">class_name</span><span class="o">=</span><span class="s">&#39;synoptic.SynopticWidget&#39;</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;Horreur!: svgsynoptic MODULE NOT AVAILABLE!&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">None</span>
+
+        <span class="k">print</span> <span class="s">&#39;Out of VaccaSynoptic.getPanelDescription(</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span><span class="n">JDRAW_FILE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PanelDescription</span><span class="p">(</span><span class="n">NAME</span><span class="p">,</span>
+                                <span class="c">#classname = &#39;vacca.VacuumSynoptic&#39;,</span>
+                                <span class="n">classname</span><span class="o">=</span><span class="n">class_name</span><span class="p">,</span>
+                                <span class="n">model</span><span class="o">=</span><span class="n">JDRAW_FILE</span><span class="p">,</span> <span class="c">#Model loading is delayed by</span>
+                                <span class="c"># VacuumSynoptic method</span>
+                                <span class="n">sharedDataRead</span><span class="o">=</span><span class="n">rsignal</span><span class="p">,</span>
+                                <span class="n">sharedDataWrite</span><span class="o">=</span><span class="n">wsignal</span><span class="p">,</span>
+                                <span class="p">)</span>        
+
+    <span class="c">###########################################################################</span>
+    <span class="c"># OVERLOADED METHODS FOR CUSTOM HIGHLITHING</span>
+    <span class="c"># It should be included in Taurus as patches</span>
+    
+    </div>
+<div class="viewcode-block" id="VaccaSynoptic.setHighlightedItems"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynoptic.setHighlightedItems">[docs]</a>    <span class="k">def</span> <span class="nf">setHighlightedItems</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">color</span><span class="o">=</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param models: List of model to be Highlighted</span>
+<span class="sd">        :param color: Color, by default Qt.Qt.red</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">fandango</span><span class="o">.</span><span class="n">isSequence</span><span class="p">(</span><span class="n">models</span><span class="p">):</span>
+            <span class="n">models</span> <span class="o">=</span> <span class="s">&#39;(</span><span class="si">%s</span><span class="s">)&#39;</span><span class="o">%</span><span class="s">&#39;)|(&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;setHighLightedItems(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">models</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">selectionColor</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">setSelectionColor</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">selectGraphicItem</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">setSelectionColor</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">setSelectionColor</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+    
+    </div>
+<div class="viewcode-block" id="VaccaSynoptic.getGraphicsFactory"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynoptic.getGraphicsFactory">[docs]</a>    <span class="k">def</span> <span class="nf">getGraphicsFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">delayed</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">VaccaSynopticGraphicsFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">alias</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="ow">or</span> <span class="bp">None</span><span class="p">),</span><span class="n">delayed</span><span class="o">=</span><span class="n">delayed</span><span class="p">)</span>
+    </div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="VaccaSynoptic.getDefaultIcon"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynoptic.getDefaultIcon">[docs]</a>    <span class="k">def</span> <span class="nf">getDefaultIcon</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: The Default Icon Path.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;image/icons/Synoptic.png&#39;</span>
+        <span class="k">return</span> <span class="n">path</span>
+
+<span class="c">#A decorator for QGraphics Objects</span></div></div>
+<div class="viewcode-block" id="GetClassWithExtensions"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.GetClassWithExtensions">[docs]</a><span class="k">def</span> <span class="nf">GetClassWithExtensions</span><span class="p">(</span><span class="n">klass</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">ClassWithExtensions</span><span class="p">(</span><span class="n">klass</span><span class="p">):</span>
+        
+        
+        <span class="k">def</span> <span class="nf">setName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span><span class="c">#srubio@cells.es: modified to store ._name since initialization (even if a model is not set)</span>
+        
+        
+        <span class="k">def</span> <span class="nf">getExtensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Any in</span>
+<span class="sd">            ExtensionsList,noPrompt,standAlone,noTooltip,noSelect,ignoreRepaint,shellCommand,className,classParams</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;_extensions&#39;</span><span class="p">,{})</span>
+            <span class="k">if</span> <span class="s">&#39;ExtensionsList&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="o">.</span><span class="n">update</span><span class="p">((</span><span class="n">k</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span><span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="p">[</span><span class="s">&#39;ExtensionsList&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;ExtensionsList&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;noPrompt&#39;</span><span class="p">,</span><span class="s">&#39;standAlone&#39;</span><span class="p">,</span><span class="s">&#39;noTooltip&#39;</span><span class="p">,</span><span class="s">&#39;ignoreRepaint&#39;</span><span class="p">,</span><span class="s">&#39;noSelect&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span><span class="o">==</span><span class="s">&#39;&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">noPrompt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;noPrompt&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">standAlone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;standAlone&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">noTooltip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;noTooltip&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ignoreRepaint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;ignoreRepaint&#39;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;ignoreRepaint&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">))</span>
+            <span class="n">tooltip</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">noTooltip</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="o">==</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+            <span class="c">#self.debug(&#39;setting %s.tooltip = %s&#39;%(self._name,tooltip))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="n">tooltip</span><span class="p">)</span>
+            <span class="c">#self.debug(&#39;%s.getExtensions(): %s&#39;%(self._name,self._extensions))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extensions</span>
+    <span class="k">return</span> <span class="n">ClassWithExtensions</span>
+</div>
+<div class="viewcode-block" id="VaccaSynopticGraphicsFactory"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynopticGraphicsFactory">[docs]</a><span class="k">class</span> <span class="nc">VaccaSynopticGraphicsFactory</span><span class="p">(</span><span class="n">TaurusJDrawGraphicsFactory</span><span class="p">):</span>
+
+    
+<div class="viewcode-block" id="VaccaSynopticGraphicsFactory.getSceneObj"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynopticGraphicsFactory.getSceneObj">[docs]</a>    <span class="k">def</span> <span class="nf">getSceneObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">items</span><span class="p">):</span>
+        <span class="n">scene</span> <span class="o">=</span> <span class="n">VaccaGraphicsScene</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myparent</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+                    <span class="n">scene</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItem</span><span class="p">):</span>
+                    <span class="n">scene</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Unable to add item </span><span class="si">%s</span><span class="s"> to scene&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Details:&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scene</span>
+    
+    </div>
+<div class="viewcode-block" id="VaccaSynopticGraphicsFactory.getGraphicsItem"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaSynopticGraphicsFactory.getGraphicsItem">[docs]</a>    <span class="k">def</span> <span class="nf">getGraphicsItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">type_</span><span class="p">,</span><span class="n">params</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getNameParam</span><span class="p">())</span>
+        <span class="c">#applying alias</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;alias&#39;</span><span class="p">,{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+                <span class="n">params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">getNameParam</span><span class="p">()]</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">cls</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="s">&#39;/&#39;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="c">#replacing Taco identifiers in %s&#39;%name</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;tango:&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span> <span class="ow">or</span> <span class="ow">not</span> <span class="s">&#39;tango:/&#39;</span> <span class="ow">in</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span> 
+                <span class="n">nname</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">getNameParam</span><span class="p">()]</span> <span class="o">=</span> <span class="n">name</span> <span class="o">=</span> <span class="n">nname</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;/state&#39;</span><span class="p">):</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">cls</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span><span class="o">.</span><span class="n">findObjectClass</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="k">if</span> <span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> does not match a tango name&#39;</span><span class="o">%</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGraphicsClassItem</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">type_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="nb">str</span><span class="p">((</span><span class="n">cls</span><span class="p">,</span><span class="n">type_</span><span class="p">,</span><span class="n">klass</span><span class="p">,</span><span class="n">klass</span><span class="o">.</span><span class="n">__name__</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span><span class="s">&#39;getExtensions&#39;</span><span class="p">):</span>
+            <span class="n">klass</span> <span class="o">=</span> <span class="n">GetClassWithExtensions</span><span class="p">(</span><span class="n">klass</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">klass</span><span class="p">()</span>
+        <span class="c">## It&#39;s here were Attributes are subscribed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_common_params</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="s">&#39;getExtensions&#39;</span><span class="p">):</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">getExtensions</span><span class="p">()</span> <span class="c">#&lt;= must be called here to take extensions from params</span>
+        <span class="k">return</span> <span class="n">item</span>    
+    </div></div>
+<div class="viewcode-block" id="VaccaGraphicsScene"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaGraphicsScene">[docs]</a><span class="k">class</span> <span class="nc">VaccaGraphicsScene</span><span class="p">(</span><span class="n">TaurusGraphicsScene</span><span class="p">):</span>
+        
+    
+<div class="viewcode-block" id="VaccaGraphicsScene.setSelectionColor"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaGraphicsScene.setSelectionColor">[docs]</a>    <span class="k">def</span> <span class="nf">setSelectionColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">color</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selectioncolor</span> <span class="o">=</span> <span class="n">color</span>
+        
+    </div>
+<div class="viewcode-block" id="VaccaGraphicsScene.selectionColor"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaGraphicsScene.selectionColor">[docs]</a>    <span class="k">def</span> <span class="nf">selectionColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectioncolor</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selectioncolor</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">blue</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectioncolor</span>
+        
+    </div>
+    <span class="k">def</span> <span class="nf">_displaySelectionAsOutline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">_outline</span><span class="p">(</span><span class="n">shapes</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;&quot;Compute the boolean union from a list of QGraphicsItem. &quot;&quot;&quot;</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="c"># TODO we can use a stack instead of recursivity</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">:</span>
+                <span class="c"># TODO we should skip text and things like that</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">TaurusGroupItem</span><span class="p">):</span>
+                    <span class="n">s</span> <span class="o">=</span> <span class="n">_outline</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">childItems</span><span class="p">())</span>
+                    <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                        <span class="k">continue</span>
+
+                <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">shape</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">united</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">shape</span> <span class="o">=</span> <span class="n">s</span>
+
+            <span class="k">if</span> <span class="n">shape</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">None</span>
+
+            <span class="k">return</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsPathItem</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="c"># TODO we can cache the outline instead of computing it again and again</span>
+        <span class="n">selectionShape</span> <span class="o">=</span> <span class="n">_outline</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">selectionShape</span><span class="p">:</span>
+            <span class="c"># copy-paste from getSelectionMark</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectionColor</span><span class="p">())</span>
+            <span class="n">color</span><span class="o">.</span><span class="n">setAlphaF</span><span class="p">(</span><span class="o">.</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">pen</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectionColor</span><span class="p">()))</span>
+            <span class="n">selectionShape</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+            <span class="n">selectionShape</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectedItems</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selectedItems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+            <span class="c"># TODO i dont think this function work... or i dont know how...</span>
+            <span class="c">#self.setSelectionMark(picture=selectionShape)</span>
+            <span class="c"># ... Then do it it with hands...</span>
+            <span class="c"># copy-paste from drawSelectionMark</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">selectionShape</span><span class="p">)</span>
+            <span class="c"># It&#39;s better to add it hidden to avoid resizings</span>
+            <span class="n">selectionShape</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">selectionShape</span><span class="p">)</span>
+            <span class="c"># Put on Top</span>
+            <span class="n">selectionShape</span><span class="o">.</span><span class="n">setZValue</span><span class="p">(</span><span class="mi">9999</span><span class="p">)</span>
+            <span class="n">selectionShape</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateSceneViews</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">return</span> <span class="bp">False</span>
+    
+    
+<div class="viewcode-block" id="VaccaGraphicsScene.getSelectionMark"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaGraphicsScene.getSelectionMark">[docs]</a>    <span class="k">def</span> <span class="nf">getSelectionMark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">picture</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">w</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">h</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">picture</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">SelectionMark</span><span class="p">:</span>
+                <span class="n">SelectionMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SelectionMark</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">SelectionMark</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsEllipseItem</span><span class="p">()</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectionColor</span><span class="p">())</span>
+                <span class="n">color</span><span class="o">.</span><span class="n">setAlphaF</span><span class="p">(</span><span class="o">.</span><span class="mi">10</span><span class="p">)</span>
+                <span class="n">SelectionMark</span><span class="o">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+                <span class="n">pen</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CustomDashLine</span><span class="p">)</span>
+                <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+                <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectionColor</span><span class="p">()))</span>
+                <span class="n">SelectionMark</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+                <span class="n">SelectionMark</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span> <span class="c">#It&#39;s better to add it hidden to avoid resizings                </span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span><span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsItem</span><span class="p">):</span>
+                    <span class="n">SelectionMark</span> <span class="o">=</span> <span class="n">picture</span>
+                    <span class="n">SelectionMark</span><span class="o">.</span><span class="n">setRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="n">h</span><span class="p">)</span>
+                    <span class="n">SelectionMark</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="n">operator</span><span class="o">.</span><span class="n">isCallable</span><span class="p">(</span><span class="n">picture</span><span class="p">):</span>
+                    <span class="n">SelectionMark</span> <span class="o">=</span> <span class="n">picture</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span><span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">):</span>
+                        <span class="n">pixmap</span> <span class="o">=</span> <span class="n">picture</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span><span class="nb">basestring</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span><span class="n">Qt</span><span class="o">.</span><span class="n">QString</span><span class="p">):</span>
+                        <span class="n">picture</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">picture</span><span class="p">)</span>
+                        <span class="n">pixmap</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">picture</span><span class="p">))</span>
+                    <span class="n">SelectionMark</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QGraphicsPixmapItem</span><span class="p">()</span>
+                    <span class="n">SelectionMark</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">pixmap</span><span class="o">.</span><span class="n">scaled</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">h</span><span class="p">))</span>
+                    <span class="n">SelectionMark</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;In setSelectionMark(</span><span class="si">%s</span><span class="s">): </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span>
+                <span class="n">picture</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">SelectionMark</span>
+    
+    <span class="c">##################################################################</span>
+    
+    </div>
+<div class="viewcode-block" id="VaccaGraphicsScene.getItemByPosition"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.VaccaGraphicsScene.getItemByPosition">[docs]</a>    <span class="k">def</span> <span class="nf">getItemByPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; This method will try first with named objects; if failed then with itemAt &quot;&quot;&quot;</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QPointF</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">itemsAtPos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">z</span><span class="p">,</span><span class="n">o</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">i</span><span class="o">.</span><span class="n">zValue</span><span class="p">(),</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_itemnames</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">v</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="ow">or</span> <span class="n">i</span><span class="o">.</span><span class="n">isUnderMouse</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">o</span><span class="p">,</span><span class="s">&#39;getExtensions&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;getItemByPosition(</span><span class="si">%d</span><span class="s">,</span><span class="si">%d</span><span class="s">): adding Qt primitive </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">o</span><span class="p">))</span>
+                <span class="n">itemsAtPos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">o</span><span class="o">.</span><span class="n">getExtensions</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;noSelect&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;getItemByPosition(</span><span class="si">%d</span><span class="s">,</span><span class="si">%d</span><span class="s">): adding GraphicsItem </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">o</span><span class="p">))</span>
+                <span class="n">itemsAtPos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;getItemByPosition(</span><span class="si">%d</span><span class="s">,</span><span class="si">%d</span><span class="s">): object ignored, </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">o</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">itemsAtPos</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">itemsAtPos</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTaurusParentItem</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">or</span> <span class="n">obj</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="c">#return self.itemAt(x,y)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;getItemByPosition(</span><span class="si">%d</span><span class="s">,</span><span class="si">%d</span><span class="s">): no items found!&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+            <span class="k">return</span> <span class="bp">None</span>    
+        
+    <span class="c">#def getItemClicked(self,mouseEvent):</span>
+        <span class="c">#pos = mouseEvent.scenePos()</span>
+        <span class="c">#x,y = pos.x(),pos.y()</span>
+        <span class="c">#self.emit(Qt.SIGNAL(&quot;graphicSceneClicked(QPoint)&quot;),Qt.QPoint(x,y))</span>
+        <span class="c">#obj = self.getItemByPosition(x,y)</span>
+        <span class="c">##self.debug(&#39;mouse clicked on %s(%s) at (%s,%s)&#39;%(type(obj).__name__,getattr(obj,&#39;_name&#39;,&#39;&#39;),x,y))</span>
+        <span class="c">#return obj        </span>
+
+    <span class="c">#def mousePressEvent(self,mouseEvent):</span>
+        <span class="c">##self.debug(&#39;In TaurusGraphicsScene.mousePressEvent(%s,%s))&#39;%(str(type(mouseEvent)),str(mouseEvent.button())))</span>
+        <span class="c">#try: </span>
+            <span class="c">#obj = self.getItemClicked(mouseEvent)</span>
+            <span class="c">#obj_name = getattr(obj,&#39;_name&#39;, &#39;&#39;)</span>
+            <span class="c">#if not obj_name and isinstance(obj,QGraphicsTextBoxing): obj_name = obj.toPlainText()</span>
+            <span class="c">#if (mouseEvent.button() == Qt.Qt.LeftButton):</span>
+                <span class="c">### A null obj_name should deselect all, we don&#39;t send obj because we want all similar to be matched                </span>
+                <span class="c">#if self.selectGraphicItem(obj_name):</span>
+                    <span class="c">#self.debug(&#39; =&gt; graphicItemSelected(QString)(%s)&#39;%obj_name)</span>
+                    <span class="c">#self.emit(Qt.SIGNAL(&quot;graphicItemSelected(QString)&quot;),obj_name)</span>
+                <span class="c">#else:</span>
+                    <span class="c">## It should send None but the signature do not allow it</span>
+                    <span class="c">#self.emit(Qt.SIGNAL(&quot;graphicItemSelected(QString)&quot;), &quot;&quot;)</span>
+            <span class="c">#def addMenuAction(menu,k,action,last_was_separator=False):</span>
+                <span class="c">#try:</span>
+                    <span class="c">#if k:</span>
+                        <span class="c">#configDialogAction = menu.addAction(k)</span>
+                        <span class="c">#if action: </span>
+                            <span class="c">#self.connect(configDialogAction, Qt.SIGNAL(&quot;triggered()&quot;), lambda dev=obj_name,act=action: act(dev))</span>
+                        <span class="c">#else: configDialogAction.setEnabled(False)</span>
+                        <span class="c">#last_was_separator = False</span>
+                    <span class="c">#elif not last_was_separator: </span>
+                        <span class="c">#menu.addSeparator()</span>
+                        <span class="c">#last_was_separator = True</span>
+                <span class="c">#except Exception,e: </span>
+                    <span class="c">#self.warning(&#39;Unable to add Menu Action: %s:%s&#39;%(k,e))                    </span>
+                <span class="c">#return last_was_separator</span>
+            <span class="c">#if (mouseEvent.button() == Qt.Qt.RightButton):</span>
+                <span class="c">#&#39;&#39;&#39; This function is called when right clicking on TaurusDevTree area. A pop up menu will be shown with the available options. &#39;&#39;&#39;</span>
+                <span class="c">#self.debug(&#39;RightButton Mouse Event on %s&#39;%(obj_name))</span>
+                <span class="c">#if isinstance(obj,TaurusGraphicsItem) and (obj_name or obj.contextMenu() or obj.getExtensions()):</span>
+                    <span class="c">#menu = Qt.QMenu(None)#self.parent)    </span>
+                    <span class="c">#last_was_separator = False</span>
+                    <span class="c">#extensions = obj.getExtensions()</span>
+                    <span class="c">#if obj_name and (not extensions or not extensions.get(&#39;className&#39;)): </span>
+                        <span class="c">##menu.addAction(obj_name)</span>
+                        <span class="c">#addMenuAction(menu,&#39;Show %s panel&#39;%obj_name,lambda x=obj_name: self.showNewPanel(x))</span>
+                    <span class="c">#if obj.contextMenu():</span>
+                        <span class="c">#if obj_name: </span>
+                            <span class="c">#menu.addSeparator()</span>
+                            <span class="c">#last_was_separator = True</span>
+                        <span class="c">#for t in obj.contextMenu(): #It must be a list of tuples (ActionName,ActionMethod)</span>
+                            <span class="c">#last_was_separator = addMenuAction(menu,t[0],t[1],last_was_separator)</span>
+                    <span class="c">#if extensions:</span>
+                        <span class="c">#if not menu.isEmpty(): menu.addSeparator()</span>
+                        <span class="c">#className = extensions.get(&#39;className&#39;)</span>
+                        <span class="c">#if className and className!=&#39;noPanel&#39;:</span>
+                            <span class="c">#self.debug(&#39;launching className extension object&#39;)</span>
+                            <span class="c">#addMenuAction(menu,&#39;Show %s&#39;%className,lambda d,x=obj: self.showNewPanel(x))</span>
+                        <span class="c">#if extensions.get(&#39;shellCommand&#39;):</span>
+                            <span class="c">#addMenuAction(menu,&#39;Execute&#39;,lambda d,x=obj: self.getShellCommand(x))</span>
+                    <span class="c">#if not menu.isEmpty():</span>
+                        <span class="c">#menu.exec_(Qt.QPoint(mouseEvent.screenPos().x(),mouseEvent.screenPos().y()))</span>
+                    <span class="c">#del menu</span>
+        <span class="c">#except Exception:</span>
+            <span class="c">#self.warning( traceback.format_exc())</span>
+
+<span class="c">###############################################################################</span>
+</div></div>
+<span class="kn">import</span> <span class="nn">doc</span>
+<span class="n">__doc__</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">get_autodoc</span><span class="p">(</span><span class="n">__name__</span><span class="p">,</span><span class="nb">vars</span><span class="p">())</span>
+
+<div class="viewcode-block" id="test"><a class="viewcode-back" href="../../vacca.synoptics.html#vacca.synoptics.test">[docs]</a><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">filters</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span> 
+        <span class="n">taurus</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="n">taurus</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">Logger</span><span class="o">.</span><span class="n">Debug</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">&#39;loading synoptic: </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="n">model</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">VaccaSynoptic</span><span class="p">(</span><span class="n">delay</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">designMode</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="c">#form = taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView(designMode=False)</span>
+    <span class="c">#designMode=False,updateMode=VaccaSynoptic.NoViewportUpdate)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;showing ...&#39;</span>
+    <span class="k">return</span> <span class="n">form</span>
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c">#!/usr/bin/python</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\n\n</span><span class="s">Usage:</span><span class="se">\n\t</span><span class="s">&gt; python synoptic [jdw file]&#39;</span>
+    
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span> <span class="c">#sys.argv)</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">filters</span> <span class="o">=</span> <span class="n">fandango</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">test</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">filters</span><span class="p">)</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Welcome to vacca&#8217;s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.html">vacca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.config.html">vacca.config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.utils.html">vacca.utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.setup.html">vacca.setup module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.doc.html">vacca.doc module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.default.html">vacca.default module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.panel.html">vacca.panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.plot.html">vacca.plot module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.properties.html">vacca.properties module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.synoptics.html">vacca.synoptics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.tree.html">vacca.tree module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.alarms.html">vacca.alarms module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../vacca.grid.html">vacca.grid module</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="../../search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../../genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2015, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vacca.properties module &mdash; vacca  documentation</title>
+    
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="vacca  documentation" href="index.html" />
+    <link rel="next" title="vacca.synoptics module" href="vacca.synoptics.html" />
+    <link rel="prev" title="vacca.plot module" href="vacca.plot.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">vacca  documentation</a></div>
+        <div class="rel">
+          <a href="vacca.plot.html" title="vacca.plot module"
+             accesskey="P">previous</a> |
+          <a href="vacca.synoptics.html" title="vacca.synoptics module"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-vacca.properties">
+<span id="vacca-properties-module"></span><h1>vacca.properties module<a class="headerlink" href="#module-vacca.properties" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="vaccaproptable">
+<h3>VaccaPropTable<a class="headerlink" href="#vaccaproptable" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="vacca.properties.VaccaPropTable">
+<em class="property">class </em><tt class="descclassname">vacca.properties.</tt><tt class="descname">VaccaPropTable</tt><big>(</big><em>parent=None</em>, <em>designMode=False</em><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.properties.VaccaPropTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>It is a class that inherits from TaurusPropTable, DoubleClickable (fandango) and Dropable (fandango).</p>
+<p>Shows the Devices Properties, this widget is listening to shareDataManager if any Device has been selected to show its properties</p>
+<dl class="docutils">
+<dt>This class has the follow functionalities:</dt>
+<dd><ul class="first last simple">
+<li>Is connected to shareDataManager to share information in the GUI.</li>
+<li>Can be edit the property by doubleclick function.</li>
+</ul>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="vacca.properties.VaccaPropTable.getDefaultIcon">
+<em class="property">static </em><tt class="descname">getDefaultIcon</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable.getDefaultIcon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.properties.VaccaPropTable.getDefaultIcon" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Default Icon Path.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="vacca.properties.VaccaPropTable.getPanelDescription">
+<em class="property">static </em><tt class="descname">getPanelDescription</tt><big>(</big><em>name='TangoDeviceProperties'</em>, <em>model=''</em><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable.getPanelDescription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.properties.VaccaPropTable.getPanelDescription" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> &#8211; Name for the Panel</li>
+<li><strong>model</strong> &#8211; Model for the panel</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.properties.VaccaPropTable.setModel">
+<tt class="descname">setModel</tt><big>(</big><em>model</em><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable.setModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.properties.VaccaPropTable.setModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set Model is the callback used in shareDataManager to manage device
+selections.
+:param model:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">vacca.properties.</tt><tt class="descname">VaccaPropTable</tt><big>(</big><em>parent=None</em>, <em>designMode=False</em><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">fandango.qt.DoubleClickableQtKlass</span></tt></p>
+<p>It is a class that inherits from TaurusPropTable, DoubleClickable (fandango) and Dropable (fandango).</p>
+<p>Shows the Devices Properties, this widget is listening to shareDataManager if any Device has been selected to show its properties</p>
+<dl class="docutils">
+<dt>This class has the follow functionalities:</dt>
+<dd><ul class="first last simple">
+<li>Is connected to shareDataManager to share information in the GUI.</li>
+<li>Can be edit the property by doubleclick function.</li>
+</ul>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt>
+<em class="property">static </em><tt class="descname">getDefaultIcon</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable.getDefaultIcon"><span class="viewcode-link">[source]</span></a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Default Icon Path.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.properties.VaccaPropTable.getModelClass">
+<tt class="descname">getModelClass</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable.getModelClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.properties.VaccaPropTable.getModelClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt>
+<em class="property">static </em><tt class="descname">getPanelDescription</tt><big>(</big><em>name='TangoDeviceProperties'</em>, <em>model=''</em><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable.getPanelDescription"><span class="viewcode-link">[source]</span></a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> &#8211; Name for the Panel</li>
+<li><strong>model</strong> &#8211; Model for the panel</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">setModel</tt><big>(</big><em>model</em><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable.setModel"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Set Model is the callback used in shareDataManager to manage device
+selections.
+:param model:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vacca.properties.VaccaPropTable.setTable">
+<tt class="descname">setTable</tt><big>(</big><em>model</em><big>)</big><a class="reference internal" href="_modules/vacca/properties.html#VaccaPropTable.setTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vacca.properties.VaccaPropTable.setTable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Welcome to vacca&#8217;s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.html">vacca package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.config.html">vacca.config module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.utils.html">vacca.utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.setup.html">vacca.setup module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.doc.html">vacca.doc module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.default.html">vacca.default module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.panel.html">vacca.panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.plot.html">vacca.plot module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">vacca.properties module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vaccaproptable">VaccaPropTable</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.synoptics.html">vacca.synoptics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.tree.html">vacca.tree module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.alarms.html">vacca.alarms module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vacca.grid.html">vacca.grid module</a></li>
+</ul>
+
+          <h3 style="margin-top: 1.5em;">Search</h3>
+          <form class="search" action="search.html" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Go" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+          </form>
+          <p class="searchtip" style="font-size: 90%">
+            Enter search terms or a module, class or function name.
+          </p>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="vacca.plot.html" title="vacca.plot module"
+             >previous</a> |
+          <a href="vacca.synoptics.html" title="vacca.synoptics module"
+             >next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+            <br/>
+            <a href="_sources/vacca.properties.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2015, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

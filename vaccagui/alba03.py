@@ -1,18 +1,22 @@
-import imp,fandango
+import imp,fandango,os
 from taurus.qt import Qt
 from fandango import SortedDict
 import vacca.utils
+
 import SR
 from SR.sector import SYNOPTICS,COMPOSERS,\
     get_ids_grid,get_fes_grid,get_profiler,get_sectors_toolbar,\
     forward2device,forward2composer
 
 from vacca.utils import WORKING_DIR,wdir,VACCA_PATH,vpath
+
+from vacca.default import *
+
 WDIR = WORKING_DIR
 
 DOMAIN = 'SR'
 GAUGES = ['sr/di/dcct/averagecurrent','sr/vc/all/averagepressure','sr/vc/all/ipsaveragepressure'] #fandango.get_matching_attributes(('%s/*/vgct*/p[12]'%DOMAIN.replace('BL','(BL|FE|ID)')))
-JDRAW_FILE = WDIR+'SR/jdw/ALBA_ESH.jdw'
+JDRAW_FILE = wdir('SR/jdw/ALBA_ESH.jdw')
 from taurus.qt.qtgui.graphic import TaurusGraphicsScene
 TaurusGraphicsScene.ANY_ATTRIBUTE_SELECTS_DEVICE = False
 TaurusGraphicsScene.TRACE_ALL = True
@@ -83,21 +87,42 @@ TOOLBARS = [
     ('Sectors','SR.sector.get_sectors_toolbar')
     ]
     
-EXTRA_APPS = {
-    'xrga':{'name':'RGA','classname':'vacca.panel.VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+' ctrga01'.split()},
-    'xtrend':{'name':'NewTrend','classname':'vacca.panel.VaccaAction','model':['Trend',WDIR+'image/icons/Mambo-icon.png']+'taurustrend -a'.split()},
-    'xvalves':{'name':'Valves','classname':'vacca.panel.VaccaAction','model':['Valves',WDIR+'image/equips/icon-pnv.gif']+'ctvalves'.split()},
-    'xtcs':{'name':'Thermocouples','classname':'vacca.panel.VaccaAction','model':['Thermocouples',WDIR+'image/equips/icon-eps.gif']+'cttcs'.split()},
+###EXTRA_APPS = fandango.dicts.SortedDict()
+EXTRA_APPS['Fandango'] = {'name':'QEval',
+                'class':fandango.qt.QEvaluator,
+                'icon':':apps/accessories-calculator.svg'}
+
+EXTRA_TOOLS+=[
+    ('Mambo',['mambo'],wdir('image/icons/Mambo-icon.png')),
+    ('RGAs',['ctrga01'],wdir('image/equips/icon-rga.gif')),
+    ('EPS',['alba_EPS'],wdir('image/equips/icon-eps.gif')),
+    ('Snaps',['ctsnaps'],wdir('image/icons/Crystal_Clear_app_kedit.png')),
+    ]
+    
+OLD_APPS = {
+    #'xrga':{'name':'RGA','classname':'vacca.panel.VaccaAction',
+            #'model':['RGA',wdir('image/equips/icon-rga.gif')]+' ctrga01'.split()},
+    #'xtrend':{'name':'NewTrend','classname':'vacca.panel.VaccaAction',
+              #'model':['Trend',wdir('image/icons/Mambo-icon.png')]+'taurustrend -a'.split()},
+    #'xvalves':{'name':'Valves','classname':'vacca.panel.VaccaAction',
+               #'model':['Valves',wdir('image/equips/icon-pnv.gif')]+'ctvalves'.split()},
+    #'xtcs':{'name':'Thermocouples','classname':'vacca.panel.VaccaAction',
+            #'model':['Thermocouples',wdir('image/equips/icon-eps.gif')]+'cttcs'.split()},
     }
+for k,v in OLD_APPS.items():
+    v['class'] = v['classname']
+    v['icon'] = v['model'][1]
+    EXTRA_APPS[v['name']] = v
     
 try:
     from fandango.qt import QEvaluator
     EXTRA_WIDGETS = [
-        ('fandango.qt.QEvaluator',WDIR+'image/icons/panic.gif'),
+        ('fandango.qt.QEvaluator',wdir('image/icons/panic.gif')),
         ]
 except:
     traceback.print_exc()
 
+## ALL THIS LAUNCHERS SHOULD BE MIGRATED (or not) TO BE EXTRA_APPS
 TOOLBAR = [
         ('','',None),
         #('Search',wdir('image/icons/search.png'),\
@@ -131,21 +156,21 @@ TOOLBAR = [
  
 _visor = 'kpdf'
 MENUS = [
-    ('Tools',[
-        ('LTB Gui',lambda:os.system('vacca_LTB &'),None),
-        ('Jive',lambda:os.system('jive &'),None),
-        ('Astor',lambda:os.system('astor &'),None),
-        ('EPS Gui',lambda:os.system('alba_EPS &'),None),
-        ('Valves',lambda:valves.ValvesChooser().show(),None),
-        ('TaurusTrend',lambda:os.system('taurustrend -a &'),None),
-        ]),
+    #('Tools',[
+        #('LTB Gui',lambda:os.system('vacca_LTB &'),None),
+        #('Jive',lambda:os.system('jive &'),None),
+        #('Astor',lambda:os.system('astor &'),None),
+        #('EPS Gui',lambda:os.system('alba_EPS &'),None),
+        #('Valves',lambda:valves.ValvesChooser().show(),None),
+        #('TaurusTrend',lambda:os.system('taurustrend -a &'),None),
+        #]),
     ('Drawings',[
-        ('Naming Booster',lambda:os.system('%s %s &'%(_visor,wdir('image/BoosterNaming.pdf'))),None), \
-        ('Naming Storage Ring',lambda:os.system('%s %s &'%(_visor,wdir('image/StorageNaming.pdf'))),None), \
-        ('Thermocouples Q1',lambda:os.system('%s %s &'%(_visor,wdir('image/TC_Q1.pdf'))),None), \
-        ('Thermocouples Q2',lambda:os.system('%s %s &'%(_visor,wdir('image/TC_Q2.pdf'))),None), \
-        ('Thermocouples Q3',lambda:os.system('%s %s &'%(_visor,wdir('image/TC_Q3.pdf'))),None), \
-        ('Thermocouples Q4',lambda:os.system('%s %s &'%(_visor,wdir('image/TC_Q4.pdf'))),None), \
+        ('Naming Booster',lambda:os.system('%s %s &'%(_visor,wdir('SR/image/BoosterNaming.pdf'))),None), \
+        ('Naming Storage Ring',lambda:os.system('%s %s &'%(_visor,wdir('SR/image/StorageNaming.pdf'))),None), \
+        ('Thermocouples Q1',lambda:os.system('%s %s &'%(_visor,wdir('SR/image/TC_Q1.pdf'))),None), \
+        ('Thermocouples Q2',lambda:os.system('%s %s &'%(_visor,wdir('SR/image/TC_Q2.pdf'))),None), \
+        ('Thermocouples Q3',lambda:os.system('%s %s &'%(_visor,wdir('SR/image/TC_Q3.pdf'))),None), \
+        ('Thermocouples Q4',lambda:os.system('%s %s &'%(_visor,wdir('SR/image/TC_Q4.pdf'))),None), \
         ])
     ]
 
