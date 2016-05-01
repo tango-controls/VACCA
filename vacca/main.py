@@ -44,10 +44,12 @@ if not configs:
         'VaccaConfigs':configs})
     vu.get_database().put_property('VACCA',{
         'DEFAULT':['VACCA_CONFIG='+vacca_path+'/default.py']})
+    configs = vu.get_config_properties()
 
 if not files or not files[0]: files = [configs.keys()[0]]
 
 dirname = os.getenv('VACCA_DIR') or ''
+
 if files[0] in configs:
     print('Loading %s'%files[0])
     data = vu.get_config_properties(files[0])
@@ -56,7 +58,8 @@ if files[0] in configs:
     dirname = data.get('VACCA_DIR',dirname)
 else: 
     config = files[0]
-    dirname = os.getenv('VACCA_DIR') or os.path.dirname(config)
+
+dirname = dirname or os.path.dirname(config)
 
 os.environ['VACCA_DIR'] = dirname
 os.environ['VACCA_CONFIG'] = config

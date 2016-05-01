@@ -90,8 +90,8 @@ COMPOSER = '' #'%s/vc/all'%DOMAIN
 
 #Default device to appear in the DevicePanel
 DEVICE = None # 'sys/tg_test/1' ; tg_test caused segfault in some cases!?
-DEVICE = fandango.first(d for d in get_matching_devices('(sys/tg_test|tango)*')
-              if check_device(d))
+#DEVICE = fandango.first(d for d in get_matching_devices('(sys/tg_test|tango)*')
+              #if check_device(d))
 USE_DEVICE_PANEL = True
 PANEL_COMMAND = 'taurusdevicepanel --config-file='+WDIR+'default.py'
 

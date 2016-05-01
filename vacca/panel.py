@@ -258,8 +258,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
 
     """
     
-    def __init__(self,parent=None,model=None, filters=[]): #,palette=None,
-    # bound=True,filters=[]):
+    def __init__(self,parent=None,model=None, filters=[]): #,palette=None, bound=True,filters=[]):
         """
         In Init, the class VaccaPanel check if exist any shareDataManager to
         subscribe in it.
@@ -477,7 +476,7 @@ if __name__ == '__main__':
     form = None
     if re.match('[\w-]+/[\w-]+/[\w-]+.*',model):
         print 'loading a device panel'
-        form = VaccaPanel(palette=get_fullWhite_palette(),filters=filters)
+        form = VaccaPanel(filters=filters)  #palette=get_fullWhite_palette()
         form.setModel(model)
     elif model.lower().endswith('.jdw'):
         print 'loading a synoptic'
