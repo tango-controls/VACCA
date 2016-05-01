@@ -141,7 +141,7 @@ try:
         import default
     except:
         try:
-            default = get_config_file(imp.find_module('vacca')[1]+'/default.py.ini')
+            default = get_config_file(imp.find_module('vacca')[1]+'/default.py')
         except:
             traceback.print_exc()
 
@@ -245,6 +245,11 @@ try:
         print '>'*20+'Loading Device panel (%s)...' % DEVICE
         from vacca.panel import VaccaPanel
         panel = VaccaPanel.getPanelDescription('Device',model=DEVICE)
+        
+    from vacca.panel import VaccaPanel
+    if AttributeFilters: VaccaPanel.setAttributeFilters(AttributeFilters)
+    if IconMap: VaccaPanel.setIconMap(IconMap)
+    if CommandFilters: VaccaPanel.setCommandFilters(CommandFilters)
 
     #: USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree
     USE_DEVICE_TREE = USE_DEVICE_TREE
@@ -495,7 +500,15 @@ try:
 
     #: 
     from PyQt4 import Qt
-
+    
+    #Forcing nesting of dock widgets
+    if app:
+        try:
+            main = vacca.utils.get_main_window(app)
+            main.setDockNestingEnabled(True)
+        except:
+            traceback.print_exc()
+            
     EXTRA_APPS = EXTRA_APPS
     """ The Vacca Panels to show in the JogsBar. Use EXTRA_APPS to add launchers to the toolbar.
     It will create new AppletDescription objects to add elements to the right-side toolbar.
@@ -506,15 +519,7 @@ try:
      * EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }
      * EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }
     """
-    adder = vacca.addCustomPanel2Gui(EXTRA_APPS)
-    
-    #Forcing nesting of dock widgets
-    if app:
-        try:
-            main = vacca.utils.get_main_window(app)
-            main.setDockNestingEnabled(True)
-        except:
-            traceback.print_exc()
+    adder = vacca.addCustomPanel2Gui(EXTRA_APPS)            
 
     print '>'*20+'Config Finished ...'
     globals()['CONFIG_DONE'] = True

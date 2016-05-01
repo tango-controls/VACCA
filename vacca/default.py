@@ -97,7 +97,7 @@ PANEL_COMMAND = 'taurusdevicepanel --config-file='+WDIR+'default.py'
 
 #Examples of Attribute filters to be applied to DevicePanel
 AttributeFilters = {'V-PEN': ['pressure','channelstatus','controller'],}
-AttributeFilters['EPS']=[ #You can distribute attributes in different tabs using tuples
+AttributeFilters['EPS-TEST']=[ #You can distribute attributes in different tabs using tuples
     ('Status',['_READY','OPEN_','CLOSE_']),
     ('Signals',['.*_PT.*','was_','paas_','*RGA*']),
     ]

@@ -270,7 +270,6 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         """
         
         self.call__init__(taurus.qt.qtgui.panel.TaurusDevicePanel, parent, model)
-        taurus.qt.qtgui.panel.TaurusDevicePanel(self) #,parent,model,palette,bound)
         sdm = vacca.utils.get_shared_data_manager()
         if sdm:
             sdm.connectReader('SelectedInstrument',self.setModel,
@@ -290,24 +289,39 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         
     @classmethod
     def getAttributeFilters(klass,dev_class=None):
+        """
+        TaurusDevicePanel filters are fixed to work by device name.
+        But, if AttributeFilters is declared as class property, it will override them.
+        
+        get{Property}(klass,dev_class) will update it from Tango DB and return the matching values.
+        set{Property}(dict) will update the parent TaurusDevicePanel dictionary, not the DB
+        """
         if dev_class is not None and dev_class not in klass._attribute_filter:
             filters = get_class_property(dev_class,'AttributeFilters',extract=False)
             if filters:
                 filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
                 klass._attribute_filter[dev_class] = filters
                 return {'.*':filters}
+        #if dev_name is not None: 
+            #filters = get_regexp_dict(klass._attribute_filter,dev_name,[])
+            #if filters:
+                #return {'.*':filters}
         return klass._attribute_filter
         
     @classmethod
     def getCommandFilters(klass,dev_class=None):
+        """
+        get{Property}(klass,dev_class) will update it from Tango DB and return the matching values.
+        set{Property}(dict) will update the parent TaurusDevicePanel dictionary, not the DB
+        """      
         if dev_class is not None and dev_class not in klass._attribute_filter:
             filters = get_class_property(dev_class,'CommandFilters',extract=False)
             if filters:
                 filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
                 klass._attribute_filter[dev_class] = filters
                 return {'.*':filters}
-        return klass._command_filter        
-        
+        return klass._command_filter
+      
     def setModel(self,model,pixmap=None):
         """
         Set Model is the callback used in shareDataManager to manage device
@@ -338,6 +352,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
             return
         except:
           traceback.print_exc()
+          
         try:
             taurus.Device(model).ping()
             if self.getModel(): self.detach() #Do not dettach previous model before pinging the new one (fail message will be shown at except: clause)
@@ -382,7 +397,8 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 else:
                     if self._attrs and isinstance(self._attrs,list): self._attrs = self._attrs[0]
                     self._attrs = self.get_attrs_form(device=model,form=self._attrs,filters=filters,parent=self)
-                    if self._attrs: self._attrsframe.addTab(self._attrs,'Attributes')               
+                    if self._attrs: self._attrsframe.addTab(self._attrs,'Attributes')
+                    
                 if not TaurusDevicePanel.READ_ONLY:
                     self._comms = self.get_comms_form(model,self._comms,self)
                     if self._comms: self._attrsframe.addTab(self._comms,'Commands')

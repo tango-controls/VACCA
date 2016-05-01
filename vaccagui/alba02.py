@@ -36,9 +36,10 @@ use default.py for your common options and whatever.py for your in-place customi
 print '>'*20+' Loading %s'%__name__
 
 from vacca.utils import DEFAULT_PATH
+from vacca.default import *
 
 WDIR = DEFAULT_PATH
-DEVICE = ''#sys/tg_test/1'
+DEVICE = 'lab/vc/vgct-02'
 DOMAIN = 'LAB' #ID03'
 COMPOSER = '' #ID03/VC/ALL'
 JDRAW_FILE = '' #WDIR+'ESRF/id03.jdw'
@@ -56,16 +57,21 @@ EXTRA_DEVICES = ([d for d in fandango.get_matching_devices('lab/*/*')
     if fandango.check_device(d) and not fandango.searchCl('(serial|mbus)',d)] +
     fandango.get_matching_devices('test/*/*'))
 
-EXTRA_PANELS = []
-EXTRA_PANELS.append(('PANIC','panic.gui.AlarmGUI','--'))
-EXTRA_PANELS.append(('Form','TaurusForm',''))
+#EXTRA_PANELS['PANIC','panic.gui.AlarmGUI','--'))
+#EXTRA_PANELS.append(('Form','TaurusForm',''))
+
+#BAD IDEA , SHOULD BE AN APP!
+#EXTRA_PANELS['PANIC'] = PanelDescription(
+    #'PANIC','panic.gui.AlarmGUI',model='',#---
+    #sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+    
 try:
     from PyTangoArchiving.widget.browser import ArchivingBrowser
     w = 'PyTangoArchiving.widget.browser.ArchivingBrowser'
 except:
     from PyTangoArchiving.widget.ArchivingBrowser import ModelSearchWidget
     w = 'PyTangoArchiving.widget.ArchivingBrowser.ModelSearchWidget'
-EXTRA_PANELS.append(('Finder',w,''))
+#EXTRA_PANELS['Finder'] = ('Finder',w,'')
 
 EXTRA_WIDGETS = [
 ('panic.gui.AlarmGUI',WDIR+'image/icons/panic.gif'),
@@ -77,11 +83,18 @@ EXTRA_WIDGETS = [
 #For ExternalApp/VaccaActions use:
 # {'$VarName':{'name':'$AppName','classname':'VaccaAction','model':['$Test','$/path/to/icon.png','$launcher']}}
 #xrga = AppletDescription('RGA',classname = 'VaccaAction',model=['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01'])
-EXTRA_APPS = {
-    'xrga':{'name':'RGA','classname':'vacca.panel.VaccaAction',
-            'model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
-    }
-    
-AttributeFilters = {}
-CommandFilters = {}
-IconMap = {}
+EXTRA_APPS.update({
+    #'xrga':{'name':'RGA','classname':'vacca.panel.VaccaAction',
+            #'model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
+    })
+
+EXTRA_APPS['Fandango'] = {'name':'QEval',
+                'class':fandango.qt.QEvaluator,
+                'icon':':apps/accessories-calculator.svg'}
+
+try:
+  print 'Loading filters!!!'
+  from vaccagui.filters import *
+  IconMap['MKS'] = wdir('image/equips/icon-vgct.gif')
+except:
+  traceback.print_exc()

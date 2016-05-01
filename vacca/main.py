@@ -59,7 +59,8 @@ if files[0] in configs:
 else: 
     config = files[0]
 
-dirname = dirname or os.path.dirname(config)
+dirname = dirname or os.path.dirname(config) or \
+  vu.get_vacca_property('VACCA_DIR',extract=True)
 
 os.environ['VACCA_DIR'] = dirname
 os.environ['VACCA_CONFIG'] = config

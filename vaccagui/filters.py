@@ -1,7 +1,6 @@
 import fandango
 import imp
-from vacca.utils import WORKING_DIR
-WDIR = WORKING_DIR
+from vacca.utils import wdir,vpath
 
 __itemConfigurations__ = []
 nostatus = '(?!.*(status|alarm|warning)$).*'
@@ -96,7 +95,7 @@ def getDefaultIcon(k=None):
     return taurus.qt.qtgui.resource.getIcon(':/places/network-server.svg')
 
 IconMap = fandango.dicts.CaselessDefaultDict(getDefaultIcon)
-IconMap.update(dict((k,WDIR+'image/equips/icon-%s.gif'%fandango.replaceCl('^[- ]|[- ][0-9]{0,3}$','',cleanup(k))) for k in AttributeFilters))
+IconMap.update(dict((k,wdir('image/equips/icon-%s.gif'%fandango.replaceCl('^[- ]|[- ][0-9]{0,3}$','',cleanup(k)))) for k in AttributeFilters))
 IconMap['v-pen'] = IconMap['ccg-']
 IconMap['v-pir'] = IconMap['pir-']
 IconMap['v-varip'] = IconMap['ip-']

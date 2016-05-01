@@ -190,7 +190,8 @@ DEFAULT_PATH =  WORKING_DIR
 
 def wdir(s):
     #It tries to convert all paths to absolute
-    d = VACCA_DIR
+    global VACCA_DIR
+    d = VACCA_DIR = os.getenv('VACCA_DIR')
     if not d and not os.path.exists(s): 
         d = os.path.dirname(VACCA_CONFIG)
     d = _joiner(d,'/',s)
@@ -198,7 +199,10 @@ def wdir(s):
 
 def vpath(s):
     #It tries to convert all paths to absolute
-    return _joiner(VACCA_PATH,'/',s)
+    global VACCA_PATH
+    VACCA_PATH = os.getenv('VACCA_PATH')
+    s2 = _joiner(VACCA_PATH,'/',s)
+    return s2
   
 global VACCA_PROFILES
 VACCA_PROFILES=[]
@@ -234,7 +238,7 @@ def get_config_file(config=None):
           CONFIG_FILE = get_config_properties(VACCA_CONFIG).get('CONFIG_FILE',VACCA_CONFIG)
         else:
           CONFIG_FILE = VACCA_CONFIG
-        CONFIG_FILE = CONFIG_FILE.replace('$VACCA_DIR',VACCA_DIR).replace('$VACCA_PATH',VACCA_PATH)
+        CONFIG_FILE = CONFIG_FILE.replace('$VACCA_DIR',VACCA_DIR or '').replace('$VACCA_PATH',VACCA_PATH or '')
     else:
         CONFIG_FILE = config
     print('get_config_file(%s)'%CONFIG_FILE)
@@ -632,13 +636,13 @@ class addCustomPanel2Gui(object):
             return
         
         try:
-            #taurusgui = None
-            #widgets = app.allWidgets()
-            #for widget in widgets:
-                #widgetType = str(type(widget))
-                #if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
-                    #taurusgui = widget
-            taurusgui = get_main_window()
+            taurusgui = None
+            widgets = app.allWidgets()
+            for widget in widgets:
+                widgetType = str(type(widget))
+                if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
+                    taurusgui = widget
+            #taurusgui = get_taurus_gui() #get_main_window() does not work here!?
 
             #Launch method
             def _launchPanel(panelName, panelClass, *args):
