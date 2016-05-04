@@ -394,7 +394,7 @@ def get_sectors_toolbar():
         for k in SYNOPTICS:
             buttons.append(vacca.panel.DomainButton(sectors))
             buttons[-1].setLabel(k)
-            buttons[-1].setModel(fandango.matchMap(COMPOSERS,k)+'/State',WDIR+'SR/sector.py %s'%k)
+            buttons[-1].setModel(fandango.matchMap(COMPOSERS,k)+'/State',wdir('SR/sector.py %s'%k))
             buttons[-1].setFixedHeight(60)
             sectors.addWidget(buttons[-1])
         sectors.setFixedHeight(60)

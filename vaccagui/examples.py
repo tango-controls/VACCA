@@ -1,41 +1,10 @@
-#!/usr/bin/env python
-
-#############################################################################
-##
-## This file is part of Taurus, a Tango User Interface Library
-## 
-## http://www.tango-controls.org/static/taurus/latest/doc/html/index.html
-##
-## Copyright 2011 CELLS / ALBA Synchrotron, Bellaterra, Spain
-## 
-## Taurus is free software: you can redistribute it and/or modify
-## it under the terms of the GNU Lesser General Public License as published by
-## the Free Software Foundation, either version 3 of the License, or
-## (at your option) any later version.
-## 
-## Taurus is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU Lesser General Public License for more details.
-## 
-## You should have received a copy of the GNU Lesser General Public License
-## along with Taurus.  If not, see <http://www.gnu.org/licenses/>.
-##
-###########################################################################
-
 """
-configuration file for an example of how to specify system-wide defaults for VaccaGUI 
-
-This configuration file determines the default, permanent, pre-defined
-options for the GUI; modify them to match your default gui options.
-
-Every CONFIG file loaded by vaccagui will override those options redefined on it; 
-use default.py for your common options and whatever.py for your in-place customization.
+THIS FILE JUST IS A DROP-IN FOR USEFUL VACCA RECIPES
 """
 
 print '>'*20+' Loading %s'%__name__
 
-from vacca.utils import DEFAULT_PATH
+from vacca.utils import DEFAULT_PATH,wdir,vpath,get_os_launcher
 from vacca.default import *
 
 WDIR = DEFAULT_PATH
@@ -56,6 +25,22 @@ GAUGES = fandango.get_matching_attributes('lab/vc/vgct*/p[0-9]')#'ID03/V-PEN/*/P
 EXTRA_DEVICES = ([d for d in fandango.get_matching_devices('lab/*/*') 
     if fandango.check_device(d) and not fandango.searchCl('(serial|mbus)',d)] +
     fandango.get_matching_devices('test/*/*'))
+    
+###############################################################################
+# Synoptic file
+
+JDRAW_FILE = '' #WDIR+'/examples/elinac/linac.jdw' #WDIR+'%s/%s.jdw'%(TARGET,TARGET)
+#Enables/disables loading jdraw objects into tree
+JDRAW_TREE = True 
+#A method that does transformation on signals sent to other widgets.
+JDRAW_HOOK = None #lambda s: apply_transform(get_coordinates(s)) 
+# Enable multiple selection of objects in Synoptic
+#from taurus.qt.qtgui.graphic import TaurusGraphicsScene
+#TaurusGraphicsScene.ANY_ATTRIBUTE_SELECTS_DEVICE = True
+
+
+#Devices not in JDraw or regular expression to be added to the tree
+EXTRA_DEVICES = [d for d in get_all_devices() if not matchCl('^(tango|dserver)/*',d)]
 
 #EXTRA_PANELS['PANIC','panic.gui.AlarmGUI','--'))
 #EXTRA_PANELS.append(('Form','TaurusForm',''))
@@ -64,7 +49,9 @@ EXTRA_DEVICES = ([d for d in fandango.get_matching_devices('lab/*/*')
 #EXTRA_PANELS['PANIC'] = PanelDescription(
     #'PANIC','panic.gui.AlarmGUI',model='',#---
     #sharedDataWrite={'HighlightInstruments':'devicesSelected'})
-    
+
+PANEL_COMMAND = 'taurusdevicepanel --config-file='+WDIR+'default.py'
+
 try:
     from PyTangoArchiving.widget.browser import ArchivingBrowser
     w = 'PyTangoArchiving.widget.browser.ArchivingBrowser'
@@ -78,6 +65,18 @@ EXTRA_WIDGETS = [
 ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',WDIR+'image/icons/search.png')
 ]
 
+#Extra widgets to appear in the NewPanel dialog
+EXTRA_WIDGETS = [
+        ('panic.gui.AlarmGUI',wdir('image/icons/panic.gif')),
+        ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',wdir('image/widgets/Archiving.png')),
+    ] #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
+
+EXTRA_PANELS = {}
+from taurus.qt.qtgui.taurusgui.utils import PanelDescription
+#EXTRA_PANELS['PANIC'] = PanelDescription(
+    #'PANIC','panic.gui.AlarmGUI',model='',#---
+    #sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+
 #Loading APPS from config doesnt work!!!
 
 #For ExternalApp/VaccaActions use:
@@ -88,6 +87,11 @@ EXTRA_APPS.update({
             #'model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
     })
 
+EXTRA_TOOLS = [
+  ('Jive',['jive'],vpath('image/icons/TangoLogo.png')),
+  ('Trends',['taurustrend','-a'],vpath('image/widgets/PressureTrend.jpg')),
+  ]
+  
 EXTRA_APPS['Fandango'] = {'name':'QEval',
                 'class':fandango.qt.QEvaluator,
                 'icon':':apps/accessories-calculator.svg'}
@@ -96,10 +100,10 @@ EXTRA_APPS['PANIC'] = {'name': 'PANIC',
                 'class': vacca.VaccaPanic}
 
 EXTRA_APPS['Mambo'] = {'name': 'Mambo',
-                'class': lambda:os.system('mambo&'),
+                'class': get_os_launcher('mambo'),
                 'icon': wdir('image/icons/Mambo-icon.png')}
 EXTRA_APPS['Finder'] = {'name': 'Finder',
-                'class': lambda:os.system('taurusfinder&'),
+                'class': get_os_launcher('taurusfinder'),
                 'icon': wdir('image/icons/search.png')}
 
 try:
