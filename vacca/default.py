@@ -131,8 +131,8 @@ GRID = {
 
 #Extra widgets to appear in the NewPanel dialog
 EXTRA_WIDGETS = [
-        ('panic.gui.AlarmGUI',wdir('vacca/image/icons/panic.gif')),
-        ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',wdir('vacca/image/widgets/Archiving.png')),
+        ('panic.gui.AlarmGUI',wdir('image/icons/panic.gif')),
+        ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',wdir('image/widgets/Archiving.png')),
     ] #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
 
 EXTRA_PANELS = {}

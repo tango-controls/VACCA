@@ -103,13 +103,16 @@ def get_vacca_property(prop,extract=False):
         if v == ['']: return []
         if extract and fandango.isSequence(v) and len(v)==1:
             v = v[0]
+            v = replace_env(v,'VACCA_PATH')
+            v = replace_env(v,'VACCA_DIR')
         return v
-    return []   
+    return [] if not extract else ''
 
 DB_HOST = fandango.tango.get_tango_host().split(':')[0]
 
 
-def replace_env(text,var,value):
+def replace_env(text,var,value=None):
+    if value is None: value = os.getenv(var)
     e = '[$][(]?'+var+'[)]?(?![a-zA-Z_0-9])'
     return re.sub(e,str(value),text)
 
@@ -124,9 +127,11 @@ VACCA_PATH: *vpath('path/to/icon')*
     e.g. VACCA_PATH = /homelocal/sicilia/lib/python/site-packages
     e.g. vpath = /homelocal/sicilia/lib/python/site-packages/vacca
 """
+os.environ['VACCA_PATH'] = VACCA_PATH
 
 global VACCA_DIR
 VACCA_DIR = get_env_variable('VACCA_DIR', get_env_variable('WORKING_DIR',''))
+VACCA_DIR = replace_env(VACCA_DIR,'VACCA_PATH',VACCA_PATH)
 """
 VACCA_DIR: *wdir('path/to/icon')* 
 
@@ -182,7 +187,7 @@ def load_config_properties(config,export=True):
     return props
 
 def _joiner(a,s,b):
-    return '%s%s%s'%(a,s if a and b and s not in (a[-1],b[0]) else '',b)
+    return '%s%s%s'%(a or '',s if a and b and s not in (a[-1],b[0]) else '',b or '')
 
 #Needed for backwards compatibility
 WORKING_DIR = VACCA_DIR
@@ -261,6 +266,17 @@ def get_config_file(config=None):
         print traceback.format_exc()
         raise Exception,'Unable to load %s' % CONFIG_FILE
     return CONFIG
+  
+def get_os_launcher(cmd,args=[]):
+    """
+    Returns a Linux launcher method for "cmd".
+    @TODO: Study Taurus.ExternalApp and use the same methods used there.
+    """
+    import os
+    cmd += ' '.join(args)
+    if '&' not in cmd: cmd+='&'
+    f = (lambda c=cmd: os.system(c))
+    return f
   
 def get_main_window(app=None):
     from PyQt4 import Qt

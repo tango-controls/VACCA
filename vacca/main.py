@@ -58,9 +58,18 @@ if files[0] in configs:
     dirname = data.get('VACCA_DIR',dirname)
 else: 
     config = files[0]
+    
+if config and not os.path.isfile(config):
+    try:
+      import imp
+      print('Loading %s as python module'%config)
+      config = imp.find_module(config.replace('.','/'))[1]
+      dirname = os.path.dirname(config)
+    except:
+      pass
 
 dirname = dirname or os.path.dirname(config) or \
-  vu.get_vacca_property('VACCA_DIR',extract=True)
+  vu.get_vacca_property('VACCA_DIR',extract=1) or ''
 
 os.environ['VACCA_DIR'] = dirname
 os.environ['VACCA_CONFIG'] = config
