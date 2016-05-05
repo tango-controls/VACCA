@@ -29,17 +29,20 @@ class DomainRow(Qt.QWidget):
         self.label.setMinimumWidth(50)
         self.layout().setAlignment(Qt.Qt.AlignLeft)
         self.layout().addWidget(self.label)
-        if 'FE' in domain:
+        
+        #self.valves = [str('%s/VC/%s'%(domain,m)).upper() for m in taurus.Database().get_device_member(regexp)]
+        if 'SR' in domain: regexp = '%s/*/spnv-*'%domain
+        else: regexp = '%s/*/pnv-*'%domain
+        self.valves = fandango.tango.get_matching_devices(regexp)
+        if not self.valves and 'FE' in domain:
             regexp = {
                 'FE01':'SR01/VC/PNV-*','FE02':'SR02/VC/PNV-*','FE04':'SR03/VC/PNV-*','FE09':'SR05/VC/PNV-*',
                 'FE11':'SR11/VC/PNV-*','FE13':'SR07/VC/PNV-*','FE22':'SR11/VC/PNV-*','FE24':'SR12/VC/PNV-*',
                 'FE29':'SR14/VC/PNV-*','FE34':'SR16/VC/PNV-*',
             }.get(domain.upper(),'FE*/VC/*PNV*')
             domain = regexp.split('/')[0]
-        else:
-            regexp = str(domain)+'/VC/'+('spnv-*' if 'SR' in domain else '*pnv-*')
-            
-        self.valves = [str('%s/VC/%s'%(domain,m)).upper() for m in taurus.Database().get_device_member(regexp)]
+            self.valves = fandango.tango.get_matching_devices(regexp)
+        
         print 'In DomainRow(%s), %d devices found matching %s'%(self.domain,len(self.valves),regexp)
         self.addPressure()
         for v in self.valves:
@@ -130,7 +133,7 @@ class ValvesPanel(PARENT_KLASS):
     _fes = [f for f in get_distinct_domains(taurus.Database().get_device_exported('fe*')) if re.match('fe[0-9]'.lower(),f.lower())]        
     
     def __init__(self,parent=None,regexp='*pnv-*'):
-        print 'In ValvesPanel()'
+        print 'In ValvesPanel(%s)'%regexp
         PARENT_KLASS.__init__(self,parent)
         self.setSizePolicy(Qt.QSizePolicy(Qt.QSizePolicy.Expanding,Qt.QSizePolicy.Expanding))
         self.regexp=regexp
@@ -149,7 +152,7 @@ class ValvesPanel(PARENT_KLASS):
         else:
             regexp = str(domains)+self.regexp
             domains = domains if hasattr(domains,'__iter__') and not isinstance(domains,basestring) else get_distinct_domains(taurus.Database().get_device_domain(regexp))
-        print 'domains: %s'%domains
+        print 'domains,regexp: %s,%s'%(domains,regexp)
         self.rows = []
         for d in domains: #(domains+fes):
             self.rows.append(DomainRow(d,self))
@@ -167,7 +170,7 @@ class ValvesChooser(Qt.QWidget):
     _persistent_ = None #It prevents the instances to be destroyed if not called explicitly
     
     def __init__(self,parent=None,domains=None,regexp='*pnv-*'):
-        print 'In ValvesChooser()'
+        print 'In ValvesChooser(%s,%s)'%(domains,regexp)
         Qt.QWidget.__init__(self,parent)
         self.setWindowTitle('Vacuum Valves Manager')
         self.setLayout(Qt.QVBoxLayout())
@@ -178,7 +181,7 @@ class ValvesChooser(Qt.QWidget):
         domains = domains if domains else ['LI','LT','BO','BT','SR','FE']
         self.domains = (['Choose...']+domains) if len(domains)>1 else domains
         self.combo.addItems(self.domains)
-        self.panel = ValvesPanel(self)
+        self.panel = ValvesPanel(self,regexp='')
         self.layout().addWidget(Qt.QLabel('Choose a domain to see valves status:'))
         self.layout().addWidget(self.combo)
         USE_SCROLL = False
