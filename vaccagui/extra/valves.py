@@ -5,7 +5,7 @@ import re,sys,os,time
 import fandango
 import fandango.functional as fun
 
-from tau.widget.utils.emitter import modelSetter,TauEmitterThread,SingletonWorker
+from taurus.qt.qtcore.util.emitter import SingletonWorker
 from taurus.qt.qtgui.panel.taurusvalue import TaurusValue
 from taurus.qt.qtgui.display.taurusstateled import TaurusStateLed
 from taurus.qt.qtgui.display.taurusconfiglabel import TaurusConfigLabel
@@ -130,7 +130,7 @@ PARENT_KLASS = Qt.QFrame #Qt.QWidget
 class ValvesPanel(PARENT_KLASS):
     
     _domains = ['LI','LT']+['LT%02d'%i for i in range(1,3)]+['BO%02d'%i for i in range(1,5)]+['BT']+['SR%02d'%i for i in range(1,17)]
-    _fes = [f for f in get_distinct_domains(taurus.Database().get_device_exported('fe*')) if re.match('fe[0-9]'.lower(),f.lower())]        
+    _fes = [f for f in get_distinct_domains(taurus.Database().get_device_exported('f*/*/*')) if re.match('f[ei][0-9]'.lower(),f.lower())]        
     
     def __init__(self,parent=None,regexp='*pnv-*'):
         print 'In ValvesPanel(%s)'%regexp
@@ -144,6 +144,7 @@ class ValvesPanel(PARENT_KLASS):
             self.setFrameStyle(self.Box)
     
     def setDomains(self,domains=''):
+      try:
         print 'In ValvesPanel.setDomains(%s)'%domains
         self.domains = domains
         if 'FE' in domains:
@@ -157,7 +158,10 @@ class ValvesPanel(PARENT_KLASS):
         for d in domains: #(domains+fes):
             self.rows.append(DomainRow(d,self))
             self.layout().addWidget(self.rows[-1])
-            
+      except:
+        traceback.print_exc()
+      print('Out of setDomains(%s)'%domains)
+     
     def clear(self):
         print 'In ValvesPanel.clear()'
         while self.layout().count():
@@ -181,7 +185,7 @@ class ValvesChooser(Qt.QWidget):
         domains = domains if domains else ['LI','LT','BO','BT','SR','FE']
         self.domains = (['Choose...']+domains) if len(domains)>1 else domains
         self.combo.addItems(self.domains)
-        self.panel = ValvesPanel(self,regexp='')
+        self.panel = ValvesPanel(self,regexp=regexp)
         self.layout().addWidget(Qt.QLabel('Choose a domain to see valves status:'))
         self.layout().addWidget(self.combo)
         USE_SCROLL = False
@@ -193,7 +197,7 @@ class ValvesChooser(Qt.QWidget):
             self.layout().addWidget(self.panel)
         self.combo.connect(self.combo, Qt.SIGNAL("currentIndexChanged (const QString&)"), self.comboIndexChanged)
         self.connect(self.combo, Qt.SIGNAL("currentIndexChanged (const QString&)"), self.comboIndexChanged)
-        if len(domains)==1: self.emit(Qt.SIGNAL("currentIndexChanged (const QString&)"),Qt.QString(domains[0]))
+        if len(domains)==1: self.combo.emit(Qt.SIGNAL("currentIndexChanged (const QString&)"),Qt.QString(domains[0]))
         type(self)._persistent_ = self
         
     def closeEvent(self,evt):
@@ -207,12 +211,16 @@ class ValvesChooser(Qt.QWidget):
         #type(self)._persistent_ = None
         
     def comboIndexChanged(self,text):
+      try:
         print 'In comboIndexChanged(%s)'%text
         if str(text)=='Choose...' or str(text)==self.panel.domains: 
+            print  '... %s already shown'%str(text)
             return
         self.panel.clear()
+        print '... setDomains(%s)'%text
         self.panel.setDomains(str(text))
-        
+      except:
+        traceback.print_exc()
     def OpenAll(self):
         return
     def CloseAll(self):
@@ -220,11 +228,11 @@ class ValvesChooser(Qt.QWidget):
 
 def main():
     import sys
-    print 'In main()'
+    print 'In main(): args will be ignored'
     args = sys.argv[1:]
     if 'qapp' not in locals() and 'qapp' not in globals():
         qapp = Qt.QApplication([])
-    vp = ValvesChooser(domains=args)
+    vp = ValvesChooser()
     vp.show()
     sys.exit(qapp.exec_())
 

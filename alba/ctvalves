@@ -1,0 +1,3 @@
+#!/bin/sh
+
+python $(fandango.sh findModule vaccagui)/extra/valves.py &
