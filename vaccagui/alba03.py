@@ -88,14 +88,29 @@ TOOLBARS = [
     ]
     
 ###EXTRA_APPS = fandango.dicts.SortedDict()
-EXTRA_APPS['Fandango'] = {'name':'QEval',
-                'class':fandango.qt.QEvaluator,
-                'icon':':apps/accessories-calculator.svg'}
+#EXTRA_APPS['Fandango'] = {'name':'QEval',
+                #'class':fandango.qt.QEvaluator,
+                #'icon':':apps/accessories-calculator.svg'}
+
+from vacca.utils import get_os_launcher
+
+EXTRA_APPS['Finder'] = {'name': 'Finder',
+                'class': get_os_launcher('taurusfinder'),
+                'icon': wdir('image/equips/icon-all.gif')}
+EXTRA_APPS['EPS'] = {'name': 'EPS',
+                'class': get_os_launcher('alba_EPS'),
+                'icon': wdir('image/equips/icon-eps.gif')}
+EXTRA_APPS['Mambo'] = {'name': 'Mambo',
+                'class': get_os_launcher('mambo'),
+                'icon': wdir('image/icons/Mambo-icon.png')}
+EXTRA_APPS['Valves'] = {'name': 'Valves',
+                'class': get_os_launcher('ctvalves'),
+                'icon': wdir('image/equips/icon-pnv.gif')}
 
 EXTRA_TOOLS+=[
-    ('Mambo',['mambo'],wdir('image/icons/Mambo-icon.png')),
-    ('RGAs',['ctrga01'],wdir('image/equips/icon-rga.gif')),
-    ('EPS',['alba_EPS'],wdir('image/equips/icon-eps.gif')),
+    #('Mambo',['mambo'],wdir('image/icons/Mambo-icon.png')),
+    ('RGAs',['ctrga'],wdir('image/equips/icon-rga.gif')),
+    #('EPS',['alba_EPS'],wdir('image/equips/icon-eps.gif')),
     ('Snaps',['ctsnaps'],wdir('image/icons/Crystal_Clear_app_kedit.png')),
     ]
     
@@ -141,7 +156,7 @@ TOOLBAR = [
         ('','',None),
         ('EPS',wdir('image/equips/icon-eps.gif'), lambda:launch('alba_EPS')),
         ('','',None),
-        ('Valves',wdir('image/equips/icon-pnv.gif'), lambda:valves.ValvesChooser().show()), #lambda:os.system('python %s &'%wdir('valves.py'))),
+        ('Valves',wdir('image/equips/icon-pnv.gif'), lambda:vacagui.extra.valves.ValvesChooser().show()), #lambda:os.system('python %s &'%wdir('valves.py'))),
         ('','',None),
         ('Alarms',wdir('image/icons/panic.gif'), lambda:launch('ctalarms')),
         ('','',None),

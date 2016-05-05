@@ -87,6 +87,24 @@ EXTRA_APPS.update({
             #'model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
     })
 
+EXTRA_APPS['Finder'] = {'name': 'Finder',
+                'class': get_os_launcher('taurusfinder'),
+                'icon': wdir('image/equips/icon-all.gif')}
+EXTRA_APPS['EPS'] = {'name': 'EPS',
+                'class': get_os_launcher('alba_EPS'),
+                'icon': wdir('image/equips/icon-eps.gif')}
+EXTRA_APPS['Mambo'] = {'name': 'Mambo',
+                'class': get_os_launcher('mambo'),
+                'icon': wdir('image/icons/Mambo-icon.png')}
+EXTRA_APPS['Valves'] = {'name': 'Valves',
+                'class': get_os_launcher('ctvalves'),
+                'icon': wdir('image/equips/icon-pnv.gif')}
+
+###EXTRA_APPS = fandango.dicts.SortedDict()
+#EXTRA_APPS['Fandango'] = {'name':'QEval',
+                #'class':fandango.qt.QEvaluator,
+                #'icon':':apps/accessories-calculator.svg'}
+
 EXTRA_TOOLS = [
   ('Jive',['jive'],vpath('image/icons/TangoLogo.png')),
   ('Trends',['taurustrend','-a'],vpath('image/widgets/PressureTrend.jpg')),

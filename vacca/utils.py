@@ -275,7 +275,7 @@ def get_os_launcher(cmd,args=[]):
     import os
     cmd += ' '.join(args)
     if '&' not in cmd: cmd+='&'
-    f = (lambda c=cmd: os.system(c))
+    f = (lambda : os.system(cmd))
     return f
   
 def get_main_window(app=None):

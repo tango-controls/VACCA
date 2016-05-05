@@ -1,0 +1,42 @@
+#!/usr/bin/python
+
+##!/bin/sh
+#rdesktop -g 1440x880 ctrga01
+
+import os
+from PyQt4 import Qt
+
+HOST='ctrga02'
+
+class QOptionChooser(Qt.QDialog):
+  def __init__(self,title,text,command,args,parent=None):
+    Qt.QDialog.__init__(self,parent)
+    self.command = command
+    self.args = args
+    self.combo = Qt.QComboBox()
+    self.combo.addItems(self.args)
+    self.buttons = Qt.QDialogButtonBox(Qt.QDialogButtonBox.Ok|Qt.QDialogButtonBox.Cancel)
+    self.connect(self.buttons,Qt.SIGNAL('accepted()'),self.launch)
+    self.connect(self.buttons,Qt.SIGNAL('rejected()'),self.close)
+
+    self.setLayout(Qt.QHBoxLayout())
+    self.setWindowTitle(title)
+    self.layout().addWidget(Qt.QLabel(text))
+    self.layout().addWidget(self.combo)
+    self.layout().addWidget(self.buttons)
+
+  def launch(self):
+    cmd = ' '.join(map(str,[self.command[0],self.combo.currentText()]+self.command[1:]))+' &'
+    print cmd
+    os.system(cmd)
+    self.close()
+
+title = 'Remote desktop launcher to '+HOST
+text = 'Choose your screen size'
+command = ['rdesktop -g ',' '+HOST]
+args = ['1920x1080','1440x880','1024x768','800x600']
+
+qapp = Qt.QApplication([])
+w = QOptionChooser(title,text,command,args)
+w.show()
+qapp.exec_()
