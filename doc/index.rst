@@ -6,7 +6,11 @@
 Welcome to vacca's documentation!
 =================================
 
-.. include:: ../README
+.. include:: README
+
+The environment variables needed to configure VACCA are described in vacca.utils
+
+The configuration variables for synoptics and tree models are described in vacca.config
 
 Contents:
 

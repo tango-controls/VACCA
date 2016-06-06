@@ -42,7 +42,7 @@ Variables can be declared in OS or as Tango.VACCA free properties
 VACCA_CONFIG: *get_config_file()*
 
     The config file to be loaded, it can be absolute path or 
-    relative to WORKING_DIR. Returned by 
+    relative to VACCA_DIR.
     
     e.g. /homelocal/sicilia/applications/vacca/tbl2401.py
     
@@ -51,14 +51,17 @@ VACCA_DIR: *wdir('path/to/icon')*
     The folder were VACCA should be executed, all paths within 
     the application will be relative to it. It includes all custom icons 
     that are not part of the vacca package.
-    
+
+    If VACCA_CONFIG is defined, it defaults to the path to config file.
+    At ALBA installations it defaults to the path of vaccagui library.    
     Extra modules or plugins to be imported will be loaded from this directory.
     
     e.g. /homelocal/sicilia/applications/vacca/
     
 VACCA_PATH: *vpath('path/to/icon')*
 
-    Path to the VACCA library, tipically used for icons of vacca package
+    Not mandatory, it defaults to the path of vacca library.
+    Used for launchers and default icons of vacca widgets.
 
     e.g. /homelocal/sicilia/lib/python/site-packages/vacca
 
