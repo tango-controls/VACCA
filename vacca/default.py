@@ -189,7 +189,7 @@ EXTRA_APPS['PANIC'] = {'name': 'PANIC',
 #EXTRA_APPS['Mambo'] = {'name': 'Mambo',
                 #'class': lambda:os.system('mambo&'),
                 #'icon': wdir('image/icons/Mambo-icon.png')}
-
+EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
 
 #EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
 #EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }
