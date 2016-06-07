@@ -28,10 +28,6 @@
 # # 
 # # S.Rubio-Manrique, srubio@cells.es, 2006-2015
 
-
-
-echo "Usage: vaccagui [CONFIG.py]"
-
 #Source your own environment variables from here:
 #source alba_blissrc
 
@@ -42,36 +38,9 @@ fi
 if [ ! "$VACCA_PATH" ] ; then
     #Getting current script folder
     export VACCA_PATH=$(python -c "import imp;print(imp.find_module('vacca')[1])")
-    echo "VACCA_PATH environment variable not set, trying $VACCA_PATH instead ..."
 fi
 
-LAUNCHER=$VACCA_PATH/main.py
-python $LAUNCHER
+echo "Launching $VACCA_PATH/main.py [$*]"
 
-# #Exporting the folder for config files
-# if [ ! "$VACCA_DIR" ] ; then
-#     #     export WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
-#     if [ "$WORKING_DIR" ] ; then
-#       #For compatibility with old vacca launchers/scripts
-#       export VACCA_DIR=$WORKING_DIR
-#     else
-#         VACCA_DIR=$(dirname $VACCA_CONFIG)
-#     fi
-# fi
-# 
-# #launcher, may use taurusgui or vacca_run (that strips must of taurusgui application setup)
-# if [ "$VACCA_DIR" ] ; then
-#     cd $VACCA_DIR
-# else
-#     cd $VACCA_PATH
-# fi
-# 
-# #taurusgui --taurus-log-level=DEBUG vaccagui &
-# if [ -e "$VACCA_DIR/vacca_run.py" ] ; then
-#   LAUNCHER=vacca_run.py
-# else
-#   LAUNCHER=bin/vacca_run.py
-# fi
-# 
-# echo $VACCA_DIR/$LAUNCHER
-# python $LAUNCHER
+LAUNCHER=$VACCA_PATH/main.py
+python $LAUNCHER $*

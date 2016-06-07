@@ -12,16 +12,66 @@ MAIN CODE FOR PANELS GENERATION IS IN vacca.config SUBMODULE
 """
 
 import sys,os,re,time,imp,traceback
+
+args = sys.argv[1:]
+
+__doc__ = """
+vaccagui usage
+--------------
+
+Launching vacca:
+
+  > vaccagui [config.py]  #Will execute the config.py file contents
+  
+Environment variables (optional):
+
+  VACCA_CONFIG : if set, equivalent to passing config.py as argument
+  VACCA_DIR : directory to resources needed by config.py (config.py folder by default)
+  VACCA_PATH : path to vacca module (initialized by imp.find_module())
+  
+  If not set, default values will be VACCA free properties in Tango DB.
+
+Reset of QSettings files:
+
+  > vaccagui --reset   #The last saved perspective will be removed    
+  > vaccagui --clean   #All the .ini files will be removed
+    
+"""
+
+if args and args[0].strip('- ') == 'help':
+  print(__doc__)
+  sys.exit(0)
+  
+def remove_last_config(filename):
+    print('vacca.remove_last_config(%s)'%filename)
+    lines = open(filename).readlines()
+    sections = dict((l.strip(),i) for i,l in enumerate(lines) 
+                    if re.match('[\[][a-zA-Z]*[\]]',l))
+    sections['[End]'] = len(lines)
+    begin = sections['[General]']
+    end = min(i for i in sections.values() if i>begin)
+    fo = open(filename,'w')
+    fo.writelines(lines[:begin]+lines[end:])
+    fo.close()  
+
+folder = os.getenv('HOME')+'/.config/VACCA/'
+if '--clean' in args:
+  os.remove(folder+'*.ini')
+  if len(args)==1: sys.exit(0)
+elif '--reset' in args:
+  inits = [a for a in os.walk(f).next()[2] if a.endswith('.ini')]
+  [remove_last_config(folder+filename) for filename in inits]
+  if len(args)==1: sys.exit(0)
+  
+###############################################################################
+
 import taurus
 from taurus.core.util import argparse
 from taurus.qt.qtgui.application import TaurusApplication
 from taurus.qt.qtgui.taurusgui import TaurusGui
 
-args = sys.argv[1:]
-
 import vacca 
 import vacca.utils as vu
-
 
 vacca_path = imp.find_module('vacca')[1]
 os.environ['VACCA_PATH'] = vacca_path
@@ -77,25 +127,6 @@ os.environ['VACCA_CONFIG'] = config
 for k,v in os.environ.items():
   if 'VACCA' in k:
     print((k,v))
-
-def remove_last_config(filename):
-    print('vacca.remove_last_config(%s)'%filename)
-    lines = open(filename).readlines()
-    sections = dict((l.strip(),i) for i,l in enumerate(lines) 
-                    if re.match('[\[][a-zA-Z]*[\]]',l))
-    sections['[End]'] = len(lines)
-    begin = sections['[General]']
-    end = min(i for i in sections.values() if i>begin)
-    fo = open(filename,'w')
-    fo.writelines(lines[:begin]+lines[end:])
-    fo.close()  
-
-folder = os.getenv('HOME')+'/.config/VACCA/'
-if '--clean' in args:
-  os.remove(folder+'*.ini')
-elif '--reset' in args:
-  inits = [a for a in os.walk(f).next()[2] if a.endswith('.ini')]
-  [remove_last_config(folder+filename) for filename in inits]
   
 ### MAIN CODE FOR PANELS GENERATION IS IN vacca.config SUBMODULE
 
