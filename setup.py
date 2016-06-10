@@ -53,7 +53,7 @@ setup(
     name="Vacca",
     version=str(version),
     license=license,
-    packages=find_packages(),
+    packages=['vacca'],
     description="Viewer and Commander Control Application for Tango Control System.",
     long_description="",
     author="Sergi Rubio",
