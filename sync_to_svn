@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Usage: ./sync_to_svn SVN_PATH"
+
+SVN_PATH=$1
+
+git clone t@gitcomputing.cells.es:controls/vacca.git vacca.tmp
+cd vacca.tmp
+cp -r vacca bin AUTHORS LICENSE MANIFEST.in README examples doc setup.py $SVN_PATH/
+cp -r vacca/ini/vaccagui $SVN_PATH/
+cd ..
+rm -rf vacca.tmp
