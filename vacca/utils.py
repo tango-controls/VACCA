@@ -196,7 +196,7 @@ def _joiner(a,s,b):
 WORKING_DIR = VACCA_DIR
 DEFAULT_PATH =  WORKING_DIR
 
-def wdir(s):
+def wdir(s=''):
     #It tries to convert all paths to absolute
     global VACCA_DIR
     d = VACCA_DIR = os.getenv('VACCA_DIR')
@@ -205,7 +205,7 @@ def wdir(s):
     d = _joiner(d,'/',s)
     return d
 
-def vpath(s):
+def vpath(s=''):
     #It tries to convert all paths to absolute
     global VACCA_PATH
     VACCA_PATH = os.getenv('VACCA_PATH')
@@ -223,6 +223,7 @@ VACCA_PROFILES:
 """
   
 def get_config_properties(config=''):
+    print('vacca.utils.get_config_properties(%s)'%config)
     global VACCA_PROFILES
     if not VACCA_PROFILES:
         VACCA_PROFILES = SortedDict()

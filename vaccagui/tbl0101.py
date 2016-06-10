@@ -1,4 +1,4 @@
-import imp,fandango
+import imp,fandango,traceback
 #from vacca.beamlines import BL,COMPOSER,EXTRA_DEVICES,DEVICE,DOMAIN,GAUGES,JDRAW_FILE
 from vacca.utils import *
 
@@ -89,12 +89,18 @@ except: traceback.print_exc()
 
 #EXTRA_PANELS.append(('Form','TaurusForm',''))
 try:
-    from PyTangoArchiving.widget.browser import ArchivingBrowser
-    w = 'PyTangoArchiving.widget.browser.ArchivingBrowser'
+    #from PyTangoArchiving.widget.browser import ArchivingBrowser
+    #w = 'PyTangoArchiving.widget.browser.ArchivingBrowser'
+    import PyTangoArchiving.widget.browser
+    c = PyTangoArchiving.widget.browser.ArchivingBrowser
 except:
-    from PyTangoArchiving.widget.ArchivingBrowser import ModelSearchWidget
-    w = 'PyTangoArchiving.widget.ArchivingBrowser.ModelSearchWidget'
-EXTRA_PANELS['Finder'] = PanelDescription('Finder',w)
+    #from PyTangoArchiving.widget.ArchivingBrowser import ModelSearchWidget
+    #w = 'PyTangoArchiving.widget.ArchivingBrowser.ModelSearchWidget'
+    import PyTangoArchiving.widget.ArchivingBrowser
+    c = PyTangoArchiving.widget.ArchivingBrowser.ModelSearchWidget
+#EXTRA_PANELS['Finder'] = PanelDescription('Finder',w)
+EXTRA_APPS['Finder'] = {'name': 'Finder','class': c,'icon': wdir('image/icons/search.png')}
+
 
 EXTRA_WIDGETS = [
 ('panic.gui.AlarmGUI',wdir('image/icons/panic.gif')),

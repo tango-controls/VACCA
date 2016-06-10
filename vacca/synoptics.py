@@ -542,7 +542,7 @@ def test(model,filters='',debug=False):
     
     if debug: 
         taurus.setLogLevel(taurus.core.util.Logger.Debug)
-
+        form.setWindowTitle(model)
     print 'loading synoptic: %s'%model
     form = VaccaSynoptic(delay=1000,designMode=False)
     #form = taurus.qt.qtgui.graphic.TaurusJDrawSynopticsView(designMode=False)

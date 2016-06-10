@@ -115,17 +115,16 @@ from vacca.utils import *
 #==============================================================================
 
 #print ('*'*80+'\n')*1
-print 'In vacca.config(%s)'%globals().get('CONFIG_DONE',None)
+print 'In vacca.config(%s,%s)'%(globals().get('CONFIG_DONE',None),VACCA_DIR)
 #print ('*'*80+'\n')*1
 
-VACCA_DIR = get_config_properties(os.getenv('VACCA_CONFIG')).get('VACCA_DIR',VACCA_DIR)
-vacca.utils.VACCA_DIR = VACCA_DIR
-WDIR = VACCA_DIR
+props = get_config_properties(os.getenv('VACCA_CONFIG'))
+VACCA_DIR = WDIR = props.get('VACCA_DIR',VACCA_DIR)
 
 try:
 
     if VACCA_DIR:
-        print('Changing directory to VACCA_DIR:%s,%s' %(VACCA_DIR,os.environ['VACCA_DIR' ]))
+        print('Changing directory to VACCA_DIR:%s' %(VACCA_DIR))
         os.chdir(os.environ['VACCA_DIR'])
         sys.path.append(os.environ['VACCA_DIR'])
 

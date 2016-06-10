@@ -43,7 +43,7 @@ print '>'*20+' Loading default.py'
 
 #ALL these variables can be re-defined in CONFIG FILE
 GUI_NAME = 'VACCA'
-WDIR = VACCA_DIR #imp.find_module('vacca')[1]+'/'
+WDIR = wdir() #imp.find_module('vacca')[1]+'/'
 URL_HELP = 'http://computing.cells.es/services/controls/vacuum'
 URL_LOGBOOK = 'http://logbook.cells.es/'
 VACCA_LOGO = vpath('image/icons/AlbaLogo.png')
@@ -93,7 +93,7 @@ DEVICE = None # 'sys/tg_test/1' ; tg_test caused segfault in some cases!?
 #DEVICE = fandango.first(d for d in get_matching_devices('(sys/tg_test|tango)*')
               #if check_device(d))
 USE_DEVICE_PANEL = True
-PANEL_COMMAND = 'taurusdevicepanel --config-file='+WDIR+'default.py'
+PANEL_COMMAND = 'taurusdevicepanel --config-file='+wdir()+'default.py'
 
 #Examples of Attribute filters to be applied to DevicePanel
 AttributeFilters = {'V-PEN': ['pressure','channelstatus','controller'],}

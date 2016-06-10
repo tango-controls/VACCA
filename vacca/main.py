@@ -23,7 +23,7 @@ Launching vacca:
 
   > vaccagui [config.py]  #Will execute the config.py file contents
   
-Environment variables (optional):
+Environment variables (optional, will be initialized in vacca/main.py):
 
   VACCA_CONFIG : if set, equivalent to passing config.py as argument
   VACCA_DIR : directory to resources needed by config.py (config.py folder by default)
@@ -70,8 +70,8 @@ from taurus.core.util import argparse
 from taurus.qt.qtgui.application import TaurusApplication
 from taurus.qt.qtgui.taurusgui import TaurusGui
 
-import vacca 
 import vacca.utils as vu
+import vacca 
 
 vacca_path = imp.find_module('vacca')[1]
 os.environ['VACCA_PATH'] = vacca_path
@@ -121,8 +121,8 @@ if config and not os.path.isfile(config):
 dirname = dirname or os.path.dirname(config) or \
   vu.get_vacca_property('VACCA_DIR',extract=1) or ''
 
-os.environ['VACCA_DIR'] = dirname
-os.environ['VACCA_CONFIG'] = config
+vu.VACCA_DIR = os.environ['VACCA_DIR'] = dirname
+vu.VACCA_CONFIG = os.environ['VACCA_CONFIG'] = config
 
 for k,v in os.environ.items():
   if 'VACCA' in k:
