@@ -152,7 +152,7 @@ TOOLBAR = [
             lambda:launch('python -c "import vacca;vacca.image_profile.show(\'%s\');"'%str(IMAGE_PROFILE))
             ),
         ('','',None),
-        ('RGA ProcessEye',wdir('image/equips/icon-rga.gif'), lambda:launch('ctrga01')),
+        ('RGA ProcessEye',wdir('image/equips/icon-rga.gif'), lambda:launch('ctrga02')),
         ('','',None),
         ('EPS',wdir('image/equips/icon-eps.gif'), lambda:launch('alba_EPS')),
         ('','',None),

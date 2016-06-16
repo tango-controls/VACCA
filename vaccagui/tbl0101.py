@@ -1,6 +1,10 @@
 import imp,fandango,traceback
 #from vacca.beamlines import BL,COMPOSER,EXTRA_DEVICES,DEVICE,DOMAIN,GAUGES,JDRAW_FILE
 from vacca.utils import *
+try:
+  from vaccagui.beamlines import *
+except:
+  from beamlines import *
 
 #options copied from /homelocal/sicilia/lib/python/site-packages/vacca/beamlines.py
 
@@ -44,7 +48,7 @@ GRID = {
 
 EXTRA_PANELS = {}
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
-EXTRA_PANELS['PANIC'] = PanelDescription('PANIC','panic.gui.AlarmGUI',model='',sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+#EXTRA_PANELS['PANIC'] = PanelDescription('PANIC','panic.gui.AlarmGUI',model='',sharedDataWrite={'HighlightInstruments':'devicesSelected'})
 
 #EXTRA_PANELS['EPS'] = PanelDescription('EPS','gui_alfa.epsgui') #,model='',#---
     #sharedDataWrite={'HighlightInstruments':'devicesSelected'})

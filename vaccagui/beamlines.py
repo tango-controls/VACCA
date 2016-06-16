@@ -35,20 +35,22 @@ use default.py for your common options and whatever.py for your in-place customi
 
 import fandango,imp
 
+print 'In vaccagui.beamlines ...'
+
 #The device that will be shown by default when loading the application
-COMPOSER = DEVICE = fandango.get_matching_devices('BL*/VC/ALL')[0].upper()
-DOMAIN = BL = COMPOSER.split('/')[-3]
+try:
+  COMPOSER = DEVICE = fandango.get_matching_devices('BL*/VC/ALL')[0].upper()
+  DOMAIN = BL = COMPOSER.split('/')[-3]
+except:
+  DOMAIN = BL = 'BL'
+  COMPOSER,DEVICE = 'BL/VC/ALL','BL/CT/ALARMS'
+  
+URL_HELP = 'http://controls01/vacca/index.html'
 
 print '>'*20+' Loading config for beamline %s'%BL
 
-from vacca.utils import WORKING_DIR,wdir,VACCA_PATH,vpath
-WDIR = WORKING_DIR
+from vacca.utils import VACCA_DIR,wdir,VACCA_PATH,vpath
 
-##NOTE: THIS DOESN'T SEEM TO WORK!
-EXTRA_APPS = {
-    'xtrend':{'name':'NewTrend','classname':'vacca.panel.VaccaAction','model':['Trend',wdir('image/icons/Mambo-icon.png')]+'taurustrend -a'.split()},
-    }
-    
 EXTRA_DEVICES = [
     d for d in (
         fandango.get_matching_devices('*(pnv|eps|vfcs|ccg|mvc|pir|elotech|bestec|/hc-|/ip-|rga|ipct|vgct|bakeout|tsp|cry|fcv|fs-|otr|vc/all|alarm)*')+
@@ -88,3 +90,55 @@ def ATTR_FILTER(attr_name):
         if not fandango.matchCl('p[0-9]',attr_name) or 'not used' in attr_name: 
             return False
     return True
+
+
+##NOTE: THIS DOESN'T SEEM TO WORK!
+EXTRA_APPS = {
+    'xtrend':{'name':'NewTrend','classname':'vacca.panel.VaccaAction','model':['Trend',wdir('image/icons/Mambo-icon.png')]+'taurustrend -a'.split()},
+    }
+
+if not 'ready':
+  EXTRA_PANELS = {}
+  from taurus.qt.qtgui.taurusgui.utils import PanelDescription
+  #EXTRA_PANELS['PANIC'] = PanelDescription('PANIC','panic.gui.AlarmGUI',model='',#---sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+  #from taurus.qt.qtgui.taurusgui.utils import PanelDescription
+  #EXTRA_PANELS['EPS'] = PanelDescription('EPS','gui_alfa.epsgui') #,model='',#---
+      #sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+  #EXTRA_PANELS['trends'] = PanelDescription('Trends','vacca.plot.VaccaTrend')
+
+  EXTRA_APPS = {}
+
+  try:
+    import vacca
+    EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
+    EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
+    EXTRA_APPS['PANIC']= {'class' : vacca.VaccaPanic       }
+    #EXTRA_APPS['ExtraDock']= {'class' : vacca.panel.VaccaDocker       }    
+    EXTRA_APPS['Fandango'] = {'class' : fandango.qt.QEvaluator, 'icon': ':apps/accessories-calculator.svg'}
+  except: traceback.print_exc()
+
+  try:
+    from PyQt4 import Qt
+    
+  except: traceback.print_exc()
+
+  try:
+    import sys
+    #sys.path.insert(0,'/homelocal/srubio/PROJECTS/PLCs/EPS-BL09/trunk/PLC_GUI')
+    sys.path.insert(0,'/homelocal/sicilia/applications/EPS_GUI/PLC_GUI')
+    import gui_alfa
+    EXTRA_APPS['EPS']= {'class' : gui_alfa.epsgui,
+                        'icon' : '/homelocal/sicilia/lib/python/site-packages/AlbaPLC/tools/icon/Plc_equipment.jpg',
+                        }    
+    sys.path.append('/homelocal/srubio/PROJECTS/PLCs/DeviceServers/')
+    import AlbaPLC.tools.Widgets
+    EXTRA_APPS['SourceBrowser']= {'class' : AlbaPLC.tools.Widgets.SourceBrowser,
+                                  'icon' : '/homelocal/sicilia/lib/python/site-packages/AlbaPLC/tools/icon/plc.jpg',
+                                }    
+  except: traceback.print_exc()  
+    
+  EXTRA_WIDGETS = [
+  ('panic.gui.AlarmGUI',wdir('image/icons/panic.gif')),
+  ('PyTangoArchiving.widget.browser.ArchivingBrowser',':actions/system-search.svg'),
+  ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',':actions/system-search.svg')
+  ]
