@@ -206,7 +206,7 @@ try:
     #: Logo to be shown in right-side bar
     ORGANIZATION_LOGO = ORGANIZATION_LOGO
     
-    print('SETTINGS: Perspectives will be saved/loaded from %s'%(
+    print('Config loaded, Perspectives will be saved/loaded from %s'%(
         SETTINGS.replace('$USER',get_env_variable('USER')).replace('$ORGANIZATION',ORGANIZATION).replace('$GUI_NAME',GUI_NAME)))
     
     SINGLE_INSTANCE = False
@@ -218,6 +218,8 @@ try:
     #: You can provide an URI for a manual in html format
     #: (comment out or make MANUAL_URI=None to skip creating a Manual panel)
     MANUAL_URI = URL_HELP #'http://packages.python.org/taurus'
+    
+    print('-')*80
 
     #===============================================================================
     # Define panels to be shown.
@@ -522,6 +524,7 @@ try:
 
     print '>'*20+'Config Finished ...'
     globals()['CONFIG_DONE'] = True
+    print('-')*80
 
 except:
     print traceback.format_exc()

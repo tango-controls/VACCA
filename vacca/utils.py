@@ -76,6 +76,10 @@ from taurus.qt.qtgui.base import TaurusBaseComponent
 from taurus.core.util.eventfilters import ONLY_CHANGE_AND_PERIODIC
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 
+###############################################################################
+
+DB_HOST = fandango.tango.get_tango_host().split(':')[0]
+
 def get_env_variable(var,default=''):
     """ It will try to get value from OS, then Tango.VACCA, then default """
     v = os.environ.get(var,None)
@@ -111,13 +115,12 @@ def get_vacca_property(prop,extract=False):
         return v
     return [] if not extract else ''
 
-DB_HOST = fandango.tango.get_tango_host().split(':')[0]
-
-
 def replace_env(text,var,value=None):
     if value is None: value = os.getenv(var)
     e = '[$][(]?'+var+'[)]?(?![a-zA-Z_0-9])'
     return re.sub(e,str(value),text)
+  
+###############################################################################
 
 global VACCA_PATH
 VACCA_PATH = get_env_variable('VACCA_PATH', imp.find_module('vacca')[1])
@@ -130,11 +133,14 @@ VACCA_PATH: *vpath('path/to/icon')*
     e.g. VACCA_PATH = /homelocal/sicilia/lib/python/site-packages
     e.g. vpath = /homelocal/sicilia/lib/python/site-packages/vacca
 """
+
 os.environ['VACCA_PATH'] = VACCA_PATH
+if VACCA_PATH+'/ini' not in sys.path:
+  sys.path.append(VACCA_PATH+'/ini')
 
 global VACCA_DIR
 VACCA_DIR = get_env_variable('VACCA_DIR', get_env_variable('WORKING_DIR',''))
-VACCA_DIR = replace_env(VACCA_DIR,'VACCA_PATH',VACCA_PATH)
+VACCA_DIR = replace_env(VACCA_DIR,'VACCA_PATH',VACCA_PATH) or VACCA_PATH
 """
 VACCA_DIR: *wdir('path/to/icon')* 
 
@@ -147,10 +153,16 @@ VACCA_DIR: *wdir('path/to/icon')*
     e.g. /homelocal/sicilia/applications/vacca/
 """
 
+#Needed for backwards compatibility
+#VACCA_DIR NOT FORCED HERE TO ALLOW OVERRIDE BY VACCA_CONFIG
+WORKING_DIR = VACCA_DIR
+DEFAULT_PATH =  WORKING_DIR
+
 global VACCA_CONFIG
 VACCA_CONFIG = get_env_variable('VACCA_CONFIG',DB_HOST+'.py')
 VACCA_CONFIG = replace_env(replace_env(VACCA_CONFIG,'VACCA_DIR',VACCA_DIR),
                            'VACCA_PATH',VACCA_PATH)
+VACCA_CONFIG = VACCA_CONFIG if os.path.isfile(VACCA_CONFIG) else VACCA_PATH+'/default.py'
 """
 VACCA_CONFIG: 
 
@@ -160,6 +172,49 @@ VACCA_CONFIG:
     
     e.g. /homelocal/sicilia/applications/vacca/tbl2401.py
 """
+  
+###############################################################################
+
+def _joiner(a,s,b):
+    return '%s%s%s'%(a or '',s if a and b and s not in (a[-1],b[0]) else '',b or '')
+
+def wdir(s=''):
+    #It tries to convert all paths to absolute
+    global VACCA_DIR
+    d = VACCA_DIR = os.getenv('VACCA_DIR')
+    if not d and not os.path.exists(s): 
+        d = os.path.dirname(VACCA_CONFIG)
+    d = _joiner(d,'/',s)
+    return d
+
+def vpath(s=''):
+    #It tries to convert all paths to absolute
+    global VACCA_PATH
+    VACCA_PATH = os.getenv('VACCA_PATH')
+    s2 = _joiner(VACCA_PATH,'/',s)
+    return s2
+  
+###############################################################################
+  
+global VACCA_PROFILES
+VACCA_PROFILES=[]
+"""
+VACCA_PROFILES: 
+
+    Sets of environment variables declared as free properties
+    in the Tango Database.
+    
+"""
+
+def create_config_properties():
+    global VACCA_PATH
+    configs = ['DEFAULT']
+    get_database().put_property('VACCA',{
+        'VaccaConfigs':configs})
+    get_database().put_property('VACCA',{
+        'DEFAULT':['VACCA_CONFIG='+VACCA_PATH+'/default.py']})
+    print('Created default VACCA properties')
+    return get_config_properties()    
 
 def load_config_properties(config,export=True):
     """
@@ -188,42 +243,9 @@ def load_config_properties(config,export=True):
             VACCA_DIR=os.path.dirname(VACCA_CONFIG)
             
     return props
-
-def _joiner(a,s,b):
-    return '%s%s%s'%(a or '',s if a and b and s not in (a[-1],b[0]) else '',b or '')
-
-#Needed for backwards compatibility
-WORKING_DIR = VACCA_DIR
-DEFAULT_PATH =  WORKING_DIR
-
-def wdir(s=''):
-    #It tries to convert all paths to absolute
-    global VACCA_DIR
-    d = VACCA_DIR = os.getenv('VACCA_DIR')
-    if not d and not os.path.exists(s): 
-        d = os.path.dirname(VACCA_CONFIG)
-    d = _joiner(d,'/',s)
-    return d
-
-def vpath(s=''):
-    #It tries to convert all paths to absolute
-    global VACCA_PATH
-    VACCA_PATH = os.getenv('VACCA_PATH')
-    s2 = _joiner(VACCA_PATH,'/',s)
-    return s2
-  
-global VACCA_PROFILES
-VACCA_PROFILES=[]
-"""
-VACCA_PROFILES: 
-
-    Sets of environment variables declared as free properties
-    in the Tango Database.
-    
-"""
   
 def get_config_properties(config=''):
-    print('vacca.utils.get_config_properties(%s)'%config)
+    #print('vacca.utils.get_config_properties(%s)'%config)
     global VACCA_PROFILES
     if not VACCA_PROFILES:
         VACCA_PROFILES = SortedDict()
@@ -240,6 +262,7 @@ def get_config_properties(config=''):
 
 def get_config_file(config=None):
     global VACCA_CONFIG,VACCA_DIR
+    print('-')*80
     if not config:
         VACCA_CONFIG = get_env_variable('VACCA_CONFIG',DB_HOST)
         configs = get_config_properties()
@@ -253,8 +276,11 @@ def get_config_file(config=None):
     print('get_config_file(%s)'%CONFIG_FILE)
 
     if not CONFIG_FILE.startswith('/'):
-        CONFIG_FILE = wdir(CONFIG_FILE)
-        
+      if not os.path.isfile(CONFIG_FILE):
+        cf = os.path.abspath(CONFIG_FILE)
+        CONFIG_FILE = cf if os.path.isfile(cf) else wdir(CONFIG_FILE)
+    print CONFIG_FILE
+    
     if not fandango.linos.file_exists(CONFIG_FILE):
         if fandango.linos.file_exists(CONFIG_FILE+'.py'):
             CONFIG_FILE += '.py'
@@ -269,7 +295,11 @@ def get_config_file(config=None):
     except: 
         print traceback.format_exc()
         raise Exception,'Unable to load %s' % CONFIG_FILE
+    print('-')*80
     return CONFIG
+  
+###############################################################################
+# Miscellaneous methods to be used with Taurus GUI
   
 def get_os_launcher(cmd,args=[]):
     """
@@ -338,39 +368,7 @@ def get_shared_data_signals():
     except:
         traceback.print_exc()
         return {}
-      
-def add_menu(menuname,actions):
-    '''
-    The arguments must be a list of tuples with action names and action methods.
-    
-    e.g.:
-    EXTRA_MENUS = [
-    ('Tools',[
-        ('LTB Gui',lambda:os.system('vacca_LTB &'),None),
-        ('Jive',lambda:os.system('jive &'),None),
-        ('Astor',lambda:os.system('astor &'),None),
-        ('EPS Gui',lambda:os.system('alba_EPS &'),None),
-        ('Valves',lambda:valves.ValvesChooser().show(),None),
-        ('TaurusTrend',lambda:os.system('taurustrend -a &'),None),
-        ]),
-    '''
-    print 'Adding new menu %s'%menuname
-    self = get_main_window()
-    MenuBar = self.menuBar()
-    newmenu = Qt.QMenu(MenuBar)
-    newmenu.setTitle(menuname)
-    newmenu.setObjectName(menuname)
-    newaction = Qt.QAction(MenuBar)
-    for name,method,mnemonic in actions:
-        act = Qt.QAction(newmenu)
-        act.setObjectName(name)
-        act.setText(name)
-        newmenu.addAction(act)
-        Qt.QObject.connect(act,Qt.SIGNAL("triggered()"),method)            
 
-    #self.MenuBar.addAction(newmenu.menuAction())
-    MenuBar.insertMenu(newaction,newmenu)
-    return
                 
 ###############################################################################
 # Methods for managing palettes
@@ -514,6 +512,39 @@ class OnChangeOrTimeEventFilter(EventFilter):
 # QT Helping Classes
 
 from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE, TAURUS_MODEL_LIST_MIME_TYPE
+      
+def add_menu(menuname,actions):
+    '''
+    The arguments must be a list of tuples with action names and action methods.
+    
+    e.g.:
+    EXTRA_MENUS = [
+    ('Tools',[
+        ('LTB Gui',lambda:os.system('vacca_LTB &'),None),
+        ('Jive',lambda:os.system('jive &'),None),
+        ('Astor',lambda:os.system('astor &'),None),
+        ('EPS Gui',lambda:os.system('alba_EPS &'),None),
+        ('Valves',lambda:valves.ValvesChooser().show(),None),
+        ('TaurusTrend',lambda:os.system('taurustrend -a &'),None),
+        ]),
+    '''
+    print 'Adding new menu %s'%menuname
+    self = get_main_window()
+    MenuBar = self.menuBar()
+    newmenu = Qt.QMenu(MenuBar)
+    newmenu.setTitle(menuname)
+    newmenu.setObjectName(menuname)
+    newaction = Qt.QAction(MenuBar)
+    for name,method,mnemonic in actions:
+        act = Qt.QAction(newmenu)
+        act.setObjectName(name)
+        act.setText(name)
+        newmenu.addAction(act)
+        Qt.QObject.connect(act,Qt.SIGNAL("triggered()"),method)            
+
+    #self.MenuBar.addAction(newmenu.menuAction())
+    MenuBar.insertMenu(newaction,newmenu)
+    return
 
 class WidgetAcceptDrops(object):
     """

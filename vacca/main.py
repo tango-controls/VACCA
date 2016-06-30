@@ -16,20 +16,29 @@ import sys,os,re,time,imp,traceback
 args = sys.argv[1:]
 
 __doc__ = """
+
+The file vacca/main.py is the vaccagui launcher 
+
+It creates the taurusgui environment and sets all environment variables.
+
 vaccagui usage
 --------------
 
-Launching vacca:
+Launching vacca, loading configuration from a target.py:
 
-  > vaccagui [config.py]  #Will execute the config.py file contents
+  > vaccagui [target.py or $CONFIG] [$OPTION=...]
+  
+  $CONFIG will load values from VACCA.$CONFIG property in the database
+  
+  $OPTION=... can be used to override values declared properties or target.py
   
 Environment variables (optional, will be initialized in vacca/main.py):
 
-  VACCA_CONFIG : if set, equivalent to passing config.py as argument
-  VACCA_DIR : directory to resources needed by config.py (config.py folder by default)
+  VACCA_CONFIG : if set, equivalent to passing target.py as argument
+  VACCA_DIR : directory to resources needed by target.py (target.py folder by default)
   VACCA_PATH : path to vacca module (initialized by imp.find_module())
   
-  If not set, default values will be VACCA free properties in Tango DB.
+  If not set, default values are those set as VACCA properties in Tango DB.
 
 Reset of QSettings files:
 
@@ -65,6 +74,8 @@ elif '--reset' in args:
   
 ###############################################################################
 
+print '-'*80
+
 import taurus
 from taurus.core.util import argparse
 from taurus.qt.qtgui.application import TaurusApplication
@@ -73,28 +84,10 @@ from taurus.qt.qtgui.taurusgui import TaurusGui
 import vacca.utils as vu
 import vacca 
 
-vacca_path = imp.find_module('vacca')[1]
-os.environ['VACCA_PATH'] = vacca_path
-#Adding default vaccagui at the end of pythonpath
-sys.path.append(vacca_path+'/ini') 
-
-for k,v in os.environ.items():
-  if 'VACCA' in k:
-    print((k,v))
-
 options = [a for a in args if a.startswith('-')]
-files = [a for a in args if a not in options] or [os.getenv('VACCA_CONFIG')]
-configs = vu.get_config_properties()
-
-if not configs:
-    print('Creating default VACCA properties')
-    configs = ['DEFAULT']
-    print(configs)
-    vu.get_database().put_property('VACCA',{
-        'VaccaConfigs':configs})
-    vu.get_database().put_property('VACCA',{
-        'DEFAULT':['VACCA_CONFIG='+vacca_path+'/default.py']})
-    configs = vu.get_config_properties()
+values = [a for a in args if '=' in a]
+files = [a for a in args if a not in options+values] or [os.getenv('VACCA_CONFIG')]
+configs = vu.get_config_properties() or vu.create_config_properties()
 
 if not files or not files[0]: files = [configs.keys()[0]]
 
@@ -103,13 +96,15 @@ dirname = os.getenv('VACCA_DIR') or ''
 if files[0] in configs:
     print('Loading %s'%files[0])
     data = vu.get_config_properties(files[0])
-    print(data)
     config = data.get('VACCA_CONFIG',files[0])
     dirname = data.get('VACCA_DIR',dirname)
 else: 
     config = files[0]
     
-if config and not os.path.isfile(config):
+if os.path.isfile(config):
+  config = os.path.abspath(config)
+    
+elif config:
     try:
       import imp
       print('Loading %s as python module'%config)
@@ -124,9 +119,12 @@ dirname = dirname or os.path.dirname(config) or \
 vu.VACCA_DIR = os.environ['VACCA_DIR'] = dirname
 vu.VACCA_CONFIG = os.environ['VACCA_CONFIG'] = config
 
+print('Vacca environment variables:')
 for k,v in os.environ.items():
   if 'VACCA' in k:
-    print((k,v))
+    print(('\n',k,v))
+print '-'*80
+
   
 ### MAIN CODE FOR PANELS GENERATION IS IN vacca.config SUBMODULE
 

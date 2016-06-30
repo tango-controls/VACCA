@@ -129,46 +129,44 @@ GRID = {
     'row_labels':'VcGauges(mbar):(VGCT|PEN), IonPumps(mbar):(IPCT|VARIP)',
     }
 
-#Extra widgets to appear in the NewPanel dialog
+###############################################################################
+# Extra widgets to appear in the NewPanel dialog
+
 EXTRA_WIDGETS = [
         ('panic.gui.AlarmGUI',wdir('image/icons/panic.gif')),
         ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',wdir('image/widgets/Archiving.png')),
-    ] #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
+        #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
+        ]
+
+###############################################################################
+# Extra panels to be loaded at startup
+# Extra apps to be added to the right-side Toolbar (loaded only on demand)
 
 EXTRA_PANELS = {}
-from taurus.qt.qtgui.taurusgui.utils import PanelDescription
-#EXTRA_PANELS['PANIC'] = PanelDescription(
-    #'PANIC','panic.gui.AlarmGUI',model='',#---
-    #sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+EXTRA_APPS = fandango.dicts.SortedDict()
+from taurus.qt.qtgui.taurusgui.utils import PanelDescription, AppletDescription
 
-TOOLBARS = [] #[(name,modulename.classname)]
+LIGHTWEIGHT = True
+if not LIGHTWEIGHT:
+  
+  import vacca.properties
+  EXTRA_PANELS['Properties'] = vacca.properties.VaccaPropTable.getPanelDescription('Properties',DEVICE)
 
-MENUS = []
-"""
-MENUS = [('Tools',[('Jive',lambda:os.system('jive &'),None),])]
-"""
+  EXTRA_PANELS['PANIC'] = PanelDescription(
+      'PANIC','panic.gui.AlarmGUI',model='',#---
+      sharedDataWrite={'HighlightInstruments':'devicesSelected'})
 
-#===============================================================================
-# Define which External Applications are to be inserted.
-# To define an external application, instantiate an ExternalApp object
-# See TaurusMainWindow.addExternalAppLauncher for valid values of ExternalApp
-#===============================================================================
+  #EXTRA_PANELS.append(('Form','TaurusForm',''))
 
-from taurus.qt.qtgui.taurusgui.utils import PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
-
-#xvacca = ExternalApp(cmdargs=['konqueror',URL_HELP], text="Alba VACuum Controls Application", icon=WDIR+'/image/icons/cow-tux.png')
-#logbook = ExternalApp(cmdargs=['konqueror %s'%URL_LOGBOOK], text="Logbook", icon=WDIR+"/image/icons/elog.png")
-
-#xtrend = ExternalApp(cmdargs=['taurustrend','-a'], text="Trend")
-#xjive = ExternalApp(cmdargs=['jive'], text="Jive")#, icon=WDIR+'/image/icons/cow-tux.png')
-#xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'/image/icons/cow-tux.png')
-
-EXTRA_TOOLS = [
-  ('Jive',['jive'],vpath('image/icons/TangoLogo.png')),
-  ('Trends',['taurustrend','-a'],vpath('image/widgets/PressureTrend.jpg')),
-  ]
-
-
+  try:
+      import PyTangoArchiving.widget.browser
+      c = PyTangoArchiving.widget.browser.ArchivingBrowser
+  except:
+      import PyTangoArchiving.widget.ArchivingBrowser
+      c = PyTangoArchiving.widget.ArchivingBrowser.ModelSearchWidget
+  EXTRA_PANELS['Finder'] = PanelDescription('Finder',w)
+  EXTRA_APPS['Finder'] = {'name': 'Finder','class': c,'icon': wdir('image/icons/search.png')}
+  
 #===============================================================================
 # Define custom applets to be shown in the applets bar (the wide bar that
 # contains the logos). To define an applet, instantiate an AppletDescription
@@ -181,7 +179,6 @@ EXTRA_TOOLS = [
 #For ExternalApp/VaccaActions use:
 # {'$VarName':{'name':'$AppName','classname':'VaccaAction','model':['$Test','$/path/to/icon.png','$launcher']}}
 
-EXTRA_APPS = fandango.dicts.SortedDict()
     #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
 
 EXTRA_APPS['PANIC'] = {'name': 'PANIC',
@@ -199,15 +196,39 @@ from vacca.panel import VaccaAction
     
 #xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',
 # model=["Archiving",wdir('vacca/image/widgets/ProfilePlot.png'),'mambo'],)
-
 #xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaNewPanel',
 # model=['Alarms',wdir('vacca/image/icons/panic.gif'),'panic.gui.AlarmGUI'])
-
 #xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction', model=['Snap',vpath('image/widgets/VerticalGrid.jpg'),'ctsnaps'])
 #xfinder = AppletDescription('xFinder',classname='vacca.panel.VaccaAction', model=['Attribute Finder',':actions/system-search.svg','ctfinder'])
 
 #button =  TaurusLauncherButton(widget =
 #button.setModel('a/b/c') #a device name, which will be given to the
 # TaurusAttrForm when clicking
+
+#===============================================================================
+# Define which External Applications are to be inserted.
+# To define an external application, instantiate an ExternalApp object
+# See TaurusMainWindow.addExternalAppLauncher for valid values of ExternalApp
+#===============================================================================
+
+TOOLBARS = [] #[(name,modulename.classname)]
+
+MENUS = []
+"""
+MENUS = [('Tools',[('Jive',lambda:os.system('jive &'),None),])]
+"""
+
+from taurus.qt.qtgui.taurusgui.utils import ExternalApp, ToolBarDescription
+
+#xvacca = ExternalApp(cmdargs=['konqueror',URL_HELP], text="Alba VACuum Controls Application", icon=WDIR+'/image/icons/cow-tux.png')
+#logbook = ExternalApp(cmdargs=['konqueror %s'%URL_LOGBOOK], text="Logbook", icon=WDIR+"/image/icons/elog.png")
+#xtrend = ExternalApp(cmdargs=['taurustrend','-a'], text="Trend")
+#xjive = ExternalApp(cmdargs=['jive'], text="Jive")#, icon=WDIR+'/image/icons/cow-tux.png')
+#xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'/image/icons/cow-tux.png')
+
+EXTRA_TOOLS = [
+  ('Jive',['jive'],vpath('image/icons/TangoLogo.png')),
+  ('Trends',['taurustrend','-a'],vpath('image/widgets/PressureTrend.jpg')),
+  ]
 
 __doc__ = vacca.get_autodoc(__name__,vars())
