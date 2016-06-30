@@ -1,6 +1,8 @@
 
 """
-this module will be used to document lots of things
+this module will be used to document lots of things,
+it parses existing modules and generate the .rst files 
+
 """
 
 import vacca,inspect,fandango,os
