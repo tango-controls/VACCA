@@ -27,6 +27,7 @@ import fandango,vacca,traceback
 from taurus.qt.qtgui.table.taurusdevicepropertytable import TaurusPropTable
 
 from fandango.qt import DoubleClickable,Dropable
+from taurus.external.qt import Qt
 from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE
 from taurus.core import TaurusDevice,TaurusAttribute,TaurusDatabase
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
@@ -95,11 +96,49 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
         except:
           traceback.print_exc()
         
-    def setTable(self,model):
+    def setTable(self,model,filters=[]):
+        ''' 
+        This method  overrides TaurusPropTable.setTable(), which connects with TaurusClassTable
+        This method fill the table with the names of properties and values for the device selected
+        '''      
         try:
             self.debug('VaccaPropTable.setTable(%s(%s))'%(type(model),model))
             model = model and fandango.tango.parse_tango_model(str(model))['device']
-            TaurusPropTable.setTable(self,model)
+            
+            #TaurusPropTable.setTable(self,model)
+            Qt.QObject.disconnect(self,Qt.SIGNAL("cellChanged(int,int)"),self.valueChanged)
+            self.db = fandango.get_database()
+            dev_name = str(model)
+            self.list_prop = list(self.db.get_device_property_list(dev_name,'*'))
+            neg = ['polled_attr']+[f[1:] for f in filters if f.startswith('!')]
+            pos = [f for f in filters if not f.startswith('!')]
+            self.list_prop = [p for p in self.list_prop if
+              (not pos or fandango.matchAny(pos,p)) 
+              and not fandango.matchAny(neg,p)]
+            
+            self.setRowCount(len(self.list_prop))
+            for i in range(0,len(self.list_prop)):
+                elem = self.list_prop[i]
+                self.setText(elem,i,0)
+                self.dictionary=self.db.get_device_property(dev_name,self.list_prop)
+                self.debug('Getting %s properties: %s -> %s'%(dev_name,self.list_prop,self.dictionary))
+                value=self.dictionary[elem]
+                self.debug('VaccaPropTable: property %s is type %s'%(elem,type(value)))
+                USE_TABLES=False
+                if USE_TABLES: self.setPropertyValue(value,i,1)
+                else:
+                    if not isinstance(value,str): #not something like an string
+                        #if isinstance(value,list):#type(value) is list: 
+                        heigh1 = len(value)
+                        value = '\n'.join(str(v) for v in value) # adding new lines in between elements in the list
+                    self.setText(str(value),i,1)
+            
+            self.updateStyle()
+            self.dev_name = dev_name
+            self.setWindowTitle('%s Properties'%dev_name)
+            self.resizeColumnsToContents()
+            self.resizeRowsToContents()
+            
         except:
             traceback.print_exc()
 
