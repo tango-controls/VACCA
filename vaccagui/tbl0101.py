@@ -16,11 +16,14 @@ URL_HELP = 'http://controls01/vacca/index.html'
 
 print '>'*20+' Loading config for beamline %s'%BL
 
+VC_EXP = '(bl|f)*/*(pnv|eps|vfcs|ccg|spbx|mvc|pir|elotech|fe_auto|bestec|graphix|/hc-|/ip-|rga|ipct|vgct|bakeout|tsp|cry|fcv|fs-|otr|vc/all|alarm)*'
+
 #DEFINING THE DEVICES IN THE TREE
 EXTRA_DEVICES = [
     #'bl00/ct/eps-plc-01','bl00/ct/alarms',
     d for d in (
-        fandango.get_matching_devices('(bl|f)*/*(pnv|eps|vfcs|ccg|tpg|mvc|pir|elotech|bestec|/hc-|/ip-|rga|ipct|vgct|bakeout|tsp|cry|fcv|fs-|otr|vc/all|alarm)*',fullname=False)
+        #fandango.get_matching_devices('*(pnv|eps|vfcs|ccg|spbx|mvc|pir|elotech|fe_auto|bestec|graphix|/hc-|/ip-|rga|ipct|vgct|bakeout|tsp|cry|fcv|fs-|otr|vc/all|alarm)*')+
+        fandango.get_matching_devices(VC_EXP,fullname=False)
         #+fandango.Astor('PyAlarm/*').get_all_devices()
         )
     if not any(s in d.lower() for s in ('dserver','mbus','serial','ccd','iba'))
@@ -38,7 +41,7 @@ JDRAW_FILE = wdir('BL01/BL01.jdw')
 #GAUGES = fandango.get_matching_attributes('*/*/*ccg*/pressure')
 
 GRID = {
-        'column_labels': ','.join([]),
+        'column_labels': ','.join(['-01/','-02/']),
         'delayed': False,
         'frames': False,
         'model': '(BL*|F*)/(VC|EH)/(IPCT|VGCT|TPG|CCGX|SPBX)*/(P[12345]|Pressure|State)$',

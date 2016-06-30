@@ -53,7 +53,7 @@ from vacca.utils import VACCA_DIR,wdir,VACCA_PATH,vpath
 
 EXTRA_DEVICES = [
     d for d in (
-        fandango.get_matching_devices('*(pnv|eps|vfcs|ccg|mvc|pir|elotech|bestec|/hc-|/ip-|rga|ipct|vgct|bakeout|tsp|cry|fcv|fs-|otr|vc/all|alarm)*')+
+        fandango.get_matching_devices('*(pnv|eps|vfcs|ccg|spbx|mvc|pir|elotech|fe_auto|bestec|graphix|/hc-|/ip-|rga|ipct|vgct|bakeout|tsp|cry|fcv|fs-|otr|vc/all|alarm)*')+
         fandango.Astor('PyAlarm/*').get_all_devices())
     if not any(s in d.lower() for s in ('dserver','mbus','serial','ccd','iba'))
     ]

@@ -127,9 +127,16 @@ class VaccaTree(TaurusSearchTree):
     expandable menu)
 
     """
-    #This slots are overloaded here because they are not yet in the last taurus package. Once it will be included in TaurusSearchTree than it can be removed.
-    #The slots are needed because the method_forwarder method is not seen from the SharedDataManager side.
     
+    
+    # This slots are overloaded here because they are not yet in the last taurus package. Once it will be included in TaurusSearchTree than it can be removed.
+    # The slots are needed because the method_forwarder method is not seen from the SharedDataManager side.
+    
+    #def __getattr__(self,attr):
+        #if attr!='tree': 
+          #return getattr(self.tree,attr)
+
+    ## DO  NOT REMOVE YET!!
     def setTangoHost(self,*a,**k): self.tree.setTangoHost(*a,**k)
     def addModels(self,*a,**k):  self.tree.addModels(*a,**k)
     def setModel(self,*a,**k):  self.tree.setModel(*a,**k)
