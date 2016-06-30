@@ -29,10 +29,15 @@ import PyTango
 import taurus
 from taurus.qt import Qt
 from taurus.qt.qtgui.plot import TaurusTrend,TaurusPlot
-from PyTangoArchiving.widget.trend import ArchivingTrend
 from taurus.qt.qtgui.panel import TaurusDevicePanel
 from PyQt4 import Qwt5
 from fandango.qt import Draggable
+
+try:
+  from PyTangoArchiving.widget.trend import ArchivingTrend
+  TREND_CLASS = TaurusTrend  #TaurusArchivingTrend
+except:
+  TREND_CLASS = TaurusTrend
 
 __doc__ = """
 Plots in VACCA have several setups:
@@ -42,8 +47,6 @@ Plots in VACCA have several setups:
  * Archiving is still disabled, but also Scale change warnings when re-enabled.
  
 """
-
-TREND_CLASS = TaurusTrend #TaurusArchivingTrend
 
 class PressureTrend(TREND_CLASS):
         
