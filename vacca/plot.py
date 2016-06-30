@@ -29,6 +29,7 @@ import PyTango
 import taurus
 from taurus.qt import Qt
 from taurus.qt.qtgui.plot import TaurusTrend,TaurusPlot
+from PyTangoArchiving.widget.trend import ArchivingTrend
 from taurus.qt.qtgui.panel import TaurusDevicePanel
 from PyQt4 import Qwt5
 from fandango.qt import Draggable
@@ -42,22 +43,23 @@ Plots in VACCA have several setups:
  
 """
 
+TREND_CLASS = TaurusTrend #TaurusArchivingTrend
 
-class PressureTrend(TaurusTrend):
+class PressureTrend(TREND_CLASS):
         
     def showEvent(self, event):
         if not getattr(self, '_tuned', False):
             setup_pressure_trend(self)
             setattr(self, '_tuned', True)
-        TaurusTrend.showEvent(self, event)
+        TREND_CLASS.showEvent(self, event)
         
-class VaccaTrend(TaurusTrend):
+class VaccaTrend(TREND_CLASS):
     
     def showEvent(self, event):
         if not getattr(self, '_tuned', False):
             setup_pressure_trend(self,log=False,length=4*3600)
             setattr(self, '_tuned', True)
-        TaurusTrend.showEvent(self, event)
+        TREND_CLASS.showEvent(self, event)
 
 def setup_pressure_trend(tt,log=True,length=12*3600):
     print '*'*80
@@ -111,6 +113,7 @@ class VaccaProfilePlot(Draggable(TaurusPlot)):
                 # model).rsplit('/',1)[0]
             else:
                 self.info('setting a composer model')
+                assert fandango.check_device(model)
                 dev = taurus.Device(model)
                 if all(a in map(str.lower, dev.get_attribute_list()) for a in
                     ('ccgaxxis', 'ccgpressures', 'ipaxxis', 'ippressures',
