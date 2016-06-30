@@ -84,9 +84,12 @@ def get_env_variable(var,default=''):
     """ It will try to get value from OS, then Tango.VACCA, then default """
     v = os.environ.get(var,None)
     if v: return v
-    v = fandango.get_database().get_property('VACCA',var)[var]
-    v =  v[0] if v and len(v) == 1 else v
-    if v: return v
+    try:
+      v = fandango.get_database().get_property('VACCA',var)[var]
+      v =  v[0] if v and len(v) == 1 else v
+      if v: return v
+    except:
+      traceback.print_exc()
     return default
 
 def get_class_property(dev_class,prop,extract=False):

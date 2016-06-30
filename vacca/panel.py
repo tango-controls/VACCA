@@ -387,6 +387,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 #if filters:
                     #filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
                 #else:
+                print str(dev_class),str(filters)
                 filters = get_regexp_dict(self._attribute_filter,model,['.*'])
                 if hasattr(filters,'keys'): filters = filters.items() #Dictionary!
                 if filters and isinstance(filters[0],(list,tuple)): #Mapping
