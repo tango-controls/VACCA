@@ -24,159 +24,171 @@ JDFile v11 {
     name:"Rectangle"
   }
   JDRectangle {
-    summit:673,56,694,77
-    origin:695,69
+    summit:662,61,697,82
+    origin:698,74
     fillStyle:1
     name:"BL01/VC/VGCT-01"
   }
   JDLabel {
-    summit:703,59,835,80
+    summit:703,59,889,87
     origin:769,70
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"BL01/VC/VGCT-01"
   }
   JDRectangle {
-    summit:673,86,694,107
-    origin:695,99
+    summit:662,91,697,112
+    origin:698,104
     fillStyle:1
     name:"BL01/VC/VGCT-02"
   }
   JDLabel {
-    summit:703,89,835,110
+    summit:703,89,889,117
     origin:769,100
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"BL01/VC/VGCT-02"
   }
   JDRectangle {
-    summit:673,116,694,137
-    origin:695,129
+    summit:662,121,697,141
+    origin:698,134
     fillStyle:1
     name:"BL01/VC/IPCT-01"
   }
   JDLabel {
-    summit:703,119,827,140
+    summit:703,119,878,147
     origin:769,130
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"BL01/VC/IPCT-01"
   }
   JDRectangle {
-    summit:673,147,694,168
-    origin:695,160
+    summit:662,152,697,171
+    origin:698,165
     fillStyle:1
     name:"BL01/VC/SPBX-01"
   }
   JDLabel {
-    summit:703,150,833,171
+    summit:703,150,886,178
     origin:769,161
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"BL01/VC/SPBX-01"
   }
   JDRectangle {
-    summit:672,179,693,200
-    origin:694,192
+    summit:662,184,696,205
+    origin:697,197
     fillStyle:1
     name:"BL01/VC/SPBX-02"
   }
   JDLabel {
-    summit:702,182,832,203
+    summit:702,182,885,210
     origin:768,193
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"BL01/VC/SPBX-02"
   }
   JDRectangle {
-    summit:1274,266,1295,287
-    origin:1296,279
+    summit:1272.9,270,1300.41,291
+    origin:1301.72,283
     fillStyle:1
     name:"FI03/VC/VGCT-01"
   }
   JDLabel {
-    summit:1304,269,1431,290
+    summit:1304,269,1483,297
     origin:1370,280
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"FI03/VC/VGCT-01"
   }
   JDRectangle {
-    summit:1274,296,1295,317
-    origin:1296,309
+    summit:1272.9,300,1300.41,321
+    origin:1301.72,313
     fillStyle:1
     name:"FI03/VC/VGCT-02"
   }
   JDLabel {
-    summit:1304,299,1431,320
+    summit:1304,299,1483,327
     origin:1370,310
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"FI03/VC/VGCT-02"
   }
   JDRectangle {
-    summit:1274,326,1295,347
-    origin:1296,339
+    summit:1272.9,330,1300.41,351
+    origin:1301.72,343
     fillStyle:1
     name:"FI03/EPS/PLC-01"
   }
   JDLabel {
-    summit:1304,329,1425,350
+    summit:1304,329,1474,357
     origin:1370,340
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"FI03/EPS/PLC-01"
   }
   JDRectangle {
-    summit:1274,357,1295,378
-    origin:1296,370
+    summit:1272.9,361,1300.41,382
+    origin:1301.72,374
     fillStyle:1
     name:"FI03/VC/IPCT-01"
   }
   JDLabel {
-    summit:1304,360,1423,381
+    summit:1304,360,1471,388
     origin:1370,371
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"FI03/VC/IPCT-01"
   }
   JDRectangle {
-    summit:1273,389,1294,410
-    origin:1295,402
+    summit:1271.59,393,1299.1,414
+    origin:1300.41,406
     fillStyle:1
     name:"FI03/VC/SPBX-02"
   }
   JDLabel {
-    summit:1303,392,1428,413
+    summit:1303,392,1478,420
     origin:1369,403
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"FI03/VC/SPBX-01"
   }
   JDRectangle {
-    summit:111,321,132,342
-    origin:133,334
+    summit:99,324,132,347
+    origin:133,339
     fillStyle:1
     name:"BL01/CT/EPS-PLC-01"
   }
   JDLabel {
-    summit:141,324,291,345
+    summit:141,324,352,352
     origin:207,335
     lineWidth:0
     name:"Label"
+    font:"Dialog",0,20
     text:"BL01/CT/EPS-PLC-01"
   }
   JDRectangle {
-    summit:111,353,132,374
-    origin:133,366
+    summit:99,355,133,380
+    origin:134,372
     fillStyle:1
-    name:"BL01/CT/ALARMS-01"
+    name:"BL01/CT/ALARMS"
   }
   JDLabel {
-    summit:141,356,291,377
+    summit:141,356,320,384
     origin:207,367
     lineWidth:0
     name:"Label"
-    text:"BL01/CT/ALARMS-01"
+    font:"Dialog",0,20
+    text:"BL01/CT/ALARMS"
   }
 }
