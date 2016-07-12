@@ -38,6 +38,15 @@ from taurus.qt.qtgui.button import TaurusLauncherButton
 from vacca.utils import *
 from fandango import matchCl,searchCl,replaceCl,CaselessDict,CaselessList,\
     get_matching_devices,get_matching_attributes,get_all_devices,check_device
+  
+try: 
+  import panic
+except: 
+  panic = None
+try:
+  import PyTangoArchiving
+except:
+  PyTangoArchiving = None
 
 print '>'*20+' Loading default.py'
 
@@ -132,11 +141,11 @@ GRID = {
 ###############################################################################
 # Extra widgets to appear in the NewPanel dialog
 
-EXTRA_WIDGETS = [
-        ('panic.gui.AlarmGUI',wdir('image/icons/panic.gif')),
-        ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',wdir('image/widgets/Archiving.png')),
-        #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
-        ]
+EXTRA_WIDGETS = []
+if panic: 
+  EXTRA_WIDGETS.append(('panic.gui.AlarmGUI',wdir('image/icons/panic.gif')))
+if PyTangoArchiving: 
+  EXTRA_WIDGETS.append(('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',wdir('image/widgets/Archiving.png')))
 
 ###############################################################################
 # Extra panels to be loaded at startup
@@ -152,20 +161,21 @@ if not LIGHTWEIGHT:
   import vacca.properties
   EXTRA_PANELS['Properties'] = vacca.properties.VaccaPropTable.getPanelDescription('Properties',DEVICE)
 
-  EXTRA_PANELS['PANIC'] = PanelDescription(
+  if panic:
+    EXTRA_PANELS['PANIC'] = PanelDescription(
       'PANIC','panic.gui.AlarmGUI',model='',#---
       sharedDataWrite={'HighlightInstruments':'devicesSelected'})
 
   #EXTRA_PANELS.append(('Form','TaurusForm',''))
-
-  try:
+  if PyTangoArchiving:
+    try:
       import PyTangoArchiving.widget.browser
       c = PyTangoArchiving.widget.browser.ArchivingBrowser
-  except:
+    except:
       import PyTangoArchiving.widget.ArchivingBrowser
       c = PyTangoArchiving.widget.ArchivingBrowser.ModelSearchWidget
-  EXTRA_PANELS['Finder'] = PanelDescription('Finder',w)
-  EXTRA_APPS['Finder'] = {'name': 'Finder','class': c,'icon': wdir('image/icons/search.png')}
+    EXTRA_PANELS['Finder'] = PanelDescription('Finder',w)
+    EXTRA_APPS['Finder'] = {'name': 'Finder','class': c,'icon': wdir('image/icons/search.png')}
   
 #===============================================================================
 # Define custom applets to be shown in the applets bar (the wide bar that
@@ -181,13 +191,17 @@ if not LIGHTWEIGHT:
 
     #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
 
-EXTRA_APPS['PANIC'] = {'name': 'PANIC',
-                'class': vacca.VaccaPanic}
-#EXTRA_APPS['Mambo'] = {'name': 'Mambo',
-                #'class': lambda:os.system('mambo&'),
-                #'icon': wdir('image/icons/Mambo-icon.png')}
 EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
 
+if panic:
+  EXTRA_APPS['PANIC'] = {'name': 'PANIC',
+        'class': vacca.VaccaPanic}
+
+## Just another examples:
+
+#EXTRA_APPS['Mambo'] = {'name': 'Mambo',
+                #'class': lambda:os.system('mambo&'),
+                #'icon': wdir('image/icons/Mambo-icon.png')}              
 #EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
 #EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }
 #EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }    

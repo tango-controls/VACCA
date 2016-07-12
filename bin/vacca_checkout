@@ -188,11 +188,11 @@ def main(args):
   
   if not opts.raw:
 
-    q = raw_input('Before continuing, Do you want to update setup.py script from SVN? (y/n)?').lower()
+    q = raw_input('Before continuing, Do you want to update vacca_checkout script from SVN? (y/n)?').lower()
     if q.startswith('y'):
       print('Updating setup.py script from SVN repository (use --raw to skip this check)')
-      os.system('svn export --force %s/vacca/setup.py'%VACCA_URL)
-      setup = imp.load_source('setup','setup.py')
+      os.system('svn export --force %s/bin/vacca_checkout'%VACCA_URL)
+      setup = imp.load_source('setup','vacca_checkout')
     else:
       setup = imp.load_source('setup',__file__)
       
@@ -220,8 +220,11 @@ def main(args):
       
     os.chdir(current)
 
-import doc
-__doc__ = doc.get_autodoc(__name__,vars())
+try:
+  import vacca.doc as doc
+  __doc__ = doc.get_autodoc(__name__,vars())
+except:
+  pass
    
 if __name__ == '__main__':
   main(sys.argv[1:])
