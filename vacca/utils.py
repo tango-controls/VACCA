@@ -105,16 +105,19 @@ def get_class_property(dev_class,prop,extract=False):
     return []
    
 def get_vacca_property(prop,extract=False):
+    #print('get_vacca_property(%s)'%prop)
     db = fandango.get_database()
     props = db.get_property('VACCA',prop)
     if prop in props:
         v = props[prop]
         if fandango.isSequence(v): v = list(v)
-        if v == ['']: return []
-        if extract and fandango.isSequence(v) and len(v)==1:
+        else: v = [v]
+        if not any(v): return []
+        for i,vv in enumerate(v):
+          v[i] = vv = replace_env(vv,'VACCA_PATH')
+          v[i] = vv = replace_env(vv,'VACCA_DIR')
+        if extract and len(v)==1:
             v = v[0]
-            v = replace_env(v,'VACCA_PATH')
-            v = replace_env(v,'VACCA_DIR')
         return v
     return [] if not extract else ''
 
@@ -222,7 +225,10 @@ def create_config_properties():
 def load_config_properties(config,export=True):
     """
     It will load env variables from VACCA.$config property
+    
+    NOT USED!?
     """
+    print('In load_config_properties(%s)'%config)
     props = get_vacca_property(config)
     props = [l.split('#')[0].strip() for l in props]
     props = dict(l.split('=',1) for l in props if l)
@@ -244,7 +250,7 @@ def load_config_properties(config,export=True):
             
         if not VACCA_DIR and '/' in VACCA_CONFIG:
             VACCA_DIR=os.path.dirname(VACCA_CONFIG)
-            
+    print(props)
     return props
   
 def get_config_properties(config=''):
@@ -255,13 +261,15 @@ def get_config_properties(config=''):
         for k in get_vacca_property('VaccaConfigs',False):
           VACCA_PROFILES[k] = {}
     if not config:
-        return VACCA_PROFILES
+        r = VACCA_PROFILES
     else:
         if not VACCA_PROFILES.get(config):
           VACCA_PROFILES[config] = [l.split('#')[0].strip() \
             for l in get_vacca_property(config,False)]
         config = VACCA_PROFILES[config]
-        return dict(l.split('=',1) for l in config if l)
+        r = dict(l.split('=',1) for l in config if l)
+    #print(r)
+    return r
 
 def get_config_file(config=None):
     global VACCA_CONFIG,VACCA_DIR
@@ -273,7 +281,9 @@ def get_config_file(config=None):
           CONFIG_FILE = get_config_properties(VACCA_CONFIG).get('CONFIG_FILE',VACCA_CONFIG)
         else:
           CONFIG_FILE = VACCA_CONFIG
-        CONFIG_FILE = CONFIG_FILE.replace('$VACCA_DIR',VACCA_DIR or '').replace('$VACCA_PATH',VACCA_PATH or '')
+        #CONFIG_FILE = CONFIG_FILE.replace('$VACCA_DIR',VACCA_DIR or '').replace('$VACCA_PATH',VACCA_PATH or '')
+        CONFIG_FILE = replace_env(CONFIG_FILE,'VACCA_DIR',VACCA_DIR or '')
+        CONFIG_FILE = replace_env(CONFIG_FILE,'VACCA_PATH',VACCA_PATH or '')
     else:
         CONFIG_FILE = config
     print('get_config_file(%s)'%CONFIG_FILE)
@@ -632,6 +642,12 @@ class DraggableLabel(Draggable,Qt.QLabel):
     def __init__(self,parent=None,text=''):
         Qt.QLabel.__init__(self,text)
         Draggable.__init__(self)
+        
+def YesNoDialog(title,message):
+    v = Qt.QMessageBox.warning(None,title,message, \
+    Qt.QMessageBox.Yes|Qt.QMessageBox.No);
+    return v == Qt.QMessageBox.Yes
+
 
 class MyTaurusComponent(TaurusBaseComponent,Qt.QObject):
     def __init__(self,name='test'):
