@@ -96,11 +96,8 @@ CUSTOM_TREE = {}
 
 #PyStateComposer to get Vacuum Profile curves
 COMPOSER = '' #'%s/vc/all'%DOMAIN
-
 #Default device to appear in the DevicePanel
-DEVICE = None # 'sys/tg_test/1' ; tg_test caused segfault in some cases!?
-#DEVICE = fandango.first(d for d in get_matching_devices('(sys/tg_test|tango)*')
-              #if check_device(d))
+DEVICE = '' # 'sys/tg_test/1' ; tg_test caused segfault in some cases!?
 USE_DEVICE_PANEL = True
 PANEL_COMMAND = 'taurusdevicepanel --config-file='+wdir()+'default.py'
 
