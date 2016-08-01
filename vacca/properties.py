@@ -23,7 +23,7 @@
 ##
 #############################################################################
 
-import fandango,vacca,traceback
+import fandango,vacca,traceback,taurus
 from taurus.qt.qtgui.table.taurusdevicepropertytable import TaurusPropTable
 
 from fandango.qt import DoubleClickable,Dropable
@@ -135,12 +135,35 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
             
             self.updateStyle()
             self.dev_name = dev_name
+            #self.dev_obj = taurus.Device(dev_name)
             self.setWindowTitle('%s Properties'%dev_name)
             self.resizeColumnsToContents()
             self.resizeRowsToContents()
             
         except:
             traceback.print_exc()
+            
+    def contextMenuEvent(self,event):
+        ''' This function is called when right clicking on qwt plot area. A pop up menu will be
+        shown with the available options. '''
+        self.info('TaurusPropTable.contextMenuEvent()')
+        menu = Qt.QMenu(self)
+        configDialogAction = menu.addAction("Add new property")
+        self.connect(configDialogAction, Qt.SIGNAL("triggered()"), self.addProperty)
+        configDialogAction = menu.addAction("Delete property")
+        self.connect(configDialogAction, Qt.SIGNAL("triggered()"), self.deleteProperty)
+        configDialogAction = menu.addAction("Edit property")
+        self.connect(configDialogAction, Qt.SIGNAL("triggered()"), self.editProperty)
+        menu.addSeparator()
+        cmd = 'updateDynamicAttributes' if 'DynamicAttributes' in self.list_prop else 'init'
+        configDialogAction = menu.addAction("Execute "+cmd+"()")
+        self.connect(configDialogAction, Qt.SIGNAL("triggered()"), 
+            lambda d=self.dev_name,c=cmd:
+              vacca.utils.YesNoDialog('Warning',
+              'Are you sure that %s supports %s() command?'%(self.dev_name,c))
+              and taurus.Device(d).command_inout(c))
+        menu.exec_(event.globalPos())
+        del menu    
 
     @staticmethod
     def getDefaultIcon():
