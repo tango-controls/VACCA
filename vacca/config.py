@@ -91,7 +91,8 @@ Creates new ToolBarDescription objects.
 h2. Config Variables
 ====================
 
-Described below
+Described below. All of them can be overriden in TangoDB(VACCA free properties) or
+using environment variables (adding the VACCA_ preffix).
 
 """
 
@@ -101,7 +102,7 @@ Described below
 
 import time,os,sys,traceback,imp,inspect
 from PyQt4.QtCore import SIGNAL
-import fandango,taurus
+import fandango as fn,taurus
 import vacca,vacca.utils
 from .doc import get_autodoc,get_vars_docs
 from fandango import partial,FakeLogger as FL
@@ -118,8 +119,9 @@ from vacca.utils import *
 print 'In vacca.config(%s,%s)'%(globals().get('CONFIG_DONE',None),VACCA_DIR)
 #print ('*'*80+'\n')*1
 
-props = get_config_properties(os.getenv('VACCA_CONFIG'))
-VACCA_DIR = WDIR = props.get('VACCA_DIR',VACCA_DIR)
+VACCA_CONFIG = os.getenv('VACCA_CONFIG')
+PROPS = get_config_properties(VACCA_CONFIG)
+VACCA_DIR = WDIR = PROPS.get('VACCA_DIR',VACCA_DIR)
 
 try:
 
@@ -175,19 +177,21 @@ try:
     if CONFIG:
         for op in OPTIONS:
             limit = 800
+            if 'VACCA_'+op in os.environ:
+                print('%s.%s overriden by OS'%(VACCA_CONFIG,op))
+                setattr(CONFIG,op,os.getenv('VACCA_'+op))
+            elif op in PROPS:
+                print('%s.%s overriden by TangoDB'%(VACCA_CONFIG,op))
+                setattr(CONFIG,op,PROPS[op])
+                
             if hasattr(CONFIG,op):
                 v = getattr(CONFIG,op)
-                print '\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v)[:limit])
+                print '\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v).replace('\n',',')[:limit])
                 setattr(default,op,v)
         
-        if hasattr(CONFIG,'COMPOSER') and not hasattr(CONFIG,'DEVICE'):
+        if not getattr(CONFIG,'DEVICE',None) and getattr(CONFIG,'COMPOSER',None):
             default.DEVICE = default.COMPOSER
             
-        #Trying to Load rith-toolbar apps from dictionary (NOTE: this doesn't work)
-        #if hasattr(CONFIG,'EXTRA_APPS'): 
-            #print 'Loading %s apps from %s'%(str(CONFIG.EXTRA_APPS.keys()),CONFIG.__name__)
-            #[setattr(default,X,AppletDescription(**app)) for X,app in CONFIG.EXTRA_APPS.items()]
-    
     #Adding all variables to Namespace where taurusgui can found them
     try:
         for k,v in vars(default).items():
@@ -200,7 +204,7 @@ try:
     # General info.
     #===============================================================================
     #: GUI_NAME will be used on application title and settings filenames
-    GUI_NAME = '%s-%s at %s'%(GUI_NAME,getattr(CONFIG,'__name__',TARGET),DB_HOST)
+    GUI_NAME = '%s-%s at %s'%(GUI_NAME,VACCA_CONFIG,DB_HOST)
     #: Name to be shown in right-side bar
     ORGANIZATION = ORGANIZATION
     #: Logo to be shown in right-side bar
@@ -240,23 +244,11 @@ try:
         classname = 'vacca.plot.VaccaTrend',
         model = '')
 
-    #: USE_DEVICE_PANEL:  True or False, To Show by default the DevicePanel
-    USE_DEVICE_PANEL = USE_DEVICE_PANEL
-    if USE_DEVICE_PANEL:
-        print '>'*20+'Loading Device panel (%s)...' % DEVICE
-        from vacca.panel import VaccaPanel
-        panel = VaccaPanel.getPanelDescription('Device',model=DEVICE)
-        
-    from vacca.panel import VaccaPanel
-    if AttributeFilters: VaccaPanel.setAttributeFilters(AttributeFilters)
-    if IconMap: VaccaPanel.setIconMap(IconMap)
-    if CommandFilters: VaccaPanel.setCommandFilters(CommandFilters)
-
     #: USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree
     USE_DEVICE_TREE = USE_DEVICE_TREE
 
     if USE_DEVICE_TREE or JDRAW_FILE or EXTRA_DEVICES:
-        print '>'*20+'Loading Tree panel ...'
+        print '>'*20+'Loading Tree panel(%s) ...'%(len(EXTRA_DEVICES))
         from tree import *
         try:
             # The lastWindowClosed() signal will close all opened widgets and dialogs on application exit
@@ -267,7 +259,7 @@ try:
             VaccaTree.setDefaultPanelClass(panelclass)
         except:
             print("Cannot instance Device Tree")
-        logger = fandango.Logger()
+        logger = fn.Logger()
         printf = logger.info
 
         def filterMatching(a,dct=AttributeFilters,p=printf):
@@ -275,24 +267,43 @@ try:
             if a.lower().endswith('/state'): return True
             elif a.lower().endswith('/status'): return False
             for k,l in dct.items():
-                if fandango.searchCl(k,a.rsplit('/',1)[0]):
+                if fn.searchCl(k,a.rsplit('/',1)[0]):
                     for t in l: #T is every declared Tab for panel (TabName,[attrlist]); or just attrname when not using tabs
                         p((k,t))
-                        f = t[-1] if all(map(fandango.isSequence,(t,t[-1]))) else [t]
-                        if any(fandango.matchCl(v,a.rsplit('/',1)[-1]) for v in f): 
+                        f = t[-1] if all(map(fn.isSequence,(t,t[-1]))) else [t]
+                        if any(fn.matchCl(v,a.rsplit('/',1)[-1]) for v in f): 
                             match =True
             return match
         VaccaTree.setDefaultAttrFilter(filterMatching)
         if IconMap: VaccaTree.setIconMap(IconMap)
+        
+        if fn.isString(EXTRA_DEVICES):
+          EXTRA_DEVICES = fn.join((s.split(',') if ',' in s else fn.get_matching_devices(s)) for s in EXTRA_DEVICES.split())
+        EXTRA_DEVICES = sorted(set(map(str.lower,filter(bool,[DEVICE]+list(EXTRA_DEVICES)))))
+        
         tree = PanelDescription('Tree',
-                            classname = 'vacca.VaccaTree',#'vacca.VaccaTree',#'TaurusDevTree',
-                            model = CUSTOM_TREE or ','.join(EXTRA_DEVICES),
-                            sharedDataRead={'LoadItems':'addModels',
-                                ##DISABLED BECAUSE TRIGGERED RECURSIVE SELECTION, TO BE AVOIDED IN TREE
-                                #'SelectedInstrument':'findInTree',
-                                }, #It will load devices from synoptic
-                            sharedDataWrite={'SelectedInstrument':'deviceSelected(QString)'}
-                            )
+            classname = 'vacca.VaccaTree',#'vacca.VaccaTree',#'TaurusDevTree',
+            model = CUSTOM_TREE or ','.join(EXTRA_DEVICES),
+            sharedDataRead={'LoadItems':'addModels',
+                ##DISABLED BECAUSE TRIGGERED RECURSIVE SELECTION, TO BE AVOIDED IN TREE
+                #'SelectedInstrument':'findInTree',
+                }, #It will load devices from synoptic
+            sharedDataWrite={'SelectedInstrument':'deviceSelected(QString)'}
+            )
+                            
+        if EXTRA_DEVICES and not DEVICE: DEVICE = EXTRA_DEVICES[0]
+
+    #: USE_DEVICE_PANEL:  True or False, To Show by default the DevicePanel
+    USE_DEVICE_PANEL = USE_DEVICE_PANEL
+    if USE_DEVICE_PANEL:
+        print '>'*20+'Loading Device panel (%s)...' % DEVICE
+        from vacca.panel import VaccaPanel
+        panel = VaccaPanel.getPanelDescription('Device',model=DEVICE or None)
+        
+    from vacca.panel import VaccaPanel
+    if AttributeFilters: VaccaPanel.setAttributeFilters(AttributeFilters)
+    if IconMap: VaccaPanel.setIconMap(IconMap)
+    if CommandFilters: VaccaPanel.setCommandFilters(CommandFilters)
 
     #: JDRAW_FILE:  The JDRAW file to create the Synoptic, 
     #: it can be .jdw or .svg but the second option will require the svgsynoptic module from maxlab.
@@ -353,7 +364,7 @@ try:
             print 'Unable to create ProfilePlot'
             
     import vacca.properties
-    properties = vacca.properties.VaccaPropTable.getPanelDescription('Properties')
+    properties = vacca.properties.VaccaPropTable.getPanelDescription('Properties',model=DEVICE or '')
 
 
     #: EXTRA_PANELS:  dictionary of Extra Panels to be shown by default.
@@ -379,7 +390,7 @@ try:
             
         def get_panel(i):
             pargs = EXTRA_PANELS[i]
-            if not fandango.isSequence(pargs): return pargs
+            if not fn.isSequence(pargs): return pargs
             elif len(pargs)==3: return PanelDescription(pargs[0],classname=pargs[1],model=pargs[2])
             else: return PanelDescription(pargs[0],classname=pargs[1],model=pargs[2],sharedDataRead=pargs[3],sharedDataWrite=pargs[4])
 
