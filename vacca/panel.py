@@ -41,7 +41,7 @@ from taurus.qt.qtgui.panel.taurusdevicepanel import TaurusDevicePanel,get_regexp
 from taurus.qt.qtgui.resource import getPixmap
 from taurus.core import TaurusAttribute,TaurusDevice,TaurusDatabase
 from taurus.qt.qtgui.container import TaurusWidget
-from taurus.qt.qtgui.panel.taurusform import TaurusCommandsForm
+from taurus.qt.qtgui.panel.taurusform import TaurusForm,TaurusCommandsForm
 
 ###############################################################################
 # Help Methods
@@ -231,6 +231,58 @@ class VaccaDocker(Qt.QMainWindow):
         :return:
         """
         return PanelDescription(name,'vacca.panel.VaccaDocker')
+      
+class VaccaSearchForm(TaurusWidget):
+    """
+    Form with an embedded search bar that can be used to set the models
+    
+    The preffix and suffix arguments can be used to limit the search
+    """
+  
+    def __init__(self,preffix='',suffix='',labels=False,parent=None):
+        TaurusWidget.__init__(self,parent)
+        self.preffix = preffix
+        self.suffix = suffix
+        self.labels = labels
+        if preffix or suffix:
+          self.setWindowTitle('%s ... %s'%(preffix,suffix))
+        self.setLayout(Qt.QVBoxLayout())
+        self.bar = Qt.QWidget(self)
+        self.search = Qt.QLineEdit()
+        self.button = Qt.QPushButton('Search')
+        self.connect(self.button,Qt.SIGNAL("pressed()"),self.apply_search)
+        self.bar.setLayout(Qt.QHBoxLayout())
+        self.bar.layout().addWidget(self.search)
+        self.bar.layout().addWidget(self.button)
+        self.layout().addWidget(self.bar)
+        self.form = TaurusForm(self)
+        self.layout().addWidget(self.form)
+        
+    def apply_search(self):
+        signs = "==|=|<|>"
+        txt = str(self.search.text())
+        if fandango.clsearch(signs,txt):
+          t = fandango.re.split(signs,txt,1)[0]
+          txt,formula = t,txt.replace(t,'')
+        else:
+          formula = ''
+        txt = txt.replace(' ','*').strip()
+        txt = self.preffix+txt+self.suffix
+        model = fandango.get_matching_attributes(txt)
+        if self.labels and '/' in txt:
+          dev,attr = txt.rsplit('/',1)
+          model.extend(fandango.tango.get_matching_device_attribute_labels(dev,attr).keys())
+        if formula and model:
+          nm = []
+          for m in model:
+            try:
+              f = '%s %s'%(fandango.read_attribute(m),formula)
+              if eval(f):
+                nm.append(m)
+            except:
+              pass
+          model = nm
+        self.form.setModel(model)
         
 class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
     """
@@ -285,7 +337,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self._label.font().setBold(True)
         self._header.layout().addWidget(self._label,0,1,Qt.Qt.AlignLeft)
         self._label.setDragEventCallback(self._label.text)
-        self.setToolTip(getattr(self,'__help__',self.__doc__))
+        #self.setToolTip(getattr(self,'__help__',self.__doc__))
         
     @classmethod
     def getAttributeFilters(klass,dev_class=None):
@@ -296,15 +348,12 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         get{Property}(klass,dev_class) will update it from Tango DB and return the matching values.
         set{Property}(dict) will update the parent TaurusDevicePanel dictionary, not the DB
         """
+        print('getAttributeFilters(%s,%s)'%(klass,dev_class))
         if dev_class is not None and dev_class not in klass._attribute_filter:
             filters = get_class_property(dev_class,'AttributeFilters',extract=False)
             if filters:
-                filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
+                filters = [(l.split(':')[0],l.split(':')[-1].split(',')) for l in filters]
                 klass._attribute_filter[dev_class] = filters
-                return {'.*':filters}
-        #if dev_name is not None: 
-            #filters = get_regexp_dict(klass._attribute_filter,dev_name,[])
-            #if filters:
                 #return {'.*':filters}
         return klass._attribute_filter
         
@@ -313,14 +362,21 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         """
         get{Property}(klass,dev_class) will update it from Tango DB and return the matching values.
         set{Property}(dict) will update the parent TaurusDevicePanel dictionary, not the DB
-        """      
-        if dev_class is not None and dev_class not in klass._attribute_filter:
+        """
+        print('getCommandFilters(%s,%s)'%(klass,dev_class))
+        if dev_class is not None and dev_class not in klass._command_filter:
             filters = get_class_property(dev_class,'CommandFilters',extract=False)
             if filters:
-                filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
-                klass._attribute_filter[dev_class] = filters
-                return {'.*':filters}
+                #filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
+                filters = [(c,()) for c in filters]
+                klass._command_filter[dev_class] = filters
         return klass._command_filter
+      
+    @classmethod
+    def getIconMap(klass,dev_class=None):
+        if dev_class is not None and dev_class not in klass._icon_map:
+            klass._icon_map[dev_class] = get_class_property(dev_class,'Icon',extract=True)
+        return klass._icon_map
       
     def setModel(self,model,pixmap=None):
         """
@@ -355,6 +411,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
           
         try:
             taurus.Device(model).ping()
+            dev_class = fandango.get_device_info(model).dev_class
             if self.getModel(): self.detach() #Do not dettach previous model before pinging the new one (fail message will be shown at except: clause)
             TaurusWidget.setModel(self,model)
             self.setWindowTitle(str(model).upper())
@@ -363,10 +420,11 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
             font = self._label.font()
             font.setPointSize(15)
             self._label.setFont(font)
-            if pixmap is None and self.getIconMap():
+            if pixmap is None and self.getIconMap(dev_class=dev_class):
                 for k,v in self.getIconMap().items():
-                    if searchCl(k,model):
-                        pixmap = v                  
+                    if searchCl(k,model) or searchCl(k,dev_class):
+                        pixmap = v
+                        break
             if pixmap is not None:
                 #print 'Pixmap is %s'%pixmap
                 qpixmap = Qt.QPixmap(pixmap)
@@ -381,20 +439,23 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
             self._status.setModel(model+'/status')
             try:
                 self._attrsframe.clear()
-                dev_class = fandango.get_device_info(model).dev_class
-                filters = type(self).getAttributeFilters(dev_class=dev_class)
-                #filters = get_class_property(dev_class,'AttributeFilters',extract=False)
-                #if filters:
-                    #filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
-                #else:
-                print str(dev_class),str(filters)
-                filters = get_regexp_dict(self._attribute_filter,model,['.*'])
+                class_filters = type(self).getAttributeFilters(dev_class=dev_class)
+                filters = get_regexp_dict(self._attribute_filter,model,[])
+                if not filters: 
+                  filters = get_regexp_dict(self._attribute_filter,dev_class,['.*'])
+                  
+                search_tab = None
+                
                 if hasattr(filters,'keys'): filters = filters.items() #Dictionary!
-                if filters and isinstance(filters[0],(list,tuple)): #Mapping
+                if filters and isinstance(filters[0],(list,tuple)): #Mapping for Tabs
                     self._attrs = []
                     for tab,attrs in filters:
+                      if attrs[1:] or attrs[0] not in ('*','.*'):
                         self._attrs.append(self.get_attrs_form(device=model,filters=attrs,parent=self))
                         self._attrsframe.addTab(self._attrs[-1],tab)
+                      else:
+                        #Embedding a Search panel
+                        search_tab = tab,VaccaSearchForm(preffix=model+'/*',suffix='*',labels=True)
                 else:
                     if self._attrs and isinstance(self._attrs,list): self._attrs = self._attrs[0]
                     self._attrs = self.get_attrs_form(device=model,form=self._attrs,filters=filters,parent=self)
@@ -403,6 +464,10 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 if not TaurusDevicePanel.READ_ONLY:
                     self._comms = self.get_comms_form(model,self._comms,self)
                     if self._comms: self._attrsframe.addTab(self._comms,'Commands')
+                    
+                    if search_tab:
+                      self._attrsframe.addTab(search_tab[1],search_tab[0])
+                      
                 if SPLIT_SIZES: self._splitter.setSizes(SPLIT_SIZES)
             except:
                 self.warning( traceback.format_exc())
@@ -420,7 +485,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self.trace( 'In TaurusDevicePanel.get_comms_form(%s)'%device)
         dev_class = fandango.get_device_info(device).dev_class
         filters = type(self).getCommandFilters(dev_class)
-        params = get_regexp_dict(filters,device,[])
+        params = get_regexp_dict(filters,device,[]) or get_regexp_dict(filters,dev_class,[])
         if filters and not params: #If filters are defined only listed devices will show commands
             self.debug('TaurusDevicePanel.get_comms_form(%s): By default an unknown device type will display no commands'% device)
             return None 
