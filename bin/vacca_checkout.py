@@ -1,5 +1,15 @@
 #!/usr/bin/env python
 
+"""
+vacca_checkout.py script
+========================
+
+This script will download all pure-python vacca dependencies from its source repositories.
+It will generate symlinks to have a local installation within a single directory.
+Binary packages (PyQt/Qwt/Tango/PyTango/Taurus) will have to be installated separately.
+
+"""
+
 # @file: vacca/installer.py
 
 import os,sys,argparse,imp
