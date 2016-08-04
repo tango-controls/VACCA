@@ -16,7 +16,7 @@ PACKAGES = [
   ('vacca', #It will be the only module installed in root folder, all the rest will use subdirectories
     'svn co '+VACCA_URL+' .'),
   ('fandango',
-    'git clone https://github.com/sergirubio/fandango.git'),
+    'git clone https://github.com/sergirubio/fandango.git fandango.git; ln -s fandango.git/fandango'),
     #'svn co https://svn.code.sf.net/p/tango-cs/code/share/fandango/trunk/fandango'),
   ('PySignalSimulator',
     'svn co https://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Simulators/PySignalSimulator/trunk PySignalSimulator'),
@@ -24,15 +24,15 @@ PACKAGES = [
     #'svn co https://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Simulators/PySignalSimulator/branches/DataBaseDS/databaseds.8.1.6 DataBaseDS'),
   ('panic',
    # 'ln -s PyAlarm/panic'),  
-   'git clone https://github.com/sergirubio/panic.git'),
+   'git clone https://github.com/sergirubio/panic.git panic.git ; ln -s panic.git/panic'),
   ('PyAlarm',
     #'svn co https://svn.code.sf.net/p/tango-ds/code/DeviceClasses/SoftwareSystem/PyAlarm/trunk PyAlarm'),
-    'ln -s panic/panic/ds PyAlarm'),
+    'ln -s panic/ds PyAlarm'),
   ('panic-gui',
     #'svn co https://svn.code.sf.net/p/tango-ds/code/Clients/python/Panic/trunk panic/gui; ln -s panic/gui panic-gui'),
-    'ln -s panic/panic/gui panic-gui'),
+    'ln -s panic/gui panic-gui'),
   ('PyTangoArchiving',
-    'svn co https://svn.code.sf.net/p/tango-cs/code/archiving/tool/PyTangoArchiving/trunk PyTangoArchiving'),
+    'svn co https://svn.code.sf.net/p/tango-cs/code/archiving/tool/PyTangoArchiving/trunk PyTangoArchiving.svn ; ln -s PyTangoArchiving.svn/PyTangoArchiving'),
   #('PyStateComposer',
     #'svn co https://svn.code.sf.net/p/tango-ds/code/DeviceClasses/Calculation/PyStateComposer/trunk/src PyStateComposer'),
   #('PyPLC',
@@ -143,7 +143,7 @@ def update(prefix,package=''):
       else:
        if package!='vacca': #vacca installed in root folder
           os.chdir(package)
-       command = 'svn update --force' if 'svn' in command else ('git pull' if 'git' in command else '')
+       command = 'svn update --force' if 'svn' in command else ('git fetch; git pull' if 'git' in command else '')
        print(command)
        os.system(command)
     else: 
