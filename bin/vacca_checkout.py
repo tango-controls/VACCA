@@ -6,14 +6,14 @@ import os,sys,argparse,imp
 
 VACCA_URL = 'https://svn.code.sf.net/p/tango-cs/code/tools/vacca/trunk'
 
-ACTIONS = 'get','checkout','check','update','reset','cleanup'
+ACTIONS = 'get','download','check','update','reset','cleanup'
 
 MODULES = ['bin','vacca','vaccagui','doc','README']
 
 DEVICES = ['PyPLC', 'PyAlarm', 'PyStateComposer', 'PySignalSimulator', 'DataBaseDS']
 
 PACKAGES = [
-  ('vacca', #It will be the only module isntalled in root folder, all the rest will use subdirectories
+  ('vacca', #It will be the only module installed in root folder, all the rest will use subdirectories
     'svn co '+VACCA_URL+' .'),
   ('fandango',
     'git clone https://github.com/sergirubio/fandango.git'),
@@ -27,10 +27,10 @@ PACKAGES = [
    'git clone https://github.com/sergirubio/panic.git'),
   ('PyAlarm',
     #'svn co https://svn.code.sf.net/p/tango-ds/code/DeviceClasses/SoftwareSystem/PyAlarm/trunk PyAlarm'),
-    'ln -s panic/panic/ds'),
+    'ln -s panic/panic/ds PyAlarm'),
   ('panic-gui',
     #'svn co https://svn.code.sf.net/p/tango-ds/code/Clients/python/Panic/trunk panic/gui; ln -s panic/gui panic-gui'),
-    'ln -s panic/panic/gui'),
+    'ln -s panic/panic/gui panic-gui'),
   ('PyTangoArchiving',
     'svn co https://svn.code.sf.net/p/tango-cs/code/archiving/tool/PyTangoArchiving/trunk PyTangoArchiving'),
   #('PyStateComposer',
@@ -81,12 +81,17 @@ def install(prefix,package=''):
     return
   
   print('The following packages will be installed : %s'%','.join(t[0] for t in packages))
-
-  if raw_input('Do you want to continue? (Y/n)').lower().startswith('n'):
+  
+  packs = raw_input('Do you want to continue? (Y/n/!package)')
+  if packs.lower().startswith('n'):
     return
     
   for package,command in packages:
     
+    if packs.startswith('!') and package in packs:
+      print('\n'+'Skipping %s ...'%package)
+      continue
+      
     print('\n'+'#'*80+'\nGetting %s\n'%package + '\n')
     
     if os.path.isdir(package):
@@ -178,7 +183,7 @@ def reset_config(confirm=''):
 
 def main(args):
   current,module = os.getcwd(),os.path.dirname(os.path.abspath(__file__))
-  #A non-module folder can be the root for setup.py
+  #A non-module folder can be the root for vacca_checkout.py
   prefix = current if current!=module or not os.path.isfile('config.py') else os.path.split(module)[0] 
   
   parser = argparse.ArgumentParser()
@@ -188,15 +193,15 @@ def main(args):
   parser.add_argument('--package',help='<package to get, all if not specified>',default='')
   opts = parser.parse_args(args)
   prefix = os.path.abspath(opts.prefix)
-  print(prefix+'/vacca/setup.py %s\n'%' '.join(args))
+  print(prefix+'/bin/vacca_checkout.py %s\n'%' '.join(args))
   
   if not opts.raw:
 
-    q = raw_input('Before continuing, Do you want to update vacca_checkout script from SVN? (y/n)?').lower()
+    q = raw_input('Before continuing, Do you want to update vacca_checkout script from repository? (y/n)?').lower()
     if q.startswith('y'):
       print('Updating setup.py script from SVN repository (use --raw to skip this check)')
-      os.system('svn export --force %s/bin/vacca_checkout'%VACCA_URL)
-      setup = imp.load_source('setup','vacca_checkout')
+      os.system('svn export --force %s/bin/vacca_checkout.py'%VACCA_URL)
+      setup = imp.load_source('setup','vacca_checkout.py')
     else:
       setup = imp.load_source('setup',__file__)
       
@@ -205,7 +210,7 @@ def main(args):
 
   else:
     
-    if opts.action in ('get','checkout'): 
+    if opts.action in ('get','download'): 
         reset_config()
         install(prefix,opts.package)
     if opts.action in ('update'): 
