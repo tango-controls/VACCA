@@ -52,6 +52,7 @@ AttributeFilters = fandango.dicts.CaselessDict({ #Put attribute names in lower c
             ('(?!^.*fsotr|ccg|brtu|pnv|vl|li|lt)_T[0-9]+','.*TC','.*_PT')]),
         ('VC',['vc_','_ip','cath','ccg','pst_','pir']),
         ('Flows',[t+nostatus for t in ('co_','coas_','was_','paas_','fsw','_fs_',)]),
+        ('Search',['*']),
         #'_READY','OPEN_','CLOSE_'
         #'.*TC.*','.*_PT.*','_READY','OPEN_','CLOSE_','was_','paas_'],
         #'EPS-PLC': ['CPU_STATUS','PLC_CONFIG_STATUS','THERMOCOUPLES'],
@@ -62,6 +63,8 @@ AttributeFilters = fandango.dicts.CaselessDict({ #Put attribute names in lower c
     'PIR-': ['pressure','channelstatus','controller'],
     'IP-': ['pressure','channelstatus','controller'],
     })
+        
+AttributeFilters['AlbaPLC'] = AttributeFilters['.*EPS-PLC-01$']        
 
 CommandFilters = fandango.dicts.CaselessDict({ #Put commands names in lower case!
     'ALL': (('evaluateFormula',()),('updateDynamicAttributes',()),('Open*',()),('Close*',())),
@@ -78,7 +81,7 @@ CommandFilters = fandango.dicts.CaselessDict({ #Put commands names in lower case
         ),
     'PNV-': (('open',()),('close',())),
     'SPNV-': (('open',()),('close',())),
-    '.*EPS-PLC-01$': (),
+    '.*EPS-PLC-01$': (('updateDynamicAttributes',()),('evaluateFormula',())),
     'SERIAL': (('init',()),),
     'CCG-': (('on',()),('off',())),
     'V-PEN': (('on',()),('off',())),
@@ -86,6 +89,8 @@ CommandFilters = fandango.dicts.CaselessDict({ #Put commands names in lower case
     'V-VARIP': (),
     'IP-': (),
     })
+    
+CommandFilters['AlbaPLC'] = CommandFilters['.*EPS-PLC-01$']
     
 cleanup = lambda k: fandango.replaceCl('[\[\]\{\}\(\)\.\*\$\?\+/,]','',k.lower())
 

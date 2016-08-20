@@ -449,12 +449,13 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 if hasattr(filters,'keys'): filters = filters.items() #Dictionary!
                 if filters and isinstance(filters[0],(list,tuple)): #Mapping for Tabs
                     self._attrs = []
+                    print(filters)
                     for tab,attrs in filters:
                       if attrs[1:] or attrs[0] not in ('*','.*'):
                         self._attrs.append(self.get_attrs_form(device=model,filters=attrs,parent=self))
                         self._attrsframe.addTab(self._attrs[-1],tab)
                       else:
-                        #Embedding a Search panel
+                        self.info('Embedding a Search panel')
                         search_tab = tab,VaccaSearchForm(preffix=model+'/*',suffix='*',labels=True)
                 else:
                     if self._attrs and isinstance(self._attrs,list): self._attrs = self._attrs[0]
