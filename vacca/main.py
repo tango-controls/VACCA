@@ -119,10 +119,8 @@ dirname = dirname or os.path.dirname(config) or \
 vu.VACCA_DIR = os.environ['VACCA_DIR'] = dirname
 vu.VACCA_CONFIG = os.environ['VACCA_CONFIG'] = config
 
-print('Vacca environment variables:')
-for k,v in os.environ.items():
-  if 'VACCA' in k:
-    print(('\n',k,v))
+print('Vacca Environment variables:')
+print(dict((k,v) for k,v in os.environ.items() if 'VACCA' in k))
 print '-'*80
 
   

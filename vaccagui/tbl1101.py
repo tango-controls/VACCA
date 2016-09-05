@@ -1,7 +1,6 @@
 import imp,fandango
-from vacca.beamlines import BL,COMPOSER,EXTRA_DEVICES,DEVICE,DOMAIN,GAUGES,JDRAW_FILE
-
 from vacca.utils import WORKING_DIR,wdir,VACCA_PATH,vpath
+from vaccagui.beamlines import *
 
 JDRAW_FILE = wdir('%s/%s-schema.jdw'%(BL,BL))
 

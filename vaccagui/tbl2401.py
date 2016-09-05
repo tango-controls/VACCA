@@ -1,5 +1,5 @@
 import imp,fandango
-from vacca.beamlines import BL,COMPOSER,EXTRA_DEVICES,DEVICE,DOMAIN,GAUGES,JDRAW_FILE
+from vaccagui.beamlines import *
 
 """
 > @TODO: Add an extra NAPP tree with Gauge devices with verbose names:
