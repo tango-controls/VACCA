@@ -348,13 +348,13 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         get{Property}(klass,dev_class) will update it from Tango DB and return the matching values.
         set{Property}(dict) will update the parent TaurusDevicePanel dictionary, not the DB
         """
-        print('getAttributeFilters(%s,%s)'%(klass,dev_class))
         if dev_class is not None and dev_class not in klass._attribute_filter:
             filters = get_class_property(dev_class,'AttributeFilters',extract=False)
             if filters:
                 filters = [(l.split(':')[0],l.split(':')[-1].split(',')) for l in filters]
                 klass._attribute_filter[dev_class] = filters
                 #return {'.*':filters}
+        print('getAttributeFilters(%s,%s): ...'%(klass,dev_class))#,klass._attribute_filter))
         return klass._attribute_filter
         
     @classmethod
@@ -363,19 +363,22 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         get{Property}(klass,dev_class) will update it from Tango DB and return the matching values.
         set{Property}(dict) will update the parent TaurusDevicePanel dictionary, not the DB
         """
-        print('getCommandFilters(%s,%s)'%(klass,dev_class))
         if dev_class is not None and dev_class not in klass._command_filter:
             filters = get_class_property(dev_class,'CommandFilters',extract=False)
             if filters:
                 #filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
                 filters = [(c,()) for c in filters]
                 klass._command_filter[dev_class] = filters
+        print('getCommandFilters(%s,%s): ...'%(klass,dev_class))#,klass._command_filter))
         return klass._command_filter
       
     @classmethod
     def getIconMap(klass,dev_class=None):
         if dev_class is not None and dev_class not in klass._icon_map:
-            klass._icon_map[dev_class] = get_class_property(dev_class,'Icon',extract=True)
+            p = get_class_property(dev_class,'Icon',extract=True)
+            if p: klass._icon_map[dev_class] = p #Not trivial!
+        print('getIconMap(%s): ...'%(klass))
+        #print('getIconMap(%s): ...%s'%(klass,klass._icon_map))
         return klass._icon_map
       
     def setModel(self,model,pixmap=None):
