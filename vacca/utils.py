@@ -750,7 +750,7 @@ class addCustomPanel2Gui(object):
                 try:
                     icon = extra_panels[panel].get('icon',None) or class_Panel.getDefaultIcon()
                 except Exception,e:
-                    print('Icon exception in addCustomPanel2Gui: %s'%traceback.format_exc())
+                    print('Icon exception in addCustomPanel2Gui(%s)!! %s'%(panel,e))
                     icon = ':/places/network-server.svg'
                 final_icon_url = icon if fandango.matchCl('^[\:/]',icon) else wdir('vacca/'+icon)
 
