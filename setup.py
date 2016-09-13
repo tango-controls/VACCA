@@ -19,7 +19,7 @@ To tune some options:
 
   RU=/opt/control
   python setup.py egg_info --egg-base=tmp install --root=$RU/files --no-compile \
-    --install-lib=lib/python/site-packages --install-scripts=ds
+    --install-lib=lib/python/site-packages --install-scripts=bin
 
 -------------------------------------------------------------------------------
 """
@@ -37,7 +37,8 @@ entry_points = {
             #'CopyCatDS = PyTangoArchiving.interface.CopyCatDS:main',
         ],
 }
-
+        
+package_dir = {'vacca':'vacca'}
 package_data = {
     'vacca': [#'VERSION','README',
          'VERSION',
@@ -47,13 +48,43 @@ package_data = {
          'image/widgets/*',
          'ini/vaccagui/*',
          ]
-}
+} 
+    
+# PARSING EXTRA FILES ADDED TO THE PACKAGE
+import os,re
+
+if os.path.isdir('vaccagui'):
+  print 'Adding custom vaccagui package ...'
+  package_dir['vaccagui'] = 'vaccagui'
+else:
+  package_dir['vaccagui'] = 'vacca/ini/vaccagui'
+  
+def getter(s,d,files,remove='vaccagui'):
+  #d = os.path.join(*(d.split(os.path.sep)[1:] or ['']))
+  print d,files
+  for n in files:
+    n,r = os.path.join(d,n),re.match('.*(pyc|~|git|svn|bak|tmp)$',n)
+    if os.path.isfile(n) and not r:
+      if n.startswith(remove+os.path.sep):
+        n = n.replace(remove+os.path.sep,'')
+      s.append(n)
+
+package_data['vaccagui'] = []
+os.path.walk(package_dir['vaccagui'],getter,package_data['vaccagui'])
+#print package_data
+
+import pickle
+pickle.dump(package_data,open('data.pck','w'))
+  
+packages = package_dir.keys()
+
 
 setup(
     name="Vacca",
     version=str(version),
     license=license,
-    packages=['vacca'],
+    packages=packages,
+    package_dir=package_dir,
     description="Viewer and Commander Control Application for Tango Control System.",
     long_description="",
     author="Sergi Rubio",
