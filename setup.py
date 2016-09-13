@@ -69,9 +69,16 @@ def getter(s,d,files,remove='vaccagui'):
         n = n.replace(remove+os.path.sep,'')
       s.append(n)
 
+vg = package_dir['vaccagui']
 package_data['vaccagui'] = []
-os.path.walk(package_dir['vaccagui'],getter,package_data['vaccagui'])
+os.path.walk(vg,getter,package_data['vaccagui'])
+vgb = os.path.join(vg,'bin')
+if os.path.isdir(vgb):
+  os.path.walk(vgb,
+    lambda l,d,f:l.extend(os.path.join(vgb,n) for n in f),
+    scripts)
 #print package_data
+
 
 import pickle
 pickle.dump(package_data,open('data.pck','w'))
