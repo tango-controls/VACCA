@@ -115,13 +115,12 @@ from vacca.utils import *
 # (end of import section)
 #==============================================================================
 
-#print ('*'*80+'\n')*1
-print 'In vacca.config(%s,%s)'%(globals().get('CONFIG_DONE',None),VACCA_DIR)
-#print ('*'*80+'\n')*1
-
 VACCA_CONFIG = os.getenv('VACCA_CONFIG')
 PROPS = get_config_properties(VACCA_CONFIG)
 VACCA_DIR = WDIR = PROPS.get('VACCA_DIR',VACCA_DIR)
+
+print('-'*80)
+print('In vacca.config(%s,%s)'%(globals().get('CONFIG_DONE',None),VACCA_DIR))
 
 try:
 
@@ -135,7 +134,7 @@ try:
         assert app,'QApplication not running!'
         splash = VaccaSplash()
     except:
-        print "QApplication Instance do not exist!"
+        print("QApplication Instance do not exist!")
         app = None
 
     try:
@@ -175,6 +174,7 @@ try:
         __doc__ += get_vars_docs(__name__,title=c+' Options',module_vars=l,subtitle=False)
     
     if CONFIG:
+        print('\nConfig Options:')
         for op in OPTIONS:
             limit = 800
             if 'VACCA_'+op in os.environ:
@@ -186,12 +186,12 @@ try:
                 
             if hasattr(CONFIG,op):
                 v = getattr(CONFIG,op)
-                print '\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v).replace('\n',',')[:limit])
+                print('\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v).replace('\n',',')[:limit]))
                 setattr(default,op,v)
         
         if not getattr(CONFIG,'DEVICE',None) and getattr(CONFIG,'COMPOSER',None):
             default.DEVICE = default.COMPOSER
-            
+    
     #Adding all variables to Namespace where taurusgui can found them
     try:
         for k,v in vars(default).items():
@@ -210,8 +210,10 @@ try:
     #: Logo to be shown in right-side bar
     ORGANIZATION_LOGO = ORGANIZATION_LOGO
     
-    print('Config loaded, Perspectives will be saved/loaded from %s'%(
-        SETTINGS.replace('$USER',get_env_variable('USER')).replace('$ORGANIZATION',ORGANIZATION).replace('$GUI_NAME',GUI_NAME)))
+    print('\nConfig loaded, Perspectives will be saved/loaded from %s'%(
+        SETTINGS.replace('$USER',get_env_variable('USER')
+          ).replace('$ORGANIZATION',ORGANIZATION
+          ).replace('$GUI_NAME',GUI_NAME)))
     
     SINGLE_INSTANCE = False
 
@@ -223,7 +225,8 @@ try:
     #: (comment out or make MANUAL_URI=None to skip creating a Manual panel)
     MANUAL_URI = URL_HELP #'http://packages.python.org/taurus'
     
-    print('-')*80
+    print('\n'+'#'*80+'\n')
+    print('In vacca.config(%s): loading classes\n'%VACCA_CONFIG)
 
     #===============================================================================
     # Define panels to be shown.
@@ -231,7 +234,7 @@ try:
     # for the gblgui_utils module)
     #===============================================================================
     
-    print '>'*20+'Loading Trend panel ... %s'%','.join(GAUGES)
+    print('\t>>> Loading Trend panel ... %s'%','.join(GAUGES))
     
     #: If defined, the default trend will be shown in logarithmic scale
     GAUGES=GAUGES
@@ -248,7 +251,7 @@ try:
     USE_DEVICE_TREE = USE_DEVICE_TREE
 
     if USE_DEVICE_TREE or JDRAW_FILE or EXTRA_DEVICES:
-        print '>'*20+'Loading Tree panel(%s) ...'%(len(EXTRA_DEVICES))
+        print('\t>>> Loading Tree panel(%s) ...'%(len(EXTRA_DEVICES)))
         from tree import *
         try:
             # The lastWindowClosed() signal will close all opened widgets and dialogs on application exit
@@ -296,7 +299,7 @@ try:
     #: USE_DEVICE_PANEL:  True or False, To Show by default the DevicePanel
     USE_DEVICE_PANEL = USE_DEVICE_PANEL
     if USE_DEVICE_PANEL:
-        print '>'*20+'Loading Device panel (%s)...' % DEVICE
+        print('\t>>> Loading Device panel (%s)...' % DEVICE)
         from vacca.panel import VaccaPanel
         panel = VaccaPanel.getPanelDescription('Device',model=DEVICE or None)
         
@@ -310,8 +313,8 @@ try:
     JDRAW_FILE = JDRAW_FILE
 
     if JDRAW_FILE:
-        print '>'*20+'Loading Synoptic panel new ... %s, %s, %s'%(JDRAW_FILE,
-                                                         JDRAW_HOOK, JDRAW_TREE)
+        print('\t>>> Loading Synoptic panel new ... %s, %s, %s'%(JDRAW_FILE,
+                                                         JDRAW_HOOK, JDRAW_TREE))
         from vacca.synoptics import VaccaSynoptic
         try:
             synoptic = VaccaSynoptic.getPanelDescription('Synoptic',JDRAW_FILE,JDRAW_HOOK,JDRAW_TREE)
@@ -323,7 +326,7 @@ try:
     GRID = GRID
 
     if GRID:
-        print '>'*20+'Loading Grid panels ...'
+        print('\t>>> Loading Grid panels ...')
         
         GRID['frames'] = False
         GRID['labels'] = False
@@ -335,7 +338,7 @@ try:
             assert Qt.QApplication.instance(),'QApplication not running!'
             grid = VaccaGrid.getGridPanelDescription(GRID)
         except:
-            print 'Unable to create Grid'
+            print('\t>>> Unable to create Grid')
 
         ##VGRID disabled, the Vertical layout should be added as option to common GRID
         #try:
@@ -349,19 +352,19 @@ try:
 
     if COMPOSER:
         def VacuumProfile():
-            print 'VacuumProfile()'
+            print('\t>>> Loading VacuumProfile()')
             from . import plot
             p = plot.VaccaProfilePlot()
             p.setModel(COMPOSER)
             return p
         try:
-            print '>'*20+'Loading Profile panel ...'
+            print('\t>>> Loading Profile panel ...')
             profile = PanelDescription('Profile',
                             classname = 'vacca.plot.VaccaProfilePlot',
                             model = COMPOSER,
                             )
         except:
-            print 'Unable to create ProfilePlot'
+            print('\t>>> Unable to create ProfilePlot')
             
     import vacca.properties
     properties = vacca.properties.VaccaPropTable.getPanelDescription('Properties',model=DEVICE or '')
@@ -384,7 +387,7 @@ try:
     EXTRA_PANELS = EXTRA_PANELS
 
     if EXTRA_PANELS:
-        print '>'*20+'Loading Extra panels ... %s'%str(EXTRA_PANELS)
+        print('\t>>> Loading Extra panels ... %s'%str(EXTRA_PANELS))
         if not hasattr(EXTRA_PANELS,'items'):
             EXTRA_PANELS = dict(('extra%d'%(i+1),p) for i,p in enumerate(EXTRA_PANELS))
             
@@ -533,10 +536,10 @@ try:
     """
     adder = vacca.addCustomPanel2Gui(EXTRA_APPS)            
 
-    print '>'*20+'Config Finished ...'
+    print('\n\t>>> Config Finished ...')
     globals()['CONFIG_DONE'] = True
-    print('-')*80
+    print('-'*80 + '\n\n\n')
 
 except:
-    print traceback.format_exc()
+    print(traceback.format_exc())
 

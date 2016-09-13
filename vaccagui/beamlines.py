@@ -35,7 +35,7 @@ use default.py for your common options and whatever.py for your in-place customi
 
 import fandango,imp
 
-print 'In vaccagui.beamlines ...'
+print('In vaccagui.beamlines(%s)'%fandango.get_tango_host())
 
 #The device that will be shown by default when loading the application
 try:
@@ -77,7 +77,7 @@ except:
     from vacca.filters import *
   except:
     print 'UNABLE TO LOAD filters.py!'
-
+    
 #NOT USED, HAVE A LOOK TO filters.AttributeFilters INSTEAD
 def ATTR_FILTER(attr_name):
     attr_name = attr_name.lower()
@@ -142,3 +142,4 @@ if not 'ready':
   ('PyTangoArchiving.widget.browser.ArchivingBrowser',':actions/system-search.svg'),
   ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',':actions/system-search.svg')
   ]
+  

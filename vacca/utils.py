@@ -286,7 +286,7 @@ def get_config_file(config=None):
         CONFIG_FILE = replace_env(CONFIG_FILE,'VACCA_PATH',VACCA_PATH or '')
     else:
         CONFIG_FILE = config
-    print('get_config_file(%s)'%CONFIG_FILE)
+    print('In get_config_file(%s)'%CONFIG_FILE)
 
     if not CONFIG_FILE.startswith('/'):
       if not os.path.isfile(CONFIG_FILE):
@@ -308,7 +308,7 @@ def get_config_file(config=None):
     except: 
         print traceback.format_exc()
         raise Exception,'Unable to load %s' % CONFIG_FILE
-    print('-')*80
+    print('Out of get_config_file(...)\n')
     return CONFIG
   
 ###############################################################################
