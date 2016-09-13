@@ -92,9 +92,9 @@ def ATTR_FILTER(attr_name):
     return True
 
 
-##NOTE: THIS DOESN'T SEEM TO WORK!
+##NOTE: THIS SYNTAX DOESN'T SEEM TO WORK ANYMORE!
 EXTRA_APPS = {
-    'xtrend':{'name':'NewTrend','classname':'vacca.panel.VaccaAction','model':['Trend',wdir('image/icons/Mambo-icon.png')]+'taurustrend -a'.split()},
+    #'xtrend':{'name':'NewTrend','classname':'vacca.panel.VaccaAction','model':['Trend',wdir('image/icons/Mambo-icon.png')]+'taurustrend -a'.split()},
     }
 
 if not 'ready':
