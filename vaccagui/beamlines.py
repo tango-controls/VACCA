@@ -97,7 +97,7 @@ EXTRA_APPS = {
     #'xtrend':{'name':'NewTrend','classname':'vacca.panel.VaccaAction','model':['Trend',wdir('image/icons/Mambo-icon.png')]+'taurustrend -a'.split()},
     }
 
-if not 'ready':
+if 'ready':
   EXTRA_PANELS = {}
   from taurus.qt.qtgui.taurusgui.utils import PanelDescription
   #EXTRA_PANELS['PANIC'] = PanelDescription('PANIC','panic.gui.AlarmGUI',model='',#---sharedDataWrite={'HighlightInstruments':'devicesSelected'})
@@ -111,9 +111,7 @@ if not 'ready':
   try:
     import vacca
     EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
-    EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
     EXTRA_APPS['PANIC']= {'class' : vacca.VaccaPanic       }
-    #EXTRA_APPS['ExtraDock']= {'class' : vacca.panel.VaccaDocker       }    
     EXTRA_APPS['Fandango'] = {'class' : fandango.qt.QEvaluator, 'icon': ':apps/accessories-calculator.svg'}
   except: traceback.print_exc()
 
@@ -131,10 +129,7 @@ if not 'ready':
                         'icon' : '/homelocal/sicilia/lib/python/site-packages/AlbaPLC/tools/icon/Plc_equipment.jpg',
                         }    
     sys.path.append('/homelocal/srubio/PROJECTS/PLCs/DeviceServers/')
-    import AlbaPLC.tools.Widgets
-    EXTRA_APPS['SourceBrowser']= {'class' : AlbaPLC.tools.Widgets.SourceBrowser,
-                                  'icon' : '/homelocal/sicilia/lib/python/site-packages/AlbaPLC/tools/icon/plc.jpg',
-                                }    
+
   except: traceback.print_exc()  
     
   EXTRA_WIDGETS = [
@@ -142,4 +137,11 @@ if not 'ready':
   ('PyTangoArchiving.widget.browser.ArchivingBrowser',':actions/system-search.svg'),
   ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',':actions/system-search.svg')
   ]
-  
+
+if not 'ready':
+    EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
+    EXTRA_APPS['ExtraDock']= {'class' : vacca.panel.VaccaDocker       }        
+    import AlbaPLC.tools.Widgets
+    EXTRA_APPS['SourceBrowser']= {'class' : AlbaPLC.tools.Widgets.SourceBrowser,
+                                  'icon' : '/homelocal/sicilia/lib/python/site-packages/AlbaPLC/tools/icon/plc.jpg',
+                                }

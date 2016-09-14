@@ -102,8 +102,14 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
         This method fill the table with the names of properties and values for the device selected
         '''      
         try:
-            self.debug('VaccaPropTable.setTable(%s(%s))'%(type(model),model))
-            model = model and fandango.tango.parse_tango_model(str(model))['device']
+            model = model and fandango.tango.parse_tango_model(str(model))
+            if model is None:
+              self.warning('VaccaPropTable.setTable(%s(%s)): MODEL NOT PARSABLE!'%(type(model),model))
+              return
+            else:
+              try: model = model['device']
+              except: model = str(model)
+              self.debug('VaccaPropTable.setTable(%s(%s))'%(type(model),model))
             
             #TaurusPropTable.setTable(self,model)
             Qt.QObject.disconnect(self,Qt.SIGNAL("cellChanged(int,int)"),self.valueChanged)

@@ -1,12 +1,6 @@
 JDFile v11 {
   Global {
   }
-  JDRectangle {
-    summit:3,522,1226,3
-    origin:615,263
-    fillStyle:1
-    name:"BL11/VC/ALL"
-  }
   JDImage {
     summit:11,12.1281,1216,512
     origin:613.9074,262.3769
@@ -366,10 +360,22 @@ JDFile v11 {
     text:"BL11 - NCD"
   }
   JDRectangle {
+    summit:3,522,1226,3
+    origin:615,263
+    fillStyle:1
+    name:"BL11/VC/ALL"
+    extensions:{
+      noSelect:"True"
+    }    
+  }   
+  JDRectangle {
     summit:366,271,416,318
     origin:396,283
     foreground:255,0,255
     lineWidth:4
     name:"Rectangle"
-  }
+    extensions:{
+      noSelect:"True"
+    }    
+  } 
 }

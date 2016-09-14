@@ -392,7 +392,11 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         """
         try:    
           model,modelclass,raw = str(model).strip(),'',model
-          model = fandango.tango.parse_tango_model(str(model))['device']
+          model = fandango.tango.parse_tango_model(str(model))
+          if model is None: 
+            self.warning('VaccaPanel(%s).setModel(%s,%s): MODEL NOT PARSABLE!'%(id(self),model,pixmap))
+            return
+          else: model = model['device']
           self.info('VaccaPanel(%s).setModel(%s,%s)'%(id(self),model,pixmap))
           if model: 
             model = model and model.split()[0] or ''

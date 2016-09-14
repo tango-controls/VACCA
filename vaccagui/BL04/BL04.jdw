@@ -6,12 +6,18 @@ JDFile v11 {
     origin:590.1204,237.2006
     fillStyle:1
     name:"BL04/VC/ALL"
+    extensions:{
+      noSelect:"True"
+    }
   }
   JDImage {
     summit:7.8141,20,1320.6806,469
     origin:891.9895,307.7857
     lineWidth:0
     name:"Image"
+    extensions:{
+      noSelect:"True"
+    }
     file_name:"BL04.jpg"
   }
   JDPolyline {
@@ -409,5 +415,8 @@ JDFile v11 {
     background:255,255,51
     fillStyle:10
     name:""
+    extensions:{
+      noSelect:"True"
+    }
   }
 }

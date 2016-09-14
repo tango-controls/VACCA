@@ -1,31 +1,33 @@
 JDFile v11 {
   Global {
   }
-  JDGroup {
-    summit:4,6,1591,515
-    origin:793.5,254.5
-    name:"JDGroup"
-    children: {
-      JDRectangle {
-        summit:4,515,1591,6
-        origin:616,239
-        fillStyle:1
-        name:"BL11/VC/ALL"
-      }
-      JDRectangle {
-        summit:17,16,1575,499
-        origin:59,126
-        fillStyle:1
-        name:"Rectangle"
-      }
-      JDImage {
-        summit:18,70,1551,451
-        origin:611,229
-        lineWidth:0
-        name:"Image"
-        file_name:"BL11-schema.jpg"
-      }
+  JDRectangle {
+    summit:4,515,1591,6
+    origin:616,239
+    fillStyle:1
+    name:"BL11/VC/ALL"
+    extensions:{
+      noSelect:""
     }
+  }
+  JDRectangle {
+    summit:17,16,1575,499
+    origin:59,126
+    fillStyle:1
+    name:"Rectangle"
+    extensions:{
+      noSelect:""
+    }
+  }
+  JDImage {
+    summit:18,70,1551,451
+    origin:611,229
+    lineWidth:0
+    name:"Image"
+    extensions:{
+      noSelect:""
+    }
+    file_name:"BL11-schema.jpg"
   }
   JDEllipse {
     summit:1467.3009,271,1488,288.5174
@@ -350,131 +352,110 @@ JDFile v11 {
     fillStyle:10
     name:"fe11/vc/ipct-01"
   }
-  JDGroup {
-    summit:757.006,41.718,1018.238,87.222
-    origin:195.616,-416.248
-    name:"JDGroup"
-    children: {
-      JDImage {
-        summit:757.006,41.718,831.582,87.222
-        origin:915.006,1.27
-        lineWidth:0
-        name:"Image"
-        file_name:"image/equips/icon-vgct.gif"
-      }
-      JDRectangle {
-        summit:853.75,54.678,875.238,78.694
-        origin:924.534,53.414
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/VC/VGCT-04"
-      }
-      JDRectangle {
-        summit:888.75,54.678,910.238,78.694
-        origin:959.534,53.414
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/VC/VGCT-03"
-      }
-      JDRectangle {
-        summit:926.75,54.678,948.238,78.694
-        origin:997.534,53.414
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/VC/VGCT-02"
-      }
-      JDRectangle {
-        summit:962.75,54.678,984.238,78.694
-        origin:1033.534,53.414
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/VC/VGCT-01"
-      }
-      JDRectangle {
-        summit:996.75,54.678,1018.238,78.694
-        origin:1067.534,53.414
-        background:204,204,204
-        fillStyle:1
-        name:"FE11/VC/VGCT-01"
-      }
-    }
+  JDImage {
+    summit:757.006,41.718,831.582,87.222
+    origin:915.006,1.27
+    lineWidth:0
+    name:"Image"
+    file_name:"image/equips/icon-vgct.gif"
   }
-  JDGroup {
-    summit:1127.278,41.574,1222.342,89.606
-    origin:1084.532,-420.984
-    name:"JDGroup"
-    children: {
-      JDImage {
-        summit:1127.278,41.574,1186.686,89.606
-        origin:1051.438,-55.754
-        lineWidth:0
-        name:"Image"
-        file_name:"image/equips/icon-eps.gif"
-      }
-      JDRectangle {
-        summit:1200.854,53.478,1222.342,77.494
-        origin:1271.638,52.214
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/CT/EPS-PLC-01"
-      }
-    }
+  JDRectangle {
+    summit:853.75,54.678,875.238,78.694
+    origin:924.534,53.414
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/VGCT-04"
   }
-  JDGroup {
-    summit:363.974,38,661.974,93.742
-    origin:-700,-443.129
-    name:"JDGroup"
-    children: {
-      JDRectangle {
-        summit:640.486,53.558,661.974,77.574
-        origin:711.27,52.294
-        background:204,204,204
-        fillStyle:1
-        name:"FE11/VC/IPCT-01"
-      }
-      JDRectangle {
-        summit:601.486,53.558,622.974,77.574
-        origin:672.27,52.294
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/VC/IPCT-01"
-      }
-      JDRectangle {
-        summit:563.486,53.558,584.974,77.574
-        origin:634.27,52.294
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/VC/IPCT-02"
-      }
-      JDRectangle {
-        summit:524.486,53.558,545.974,77.574
-        origin:595.27,52.294
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/VC/IPCT-03"
-      }
-      JDRectangle {
-        summit:483.486,53.558,504.974,77.574
-        origin:554.27,52.294
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/VC/IPCT-04"
-      }
-      JDRectangle {
-        summit:444.486,53.558,465.974,77.574
-        origin:515.27,52.294
-        background:204,204,204
-        fillStyle:1
-        name:"BL11/VC/IPCT-05"
-      }
-      JDImage {
-        summit:363.974,38,426,93.742
-        origin:553.574,-66.786
-        lineWidth:0
-        name:"Image"
-        file_name:"image/equips/icon-ipct.gif"
-      }
-    }
+  JDRectangle {
+    summit:888.75,54.678,910.238,78.694
+    origin:959.534,53.414
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/VGCT-03"
+  }
+  JDRectangle {
+    summit:926.75,54.678,948.238,78.694
+    origin:997.534,53.414
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/VGCT-02"
+  }
+  JDRectangle {
+    summit:962.75,54.678,984.238,78.694
+    origin:1033.534,53.414
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/VGCT-01"
+  }
+  JDRectangle {
+    summit:996.75,54.678,1018.238,78.694
+    origin:1067.534,53.414
+    background:204,204,204
+    fillStyle:1
+    name:"FE11/VC/VGCT-01"
+  }
+  JDImage {
+    summit:1127.278,41.574,1186.686,89.606
+    origin:1051.438,-55.754
+    lineWidth:0
+    name:"Image"
+    file_name:"image/equips/icon-eps.gif"
+  }
+  JDRectangle {
+    summit:1200.854,53.478,1222.342,77.494
+    origin:1271.638,52.214
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/CT/EPS-PLC-01"
+  }
+  JDRectangle {
+    summit:640.486,53.558,661.974,77.574
+    origin:711.27,52.294
+    background:204,204,204
+    fillStyle:1
+    name:"FE11/VC/IPCT-01"
+  }
+  JDRectangle {
+    summit:601.486,53.558,622.974,77.574
+    origin:672.27,52.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-01"
+  }
+  JDRectangle {
+    summit:563.486,53.558,584.974,77.574
+    origin:634.27,52.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-02"
+  }
+  JDRectangle {
+    summit:524.486,53.558,545.974,77.574
+    origin:595.27,52.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-03"
+  }
+  JDRectangle {
+    summit:483.486,53.558,504.974,77.574
+    origin:554.27,52.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-04"
+  }
+  JDRectangle {
+    summit:444.486,53.558,465.974,77.574
+    origin:515.27,52.294
+    background:204,204,204
+    fillStyle:1
+    name:"BL11/VC/IPCT-05"
+  }
+  JDImage {
+    summit:363.974,38,426,93.742
+    origin:553.574,-66.786
+    lineWidth:0
+    name:"Image"
+    file_name:"image/equips/icon-ipct.gif"
   }
   JDLabel {
     summit:83,48,236,80

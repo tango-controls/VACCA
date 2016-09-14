@@ -5,6 +5,9 @@ JDFile v11 {
     summit:5,5,1650,485
     origin:397,261
     name:"Rectangle"
+    extensions:{
+      noSelect:"True"
+    }
   }
   JDImage {
     summit:25,21,1619,460

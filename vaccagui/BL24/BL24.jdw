@@ -5,6 +5,9 @@ JDFile v11 {
     summit:2,4,1425,367
     origin:711.5,212.5
     name:"JDGroup"
+    extensions:{
+      noSelect:"True"
+    }
     children: {
       JDRectangle {
         summit:2,4,1425,367
