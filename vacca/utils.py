@@ -105,7 +105,7 @@ def get_class_property(dev_class,prop,extract=False):
     return []
    
 def get_vacca_property(prop,extract=False):
-    #print('get_vacca_property(%s)'%prop)
+    print('get_vacca_property(%s)'%prop)
     db = fandango.get_database()
     props = db.get_property('VACCA',prop)
     if prop in props:
@@ -268,7 +268,6 @@ def get_config_properties(config=''):
             for l in get_vacca_property(config,False)]
         config = VACCA_PROFILES[config]
         r = dict(l.split('=',1) for l in config if l)
-    #print(r)
     return r
 
 def get_config_file(config=None):

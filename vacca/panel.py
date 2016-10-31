@@ -335,6 +335,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         #self._label = vacca.utils.DraggableLabel()
         self._label = fandango.qt.Draggable(Qt.QLabel)()
         self._label.font().setBold(True)
+        self._label.setText('SELECT A DEVICE FROM THE TREE')
         self._header.layout().addWidget(self._label,0,1,Qt.Qt.AlignLeft)
         self._label.setDragEventCallback(self._label.text)
         #self.setToolTip(getattr(self,'__help__',self.__doc__))

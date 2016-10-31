@@ -174,7 +174,7 @@ try:
         __doc__ += get_vars_docs(__name__,title=c+' Options',module_vars=l,subtitle=False)
     
     if CONFIG:
-        print('\nConfig Options:')
+        print('\n%s Config Options:\n'%VACCA_CONFIG)
         for op in OPTIONS:
             limit = 800
             if 'VACCA_'+op in os.environ:
