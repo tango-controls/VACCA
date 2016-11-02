@@ -1,6 +1,10 @@
+
 =========================
 Overriding VACCA Settings
 =========================
+
+Levels
+------
 
 There are 4 hierarchic levels of settings in VACCA:
 
