@@ -204,7 +204,7 @@ try:
     # General info.
     #===============================================================================
     #: GUI_NAME will be used on application title and settings filenames
-    GUI_NAME = '%s-%s at %s'%(GUI_NAME,VACCA_CONFIG,DB_HOST)
+    GUI_NAME = '%s-%s-%s'%(GUI_NAME,VACCA_CONFIG.split('/')[-1].split('.')[0],DB_HOST)
     #: Name to be shown in right-side bar
     ORGANIZATION = ORGANIZATION
     #: Logo to be shown in right-side bar
