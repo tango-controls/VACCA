@@ -1,4 +1,9 @@
+=====
+VACCA
+=====
+
 DESCRIPTION
+===========
 
 VACCA is a versatile Control System Navigator tool built on top of the Taurus framework.
 It was developed by Sergi Rubio (srubio@cells.es) as the VACuum Control Application for ALBA Synchrotron.
@@ -15,6 +20,7 @@ It provides:
 Since Vacca 2.0 the application is build on top of taurus-gui. Its default setup includes 4 initial perspectives combining tree, synoptic, device panel, attribute grids, taurus trends and some common vacuum panels like pressure/temperature profiles.
 
 LINKS / DEPENDENCIES
+====================
 
 All dependencies and User Manual are available from www.tango-controls.org:
 
@@ -24,12 +30,14 @@ Taurus
 Fandango
 
 INSTALLING:
+===========
 
 Copy vacca folder to a folder in your PYTHONPATH
 Copy ./vaccagui script to a folder in your PATH
 Copy default.py.ini to default.py and edit your default options (follow comments in the file)
 
 CONTENTS:
+=========
 
  * bin/vaccagui : a launcher script
  * vaccagui : an application definition for taurusgui
@@ -40,12 +48,14 @@ CONTENTS:
  * vacca : the main module
 
 CUSTOMIZING:
+============
 
 The idea is to have general config in default.py (ORGANIZATION_LOGO, EXTRA_APPS, ...) and use another file to customize to your beamline/system.
 Copy default.py to my_beamline.py; modify variables like JDRAW_FILE, COMPOSER, GRID, DEVICE, GAUGES, ...
 Remove all variables you don't need to modify (if ORGANIZATION_LOG is the same for all do not have it declared in many files)
 
 RUNNING:
+========
 
 Launch the gui as:
  ./vaccagui path/to/mybeamline.py 
