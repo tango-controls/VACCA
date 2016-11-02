@@ -317,7 +317,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
 
         :param parent:
         :param model: Model to start the Panel.
-        :param filters: List of filters, by default is None
+        :param filters: dictionary with 'attrs' and 'comms' filters as regexp or tuples lists
         :return:
         """
         
@@ -340,6 +340,14 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self._label.setDragEventCallback(self._label.text)
         #self.setToolTip(getattr(self,'__help__',self.__doc__))
         
+        if filters:
+          self.info('VaccaPanel(filters=%s)'%filters)
+          if 'attrs' in filters:
+            type(self)._attribute_filter = {'.*':filters['attrs']}
+          if 'comms' in filters:
+            type(self)._command_filter = {'.*':
+              [c if fun.isSequence(c) else (c,()) for c in filters['comms']]}
+        
     @classmethod
     def getAttributeFilters(klass,dev_class=None):
         """
@@ -355,6 +363,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 filters = [(l.split(':')[0],l.split(':')[-1].split(',')) for l in filters]
                 klass._attribute_filter[dev_class] = filters
                 #return {'.*':filters}
+                
         print('getAttributeFilters(%s,%s): ...'%(klass,dev_class))#,klass._attribute_filter))
         return klass._attribute_filter
         
@@ -370,6 +379,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 #filters = dict((k,eval(v)) for k,v in (l.split(':',1) for l in filters))
                 filters = [(c,()) for c in filters]
                 klass._command_filter[dev_class] = filters
+                
         print('getCommandFilters(%s,%s): ...'%(klass,dev_class))#,klass._command_filter))
         return klass._command_filter
       
@@ -491,17 +501,22 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         return
     
     def get_comms_form(self,device,form=None,parent=None):
+      
         self.trace( 'In TaurusDevicePanel.get_comms_form(%s)'%device)
         dev_class = fandango.get_device_info(device).dev_class
         filters = type(self).getCommandFilters(dev_class)
         params = get_regexp_dict(filters,device,[]) or get_regexp_dict(filters,dev_class,[])
+        
         if filters and not params: #If filters are defined only listed devices will show commands
             self.debug('TaurusDevicePanel.get_comms_form(%s): By default an unknown device type will display no commands'% device)
             return None 
+          
         if not form: 
             form = TaurusCommandsForm(parent)
+            
         elif hasattr(form,'setModel'): 
             form.setModel('')
+            
         try:
             form.setModel(device)
             if params: 
@@ -515,6 +530,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
             #form._splitter.setStretchFactor(1,70)
             #form._splitter.setStretchFactor(0,30)
             form._splitter.setSizes([80,20])
+            
         except Exception: 
             self.warning('Unable to setModel for TaurusDevicePanel.comms_form!!: %s'%traceback.format_exc())
         return form
@@ -556,19 +572,28 @@ def configure_form(dev,form=None):
     #sw.setShowQuality(False) #It didn't work as expected
     return form
 
-if __name__ == '__main__':
-    #!/usr/bin/python
+
+def main(args):
+
     import sys,re,traceback,taurus
+    assert len(args)>1, '\n\nUsage:\n\t> python panel.py [a/device/name or synoptic.jdw] [--attrs] [attr_regexps] --comms [comm_regexps]'
+    
+    model = args[1]
     taurus.setLogLevel(taurus.core.util.Logger.Debug)
-    app = Qt.QApplication(sys.argv)
-    assert len(sys.argv)>1, '\n\nUsage:\n\t> python widgets.py a/device/name [attr_regexp]'
-    model = sys.argv[1]
-    filters = fun.first(sys.argv[2:],'')
+    app = Qt.QApplication(args)
     form = None
+    
     if re.match('[\w-]+/[\w-]+/[\w-]+.*',model):
+      
         print 'loading a device panel'
+        k,filters = '--attrs',fandango.defaultdict(list)
+        for f in args[2:]:
+          if f.startswith('--'): k = f.strip('-')
+          else: filters[k].append(f) #(f,()) if k=='comms' else f)
+          
         form = VaccaPanel(filters=filters)  #palette=get_fullWhite_palette()
         form.setModel(model)
+        
     elif model.lower().endswith('.jdw'):
         print 'loading a synoptic'
         form = taurus.qt.qtgui.graphic.TauJDrawSynopticsView(designMode=False,
@@ -588,8 +613,12 @@ if __name__ == '__main__':
             try: 
                 taurus.Attribute(m).changePollingPeriod(period)
             except: print '(%s).changePollingPeriod(%s): Failed: %s'%(m,period,traceback.format_exc())
+    
     print 'showing ...'
     form.show()
     sys.exit(app.exec_())
 
 __doc__ = vacca.get_autodoc(__name__,vars())
+
+if __name__ == '__main__': 
+  main(sys.argv)

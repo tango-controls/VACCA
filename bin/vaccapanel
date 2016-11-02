@@ -1,0 +1,24 @@
+#!/bin/sh
+
+
+# # VACCA Device Panel
+# # 
+# # Usage:
+# #    > vaccapanel [a/device/name or synoptic.jdw] [--attrs] [attr_regexps] --comms [comm_regexps]
+# # 
+# # It allows to open a taurusdevicepanel customized to show specific attributes/commands
+# # 
+# # S.Rubio-Manrique, srubio@cells.es, 2006-2015
+
+#Source your own environment variables from here:
+#source alba_blissrc
+
+if [ ! "$VACCA_PATH" ] ; then
+    #Getting current script folder
+    export VACCA_PATH=$(python -c "import imp;print(imp.find_module('vacca')[1])")
+fi
+
+LAUNCHER=$VACCA_PATH/panel.py
+python $LAUNCHER $* 
+#3>&1 2>&1 1>/dev/null
+
