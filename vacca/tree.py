@@ -36,6 +36,7 @@ from taurus.external.qt import Qt
 
 import taurus.core
 from taurus.core.util.colors import DEVICE_STATE_PALETTE,ATTRIBUTE_QUALITY_PALETTE
+
 from taurus.core.util.containers import CaselessDict
 from taurus.core.tango.search import * #@TODO: Avoid implicit imports
 from taurus.qt.qtcore.util.emitter import SingletonWorker
@@ -118,7 +119,42 @@ class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree,TaurusBas
                     item = self.createItem(parent,node,text)
             except:
                 self.warning('setNodeTree(%s,%s) failed!: %s'%(parent,node,traceback.format_exc()))
+                        
+    def getAllNodes(self):
+        """ Returns a list with all node objects. """
+        return self.item_index        
     
+    def setStateIcon(self, child, color):
+        color_codes = {
+            '#00ff00,ON,OPEN,EXTRACT':':/ICON_GREEN',
+            "#ff0000,OFF,FAULT":":/ICON_RED",
+            "#ff8c00,ALARM":":/ICON_ORANGE",
+            "#ffffff,CLOSE,INSERT":":/ICON_WHITE",
+            "#80a0ff,MOVING,RUNNING":":/ICON_BLUE",
+            "#ffff00,STANDBY":":/ICON_YELLOW",
+            "#cccc7a,INIT":":/ICON_BRAWN",
+            "#ff00ff,DISABLE":":/ICON_PINK",
+            "#808080f,None,UNKNOWN":":/ICON_GREY",            
+            }
+        if icons_dev_tree is None:
+            self.debug('In setStateIcon(...): Icons for states not available!')
+            self.setStateBackground(child,color)
+        else:
+            icon  = ":/ICON_WHITE"
+            for states,code in color_codes.items():
+                if str(color).upper() in states.upper():
+                    icon  = code
+            self.debug('setStateIcon(%s) => %s'%(color,icon))
+            icon = Qt.QIcon(icon)
+            child.setIcon(0,icon)
+            
+    def setStateBackground(self,child,color):
+        if not isinstance(color,Qt.QColor):
+            if DEVICE_STATE_PALETTE.has(color):
+                qc = Qt.QColor(*DEVICE_STATE_PALETTE.rgb(color))
+            else:
+                qc = Qt.QColor(color) if not fandango.isSequence(color) else Qt.QColor(*color)
+        child.setBackground(0,Qt.QBrush(qc))
     
 class VaccaTree(TaurusSearchTree):
     """
@@ -227,7 +263,37 @@ class VaccaTree(TaurusSearchTree):
                                       f = self,
                                       s = signal: f.emit(Qt.SIGNAL(s), args))
         self.edit.connectWithTree(self.tree)
-        return    
+        self.statetimer = Qt.QTimer(self)
+        self.connect(self.statetimer,Qt.SIGNAL('timeout()'),self.updateStates)
+        self.statetimer.start(100)
+        return
+    
+    def updateStates(self):
+        try:
+            self.info('On VaccaTree.updateStates()')
+            if not hasattr(self,'_statecount'): self._statecount = 0
+            if not self._statecount: 
+                self._nodes2update = self.tree.getAllNodes().keys()
+                self._allexported = fandango.get_all_devices(exported=True)
+            t0,dct = time.time(),{}
+            while time.time() < t0+2e-3:
+                if self._statecount>=len(self._nodes2update):
+                    self._statecount = 0
+                    break
+                else:
+                    k = self._nodes2update[self._statecount]
+                    self._statecount+=1 #< must be here
+                    try:
+                        if k.count('/') == k.count(':')+2:
+                            assert k in self._allexported
+                            dct[k] = str(taurus.Attribute(k+'/State').read().value)
+                            #print('updateStates(%s/%s): %s = %s'%(self._statecount,len(self._nodes2update),k,dct[k]))
+                    except:
+                        dct[k] = 'UNKNOWN'
+                        
+            self.tree.setIcons(dct,regexps=False)
+        except:
+            self.warning('On VaccaTree.updateStates(): %s'%traceback.format_exc())
 
     @staticmethod
     def getDefaultIcon():
