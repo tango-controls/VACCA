@@ -6,12 +6,19 @@ PyTango and Taurus must be installed
 
 In addition, get latest fandango and SimulatorDS::
 
-  > git clone https://github.com/tango-controls/fandango
+  > git clone https://github.com/tango-controls/fandango fandango.git
   > git clone https://github.com/tango-controls/SimulatorDS
+  
+Install them using setup.py or just add folders to PATH:
+
+  > export PYTHONPATH=$(pwd):$(pwd)/fandango.git:$PYTHONPATH
+  > export PATH=$(pwd)/fandango.git/fandango/scripts:$PATH 
 
 Get Vacca::
 
   > git clone https://github.com/sergirubio/vacca vacca.git
+  > export PATH=$(pwd)/vacca.git/bin:$PATH
+  > export PYTHONPATH=$(pwd)/vacca.git:$PYTHONPATH
   > cd vacca.git/examples/elinac
 
 If you don't have the TangoBox devices, create new simulators::
