@@ -49,7 +49,7 @@ ORGANIZATION_LOGO = WDIR+'image/icons/AlbaLogo.png'
 ###############################################################################
 # Synoptic file
 
-JDRAW_FILE = WDIR+'/examples/elinac/linac.jdw' #WDIR+'%s/%s.jdw'%(TARGET,TARGET)
+JDRAW_FILE = 'linac.jdw' #WDIR+'%s/%s.jdw'%(TARGET,TARGET)
 #Enables/disables loading jdraw objects into tree
 JDRAW_TREE = True 
 #A method that does transformation on signals sent to other widgets.
@@ -168,9 +168,19 @@ xastor = ExternalApp(cmdargs=['astor'], text="Astor")#, icon=WDIR+'image/icons/c
 EXTRA_APPS = {
     #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
     }
+
+try:
+    import panic
+    EXTRA_APPS['PANIC'] = {'name': 'PANIC',
+                'class': vacca.VaccaPanic}
+except: pass
+
+EXTRA_APPS['Finder'] = {'name': 'Finder',
+                'class': lambda:os.system('taurusfinder&'),
+                'icon': vacca.utils.wdir('image/icons/search.png')}
     
 #from vacca.panel import VaccaAction
     
-xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',model=["Archiving",WDIR+'image/icons/Mambo-icon.png','mambo'],)
-xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaAction',model=['Alarms',WDIR+'image/icons/panic.gif','panic'])
-xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction',model=['Snap',WDIR+'image/icons/Crystal_Clear_app_kedit.png','ctsnaps'])
+#xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',model=["Archiving",WDIR+'image/icons/Mambo-icon.png','mambo'],)
+#xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaAction',model=['Alarms',WDIR+'image/icons/panic.gif','panic'])
+#xsnap = AppletDescription('xSnap',classname='vacca.panel.VaccaAction',model=['Snap',WDIR+'image/icons/Crystal_Clear_app_kedit.png','ctsnaps'])
