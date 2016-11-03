@@ -37,6 +37,8 @@ Last, launch VACCA::
 
   > vaccagui elinac.py
 
+.. image:: screenshot.png
+
 Enjoy
 
 Sergi Rubio, 2010 - 2016
