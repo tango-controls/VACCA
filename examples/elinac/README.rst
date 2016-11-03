@@ -1,35 +1,35 @@
 
-# Execute the ELinac simulation
-# =============================
+Execute the ELinac simulation
+=============================
 
-# PyTango and Taurus must be installed
+PyTango and Taurus must be installed
 
-# In addition, get latest fandango and SimulatorDS
+In addition, get latest fandango and SimulatorDS::
 
-> git clone https://github.com/tango-controls/fandango
-> git clone https://github.com/tango-controls/SimulatorDS
+  > git clone https://github.com/tango-controls/fandango
+  > git clone https://github.com/tango-controls/SimulatorDS
 
-# Get Vacca
+Get Vacca::
 
-> git clone https://github.com/sergirubio/vacca vacca.git
-> cd vacca.git/examples/elinac
+  > git clone https://github.com/sergirubio/vacca vacca.git
+  > cd vacca.git/examples/elinac
 
-# Create the simulators
+If you don't have the TangoBox devices, create new simulators::
 
-> ipython
-: import Simulator.gen_simulation as gs
-: gs.generate_class_properties()
-: gs.create_simulators('ui_attribute_values.pck',instance='elinac',tango_host='127.0.0.1')
-: Ctrl+D
+  > ipython
+  : import Simulator.gen_simulation as gs
+  : gs.generate_class_properties()
+  : gs.create_simulators('ui_attribute_values.pck',instance='elinac',tango_host='127.0.0.1')
+  : Ctrl+D
 
-# If you have starter and fandango/scripts in PATH, let's launch the simulators:
+If you have starter and fandango/scripts in PATH, let's launch the simulators::
 
-> tango_servers start "SimulatorDS/elin*"
+  > tango_servers start "SimulatorDS/elin*"
 
-# Last, launch VACCA
+Last, launch VACCA::
 
-> vaccagui elinac.py
+  > vaccagui elinac.py
 
-# Enjoy
+Enjoy
 
-# srubio, 2010 - 2016
+Sergi Rubio, 2010 - 2016
