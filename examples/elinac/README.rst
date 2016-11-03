@@ -9,7 +9,7 @@ In addition, get latest fandango and SimulatorDS::
   > git clone https://github.com/tango-controls/fandango fandango.git
   > git clone https://github.com/tango-controls/SimulatorDS
   
-Install them using setup.py or just add folders to PATH:
+Install them using setup.py or just add folders to PATH::
 
   > export PYTHONPATH=$(pwd):$(pwd)/fandango.git:$PYTHONPATH
   > export PATH=$(pwd)/fandango.git/fandango/scripts:$PATH 
