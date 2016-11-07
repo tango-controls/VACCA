@@ -105,7 +105,7 @@ def get_class_property(dev_class,prop,extract=False):
     return []
    
 def get_vacca_property(prop,extract=False):
-    print('get_vacca_property(%s)'%prop)
+    #print('get_vacca_property(%s)'%prop)
     db = fandango.get_database()
     props = db.get_property('VACCA',prop)
     if prop in props:
