@@ -1,5 +1,25 @@
 2016 
 
+VACCA 4.3: 9th November 2016, Migrated to github, tuned for ELinac demo
+
+Update documentation
+Add instructions to launch ELINAC demo
+Solve default.ini bugs
+Adding setup for elinac example
+Solve config naming bug
+Add vaccapanel launcher
+Add attrs/comms filters to vaccapanel launcher.
+Add log to get_attrs_form
+Reenable state colors in Tree
+Add hint to empty panel
+Solve background selection issues in synoptics
+fix_bug_in_launchers
+Solved bug with paths and env variables
+Traces cleanup
+Better traces on icon exception
+
+-------------------------------------------------------------------------------------------------------------------
+
 VACCA 4.2: 13th September 2016, Bug Fixing release for beamlines!
 
 Solved path issues in beamlines
