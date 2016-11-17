@@ -36,6 +36,10 @@ Copy vacca folder to a folder in your PYTHONPATH
 Copy ./vaccagui script to a folder in your PATH
 Copy default.py.ini to default.py and edit your default options (follow comments in the file)
 
+For a fast way to test VACCA, try the ELINAC example:
+
+ * https://github.com/sergirubio/VACCA/blob/master/examples/elinac/README.rst
+
 CONTENTS:
 =========
 
