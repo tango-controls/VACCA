@@ -75,6 +75,7 @@ from fandango.qt import Qt
 from taurus.qt.qtgui.base import TaurusBaseComponent
 from taurus.core.util.eventfilters import ONLY_CHANGE_AND_PERIODIC
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
+from taurus.qt.qtgui.taurusgui import TaurusGui
 
 ###############################################################################
 
@@ -343,8 +344,7 @@ def get_taurus_gui(app=None):
         taurusgui = None
         widgets = app.allWidgets()
         for widget in widgets:
-            widgetType = str(type(widget))
-            if widgetType.endswith('TaurusGui'):
+            if isinstance(widget, TaurusGui):
                 taurusgui = widget  
         return taurusgui
     except:
@@ -708,8 +708,7 @@ class addCustomPanel2Gui(object):
             taurusgui = None
             widgets = app.allWidgets()
             for widget in widgets:
-                widgetType = str(type(widget))
-                if 'taurus.qt.qtgui.taurusgui.taurusgui.TaurusGui' in widgetType:
+                if isinstance(widget, TaurusGui):
                     taurusgui = widget
             #taurusgui = get_taurus_gui() #get_main_window() does not work here!?
 
