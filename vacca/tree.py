@@ -40,7 +40,7 @@ from taurus.external.qt import Qt
 import taurus.core
 from taurus.core.util.colors import DEVICE_STATE_PALETTE
 
-from taurus.core.tango.search import, get_alias_for_device
+from taurus.core.tango.search import get_alias_for_device
 from taurus.qt.qtgui.base import TaurusBaseComponent, TaurusBaseWidget
 
 TREE_ITEM_MIME_TYPE = 'application/x-qabstractitemmodeldatalist'
