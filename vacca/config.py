@@ -120,7 +120,7 @@ PROPS = get_config_properties(VACCA_CONFIG)
 VACCA_DIR = WDIR = PROPS.get('VACCA_DIR',VACCA_DIR)
 
 print('-'*80)
-print('In vacca.config(%s,%s)'%(globals().get('CONFIG_DONE',None),VACCA_DIR))
+print('In vacca.config(done=%s,vacca_dir=%s)'%(globals().get('CONFIG_DONE',False),VACCA_DIR))
 
 try:
 
@@ -162,7 +162,7 @@ try:
         ('General Info', ['GUI_NAME','URL_HELP','URL_LOGBOOK','VACCA_LOGO','ORGANIZATION','ORGANIZATION_LOGO',]),
         ('Installation', ['WDIR','SETTINGS']),
         ('Sub systems', ['DOMAIN','TARGET','COMPOSER',]),
-        ('Device Tree', ['USE_DEVICE_TREE','CUSTOM_TREE','EXTRA_DEVICES',]),
+        ('Device Tree', ['USE_DEVICE_TREE','CUSTOM_TREE','DEVICES','EXTRA_DEVICES']),
         ('Synoptics', ['JDRAW_FILE','JDRAW_TREE','JDRAW_HOOK','GRID',]),
         ('Device Panel', ['USE_DEVICE_PANEL','DEVICE','PANEL_COMMAND','AttributeFilters','CommandFilters','IconMap',]),
         ('Plot', ['GAUGES']),
@@ -175,11 +175,14 @@ try:
     
     if CONFIG:
         print('\n%s Config Options:\n'%VACCA_CONFIG)
+          
+        #Variable replacement
         for op in OPTIONS:
             limit = 800
             if 'VACCA_'+op in os.environ:
                 print('%s.%s overriden by OS'%(VACCA_CONFIG,op))
                 setattr(CONFIG,op,os.getenv('VACCA_'+op))
+                
             elif op in PROPS:
                 print('%s.%s overriden by TangoDB'%(VACCA_CONFIG,op))
                 setattr(CONFIG,op,PROPS[op])
@@ -249,9 +252,19 @@ try:
 
     #: USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree
     USE_DEVICE_TREE = USE_DEVICE_TREE
+    
+    try:
+        DEVICES = expand_device_list(DEVICES)
+        DEVICES.extend(expand_device_list(EXTRA_DEVICES))
+        if DEVICE and DEVICE.lower() not in DEVICES:
+          DEVICES.append(DEVICE.lower())
+        if DEVICES and not DEVICE: 
+          DEVICE = DEVICES[0]
+    except: 
+        traceback.print_exc()
 
-    if USE_DEVICE_TREE or JDRAW_FILE or EXTRA_DEVICES:
-        print('\t>>> Loading Tree panel(%s) ...'%(len(EXTRA_DEVICES)))
+    if any((USE_DEVICE_TREE,JDRAW_FILE,len(DEVICES)>1)):
+        print('\t>>> Loading Tree panel(%s) ...'%(len(DEVICES)))
         from tree import *
         try:
             # The lastWindowClosed() signal will close all opened widgets and dialogs on application exit
@@ -280,21 +293,15 @@ try:
         VaccaTree.setDefaultAttrFilter(filterMatching)
         if IconMap: VaccaTree.setIconMap(IconMap)
         
-        if fn.isString(EXTRA_DEVICES):
-          EXTRA_DEVICES = fn.join((s.split(',') if ',' in s else fn.get_matching_devices(s)) for s in EXTRA_DEVICES.split())
-        EXTRA_DEVICES = sorted(set(map(str.lower,filter(bool,[DEVICE]+list(EXTRA_DEVICES)))))
-        
         tree = PanelDescription('Tree',
             classname = 'vacca.VaccaTree',#'vacca.VaccaTree',#'TaurusDevTree',
-            model = CUSTOM_TREE or ','.join(EXTRA_DEVICES),
+            model = CUSTOM_TREE or ','.join(DEVICES),
             sharedDataRead={'LoadItems':'addModels',
                 ##DISABLED BECAUSE TRIGGERED RECURSIVE SELECTION, TO BE AVOIDED IN TREE
                 #'SelectedInstrument':'findInTree',
                 }, #It will load devices from synoptic
             sharedDataWrite={'SelectedInstrument':'deviceSelected(QString)'}
             )
-                            
-        if EXTRA_DEVICES and not DEVICE: DEVICE = EXTRA_DEVICES[0]
 
     #: USE_DEVICE_PANEL:  True or False, To Show by default the DevicePanel
     USE_DEVICE_PANEL = USE_DEVICE_PANEL
