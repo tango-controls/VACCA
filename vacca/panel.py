@@ -249,7 +249,7 @@ class VaccaSearchForm(TaurusWidget):
         self.setLayout(Qt.QVBoxLayout())
         self.bar = Qt.QWidget(self)
         self.search = Qt.QLineEdit()
-        self.button = Qt.QPushButton('Search')
+        self.button = Qt.QPushButton('Load')
         self.connect(self.button,Qt.SIGNAL("pressed()"),self.apply_search)
         self.bar.setLayout(Qt.QHBoxLayout())
         self.bar.layout().addWidget(self.search)
@@ -260,7 +260,7 @@ class VaccaSearchForm(TaurusWidget):
         
     def apply_search(self):
         signs = "==|=|<|>"
-        txt = str(self.search.text())
+        txt = str(self.search.text() or '*')
         if fandango.clsearch(signs,txt):
           t = fandango.re.split(signs,txt,1)[0]
           txt,formula = t,txt.replace(t,'')
@@ -463,8 +463,12 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                   filters = get_regexp_dict(self._attribute_filter,dev_class,['.*'])
                   
                 search_tab = None
+                if filters == ['.*'] and len(taurus.Device(model).get_attribute_list())>16:
+                    filters = [('Attributes',['.*'])]
                 
                 if hasattr(filters,'keys'): filters = filters.items() #Dictionary!
+                print('\tfilters = %s'%filters)
+
                 if filters and isinstance(filters[0],(list,tuple)): #Mapping for Tabs
                     self._attrs = []
                     for tab,attrs in filters:
