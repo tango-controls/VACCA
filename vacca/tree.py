@@ -122,7 +122,48 @@ class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree, TaurusBa
     def getAllNodes(self):
         """ Returns a list with all node objects. """
         return self.item_index
+      
+    ###########################################################################
+    # Update node colors
+      
+    def setIcons(self,dct={},root_name=None,regexps=True):
+        '''
+        This method change the icons depending of the status of the devices
+        Dict is a dictionary with name of device and colors such as 
+        {name_device:color,name_device2:color2}
+        An alternative may be an icon name!
+        '''
+        state2color = lambda state: Qt.QColor(DEVICE_STATE_PALETTE.number(state))
 
+        def update_node(node,key,dct):
+            if hasattr(node,'CustomForeground'):
+                node.setForeground(0,Qt.QBrush(Qt.QColor(node.CustomForeground)))
+            if hasattr(node,'CustomBackground'):
+                node.setBackground(0,Qt.QBrush(Qt.QColor(node.CustomBackground)))            
+            elif hasattr(node,'StateBackground'):
+                node.setBackground(0,Qt.QBrush(state2color(dct[key])))
+            if hasattr(node,'CustomIcon'):
+                node.setIcon(0,Qt.QIcon(node.CustomIcon))
+            else:
+                if key.count('/')==2:
+                    self.setStateIcon(node,dct and dct[key] or '')
+            return
+
+        if not isinstance(dct,dict): 
+            dct = dict.fromkeys(dct,'')    
+        nodes = self.getAllNodes()
+        
+        for name,node in nodes.iteritems():
+            name = str(name).split()[0]
+            if node.isHidden(): continue
+            if regexps:
+                matches = [v for k,v in dct.items() if re.match(k.lower(),name.lower())]
+                if matches: 
+                    update_node(node,name,{name:matches[0]})
+            elif name in dct:
+                update_node(node,name,dct or {name:''})
+        return
+    
     def setStateIcon(self, child, color):
         color_codes = {
             '#00ff00,ON,OPEN,EXTRACT': ':/ICON_GREEN',
@@ -136,8 +177,8 @@ class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree, TaurusBa
             "#808080f,None,UNKNOWN": ":/ICON_GREY",
         }
         if icons_dev_tree is None:
-            self.debug('In setStateIcon(...): Icons for states not available!')
-            self.setStateBackground(child, color)
+            self.debug('In setStateIcon(%s,%s): Icons for states not available!'%(child,color))
+            self.setStateBackground(child,color)
         else:
             icon = ":/ICON_WHITE"
             for states, code in color_codes.items():
@@ -259,6 +300,8 @@ class VaccaTree(TaurusSearchTree):
         self.setLayout(Qt.QVBoxLayout())
         self.edit = TaurusDevTreeOptions(self)
         self.tree = VaccaDevTree(self)
+        self.setLogLevel(self.Info)
+        self.tree.setLogLevel(self.Info)
         self.astor = fandango.Astor()
         if 'Start Server' not in dict(self.tree.ExpertMenu):
             self.tree.ExpertMenu.append(('Start Server', self.start_server))
@@ -277,33 +320,45 @@ class VaccaTree(TaurusSearchTree):
         self.edit.connectWithTree(self.tree)
         self.statetimer = Qt.QTimer(self)
         self.connect(self.statetimer, Qt.SIGNAL('timeout()'), self.updateStates)
-        self.statetimer.start(100)
+        self.statetimer.start(333)
         return
 
     def updateStates(self):
         try:
-            self.info('On VaccaTree.updateStates()')
-            if not hasattr(self, '_statecount'): self._statecount = 0
-            if not self._statecount:
+            self.debug('On VaccaTree.updateStates()')
+            if not hasattr(self,'_statecount'): self._statecount = 0
+            if not self._statecount: 
                 self._nodes2update = self.tree.getAllNodes().keys()
                 self._allexported = fandango.get_all_devices(exported=True)
-            t0, dct = time.time(), {}
-            while time.time() < t0 + 2e-3:
-                if self._statecount >= len(self._nodes2update):
-                    self._statecount = 0
-                    break
-                else:
-                    k = self._nodes2update[self._statecount]
-                    self._statecount += 1  # < must be here
-                    try:
-                        if k.count('/') == k.count(':') + 2:
-                            assert k in self._allexported
-                            dct[k] = str(taurus.Attribute(k + '/State').read().value)
-                            # print('updateStates(%s/%s): %s = %s'%(self._statecount,len(self._nodes2update),k,dct[k]))
-                    except:
-                        dct[k] = 'UNKNOWN'
 
-            self.tree.setIcons(dct, regexps=False)
+            if len(self._nodes2update)>32:
+              if getattr(self,'_coloured',True):
+                self._coloured = False
+                whites = dict((k,'CLOSE') for k in self._nodes2update)
+                self.tree.setIcons(whites,regexps=False)
+                self.warning('too many tree nodes (%s) to update!'%(len(self._nodes2update)))
+              else: pass #Not trivial
+            else:
+              t0,dct = time.time(),{}
+              while time.time() < t0+2e-3:
+                  if self._statecount>=len(self._nodes2update):
+                      self._statecount = 0
+                  k = self._nodes2update[self._statecount]
+                  self._statecount+=1 #< must be here
+                  try:
+                      if k.count('/') == k.count(':')+2:
+                          x = k in self._allexported
+                          self.debug('On VaccaTree.updateStates(%s,%s,%s)'%(self._statecount,k,x))
+                          if not x:
+                            self.debug('\t%s not exported!'%k)
+                            dct[k] = 'UNKNOWN'
+                          else:
+                            dct[k] = str(taurus.Attribute(k+'/State').read().value)
+                  except:
+                      self.info('updateStates(%s) failed!: %s'%(k,traceback.format_exc()))
+              if dct:
+                  self.tree.setIcons(dct,regexps=False)
+
         except:
             self.warning('On VaccaTree.updateStates(): %s' % traceback.format_exc())
 
