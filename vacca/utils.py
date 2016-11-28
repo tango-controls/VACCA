@@ -69,7 +69,7 @@ VACCA_PATH: *vpath('path/to/icon')*
 
 import os,sys,traceback,imp,time,re
 import fandango
-from fandango import printf,get_database,first
+from fandango import printf,get_database,first,isString,isRegexp
 from fandango.dicts import SortedDict
 from fandango.qt import Qt
 from taurus.qt.qtgui.base import TaurusBaseComponent
@@ -200,6 +200,34 @@ def vpath(s=''):
     VACCA_PATH = os.getenv('VACCA_PATH')
     s2 = _joiner(VACCA_PATH,'/',s)
     return s2
+  
+def expand_device_list(expressions):
+    """
+    Expands a list of regular expressions into a list of devices
+    
+    It adds 2 new reserverd characters:
+     - ! , at the beginning of the expression is a negative lookup
+     - ? , at the beginning of the expression, matches only exported devices
+    """
+    devices,ins,outs = [],set(),set()
+    if isString(expressions):
+      expressions = (','.join(expressions.split())).split(',')
+    [(ins,outs)['!' in s].add(s.strip().lower()) for s in expressions if s.strip()]
+    for s in ins:
+      try:
+        if isRegexp(s):
+          ds = fandango.get_matching_devices(s.strip('?'),exported='?' in s)
+          devices.extend(d for d in ds if not d.startswith('dserver/'))
+        else:
+          devices.append(s)
+      except Exception,e:
+        print(e,traceback.format_exc())
+    for o in outs:
+      try:
+        devices = [d for d in devices if not fandango.matchCl(o.strip('!'),d)]
+      except:
+        print(e,traceback.format_exc())
+    return sorted(devices)
   
 ###############################################################################
   
