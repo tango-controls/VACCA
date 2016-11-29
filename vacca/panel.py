@@ -463,13 +463,14 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                   filters = get_regexp_dict(self._attribute_filter,dev_class,['.*'])
                   
                 search_tab = None
-                if filters == ['.*'] and len(taurus.Device(model).get_attribute_list())>16:
+                if filters == ['.*'] and len(taurus.Device(model).get_attribute_list())>32:
                     filters = [('Attributes',['.*'])]
                 
                 if hasattr(filters,'keys'): filters = filters.items() #Dictionary!
                 print('\tfilters = %s'%filters)
 
-                if filters and isinstance(filters[0],(list,tuple)): #Mapping for Tabs
+                #Showing multiple Tabs
+                if filters and isinstance(filters[0],(list,tuple)): 
                     self._attrs = []
                     for tab,attrs in filters:
                       if attrs[1:] or attrs[0] not in ('*','.*'):
@@ -479,8 +480,10 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                       else:
                         self.info('Embedding a Search panel')
                         search_tab = tab,VaccaSearchForm(preffix=model+'/*',suffix='*',labels=True)
-                else:
+                #Mapping into a single form
+                else: 
                     if self._attrs and isinstance(self._attrs,list): self._attrs = self._attrs[0]
+                    if not isinstance(self._attrs,Qt.QWidget): self._attrs = None
                     self._attrs = self.get_attrs_form(device=model,form=self._attrs,filters=filters,parent=self)
                     if self._attrs: self._attrsframe.addTab(self._attrs,'Attributes')
                     
