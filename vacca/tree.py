@@ -133,36 +133,40 @@ class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree, TaurusBa
         {name_device:color,name_device2:color2}
         An alternative may be an icon name!
         '''
-        state2color = lambda state: Qt.QColor(DEVICE_STATE_PALETTE.number(state))
+        try:
+          state2color = lambda state: Qt.QColor(DEVICE_STATE_PALETTE.number(state))
+          self.node_colors = getattr(self,'node_colors',{})
+          dct = dict((k,v) for k,v in dct.items() if v!=self.node_colors.get(k,None))
 
-        def update_node(node,key,dct):
-            if hasattr(node,'CustomForeground'):
-                node.setForeground(0,Qt.QBrush(Qt.QColor(node.CustomForeground)))
-            if hasattr(node,'CustomBackground'):
-                node.setBackground(0,Qt.QBrush(Qt.QColor(node.CustomBackground)))            
-            elif hasattr(node,'StateBackground'):
-                node.setBackground(0,Qt.QBrush(state2color(dct[key])))
-            if hasattr(node,'CustomIcon'):
-                node.setIcon(0,Qt.QIcon(node.CustomIcon))
-            else:
-                if key.count('/')==2:
-                    self.setStateIcon(node,dct and dct[key] or '')
-            return
+          def update_node(node,key,dct):
+              if hasattr(node,'CustomForeground'):
+                  node.setForeground(0,Qt.QBrush(Qt.QColor(node.CustomForeground)))
+              if hasattr(node,'CustomBackground'):
+                  node.setBackground(0,Qt.QBrush(Qt.QColor(node.CustomBackground)))            
+              elif hasattr(node,'StateBackground'):
+                  node.setBackground(0,Qt.QBrush(state2color(dct[key])))
+              if hasattr(node,'CustomIcon'):
+                  node.setIcon(0,Qt.QIcon(node.CustomIcon))
+              else:
+                  if key.count('/')==2:
+                      self.setStateIcon(node,dct and dct[key] or '')
+              return
 
-        if not isinstance(dct,dict): 
-            dct = dict.fromkeys(dct,'')    
-        nodes = self.getAllNodes()
-        
-        for name,node in nodes.iteritems():
-            name = str(name).split()[0]
-            if node.isHidden(): continue
-            if regexps:
-                matches = [v for k,v in dct.items() if re.match(k.lower(),name.lower())]
-                if matches: 
-                    update_node(node,name,{name:matches[0]})
-            elif name in dct:
-                update_node(node,name,dct or {name:''})
-        return
+          nodes = self.getAllNodes()
+          
+          for name,node in nodes.iteritems():
+              name = str(name).split()[0]
+              if node.isHidden(): continue
+              if regexps:
+                  matches = [v for k,v in dct.items() if re.match(k.lower(),name.lower())]
+                  if matches: 
+                      update_node(node,name,{name:matches[0]})
+              elif name in dct:
+                  update_node(node,name,dct or {name:''})
+                  
+          self.node_colors.update(dct)
+        except:
+          self.warning('setIcons(): \n%s'%traceback.format_exc())
     
     def setStateIcon(self, child, color):
         color_codes = {
