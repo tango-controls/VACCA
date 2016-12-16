@@ -24,7 +24,7 @@ Get Vacca::
 If you don't have the TangoBox devices, create new simulators::
 
   > ipython
-  : import Simulator.gen_simulation as gs
+  : import SimulatorDS.gen_simulation as gs
   : gs.generate_class_properties()
   : gs.create_simulators('ui_attribute_values.pck',instance='elinac',tango_host='127.0.0.1')
   : Ctrl+D
