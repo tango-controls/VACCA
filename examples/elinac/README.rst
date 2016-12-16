@@ -29,9 +29,15 @@ If you don't have the TangoBox devices, create new simulators::
   : gs.create_simulators('ui_attribute_values.pck',instance='elinac',tango_host='127.0.0.1')
   : Ctrl+D
 
-If you have starter and fandango/scripts in PATH, let's launch the simulators::
+Let's launch the simulators:
+
+ With Starter and fandango/scripts::
 
   > tango_servers start "SimulatorDS/elin*"
+
+ Or directly running the .py script::
+
+  > python ...../SimulatorDS.py elin &
 
 Last, launch VACCA::
 
