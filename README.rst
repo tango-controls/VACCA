@@ -8,7 +8,7 @@ DESCRIPTION
 VACCA is a versatile Control System Navigator tool built on top of the Taurus framework.
 It was developed by Sergi Rubio (srubio@cells.es) as the VACuum Control Application for ALBA Synchrotron.
 
-http://www.tango-controls.org/Members/srubio/vacca
+https://github.com/tango-controls/VACCA
 
 It provides:
 
@@ -18,6 +18,8 @@ It provides:
  * Filters at Device/Attribute/Command level, to display only the devices/attributes users are interested in.
 
 Since Vacca 2.0 the application is build on top of taurus-gui. Its default setup includes 4 initial perspectives combining tree, synoptic, device panel, attribute grids, taurus trends and some common vacuum panels like pressure/temperature profiles.
+
+.. image:: doc/bl09_vacca_image.jpg
 
 LINKS / DEPENDENCIES
 ====================
