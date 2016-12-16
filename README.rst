@@ -19,7 +19,7 @@ It provides:
 
 Since Vacca 2.0 the application is build on top of taurus-gui. Its default setup includes 4 initial perspectives combining tree, synoptic, device panel, attribute grids, taurus trends and some common vacuum panels like pressure/temperature profiles.
 
-.. image:: doc/vacca_screenshot.png
+.. image:: doc/bl09_vacca_image.jpg
 
 LINKS / DEPENDENCIES
 ====================
