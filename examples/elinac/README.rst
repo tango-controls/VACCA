@@ -16,12 +16,12 @@ Install them using setup.py or just add folders to PATH::
 
 Get Vacca::
 
-  > git clone https://github.com/sergirubio/vacca vacca.git
+  > git clone https://github.com/tango-controls/vacca vacca.git
   > export PATH=$(pwd)/vacca.git/bin:$PATH
   > export PYTHONPATH=$(pwd)/vacca.git:$PYTHONPATH
   > cd vacca.git/examples/elinac
 
-If you don't have the TangoBox devices, create new simulators::
+If you don't have the TangoBox devices, create new simulators using SimulatorDS ::
 
   > ipython
   : import SimulatorDS.gen_simulation as gs
