@@ -45,6 +45,9 @@ Last, launch VACCA::
 
 .. image:: screenshot.png
 
-Enjoy
+From this point you can select devices from the tree or synoptic, interact with attributes/commands and start/stop/reload devices and its properties using the right click menus.
+
+If panic and PyTangoArchiving are available, the AlarmGUI and ArchivingBrowser widgets can be added to the perspective for a richer functionality.
+
 
 Sergi Rubio, 2010 - 2016
