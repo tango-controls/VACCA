@@ -122,10 +122,17 @@ def get_vacca_property(prop,extract=False):
         return v
     return [] if not extract else ''
 
-def replace_env(text,var,value=None):
-    if value is None: value = os.getenv(var)
-    e = '[$][(]?'+var+'[)]?(?![a-zA-Z_0-9])'
-    return re.sub(e,str(value),text)
+def replace_env(text,var=('VACCA_DIR','VACCA_PATH'),value=None):
+    """
+    Replaces each occurrence of $ENV_VARIABLE by its value.
+    Var names can be a sequence
+    """
+    if fandango.isSequence(var):
+      return reduce(replace_env,[text]+list(var))
+    else:
+      if value is None: value = os.getenv(var)
+      e = '[$][(]?'+var+'[)]?(?![a-zA-Z_0-9])'
+      return re.sub(e,str(value),text)
   
 ###############################################################################
 
