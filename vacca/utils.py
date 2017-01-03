@@ -283,6 +283,11 @@ def load_config_properties(config,export=True):
     return props
   
 def get_config_properties(config=''):
+    """
+    This method will get the list of VACCA free properties.
+    If a config is passed, it will parse its contents as a dictionary.
+    A new declaration of VACCA_CONFIG will be parsed as CONFIG_FILE instead.
+    """
     #print('vacca.utils.get_config_properties(%s)'%config)
     global VACCA_PROFILES
     if not VACCA_PROFILES:
@@ -297,9 +302,15 @@ def get_config_properties(config=''):
             for l in get_vacca_property(config,False)]
         config = VACCA_PROFILES[config]
         r = dict(l.split('=',1) for l in config if l)
+        if 'VACCA_CONFIG' in r and 'CONFIG_FILE' not in r:
+          r['CONFIG_FILE'] = r.pop('VACCA_CONFIG')
     return r
 
 def get_config_file(config=None):
+    """
+    This method parses properties and returns the value of CONFIG_FILE.
+    If undefined, VACCA_CONFIG is returned as fallback.
+    """
     global VACCA_CONFIG,VACCA_DIR
     print('-')*80
     if not config:
