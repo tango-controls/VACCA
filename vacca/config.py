@@ -185,10 +185,10 @@ try:
                 
             elif op in PROPS:
                 print('%s.%s overriden by TangoDB'%(VACCA_CONFIG,op))
-                setattr(CONFIG,op,PROPS[op])
+                setattr(CONFIG,op,replace_env(PROPS[op]))
                 
             if hasattr(CONFIG,op):
-                v = getattr(CONFIG,op)
+                v = replace_env(getattr(CONFIG,op))
                 print('\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v).replace('\n',',')[:limit]))
                 setattr(default,op,v)
         

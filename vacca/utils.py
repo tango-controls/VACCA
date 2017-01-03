@@ -125,7 +125,7 @@ def get_vacca_property(prop,extract=False):
 def replace_env(text,var=('VACCA_DIR','VACCA_PATH'),value=None):
     """
     Replaces each occurrence of $ENV_VARIABLE by its value.
-    Var names can be a sequence
+    Var names can be a sequence.
     """
     if fandango.isSequence(var):
       return reduce(replace_env,[text]+list(var))
