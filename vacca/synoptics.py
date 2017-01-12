@@ -36,7 +36,11 @@ from taurus.qt import Qt
 from fandango import partial,FakeLogger as FL
 
 from taurus.qt.qtgui.graphic import TaurusJDrawSynopticsView,TaurusGraphicsScene,TaurusJDrawGraphicsFactory,TYPE_TO_GRAPHICS
-from taurus.qt.qtgui.graphic.taurusgraphic import TaurusGroupItem
+from taurus.qt.qtgui.graphic.taurusgraphic import TaurusGroupItem,TaurusGraphicsItem,QGraphicsTextBoxing
+from taurus.qt.qtgui.util import ExternalAppAction
+
+from vacca.utils import get_env_variable
+from vacca.panel import VaccaPanel
 
 import traceback
 def catched(f):
@@ -46,6 +50,37 @@ def catched(f):
     except:
       traceback.print_exc()
   return new_f
+
+__doc__ = """
+How Synoptics work in Taurus
+============================
+
+Parsing of JDRAW files
+----------------------
+
+The ...graphic.jdraw.jdraw module provides the TaurusJDrawGraphicsFactory
+At graphic.jdraw_view.TaurusJDrawSynopticsView.setModel(), the factory is passed
+to the jdraw_parser.parse method. It will return a TaurusGraphicsScene object, 
+that will be linked to the view using ...View.setScene() method.
+
+Once the Scene is set, the View object is just a proxy to the scene. 
+Its main function is to manage resizing, signals and drag&drop.
+
+The Scene provides all the methods for selection and interaction with objects.
+
+In Vacca the View, Factory and Scene objects are overriden by:
+
+- VaccaSynoptic(TaurusJDrawSynopticsView)
+- VaccaSynopticGraphicsFactory(TaurusJDrawGraphicsFactory)
+- VaccaGraphicsScene(TaurusGraphicsScene)
+
+Parsing of SVG files
+--------------------
+
+It will require the maxIV plugin. It provides a javascript code to be executed
+within a QWeb widget. Qt events are used to pass the states to javascript.
+
+"""
 
 class VaccaSynoptic(TaurusJDrawSynopticsView):
     """
@@ -61,9 +96,10 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
     JDRAW_TREE = None
 
     
-    def __init__(self, parent = None, delay=0, designMode = False, updateMode=None, alias = None, resizable = True, panelClass = None):
+    def __init__(self, parent = None, delay=0, designMode = False, updateMode=None, alias = None, resizable = True, panelClass = VaccaPanel):
         self.delay = delay
         TaurusJDrawSynopticsView.__init__(self, parent,designMode,updateMode,alias,resizable,panelClass)
+        #self.setLogLevel(self.Debug) #getattr(self,get_env_variable('VACCA_LOG') or 'Info',self.Info))
         self.setModelInConfig(False)
 
     
@@ -261,19 +297,16 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
 
 #A decorator for QGraphics Objects
 def GetClassWithExtensions(klass):
+  
     class ClassWithExtensions(klass):
         
-        
         def setName(self,name):
-            name = str(name or self.__class__.__name__)
+            name = str(name or '') #self.__class__.__name__) #Using class name corrupted element selection
             self._name = name#srubio@cells.es: modified to store ._name since initialization (even if a model is not set)
         
-        
         def getExtensions(self):
-            """
-            Any in
-            ExtensionsList,noPrompt,standAlone,noTooltip,noSelect,ignoreRepaint,shellCommand,className,classParams
-            """
+            """ Any in ExtensionsList, noPrompt, standAlone, noTooltip, noSelect, 
+            ignoreRepaint, shellCommand, className, classParams """
             self._extensions = getattr(self,'_extensions',{})
             if 'ExtensionsList' in self._extensions:
                 self._extensions.update((k.strip(),True) for k in self._extensions['ExtensionsList'].split(','))
@@ -290,6 +323,7 @@ def GetClassWithExtensions(klass):
             self.setToolTip(tooltip)
             #self.debug('%s.getExtensions(): %s'%(self._name,self._extensions))
             return self._extensions
+          
     return ClassWithExtensions
 
 class VaccaSynopticGraphicsFactory(TaurusJDrawGraphicsFactory):
@@ -327,14 +361,17 @@ class VaccaSynopticGraphicsFactory(TaurusJDrawGraphicsFactory):
         else: 
             if name: self.debug('%s does not match a tango name'%name)
         klass = self.getGraphicsClassItem(cls, type_)
+        
         self.debug(str((cls,type_,klass,klass.__name__)))
         if not hasattr(klass,'getExtensions'):
             klass = GetClassWithExtensions(klass)
+            
         item = klass()
         ## It's here were Attributes are subscribed
         self.set_common_params(item,params)
         if hasattr(item,'getExtensions'):
             item.getExtensions() #<= must be called here to take extensions from params
+            
         return item    
     
 class VaccaGraphicsScene(TaurusGraphicsScene):
@@ -350,7 +387,6 @@ class VaccaGraphicsScene(TaurusGraphicsScene):
         except:
             self._selectioncolor = Qt.Qt.blue
         return self._selectioncolor
-        
     
     def _displaySelectionAsOutline(self, items):
         def _outline(shapes):
@@ -407,7 +443,6 @@ class VaccaGraphicsScene(TaurusGraphicsScene):
 
         return False
     
-    
     def getSelectionMark(self,picture=None,w=10,h=10):
         if picture is None:
             if self.SelectionMark:
@@ -443,95 +478,104 @@ class VaccaGraphicsScene(TaurusGraphicsScene):
                 self.debug('In setSelectionMark(%s): %s'%(picture,traceback.format_exc()))
                 picture = None
         return SelectionMark
-    
+      
+    ##################################################################
+    # METHODS JUST FOR DEBUGGING
+      
+    def mousePressEvent(self,mouseEvent):
+        #self.logger.setLogLevel(self.logger.Debug)
+        self.debug('<'*80)
+        self.debug('In TaurusGraphicsScene.mousePressEvent(%s,%s))'%(
+          str(type(mouseEvent)),str(mouseEvent.button())))
+        
+        try: 
+            obj = self.getItemClicked(mouseEvent)
+            obj_name = getattr(obj,'_name', '')
+            
+            ##@BUG:OBJ NAME SHOULD BE KEPT EMPTY; THIS LINE CAUSED SOME SELECTIONS TO FAIL!
+            if not obj_name and isinstance(obj,QGraphicsTextBoxing): obj_name = obj.toPlainText()
+            
+            if (mouseEvent.button() == Qt.Qt.LeftButton):
+                """ A null obj_name should deselect all, we don't send obj because 
+                we want all similar to be matched  """
+                if self.selectGraphicItem(obj_name):
+                    self.debug(' => graphicItemSelected(QString)(%s)'%obj_name)
+                    self.emit(Qt.SIGNAL("graphicItemSelected(QString)"),obj_name)
+                else:
+                    # It should send None but the signature do not allow it
+                    self.emit(Qt.SIGNAL("graphicItemSelected(QString)"), "")
+                    
+            if (mouseEvent.button() == Qt.Qt.RightButton):
+                ''' This function is called when right clicking on TaurusDevTree area. 
+                A pop up menu will be shown with the available options. '''
+                self.debug('RightButton Mouse Event on %s, (%s)'%(
+                  obj_name,isinstance(obj,TaurusGraphicsItem)))
+                
+                if isinstance(obj,TaurusGraphicsItem) and (obj_name or obj.contextMenu() or obj.getExtensions()):
+                    self.showContextMenu(obj,mouseEvent)
+
+        except Exception:
+            self.warning(traceback.format_exc())
+        self.debug('<'*80)
+            
+    def showContextMenu(self,obj,mouseEvent):
+        obj_name = getattr(obj,'_name', '')
+        self.debug('%s.showContextMenu()'%(obj_name or obj))
+
+        def addMenuAction(menu,k,action,last_was_separator=False):
+            self.debug('%s.addMenuAction(%s,%s,%s)'%(obj_name or obj,menu,k,action))
+            try:
+                if k:
+                    configDialogAction = menu.addAction(k)
+                    if action: 
+                        self.connect(configDialogAction, Qt.SIGNAL("triggered()"), 
+                                    lambda dev=obj_name,act=action: act(dev))
+                    else: configDialogAction.setEnabled(False)
+                    last_was_separator = False
+                elif not last_was_separator: 
+                    menu.addSeparator()
+                    last_was_separator = True
+            except Exception,e: 
+                self.warning('Unable to add Menu Action: %s:%s'%(k,e))                    
+            return last_was_separator
+        
+        menu = Qt.QMenu(None)#self.parent)    
+        last_was_separator = False
+        extensions = obj.getExtensions()
+        
+        self.debug('%s.showContextMenu(%s,%s)'%(obj_name or obj,extensions,obj.contextMenu()))
+        
+        if obj_name and (not extensions or not extensions.get('className')): 
+            #menu.addAction(obj_name)
+            addMenuAction(menu,'Show %s panel'%obj_name,lambda x=obj_name: self.showNewPanel(x))
+            
+        if obj.contextMenu():
+          
+            if obj_name: 
+                menu.addSeparator()
+                last_was_separator = True
+                
+            for t in obj.contextMenu(): #It must be a list of tuples (ActionName,ActionMethod)
+                last_was_separator = addMenuAction(menu,t[0],t[1],last_was_separator)
+                
+        if extensions:
+            if not menu.isEmpty(): menu.addSeparator()
+            className = extensions.get('className')
+            if className and className!='noPanel':
+                self.debug('launching className extension object')
+                addMenuAction(menu,'Show %s'%className,lambda d,x=obj: self.showNewPanel(x))
+                
+            if extensions.get('shellCommand'):
+                addMenuAction(menu,'Execute',lambda d,x=obj: self.getShellCommand(x))
+                
+        if not menu.isEmpty():
+            self.debug('%s(%s).menu.exec()'%(obj,obj_name))
+            menu.exec_(Qt.QPoint(mouseEvent.screenPos().x(),mouseEvent.screenPos().y()))
+            
+        del menu
+      
     ##################################################################
     
-    
-    def getItemByPosition(self,x,y):
-        """ This method will try first with named objects; if failed then with itemAt """
-        pos = Qt.QPointF(x,y)
-        itemsAtPos = []
-        for z,o in sorted((i.zValue(),i) for v in self._itemnames.values() for i in v if i.contains(pos) or i.isUnderMouse()):
-            if not hasattr(o,'getExtensions'):
-                self.warning('getItemByPosition(%d,%d): adding Qt primitive %s'%(x,y,o))
-                itemsAtPos.append(o)
-            elif not o.getExtensions().get('noSelect'):
-                self.warning('getItemByPosition(%d,%d): adding GraphicsItem %s'%(x,y,o))
-                itemsAtPos.append(o)
-            else: self.warning('getItemByPosition(%d,%d): object ignored, %s'%(x,y,o))
-        if itemsAtPos:
-            obj = itemsAtPos[-1]
-            return self.getTaurusParentItem(obj) or obj
-        else: 
-            #return self.itemAt(x,y)
-            self.debug('getItemByPosition(%d,%d): no items found!'%(x,y))
-            return None    
-        
-    #def getItemClicked(self,mouseEvent):
-        #pos = mouseEvent.scenePos()
-        #x,y = pos.x(),pos.y()
-        #self.emit(Qt.SIGNAL("graphicSceneClicked(QPoint)"),Qt.QPoint(x,y))
-        #obj = self.getItemByPosition(x,y)
-        ##self.debug('mouse clicked on %s(%s) at (%s,%s)'%(type(obj).__name__,getattr(obj,'_name',''),x,y))
-        #return obj        
-
-    #def mousePressEvent(self,mouseEvent):
-        ##self.debug('In TaurusGraphicsScene.mousePressEvent(%s,%s))'%(str(type(mouseEvent)),str(mouseEvent.button())))
-        #try: 
-            #obj = self.getItemClicked(mouseEvent)
-            #obj_name = getattr(obj,'_name', '')
-            #if not obj_name and isinstance(obj,QGraphicsTextBoxing): obj_name = obj.toPlainText()
-            #if (mouseEvent.button() == Qt.Qt.LeftButton):
-                ### A null obj_name should deselect all, we don't send obj because we want all similar to be matched                
-                #if self.selectGraphicItem(obj_name):
-                    #self.debug(' => graphicItemSelected(QString)(%s)'%obj_name)
-                    #self.emit(Qt.SIGNAL("graphicItemSelected(QString)"),obj_name)
-                #else:
-                    ## It should send None but the signature do not allow it
-                    #self.emit(Qt.SIGNAL("graphicItemSelected(QString)"), "")
-            #def addMenuAction(menu,k,action,last_was_separator=False):
-                #try:
-                    #if k:
-                        #configDialogAction = menu.addAction(k)
-                        #if action: 
-                            #self.connect(configDialogAction, Qt.SIGNAL("triggered()"), lambda dev=obj_name,act=action: act(dev))
-                        #else: configDialogAction.setEnabled(False)
-                        #last_was_separator = False
-                    #elif not last_was_separator: 
-                        #menu.addSeparator()
-                        #last_was_separator = True
-                #except Exception,e: 
-                    #self.warning('Unable to add Menu Action: %s:%s'%(k,e))                    
-                #return last_was_separator
-            #if (mouseEvent.button() == Qt.Qt.RightButton):
-                #''' This function is called when right clicking on TaurusDevTree area. A pop up menu will be shown with the available options. '''
-                #self.debug('RightButton Mouse Event on %s'%(obj_name))
-                #if isinstance(obj,TaurusGraphicsItem) and (obj_name or obj.contextMenu() or obj.getExtensions()):
-                    #menu = Qt.QMenu(None)#self.parent)    
-                    #last_was_separator = False
-                    #extensions = obj.getExtensions()
-                    #if obj_name and (not extensions or not extensions.get('className')): 
-                        ##menu.addAction(obj_name)
-                        #addMenuAction(menu,'Show %s panel'%obj_name,lambda x=obj_name: self.showNewPanel(x))
-                    #if obj.contextMenu():
-                        #if obj_name: 
-                            #menu.addSeparator()
-                            #last_was_separator = True
-                        #for t in obj.contextMenu(): #It must be a list of tuples (ActionName,ActionMethod)
-                            #last_was_separator = addMenuAction(menu,t[0],t[1],last_was_separator)
-                    #if extensions:
-                        #if not menu.isEmpty(): menu.addSeparator()
-                        #className = extensions.get('className')
-                        #if className and className!='noPanel':
-                            #self.debug('launching className extension object')
-                            #addMenuAction(menu,'Show %s'%className,lambda d,x=obj: self.showNewPanel(x))
-                        #if extensions.get('shellCommand'):
-                            #addMenuAction(menu,'Execute',lambda d,x=obj: self.getShellCommand(x))
-                    #if not menu.isEmpty():
-                        #menu.exec_(Qt.QPoint(mouseEvent.screenPos().x(),mouseEvent.screenPos().y()))
-                    #del menu
-        #except Exception:
-            #self.warning( traceback.format_exc())
 
 ###############################################################################
 
