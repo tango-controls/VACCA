@@ -296,21 +296,21 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
 
     It is a class that inherits from TaurusDevicePanel and Dropable module from fandango.
 
-    In Init, the class VaccaPanel check if exist any shareDataManager to
-        subscribe in it.
+    If connect=True at init, it checks if it exists any shareDataManager to
+        subscribe in it. It can be done later using getPanelDescription or connectSharedSignals
 
     This Widget shows the device Commands and Attributes, it is listening the shareDataManager to show the device selected information.
 
     The title of this Widget can be draggable.
 
-    This class has the follow functionalities:
+    VaccaPanel has the follow functionalities:
 
         * Title is draggable.
         * Is connected to shareDataManager to share information in the GUI.
 
     """
     
-    def __init__(self,parent=None,model=None, filters=[]): #,palette=None, bound=True,filters=[]):
+    def __init__(self,parent=None,model=None, filters=[], connect=False): #,palette=None, bound=True,filters=[]):
         """
         In Init, the class VaccaPanel check if exist any shareDataManager to
         subscribe in it.
@@ -322,15 +322,18 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         """
         
         self.call__init__(taurus.qt.qtgui.panel.TaurusDevicePanel, parent, model)
-        sdm = vacca.utils.get_shared_data_manager()
-        if sdm:
-            sdm.connectReader('SelectedInstrument',self.setModel,
-                              readOnConnect=True)
+        #self.setLogLevel(self.Info)
+        self.info('init(%s,%s): connecting ...'%(model,filters))
+        
+        self._connected = []
+        if connect: self.connectSharedSignals()
 
         if self.checkDropSupport():
             self.setSupportedMimeTypes([self.TAURUS_DEV_MIME_TYPE,
                                         self.TEXT_MIME_TYPE, self.TAURUS_MODEL_MIME_TYPE])
-            self.setDropEventCallback(self.setModel)
+            self.setDropEventCallback(self.setModelHook)
+
+        self.info('init(...): layout ...')
         self._header.layout().removeWidget(self._label)
         #self._label = vacca.utils.DraggableLabel()
         self._label = fandango.qt.Draggable(Qt.QLabel)()
@@ -347,7 +350,25 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
           if 'comms' in filters:
             type(self)._command_filter = {'.*':
               [c if fun.isSequence(c) else (c,()) for c in filters['comms']]}
-        
+            
+    def connectSharedSignals(self,read='SelectedInstrument',write=''):
+        self.info('connectSharedSignals(%s,%s)'%(read,write))
+        sdm = vacca.utils.get_shared_data_manager()
+        if sdm and read and read not in self._connected:
+            sdm.connectReader(read,self.setModelHook,readOnConnect=True) 
+            self._connected.append(read)
+        return
+            
+    def setModelHook(self,model):
+        #self.info('%s,%s'%(repr(args),repr(kwargs)))
+        #l = [(str(type(a)),) for l in (args,kwargs.values()) for a in args]
+        self.info('In setModelHook(%s)'%str(model))
+        try:
+          fandango.tango.parse_tango_model(str(model).strip())['device']
+          self.setModel(model)
+        except:
+          self.warning('Invalid model: %s\n%s'%(repr(model),traceback.format_exc()))
+    
     @classmethod
     def getAttributeFilters(klass,dev_class=None):
         """
@@ -402,13 +423,14 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         :return:
         """
         try:    
+          #self.setLogLevel(self.Debug)
+          self.info('VaccaPanel(%s).setModel(%s,%s)'%(id(self),model,pixmap))
           model,modelclass,raw = str(model).strip(),'',model
-          model = fandango.tango.parse_tango_model(str(model))
+          model = fandango.tango.parse_tango_model(model)
           if model is None: 
             self.warning('VaccaPanel(%s).setModel(%s,%s): MODEL NOT PARSABLE!'%(id(self),model,pixmap))
             return
           else: model = model['device']
-          self.info('VaccaPanel(%s).setModel(%s,%s)'%(id(self),model,pixmap))
           if model: 
             model = model and model.split()[0] or ''
             modelclass = taurus.Factory().findObjectClass(model)
@@ -496,14 +518,17 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                       
                 if SPLIT_SIZES: self._splitter.setSizes(SPLIT_SIZES)
             except:
+                self.warning('setModel(%s) failed!'%model)
                 self.warning( traceback.format_exc())
                 qmsg = Qt.QMessageBox(Qt.QMessageBox.Critical,'%s Error'%model,'%s not available'%model,Qt.QMessageBox.Ok,self)
                 qmsg.setDetailedText(traceback.format_exc())
                 qmsg.show()
         except:
+            self.warning('setModel(%s) failed!'%model)
             self.warning(traceback.format_exc())
             qmsg = Qt.QMessageBox(Qt.QMessageBox.Critical,'%s Error'%model,'%s not available'%model,Qt.QMessageBox.Ok,self)
             qmsg.show()
+            
         self.setWindowTitle(self.getModel())
         return
     
@@ -557,8 +582,10 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         :param model: Model for the panel
         :return:
         """
-        return PanelDescription(name,classname='vacca.panel.VaccaPanel',model=model)
-
+        return PanelDescription(
+          name,classname='vacca.panel.VaccaPanel',
+          model=model,sharedDataRead={'SelectedInstrument':'setModelHook'},
+          )
         
 def configure_form(dev,form=None):
     """ Creates a TauForm and configures its Status fields 
