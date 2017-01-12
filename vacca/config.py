@@ -269,7 +269,7 @@ try:
         try:
             # The lastWindowClosed() signal will close all opened widgets and dialogs on application exit
             assert Qt.QApplication.instance(),'QApplication not running!'
-            panelclass = VaccaAction(default=PANEL_COMMAND)
+            panelclass = VaccaPanel #VaccaAction(default=PANEL_COMMAND)
             Qt.QObject.connect(Qt.QApplication.instance(), Qt.SIGNAL(
              "lastWindowClosed()"), panelclass.kill )
             VaccaTree.setDefaultPanelClass(panelclass)
