@@ -304,8 +304,8 @@ class VaccaTree(TaurusSearchTree):
         self.setLayout(Qt.QVBoxLayout())
         self.edit = TaurusDevTreeOptions(self)
         self.tree = VaccaDevTree(self)
-        self.setLogLevel(self.Info)
-        self.tree.setLogLevel(self.Info)
+        self.setLogLevel(self.Warning)
+        self.tree.setLogLevel(self.Warning)
         self.astor = fandango.Astor()
         if 'Start Server' not in dict(self.tree.ExpertMenu):
             self.tree.ExpertMenu.append(('Start Server', self.start_server))
