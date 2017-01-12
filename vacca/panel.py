@@ -446,8 +446,9 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
           elif not issubclass(modelclass, TaurusDevice):
             self.warning('TaurusDevicePanel accepts only Device models')
             return
-        except:
+        except Exception,e:
           traceback.print_exc()
+          raise e
           
         try:
             taurus.Device(model).ping()
@@ -477,6 +478,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
             self._state.setModel(model+'/state')
             if hasattr(self,'_statelabel'): self._statelabel.setModel(model+'/state')
             self._status.setModel(model+'/status')
+            
             try:
                 self._attrsframe.clear()
                 class_filters = type(self).getAttributeFilters(dev_class=dev_class)
@@ -517,17 +519,22 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                       self._attrsframe.addTab(search_tab[1],search_tab[0])
                       
                 if SPLIT_SIZES: self._splitter.setSizes(SPLIT_SIZES)
-            except:
+                
+            except Exception,e:
                 self.warning('setModel(%s) failed!'%model)
                 self.warning( traceback.format_exc())
                 qmsg = Qt.QMessageBox(Qt.QMessageBox.Critical,'%s Error'%model,'%s not available'%model,Qt.QMessageBox.Ok,self)
                 qmsg.setDetailedText(traceback.format_exc())
                 qmsg.show()
-        except:
+                raise e
+
+        except Exception,e:
             self.warning('setModel(%s) failed!'%model)
             self.warning(traceback.format_exc())
             qmsg = Qt.QMessageBox(Qt.QMessageBox.Critical,'%s Error'%model,'%s not available'%model,Qt.QMessageBox.Ok,self)
+            qmsg.setDetailedText(traceback.format_exc())
             qmsg.show()
+            raise e
             
         self.setWindowTitle(self.getModel())
         return
