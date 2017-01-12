@@ -82,6 +82,32 @@ within a QWeb widget. Qt events are used to pass the states to javascript.
 
 """
 
+class QSignalHook(Qt.QObject):
+    """
+    @TODO: This class belongs to Fandango!!, remove it once fandango will be updated with the str(model) fix
+    Class initialized with a transformation function.
+    For every setModel(model) it will emit a modelChanged(function(model))
+    """
+    #__pyqtSignals__ = ("modelChanged",)
+    def __init__(self,function):
+        Qt.QObject.__init__(self)
+        self._model = None
+        self._new_model = None
+        self.function = function
+        
+    def setModel(self,model):
+        model = str(model) #Do a copy or die!
+        from fandango import FakeLogger as FL
+        fl = FL('QSignalHook',True)
+        try:
+          #fl.warning('QSignalHook(%s)'%(self._model,))
+          self._model = model
+          self._new_model = self.function(model) if self.function is not None else model
+          #fl.warning('QSignalHook.modelChanged(%s => %s)'%(self._model,self._new_model))
+          self.emit(Qt.SIGNAL("modelChanged"), self._new_model)
+        except:
+          fl.warning('QSignalHook: %s'%(traceback.format_exc()))
+
 class VaccaSynoptic(TaurusJDrawSynopticsView):
     """
 
@@ -169,7 +195,7 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
             if sdm:
                 v = sdm._SharedDataManager__models.get('SelectedInstrument')
                 # An inline instantiated FakeLogger will print selected instrument on each click
-                sdm.connectReader('SelectedInstrument', 
+                sdm.connectReader('SelectedInstrument', #<<< Works when triggered from tree
                     FL('SDM.SelectedInstrument [%s,%s]' % 
                        (v.readerCount(),v.writerCount()), True).info,
                     readOnConnect=False)
@@ -190,34 +216,35 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
 
             if JDRAW_HOOK is not None:
                 print 'Enabling JDRAW_HOOK = %s'%JDRAW_HOOK
-                from fandango.qt import QSignalHook
-                in_hook = QSignalHook(JDRAW_HOOK)
-                out_hook = QSignalHook(JDRAW_HOOK)
+                VaccaSynoptic.in_hook = QSignalHook(JDRAW_HOOK) #MUST BE PERSISTENT
+                VaccaSynoptic.out_hook = QSignalHook(JDRAW_HOOK)
 
                 #Synoptic will write this signal
                 wsignal = {'JDrawOut': 'graphicItemSelected(QString)', }
 
                 if sdm:
-                    sdm.connectReader('JDrawOut', FL('SDM.JDrawOut',
-                                                     True).info,
-                                      readOnConnect=False)
-                    sdm.connectReader('JDrawOut', out_hook.setModel,
-                                      readOnConnect=False)
-                    sdm.connectWriter('SelectedInstrument', out_hook,
+                    sdm.connectWriter('SelectedInstrument', VaccaSynoptic.out_hook,
                                       'modelChanged')
 
+                    sdm.connectReader('JDrawOut', VaccaSynoptic.out_hook.setModel, #ITS NOT CALLED!?!?!?
+                                      readOnConnect=False)
+
+                    sdm.connectReader('JDrawOut', FL('SDM.JDrawOut',True).info,
+                                      readOnConnect=False)
+                    
                     v = sdm._SharedDataManager__models.get('JDrawOut')
+
                     sdm.connectReader('JDrawOut', FL('SDM.JDrawOut DONE [%s,'
                                                      '%s]'%(v.readerCount(),
                                                             v.writerCount()),
                                                      True).info,
                                       readOnConnect=False)
 
-                    sdm.connectWriter('JDrawIn', in_hook,'modelChanged')
+                    sdm.connectWriter('JDrawIn', VaccaSynoptic.in_hook,'modelChanged')
                     sdm.connectReader('JDrawIn', FL('SDM.JDrawIn', True).info,
                                       readOnConnect=False)
                     rsignal = {'JDrawIn': 'selectGraphicItem', }
-                    sdm.connectReader('SelectedInstrument', in_hook.setModel,
+                    sdm.connectReader('SelectedInstrument', VaccaSynoptic.in_hook.setModel,
                                       readOnConnect=False)
 
                     v = sdm._SharedDataManager__models.get('JDrawIn')
