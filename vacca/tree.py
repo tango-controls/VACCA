@@ -200,6 +200,172 @@ class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree, TaurusBa
                 qc = Qt.QColor(color) if not fandango.isSequence(color) else Qt.QColor(*color)
         child.setBackground(0, Qt.QBrush(qc))
 
+    def showNodeContextMenu(self,node,event):
+        """
+        A pop up menu will be shown with the available options. 
+        Menus are managed using two tuple lists for each node: node.ContextMenu and node.ExpertMenu
+        """
+        obj = self.getNodeDraggable(node)
+        position = event.globalPos()
+        self.debug('showNodeContextMenu(%s)'%obj)
+        if self.itemAt(position) is self.headerItem():
+            node = self.headerItem()
+            #node.ContextMenu = ['Search ...']
+        if node is None:
+            node = self
+        else:
+            if not hasattr(node,'ContextMenu'):
+                node.ContextMenu=[]
+            if not 'Search ...' in [k for k,a in node.ContextMenu]: ##Creating default menu
+              
+                if not hasattr(node,'ExpertMenu'): 
+                  setattr(node,'ExpertMenu',self.ExpertMenu)
+                  
+                def addOption(menu,name,action):
+                  if name not in [t[0] for t in menu]:
+                    menu.append((name,action))
+              
+                # DEVICE NODE CONTEXT MENU
+                if obj.count('/')==2:
+                    
+                    addOption(node.ContextMenu,"Open Panel", self.showPanel)
+                    addOption(node.ContextMenu,"Show Attributes",self.addAttrToNode)
+                    
+                    if self.getNodeAdmin(node):
+                        addOption(node.ContextMenu,"Go to %s"%self.getNodeAdmin(node),
+                            (lambda p=self.getNodeAdmin(node): p and self.findInTree(p)))
+                    
+                    addOption(node.ContextMenu,'', None)
+
+                    addOption(node.ContextMenu,"Show Properties", self.showProperties)
+                    addOption(node.ContextMenu,"Test Device", self.test_device)
+                    
+                    try:
+                      self.astor = fandango.Astor()
+                      addOption(node.ContextMenu,'Start Server', self.start_server)
+                      addOption(node.ContextMenu,'Stop Server', self.stop_server)
+                      addOption(node.ContextMenu,'Device Info', self.device_info)
+                    except:
+                      self.warning('fandango.Astor() not available to start/stop devices')
+                        
+                    node.ContextMenu.append(('',None))
+                    addOption(node.ExpertMenu,"Show ALL Attributes", lambda s=self:s.addAttrToNode(full=True))
+                    
+                # ATTRIBUTE NODE CONTEXT MENU
+                elif obj.count('/')==3:
+                    for k,v in self.AttributeMenu:
+                        self.debug('Adding action %s'%k)
+                        if type(v) is str and hasattr(self,v):
+                            node.ContextMenu.append((k, getattr(self,v)))
+                        else:
+                            node.ContextMenu.append((k, lambda s=self.getNodeAlias(node): v(s)))
+                    #node.ContextMenu.append(("add to Trends", self.addToPlot))
+                    #node.ContextMenu.append(("remove from Trends", self.removeFromPlot))
+                    node.ContextMenu.append(('',None))
+                    
+                #node.ContextMenu.append(("Expand Node", self.expandNode))
+                #node.ContextMenu.append(("Collapse Node", self.collapseNode))
+                
+                if node.isExpanded() and node.childCount()<10 and all(self.getNodeText(node.child(j)).count('/')==2 for j in range(node.childCount())):
+                    node.ContextMenu.append(("Show Attributes", lambda n=node,s=self: [s.addAttrToNode(n.child(j)) for j in range(n.childCount())]))
+                node.ContextMenu.append(("Search ...",\
+                    lambda: self.findInTree(str(Qt.QInputDialog.getText(self,'Search ...','Write a part of the name',Qt.QLineEdit.Normal)[0]))
+                    ))
+        #configDialogAction = menu.addAction("Refresh Tree")
+        #self.connect(configDialogAction, Qt.SIGNAL("triggered()"), self.refreshTree)
+        menu = Qt.QMenu(self)
+        
+        if hasattr(node,'ContextMenu'):
+            last_was_separator = True
+            for t in (type(node.ContextMenu) is dict and node.ContextMenu.items() or node.ContextMenu):
+                try:
+                    k,action = t
+                    if k:
+                        configDialogAction = menu.addAction(k)
+                        if action: self.connect(configDialogAction, Qt.SIGNAL("triggered()"), action)
+                        else: configDialogAction.setEnabled(False)
+                        last_was_separator = False
+                    elif not last_was_separator: 
+                        menu.addSeparator()
+                        last_was_separator = True
+                except Exception,e: 
+                    self.warning('Unable to add Menu Action: %s:%s'%(t,e))
+        
+        if hasattr(node,'ExpertMenu'):
+            menu.addSeparator()
+            expert = menu.addMenu('Expert')
+            #expert.addSeparator()
+            last_was_separator = True
+            for t in (type(node.ContextMenu) is dict and node.ExpertMenu.items() or node.ExpertMenu):
+                try:
+                    k,action = t
+                    if k:
+                        configDialogAction = expert.addAction(k)
+                        if action: self.connect(configDialogAction, Qt.SIGNAL("triggered()"), action)
+                        else: configDialogAction.setEnabled(False)
+                        last_was_separator = False
+                    elif not last_was_separator: 
+                        expert.addSeparator()
+                        last_was_separator = True
+                except Exception,e: 
+                    self.warning('Unable to add Expert Action: %s:%s'%(t,e))            
+        #menu.addSeparator()
+        menu.exec_(event.globalPos())
+        del menu
+        
+    def start_server(self, device=None):
+        """
+        Allow start Servers.
+        :param device: DeviceName
+        :return:
+        """
+        device = device or self.getNodeDeviceName()
+        self.astor.load_by_name(device)
+        ss = self.astor.get_device_server(device)
+        text, ok = Qt.QInputDialog.getText(self, 'Start Server', 'Start %s at '
+                                                                 'host ...'
+                                           % ss, Qt.QLineEdit.Normal,
+                                           self.astor[ss].host)
+        if ok:
+            return self.astor.start_servers(ss, host=str(text))
+        else:
+            return False
+
+    def stop_server(self, device=None):
+        """
+        Allow stop Servers
+        :param device: DeviceName
+        :return:
+        """
+        device = device or self.getNodeDeviceName()
+        self.astor.load_by_name(device)
+        ss = self.astor.get_device_server(device)
+        v = Qt.QMessageBox.warning(self, 'Stop Server', 
+            '%s will be killed!, Are you sure?'%ss,
+            Qt.QMessageBox.Yes | Qt.QMessageBox.No)
+        if v == Qt.QMessageBox.Yes:
+            return self.astor.stop_servers(ss)
+        else:
+            return False
+
+    def device_info(self, device=None):
+        """
+        Show a the Device Info
+        :param device: DeviceName
+        :return:
+        """
+        device = device or self.getNodeDeviceName()
+        di = fandango.tango.get_device_info(device)
+        txt = '\n'.join('%s : %s' % (k, getattr(di, k)) for k in
+                        'name dev_class server host level exported started stopped PID'.split())
+        v = Qt.QMessageBox.information(self, device, txt, Qt.QMessageBox.Ok)
+        
+    def test_device(self):
+        import os
+        device = str(self.getNodeDeviceName())
+        if not device: return
+        comm = 'tg_devtest %s &'%device
+        os.system(comm)        
 
 class VaccaTree(TaurusSearchTree):
     """
@@ -251,53 +417,6 @@ class VaccaTree(TaurusSearchTree):
     def setIconMap(klass, iconMap):
         TaurusDevTree.setIconMap(iconMap)
 
-    def start_server(self, device=None):
-        """
-        Allow start Servers.
-        :param device: DeviceName
-        :return:
-        """
-        device = device or self.tree.getNodeDeviceName()
-        self.astor.load_by_name(device)
-        ss = self.astor.get_device_server(device)
-        text, ok = Qt.QInputDialog.getText(self, 'Start Server', 'Start %s at '
-                                                                 'host ...'
-                                           % ss, Qt.QLineEdit.Normal,
-                                           self.astor[ss].host)
-        if ok:
-            return self.astor.start_servers(ss, host=str(text))
-        else:
-            return False
-
-    def stop_server(self, device=None):
-        """
-        Allow stop Servers
-        :param device: DeviceName
-        :return:
-        """
-        device = device or self.tree.getNodeDeviceName()
-        self.astor.load_by_name(device)
-        ss = self.astor.get_device_server(device)
-        v = Qt.QMessageBox.warning(self, 'Stop Server', '%s will be killed!, '
-                                                        'Are you sure?',
-                                   Qt.QMessageBox.Yes | Qt.QMessageBox.No)
-        if v == Qt.QMessageBox.Yes:
-            return self.astor.stop_servers(ss)
-        else:
-            return False
-
-    def device_info(self, device=None):
-        """
-        Show a the Device Info
-        :param device: DeviceName
-        :return:
-        """
-        device = device or self.tree.getNodeDeviceName()
-        di = fandango.tango.get_device_info(device)
-        txt = '\n'.join('%s : %s' % (k, getattr(di, k)) for k in
-                        'name dev_class server host level exported started stopped PID'.split())
-        v = Qt.QMessageBox.information(self, device, txt, Qt.QMessageBox.Ok)
-
     def defineStyle(self):
         # print('In TaurusSearchTree.defineStyle()')
         self.setWindowTitle('VaccaTree')
@@ -306,11 +425,7 @@ class VaccaTree(TaurusSearchTree):
         self.tree = VaccaDevTree(self)
         self.setLogLevel(self.Warning)
         self.tree.setLogLevel(self.Warning)
-        self.astor = fandango.Astor()
-        if 'Start Server' not in dict(self.tree.ExpertMenu):
-            self.tree.ExpertMenu.append(('Start Server', self.start_server))
-            self.tree.ExpertMenu.append(('Stop Server', self.stop_server))
-            self.tree.ExpertMenu.append(('Device Info', self.device_info))
+
         self.layout().addWidget(self.edit)
         self.layout().addWidget(self.tree)
         self.registerConfigDelegate(self.tree)
@@ -321,6 +436,7 @@ class VaccaTree(TaurusSearchTree):
                                lambda args,
                                       f=self,
                                       s=signal: f.emit(Qt.SIGNAL(s), args))
+            
         self.edit.connectWithTree(self.tree)
         self.statetimer = Qt.QTimer(self)
         self.connect(self.statetimer, Qt.SIGNAL('timeout()'), self.updateStates)
@@ -365,7 +481,7 @@ class VaccaTree(TaurusSearchTree):
 
         except:
             self.warning('On VaccaTree.updateStates(): %s' % traceback.format_exc())
-
+            
     @staticmethod
     def getDefaultIcon():
         """
