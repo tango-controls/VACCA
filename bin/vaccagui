@@ -31,10 +31,6 @@
 #Source your own environment variables from here:
 #source alba_blissrc
 
-if [ "x$1" != "x" ] ; then
-    export VACCA_CONFIG="$1"
-fi
-
 if [ ! "$VACCA_PATH" ] ; then
     #Getting current script folder
     export VACCA_PATH=$(python -c "import imp;print(imp.find_module('vacca')[1])")
