@@ -40,7 +40,7 @@ Copy default.py.ini to default.py and edit your default options (follow comments
 
 For a fast way to test VACCA, try the ELINAC example:
 
- * https://github.com/tango-controls/VACCA/blob/master/examples/elinac/README.rst
+ * https://github.com/tango-controls/VACCA/blob/documentation/examples/elinac/README.rst
 
 CONTENTS:
 =========
