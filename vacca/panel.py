@@ -38,10 +38,17 @@ from taurus.qt import Qt
 from taurus.qt.qtgui.container import TaurusWidget as WIDGET_CLASS
 from taurus.qt.qtgui.panel import TaurusForm as FORM_CLASS
 from taurus.qt.qtgui.panel.taurusdevicepanel import TaurusDevicePanel,get_regexp_dict,searchCl,matchCl,str_to_filter,get_White_palette,get_eqtype
-from taurus.qt.qtgui.resource import getPixmap
-from taurus.core import TaurusAttribute,TaurusDevice,TaurusDatabase
 from taurus.qt.qtgui.container import TaurusWidget
 from taurus.qt.qtgui.panel.taurusform import TaurusForm,TaurusCommandsForm
+
+try:
+    #Taurus 3
+    from taurus.qt.qtgui.resource import getPixmap as getCachedPixmap
+    from taurus.core import TaurusAttribute,TaurusDevice,TaurusDatabase
+except:
+    #Taurus 4
+    from taurus.qt.qtgui.icon import getCachedPixmap
+    from taurus.core import TaurusAttribute,TaurusDevice,TaurusAuthority
 
 ###############################################################################
 # Help Methods
@@ -472,7 +479,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 if qpixmap.height()>.9*IMAGE_SIZE[1]: qpixmap=qpixmap.scaledToHeight(.9*IMAGE_SIZE[1])
                 if qpixmap.width()>.9*IMAGE_SIZE[0]: qpixmap=qpixmap.scaledToWidth(.9*IMAGE_SIZE[0])
             else:
-                qpixmap = getPixmap(':/logo.png')
+                qpixmap = getCachedPixmap(':/logo.png')
             
             self._image.setPixmap(qpixmap)
             self._state.setModel(model+'/state')
