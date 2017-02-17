@@ -249,6 +249,7 @@ class VaccaSearchForm(TaurusWidget):
         self.setLayout(Qt.QVBoxLayout())
         self.bar = Qt.QWidget(self)
         self.search = Qt.QLineEdit()
+        self.search.setText('... type to search for attributes ...')
         self.button = Qt.QPushButton('Load')
         self.connect(self.button,Qt.SIGNAL("pressed()"),self.apply_search)
         self.bar.setLayout(Qt.QHBoxLayout())
@@ -488,7 +489,10 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                   
                 search_tab = None
                 if filters == ['.*'] and len(taurus.Device(model).get_attribute_list())>32:
-                    filters = [('Attributes',['.*'])]
+                    filters = [
+                      #('Status',['Status']),
+                      ('Search Attributes',['.*'])
+                      ]
                 
                 if hasattr(filters,'keys'): filters = filters.items() #Dictionary!
                 print('\tfilters = %s'%filters)
