@@ -44,6 +44,10 @@ Reset of QSettings files:
 
   > vaccagui --reset   #The last saved perspective will be removed    
   > vaccagui --clean   #All the .ini files will be removed
+  
+Other options:
+  > vaccagui --helps   #Prints this text
+  > vaccagui --list    #Prints available configurations
     
 """
 
@@ -68,11 +72,23 @@ if '--clean' in args:
   print('Removing last vacca configs (%s/*.ini)'%folder)
   os.remove(folder+'*.ini')
   if len(args)==1: sys.exit(0)
+  
 elif '--reset' in args:
   inits = [a for a in os.walk(f).next()[2] if a.endswith('.ini')]
   print('Removing last vacca configs (%s)'%inits)
   [remove_last_config(folder+filename) for filename in inits]
   if len(args)==1: sys.exit(0)
+  
+elif '--help' in args or '-h' in args or '-?' in args:
+  print(__doc__)
+  sys.exit(0)
+  
+elif '--list' in args:
+  import vacca.utils as vu
+  configs = vu.get_config_properties()
+  print('\nVaccaConfigs:')
+  print('\n\t'+'\n\t'.join(configs)+'\n')
+  sys.exit(0)
   
 ###############################################################################
 # Delayed imports

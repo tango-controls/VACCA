@@ -24,14 +24,14 @@ Get Vacca::
 If you don't have the TangoBox devices, create new simulators::
 
   > ipython
-  : import Simulator.gen_simulation as gs
-  : gs.generate_class_properties()
-  : gs.create_simulators('ui_attribute_values.pck',instance='elinac',tango_host='127.0.0.1')
+  : import SimulatorDS.gen_simulation as gs
+  : gs.generate_class_properties(all_rw=True)
+  : gs.create_simulators('ui_attribute_values.pck',instance='elinac-',tango_host='127.0.0.1')
   : Ctrl+D
 
-If you have starter and fandango/scripts in PATH, let's launch the simulators::
+If you have starter, SimulatorDS and fandango/scripts in PATH, let's launch the simulators::
 
-  > tango_servers start "SimulatorDS/elin*"
+  > tango_servers start "DynamicDS/elin*"
 
 Last, launch VACCA::
 

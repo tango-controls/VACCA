@@ -69,7 +69,7 @@ VACCA_PATH: *vpath('path/to/icon')*
 
 import os,sys,traceback,imp,time,re
 import fandango
-from fandango import printf,get_database,first
+from fandango import printf,get_database,first,isString,isRegexp
 from fandango.dicts import SortedDict
 from fandango.qt import Qt
 from taurus.qt.qtgui.base import TaurusBaseComponent
@@ -122,10 +122,19 @@ def get_vacca_property(prop,extract=False):
         return v
     return [] if not extract else ''
 
-def replace_env(text,var,value=None):
-    if value is None: value = os.getenv(var)
-    e = '[$][(]?'+var+'[)]?(?![a-zA-Z_0-9])'
-    return re.sub(e,str(value),text)
+def replace_env(text,var=('VACCA_DIR','VACCA_PATH'),value=None):
+    """
+    Replaces each occurrence of $ENV_VARIABLE by its value.
+    Var names can be a sequence.
+    """
+    if not fandango.isString(text):
+      return text
+    elif fandango.isSequence(var):
+      return reduce(replace_env,[text]+list(var))
+    else:
+      if value is None: value = os.getenv(var)
+      e = '[$][(]?'+var+'[)]?(?![a-zA-Z_0-9])'
+      return re.sub(e,str(value),text)
   
 ###############################################################################
 
@@ -201,6 +210,34 @@ def vpath(s=''):
     s2 = _joiner(VACCA_PATH,'/',s)
     return s2
   
+def expand_device_list(expressions):
+    """
+    Expands a list of regular expressions into a list of devices
+    
+    It adds 2 new reserverd characters:
+     - ! , at the beginning of the expression is a negative lookup
+     - ? , at the beginning of the expression, matches only exported devices
+    """
+    devices,ins,outs = [],set(),set()
+    if isString(expressions):
+      expressions = (','.join(expressions.split())).split(',')
+    [(ins,outs)['!' in s].add(s.strip().lower()) for s in expressions if s.strip()]
+    for s in ins:
+      try:
+        if isRegexp(s):
+          ds = fandango.get_matching_devices(s.strip('?'),exported='?' in s)
+          devices.extend(d for d in ds if not d.startswith('dserver/'))
+        else:
+          devices.append(s)
+      except Exception,e:
+        print(e,traceback.format_exc())
+    for o in outs:
+      try:
+        devices = [d for d in devices if not fandango.matchCl(o.strip('!'),d)]
+      except:
+        print(e,traceback.format_exc())
+    return sorted(devices)
+  
 ###############################################################################
   
 global VACCA_PROFILES
@@ -255,6 +292,11 @@ def load_config_properties(config,export=True):
     return props
   
 def get_config_properties(config=''):
+    """
+    This method will get the list of VACCA free properties.
+    If a config is passed, it will parse its contents as a dictionary.
+    A new declaration of VACCA_CONFIG will be parsed as CONFIG_FILE instead.
+    """
     #print('vacca.utils.get_config_properties(%s)'%config)
     global VACCA_PROFILES
     if not VACCA_PROFILES:
@@ -269,9 +311,15 @@ def get_config_properties(config=''):
             for l in get_vacca_property(config,False)]
         config = VACCA_PROFILES[config]
         r = dict(l.split('=',1) for l in config if l)
+        if 'VACCA_CONFIG' in r and 'CONFIG_FILE' not in r:
+          r['CONFIG_FILE'] = r.pop('VACCA_CONFIG')
     return r
 
 def get_config_file(config=None):
+    """
+    This method parses properties and returns the value of CONFIG_FILE.
+    If undefined, VACCA_CONFIG is returned as fallback.
+    """
     global VACCA_CONFIG,VACCA_DIR
     print('-')*80
     if not config:
