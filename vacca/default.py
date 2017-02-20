@@ -38,7 +38,10 @@ from taurus.qt.qtgui.button import TaurusLauncherButton
 from vacca.utils import *
 from fandango import matchCl,searchCl,replaceCl,CaselessDict,CaselessList,\
     get_matching_devices,get_matching_attributes,get_all_devices,check_device
-  
+
+LIGHTWEIGHT = True #This option will control whether heavy panels are loaded at startup or not
+
+# Panic and PyTangoArchiving widgets will be added at the end of this file
 try: 
   import panic
 except: 
@@ -48,7 +51,8 @@ try:
 except:
   PyTangoArchiving = None
 
-print '>'*20+' Loading default.py'
+###############################################################################
+print('>'*20+' Loading vacca/default.py')
 
 #ALL these variables can be re-defined in CONFIG FILE
 GUI_NAME = 'VACCA'
@@ -140,60 +144,29 @@ GRID = {
 # Extra widgets to appear in the NewPanel dialog
 
 EXTRA_WIDGETS = []
-if panic: 
-  EXTRA_WIDGETS.append(('panic.gui.AlarmGUI',wdir('image/icons/panic.gif')))
-if PyTangoArchiving: 
-  EXTRA_WIDGETS.append(('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',wdir('image/widgets/Archiving.png')))
+# Definition for Panic/Archiving is done at the end of this file
 
 ###############################################################################
 # Extra panels to be loaded at startup
 # Extra apps to be added to the right-side Toolbar (loaded only on demand)
 
 EXTRA_PANELS = {}
-EXTRA_APPS = fandango.dicts.SortedDict()
-from taurus.qt.qtgui.taurusgui.utils import PanelDescription, AppletDescription
+# Definition for Panic/Archiving is done at the end of this file
 
-LIGHTWEIGHT = True
 if not LIGHTWEIGHT:
-  
-  import vacca.properties
-  EXTRA_PANELS['Properties'] = vacca.properties.VaccaPropTable.getPanelDescription('Properties',DEVICE)
+  EXTRA_PANELS['Properties'] = vacca.VaccaPropTable.getPanelDescription('Properties',DEVICE) 
 
-  if panic:
-    EXTRA_PANELS['PANIC'] = PanelDescription(
-      'PANIC','panic.gui.AlarmGUI',model='',#---
-      sharedDataWrite={'HighlightInstruments':'devicesSelected'})
 
-  #EXTRA_PANELS.append(('Form','TaurusForm',''))
-  if PyTangoArchiving:
-    try:
-      import PyTangoArchiving.widget.browser
-      c = PyTangoArchiving.widget.browser.ArchivingBrowser
-    except:
-      import PyTangoArchiving.widget.ArchivingBrowser
-      c = PyTangoArchiving.widget.ArchivingBrowser.ModelSearchWidget
-    EXTRA_PANELS['Finder'] = PanelDescription('Finder',w)
-    EXTRA_APPS['Finder'] = {'name': 'Finder','class': c,'icon': wdir('image/icons/search.png')}
-  
-#===============================================================================
+###############################################################################
 # Define custom applets to be shown in the applets bar (the wide bar that
 # contains the logos). To define an applet, instantiate an AppletDescription
 # object (see documentation for the gblgui_utils module)
-#===============================================================================
-    
-#Each Applet can be described with a dictionary like this:
-#   (name, classname=None, modulename=None, widgetname=None, 
-#       sharedDataWrite=None, sharedDataRead=None, model=None, floating=True, **kwargs)
-#For ExternalApp/VaccaActions use:
-# {'$VarName':{'name':'$AppName','classname':'VaccaAction','model':['$Test','$/path/to/icon.png','$launcher']}}
+#
 
-    #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
+EXTRA_APPS = fandango.dicts.SortedDict()
+from taurus.qt.qtgui.taurusgui.utils import PanelDescription, AppletDescription
 
 EXTRA_APPS['Properties'] = {'class' : vacca.VaccaPropTable}
-
-if panic:
-  EXTRA_APPS['PANIC'] = {'name': 'PANIC',
-        'class': vacca.VaccaPanic}
 
 ## Just another examples:
 
@@ -202,10 +175,16 @@ if panic:
                 #'icon': wdir('image/icons/Mambo-icon.png')}              
 #EXTRA_APPS['DevicePanel'] = {'class' : vacca.VaccaPanel}
 #EXTRA_APPS['Panic']= {'class' : vacca.VaccaPanic       }
-#EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       }    
+#EXTRA_APPS['ExtraDock']= {'class' : Qt.QMainWindow       
+
+#Each Applet can be described with a dictionary like this:
+#   (name, classname=None, modulename=None, widgetname=None, 
+#       sharedDataWrite=None, sharedDataRead=None, model=None, floating=True, **kwargs)
+#For ExternalApp/VaccaActions use:
+# {'$VarName':{'name':'$AppName','classname':'VaccaAction','model':['$Test','$/path/to/icon.png','$launcher']}}
+    #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
     
-from vacca.panel import VaccaAction
-    
+#from vacca.panel import VaccaAction
 #xmambo = AppletDescription('Mambo',classname = 'vacca.panel.VaccaAction',
 # model=["Archiving",wdir('vacca/image/widgets/ProfilePlot.png'),'mambo'],)
 #xalarms = AppletDescription('Alarms',classname='vacca.panel.VaccaNewPanel',
@@ -217,11 +196,11 @@ from vacca.panel import VaccaAction
 #button.setModel('a/b/c') #a device name, which will be given to the
 # TaurusAttrForm when clicking
 
-#===============================================================================
+###############################################################################
 # Define which External Applications are to be inserted.
 # To define an external application, instantiate an ExternalApp object
 # See TaurusMainWindow.addExternalAppLauncher for valid values of ExternalApp
-#===============================================================================
+#
 
 TOOLBARS = [] #[(name,modulename.classname)]
 
@@ -242,5 +221,41 @@ EXTRA_TOOLS = [
   ('Jive',['jive'],vpath('image/icons/TangoLogo.png')),
   ('Trends',['taurustrend','-a'],vpath('image/widgets/PressureTrend.jpg')),
   ]
+
+###############################################################################
+# Add widgets/apps/panels for Alarms and Archiving
+
+if panic:
+  try:
+    EXTRA_APPS['PANIC'] = {'name': 'PANIC',
+        'class': vacca.VaccaPanic}
+
+    EXTRA_WIDGETS.append(('panic.gui.AlarmGUI',wdir('image/icons/panic.gif')))
+  
+    if not LIGHTWEIGHT:
+      EXTRA_PANELS['PANIC'] = PanelDescription(
+        'PANIC','panic.gui.AlarmGUI',model='',#---
+        sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+    
+  except:
+    print('Warning: Panic widgets not available')
+
+if PyTangoArchiving: 
+  try:
+    EXTRA_WIDGETS.append(('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',wdir('image/widgets/Archiving.png')))
+    EXTRA_APPS['Finder'] = {'name': 'Finder','class': c,'icon': wdir('image/icons/search.png')}   
+
+    if not LIGHTWEIGHT:
+      try:
+        import PyTangoArchiving.widget.browser
+        c = PyTangoArchiving.widget.browser.ArchivingBrowser
+      except:
+        import PyTangoArchiving.widget.ArchivingBrowser
+        c = PyTangoArchiving.widget.ArchivingBrowser.ModelSearchWidget
+
+      EXTRA_PANELS['Finder'] = PanelDescription('Finder',w)
+      
+  except:
+    print('Warning: PyTangoArchiving widgets not available')
 
 __doc__ = vacca.get_autodoc(__name__,vars())
