@@ -42,13 +42,13 @@ from taurus.qt.qtgui.container import TaurusWidget
 from taurus.qt.qtgui.panel.taurusform import TaurusForm,TaurusCommandsForm
 
 try:
-    #Taurus 3
-    from taurus.qt.qtgui.resource import getPixmap as getCachedPixmap
-    from taurus.core import TaurusAttribute,TaurusDevice,TaurusDatabase
-except:
     #Taurus 4
     from taurus.qt.qtgui.icon import getCachedPixmap
     from taurus.core import TaurusAttribute,TaurusDevice,TaurusAuthority
+except:
+    #Taurus 3
+    from taurus.qt.qtgui.resource import getPixmap as getCachedPixmap
+    from taurus.core import TaurusAttribute,TaurusDevice,TaurusDatabase
 
 ###############################################################################
 # Help Methods
@@ -458,7 +458,8 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
           raise e
           
         try:
-            taurus.Device(model).ping()
+            try: taurus.Device(model).getDeviceProxy().ping() #T4
+            except: taurus.Device(model).getHWObj().ping() #T3
             dev_class = fandango.get_device_info(model).dev_class
             if self.getModel(): self.detach() #Do not dettach previous model before pinging the new one (fail message will be shown at except: clause)
             TaurusWidget.setModel(self,model)
