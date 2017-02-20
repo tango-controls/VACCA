@@ -72,6 +72,14 @@ import fandango
 from fandango import printf,get_database,first,isString,isRegexp
 from fandango.dicts import SortedDict
 from fandango.qt import Qt
+
+try:
+  from taurus.core import TaurusDatabase as TaurusAuthority
+  print('Using Taurus <=3')
+except:
+  from taurus.core import TaurusAuthority
+  print('Using Taurus >=4')
+
 from taurus.qt.qtgui.base import TaurusBaseComponent
 from taurus.core.util.eventfilters import ONLY_CHANGE_AND_PERIODIC
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
