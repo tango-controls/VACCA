@@ -108,7 +108,7 @@ class DomainButton(Qt.QToolButton):
 
     def setModel(self, model, action):
         #print 'DomainButton.setModel(%s,%s)'%(model,action)
-        self._model = model
+        self._model = model = str(model)
         self._led.setModel(model)
         if not self._label.text(): self.setLabel(model.split('/')[0])
         self._cmd = action#action.split()
@@ -140,7 +140,7 @@ class VaccaAction(Qt.QToolButton,taurus.qt.qtgui.base.TaurusBaseWidget):
 
     def setModel(self, model):
         self.info('VaccaAction(%s).setModel(%s)' % (self._default_cmd, model))
-        model = fandango.toSequence(model)
+        model = map(str,fun.toSequence(model))
         if len(model) > 1:
             self._text = model[0]
         if len(model) > 2:
@@ -372,7 +372,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self.info('In setModelHook(%s)'%str(model))
         try:
           fandango.tango.parse_tango_model(str(model).strip())['device']
-          self.setModel(model)
+          self.setModel(str(model))
         except:
           self.warning('Invalid model: %s\n%s'%(repr(model),traceback.format_exc()))
     
