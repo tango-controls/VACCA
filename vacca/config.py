@@ -308,7 +308,8 @@ try:
     if USE_DEVICE_PANEL:
         print('\t>>> Loading Device panel (%s)...' % DEVICE)
         from vacca.panel import VaccaPanel
-        panel = VaccaPanel.getPanelDescription('Device',model=DEVICE or None)
+        m = DEVICE if DEVICE and fn.check_device(DEVICE) else None
+        panel = VaccaPanel.getPanelDescription('Device',model=m)
         
     from vacca.panel import VaccaPanel
     if AttributeFilters: VaccaPanel.setAttributeFilters(AttributeFilters)
