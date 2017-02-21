@@ -65,6 +65,8 @@ TaurusSearchTree.setDefaultAttrFilter = staticmethod(lambda c: TaurusDevTree.set
 
 class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree, TaurusBaseWidget):
     ## @TODO: SAME CHANGE MUST BE ADDED TO TAURUSJDRAWGRAPHICS SELECTGRAPHICITEM!!!
+
+    MAX_NODES_TO_UPDATE = 120
     
     def trace(self, msg):
         if self.TRACE_ALL or self.getLogLevel() in ('DEBUG', 40,):
@@ -460,7 +462,7 @@ class VaccaTree(TaurusSearchTree):
                 self._nodes2update = self.tree.getAllNodes().keys()
                 self._allexported = fandango.get_all_devices(exported=True)
 
-            if len(self._nodes2update)>32:
+            if len(self._nodes2update) > VaccaDevTree.MAX_NODES_TO_UPDATE:
               if getattr(self,'_coloured',True):
                 self._coloured = False
                 whites = dict((k,'CLOSE') for k in self._nodes2update)
