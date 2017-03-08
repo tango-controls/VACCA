@@ -48,6 +48,15 @@ import taurus.qt.qtgui.tree.taurusdevicetree
 from taurus.qt.qtgui.tree.taurusdevicetree import *
 from taurus.qt.qtcore.mimetypes import *
 
+if not hasattr(TaurusDevTree,'__pyqtSignals__'):
+  TaurusDevTree.__pyqtSignals__ = (
+   'modelChanged(const QString &)',
+   'deviceSelected(QString)',
+   'addAttrSelected(QStringList)',
+   'removeAttrSelected(QStringList)',
+   'refreshTree',
+   'nodeFound')
+
 # TaurusDevTree.setDefaultPanelClass is setting the widget to open when ContextMenu->OpenPanel is selected
 TaurusSearchTree.setDefaultPanelClass = staticmethod(lambda c: TaurusDevTree.setDefaultPanelClass(c))
 # TaurusDevTree.setDefaultPanelClass is setting the attributes to show when ContextMenu->ShowAttributes is selected
@@ -57,6 +66,8 @@ TaurusSearchTree.setDefaultAttrFilter = staticmethod(lambda c: TaurusDevTree.set
 class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree, TaurusBaseWidget):
     ## @TODO: SAME CHANGE MUST BE ADDED TO TAURUSJDRAWGRAPHICS SELECTGRAPHICITEM!!!
 
+    MAX_NODES_TO_UPDATE = 120
+    
     def trace(self, msg):
         if self.TRACE_ALL or self.getLogLevel() in ('DEBUG', 40,):
             print 'TaurusDevTree.%s: %s' % (
@@ -199,7 +210,7 @@ class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree, TaurusBa
             else:
                 qc = Qt.QColor(color) if not fandango.isSequence(color) else Qt.QColor(*color)
         child.setBackground(0, Qt.QBrush(qc))
-
+        
     def showNodeContextMenu(self,node,event):
         """
         A pop up menu will be shown with the available options. 
@@ -430,7 +441,7 @@ class VaccaTree(TaurusSearchTree):
         self.layout().addWidget(self.tree)
         self.registerConfigDelegate(self.tree)
         # Event forwarding ...
-        for signal in TaurusDevTree.__pyqtSignals__:
+        for signal in TaurusDevTree.__pyqtSignals__:        
             Qt.QObject.connect(self.tree,
                                Qt.SIGNAL(signal),
                                lambda args,
@@ -451,7 +462,7 @@ class VaccaTree(TaurusSearchTree):
                 self._nodes2update = self.tree.getAllNodes().keys()
                 self._allexported = fandango.get_all_devices(exported=True)
 
-            if len(self._nodes2update)>32:
+            if len(self._nodes2update) > VaccaDevTree.MAX_NODES_TO_UPDATE:
               if getattr(self,'_coloured',True):
                 self._coloured = False
                 whites = dict((k,'CLOSE') for k in self._nodes2update)
@@ -490,9 +501,20 @@ class VaccaTree(TaurusSearchTree):
         path = 'image/widgets/Tree.png'
         return path
 
-
-from .doc import get_autodoc
-
+from vacca.doc import get_autodoc
 __doc__ = get_autodoc(__name__, vars())
 
 ###############################################################################
+
+def main(args=[]):
+    import sys
+    args = args or sys.argv[1:]
+    qapp = Qt.QApplication(sys.argv)
+    vt = VaccaTree()
+    vt.setModel(args or fandango.get_all_devices())
+    vt.show()
+    qapp.exec_()
+
+if __name__=='__main__':
+    main()
+

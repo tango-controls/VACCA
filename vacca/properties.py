@@ -29,8 +29,14 @@ from taurus.qt.qtgui.table.taurusdevicepropertytable import TaurusPropTable
 from fandango.qt import DoubleClickable,Dropable
 from taurus.external.qt import Qt
 from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE
-from taurus.core import TaurusDevice,TaurusAttribute,TaurusDatabase
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
+
+try:
+    #Taurus 3
+    from taurus.core import TaurusDevice,TaurusAttribute,TaurusDatabase as TaurusAuthority
+except:
+    #Taurus 4
+    from taurus.core import TaurusDevice, TaurusAttribute, TaurusAuthority
 
 class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
     """
