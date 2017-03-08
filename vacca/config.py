@@ -175,8 +175,19 @@ try:
     
     if CONFIG:
         print('\n%s Config Options:\n'%VACCA_CONFIG)
+
+        #Check renamed variables
+        if getattr(CONFIG,'EXTRA_DEVICES',[]) and not getattr(CONFIG,'DEVICES',None):
+            CONFIG.DEVICES = CONFIG.EXTRA_DEVICES
+        if not getattr(CONFIG,'DEVICE',None) and getattr(CONFIG,'COMPOSER',None):
+            CONFIG.DEVICE = CONFIG.COMPOSER
+
+        varpatch = lambda old,new: (
+          setattr(CONFIG,new,getattr(CONFIG,old)) 
+          if getattr(CONFIG,old,None) and not getattr(CONFIG,new,None) 
+          else none)
           
-        #Variable replacement
+        #Variable replacement (update config ->  update default -> load default)
         for op in OPTIONS:
             limit = 800
             if 'VACCA_'+op in os.environ:
@@ -191,9 +202,6 @@ try:
                 v = replace_env(getattr(CONFIG,op))
                 print('\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v).replace('\n',',')[:limit]))
                 setattr(default,op,v)
-        
-        if not getattr(CONFIG,'DEVICE',None) and getattr(CONFIG,'COMPOSER',None):
-            default.DEVICE = default.COMPOSER
     
     #Adding all variables to Namespace where taurusgui can found them
     try:
@@ -260,6 +268,7 @@ try:
           DEVICES.append(DEVICE.lower())
         if DEVICES and not DEVICE: 
           DEVICE = DEVICES[0]
+        DEVICES = sorted(set(DEVICES))
     except: 
         traceback.print_exc()
 
