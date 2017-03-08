@@ -2,7 +2,10 @@
 Execute the ELinac simulation
 =============================
 
-REQUISITES: PyTango, Taurus and a Tango Database must be installed.
+REQUISITES: PyTango and Taurus must be installed::
+
+  > Debian/Ubuntu: sudo apt-get install tango-pytango python-taurus
+  > OpenSUSE: sudo zypper install tango-pytango python-taurus
 
 In addition, get latest fandango and SimulatorDS::
 
