@@ -342,12 +342,17 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
 
         self.info('init(...): layout ...')
         self._header.layout().removeWidget(self._label)
-        #self._label = vacca.utils.DraggableLabel()
-        self._label = fandango.qt.Draggable(Qt.QLabel)()
+        
+        self._label = fandango.qt.Dropable(fandango.qt.Draggable(Qt.QLabel))()
         self._label.font().setBold(True)
         self._label.setText('SELECT A DEVICE FROM THE TREE')
         self._header.layout().addWidget(self._label,0,1,Qt.Qt.AlignLeft)
         self._label.setDragEventCallback(self._label.text)
+        self._label.checkDropSupport()
+        self._label.setSupportedMimeTypes([self.TAURUS_DEV_MIME_TYPE,
+                    self.TEXT_MIME_TYPE, self.TAURUS_MODEL_MIME_TYPE])
+        self._label.setDropEventCallback(self.setModelHook)
+        
         #self.setToolTip(getattr(self,'__help__',self.__doc__))
         
         if filters:
@@ -432,6 +437,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         try:    
           #self.setLogLevel(self.Debug)
           self.info('VaccaPanel(%s).setModel(%s,%s)'%(id(self),model,pixmap))
+          self.checkDropSupport() #<< Needed to reapply drop support overriden by taurusgui.ini
           model,modelclass,raw = str(model).strip(),'',model
           model = fandango.tango.parse_tango_model(model)
           if model is None: 
@@ -601,6 +607,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
           name,classname='vacca.panel.VaccaPanel',
           model=model,sharedDataRead={'SelectedInstrument':'setModelHook'},
           )
+
         
 def configure_form(dev,form=None):
     """ Creates a TauForm and configures its Status fields 
