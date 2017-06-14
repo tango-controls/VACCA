@@ -80,8 +80,8 @@ if os.path.isdir(vgb):
 #print package_data
 
 
-import pickle
-pickle.dump(package_data,open('data.pck','w'))
+#import pickle
+#pickle.dump(package_data,open('data.pck','w'))
   
 packages = package_dir.keys()
 
