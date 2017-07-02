@@ -260,6 +260,7 @@ try:
 
     #: USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree
     USE_DEVICE_TREE = USE_DEVICE_TREE
+    #print('\t>>> Parsing DEVICES: %s ...'%(str(DEVICES)[:80]))
     
     try:
         DEVICES = expand_device_list(DEVICES)

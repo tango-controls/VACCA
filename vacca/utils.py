@@ -69,7 +69,8 @@ VACCA_PATH: *vpath('path/to/icon')*
 
 import os,sys,traceback,imp,time,re
 import fandango
-from fandango import printf,get_database,first,isString,isRegexp
+from fandango import printf,get_database,first,\
+    isString,isRegexp,clmatch
 from fandango.dicts import SortedDict
 from fandango.qt import Qt
 
@@ -229,21 +230,34 @@ def expand_device_list(expressions):
     devices,ins,outs = [],set(),set()
     if isString(expressions):
       expressions = (','.join(expressions.split())).split(',')
-    [(ins,outs)['!' in s].add(s.strip().lower()) for s in expressions if s.strip()]
+    [(ins,outs)['!' in s].add(s.strip().lower()) 
+            for s in expressions if s.strip()]
+
     for s in ins:
       try:
         if isRegexp(s):
-          ds = fandango.get_matching_devices(s.strip('?'),exported='?' in s)
-          devices.extend(d for d in ds if not d.startswith('dserver/'))
+          ds = fandango.get_matching_devices(s.strip('?'),
+                exported='?' in s)
+          devices.extend(d for d in ds 
+                if not clmatch('*dserver/*/*',d))
         else:
           devices.append(s)
+
       except Exception,e:
         print(e,traceback.format_exc())
-    for o in outs:
+        
+    #print('expand_device_list(%s): %s'%(
+        #expressions,str(devices)[:80]))
+    
+    for o in outs:       
       try:
-        devices = [d for d in devices if not fandango.matchCl(o.strip('!'),d)]
+        n = len(devices)
+        devices = [d for d in devices 
+            if not fandango.matchCl(o.strip('!'),d)]
       except:
         print(e,traceback.format_exc())
+        
+    #print('expand_device_list(%s): %s'%(expressions,len(devices)))
     return sorted(devices)
   
 ###############################################################################
