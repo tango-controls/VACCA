@@ -101,12 +101,12 @@ using environment variables (adding the VACCA_ preffix).
 # unless you know what you are doing
 
 import time,os,sys,traceback,imp,inspect
-from PyQt4.QtCore import SIGNAL
 import fandango as fn,taurus
 import vacca,vacca.utils
 from .doc import get_autodoc,get_vars_docs
 from fandango import partial,FakeLogger as FL
-from taurus.qt import Qt
+from taurus.external.qt import Qt
+from taurus.external.qt.Qt import SIGNAL
 from taurus.qt.qtgui.taurusgui.utils import \
   PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
 from vacca.panel import VaccaAction,VaccaSplash
@@ -531,7 +531,6 @@ try:
     #===============================================================================
 
     #: 
-    from PyQt4 import Qt
     
     #Forcing nesting of dock widgets
     if app:

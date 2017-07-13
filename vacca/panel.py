@@ -29,12 +29,11 @@ import re,os,traceback,time,sys
 import fandango,vacca
 import fandango.functional as fun
 
-from vacca.utils import *
+from vacca.utils import * #Qt, Qwt5, etc
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 
 import taurus
 import taurus.qt
-from taurus.qt import Qt
 from taurus.qt.qtgui.container import TaurusWidget as WIDGET_CLASS
 from taurus.qt.qtgui.panel import TaurusForm as FORM_CLASS
 from taurus.qt.qtgui.panel.taurusdevicepanel import TaurusDevicePanel,get_regexp_dict,searchCl,matchCl,str_to_filter,get_White_palette,get_eqtype

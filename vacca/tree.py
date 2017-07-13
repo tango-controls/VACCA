@@ -22,7 +22,6 @@
 ## along with Taurus.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #############################################################################
-from PyQt4 import QtCore
 
 __all__ = ["TaurusDevTree", "TaurusSearchTree", "TaurusDevTreeOptions",
            "VaccaTree"]  # ,"SearchEdit"] #"TaurusTreeNode"]

@@ -27,10 +27,9 @@ import traceback,time
 import fandango
 import PyTango
 import taurus
-from taurus.qt import Qt
+from vacca.utils import Qt,Qwt5
 from taurus.qt.qtgui.plot import TaurusTrend,TaurusPlot
 from taurus.qt.qtgui.panel import TaurusDevicePanel
-from PyQt4 import Qwt5
 from fandango.qt import Draggable
 
 try:
@@ -67,7 +66,7 @@ class VaccaTrend(TREND_CLASS):
 def setup_pressure_trend(tt,log=True,length=12*3600):
     print '*'*80
     print 'in setup_pressure_trend(%s,length=%s s)' % (tt, length)
-    from PyQt4 import Qwt5
+    from taurus.external.qt import Qwt5
     try:
         #n,w = str(qtw.tabText(qtw.count()-1)),qtw.widget(qtw.count()-1)
         #qtw.insertTab(0,w,n)

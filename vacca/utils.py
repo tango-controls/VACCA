@@ -71,7 +71,8 @@ import os,sys,traceback,imp,time,re
 import fandango
 from fandango import printf,get_database,first,isString,isRegexp
 from fandango.dicts import SortedDict
-from fandango.qt import Qt
+from taurus.external.qt import Qt
+from taurus.external.qt import Qwt5
 
 try:
   from taurus.core import TaurusDatabase as TaurusAuthority
@@ -382,7 +383,6 @@ def get_os_launcher(cmd,args=[]):
     return f
   
 def get_main_window(app=None):
-    from PyQt4 import Qt
     app = app or Qt.QApplication.instance()
     main = fandango.first((a for a in app.allWidgets() if isinstance(a,Qt.QMainWindow)),default=None)
     return main

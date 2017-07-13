@@ -188,7 +188,6 @@ class VaccaPropTable(DoubleClickable(Dropable(TaurusPropTable))):
 
     @classmethod
     def __test__(klass,arg=None):
-        from PyQt4 import Qt
         qapp = Qt.QApplication([])
         i = klass()
         print i

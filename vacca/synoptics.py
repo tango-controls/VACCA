@@ -25,13 +25,12 @@
 
 import sys,re,traceback
 import fandango,fandango.qt,taurus
-from PyQt4 import Qt,Qwt5
+from taurus.external.qt import Qt,Qwt5
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, \
     TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE, TAURUS_MODEL_LIST_MIME_TYPE
 from taurus import Manager
 
-from taurus.qt import Qt
 from fandango import partial,FakeLogger as FL
 
 from taurus.qt.qtgui.graphic import TaurusJDrawSynopticsView,TaurusGraphicsScene,TaurusJDrawGraphicsFactory,TYPE_TO_GRAPHICS

@@ -65,7 +65,7 @@ class VaccaPanic(AlarmGUI):
 
     @classmethod
     def __test__(klass,arg=None):
-        from PyQt4 import Qt
+        from vacca.utils import Qt
         qapp = Qt.QApplication([])
         i = klass()
         print i
