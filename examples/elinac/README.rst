@@ -21,15 +21,18 @@ Get Vacca::
   > export PYTHONPATH=$(pwd)/vacca.git:$PYTHONPATH
   > cd vacca.git/examples/elinac
 
-If you don't have the TangoBox devices, create new simulators using SimulatorDS ::
+If you don't have the TangoBox devices, create new simulators 
+using SimulatorDS ::
 
   > ipython
   : import SimulatorDS.gen_simulation as gs
   : gs.generate_class_properties(all_rw=True)
-  : gs.create_simulators('ui_attribute_values.pck',instance='elinac',tango_host='127.0.0.1')
+  : gs.create_simulators('ui_attribute_values.pck',instance='elinac',
+       tango_host='127.0.0.1')
   : Ctrl+D
 
-If you have starter, SimulatorDS and fandango/scripts in PATH, let's launch the simulators::
+If you have starter, SimulatorDS and fandango/scripts in PATH, let's 
+launch the simulators::
 
 Using Starter and fandango/scripts::
 
