@@ -33,11 +33,11 @@ If you have starter, SimulatorDS and fandango/scripts in PATH, let's launch the 
 
 Using Starter and fandango/scripts::
 
-  > tango_servers start "DynamicDS/elin*"
+  > tango_servers start "DynamicDS/elinac*"
 
  Or directly running the .py script::
 
-  > python ...../SimulatorDS.py elin &
+  > python ../../../fandango.git/fandango/device/DynamicDS.py elinac &
 
 Last, launch VACCA::
 
