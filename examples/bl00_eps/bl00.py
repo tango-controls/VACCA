@@ -65,7 +65,7 @@ try:
 except: traceback.print_exc()
 
 try:
-  from PyQt4 import Qt
+  from vacca.utils import Qt
   
 except: traceback.print_exc()
 

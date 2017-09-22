@@ -26,11 +26,17 @@ LINKS / DEPENDENCIES
 
 All dependencies and User Manual are available from www.tango-controls.org:
 
-Tango
-PyTango
-Taurus
-Fandango
+* Tango: https://github.com/tango-controls/cppTango
+* PyTango: https://github.com/tango-controls/pytango
+* Taurus: https://github.com/taurus-org/taurus
+* Fandango: https://github.com/tango-controls/fandango
 
+Optional dependencies:
+
+* https://github.com/tango-controls/SimulatorDS
+* https://github.com/tango-controls/PANIC
+* https://github.com/tango-controls/PyTangoArchiving
+* ...
 INSTALLING:
 ===========
 

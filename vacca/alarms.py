@@ -23,7 +23,7 @@
 ##
 #############################################################################
 
-import fandango,vacca,traceback
+import os,fandango,vacca,traceback
 from vacca.utils import vpath,wdir
 #from panic.gui import AlarmGUI
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
@@ -58,12 +58,14 @@ class VaccaPanic(AlarmGUI):
         """
         :return: The Default Icon Path.
         """
-        path = vpath('image/icons/panic.gif')
+        path = fandango.objects.findModule('panic')+'/gui/icon/panic-6.png'
+        print('VaccaPanic.getDefaultIcon():%s'%path)
+        #path = vpath('image/icons/panic.gif')
         return path
 
     @classmethod
     def __test__(klass,arg=None):
-        from PyQt4 import Qt
+        from vacca.utils import Qt
         qapp = Qt.QApplication([])
         i = klass()
         print i

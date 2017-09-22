@@ -541,7 +541,7 @@ background:208,231,252  }
   JDGroup {
     summit:419.975,34.25,448.025,59
     origin:166.675,28.375
-    name:"taco:elin/v-ip/bunch"
+    name:"tango:elin/v-ip/bunch"
     extensions:{
       className:"atkpanel.MainPanel"
       classParam:""
@@ -581,7 +581,7 @@ background:208,231,252  }
   JDGroup {
     summit:440.975,226.25,469.025,251
     origin:164.725,41.375
-    name:"taco:elin/v-ip/kly1"
+    name:"tango:elin/v-ip/kly1"
     extensions:{
       className:"atkpanel.MainPanel"
       classParam:""
@@ -703,7 +703,7 @@ background:208,231,252  }
   JDGroup {
     summit:752.975,226.25,781.025,251
     origin:214.925,41.375
-    name:"taco:elin/v-ip/kly2"
+    name:"tango:elin/v-ip/kly2"
     extensions:{
       className:"atkpanel.MainPanel"
       classParam:""

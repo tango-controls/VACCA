@@ -29,19 +29,25 @@ import re,os,traceback,time,sys
 import fandango,vacca
 import fandango.functional as fun
 
-from vacca.utils import *
+from vacca.utils import * #Qt, Qwt5, etc
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 
 import taurus
 import taurus.qt
-from taurus.qt import Qt
 from taurus.qt.qtgui.container import TaurusWidget as WIDGET_CLASS
 from taurus.qt.qtgui.panel import TaurusForm as FORM_CLASS
 from taurus.qt.qtgui.panel.taurusdevicepanel import TaurusDevicePanel,get_regexp_dict,searchCl,matchCl,str_to_filter,get_White_palette,get_eqtype
-from taurus.qt.qtgui.resource import getPixmap
-from taurus.core import TaurusAttribute,TaurusDevice,TaurusDatabase
 from taurus.qt.qtgui.container import TaurusWidget
 from taurus.qt.qtgui.panel.taurusform import TaurusForm,TaurusCommandsForm
+
+try:
+    #Taurus 4
+    from taurus.qt.qtgui.icon import getCachedPixmap
+    from taurus.core import TaurusAttribute,TaurusDevice,TaurusAuthority
+except:
+    #Taurus 3
+    from taurus.qt.qtgui.resource import getPixmap as getCachedPixmap
+    from taurus.core import TaurusAttribute,TaurusDevice,TaurusDatabase
 
 ###############################################################################
 # Help Methods
@@ -101,7 +107,7 @@ class DomainButton(Qt.QToolButton):
 
     def setModel(self, model, action):
         #print 'DomainButton.setModel(%s,%s)'%(model,action)
-        self._model = model
+        self._model = model = str(model)
         self._led.setModel(model)
         if not self._label.text(): self.setLabel(model.split('/')[0])
         self._cmd = action#action.split()
@@ -133,7 +139,7 @@ class VaccaAction(Qt.QToolButton,taurus.qt.qtgui.base.TaurusBaseWidget):
 
     def setModel(self, model):
         self.info('VaccaAction(%s).setModel(%s)' % (self._default_cmd, model))
-        model = fandango.toSequence(model)
+        model = map(str,fun.toSequence(model))
         if len(model) > 1:
             self._text = model[0]
         if len(model) > 2:
@@ -336,12 +342,17 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
 
         self.info('init(...): layout ...')
         self._header.layout().removeWidget(self._label)
-        #self._label = vacca.utils.DraggableLabel()
-        self._label = fandango.qt.Draggable(Qt.QLabel)()
+        
+        self._label = fandango.qt.Dropable(fandango.qt.Draggable(Qt.QLabel))()
         self._label.font().setBold(True)
         self._label.setText('SELECT A DEVICE FROM THE TREE')
         self._header.layout().addWidget(self._label,0,1,Qt.Qt.AlignLeft)
         self._label.setDragEventCallback(self._label.text)
+        self._label.checkDropSupport()
+        self._label.setSupportedMimeTypes([self.TAURUS_DEV_MIME_TYPE,
+                    self.TEXT_MIME_TYPE, self.TAURUS_MODEL_MIME_TYPE])
+        self._label.setDropEventCallback(self.setModelHook)
+        
         #self.setToolTip(getattr(self,'__help__',self.__doc__))
         
         if filters:
@@ -366,7 +377,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         self.info('In setModelHook(%s)'%str(model))
         try:
           fandango.tango.parse_tango_model(str(model).strip())['device']
-          self.setModel(model)
+          self.setModel(str(model))
         except:
           self.warning('Invalid model: %s\n%s'%(repr(model),traceback.format_exc()))
     
@@ -426,6 +437,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         try:    
           #self.setLogLevel(self.Debug)
           self.info('VaccaPanel(%s).setModel(%s,%s)'%(id(self),model,pixmap))
+          self.checkDropSupport() #<< Needed to reapply drop support overriden by taurusgui.ini
           model,modelclass,raw = str(model).strip(),'',model
           model = fandango.tango.parse_tango_model(model)
           if model is None: 
@@ -452,7 +464,8 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
           raise e
           
         try:
-            taurus.Device(model).ping()
+            try: taurus.Device(model).getDeviceProxy().ping() #T4
+            except: taurus.Device(model).getHWObj().ping() #T3
             dev_class = fandango.get_device_info(model).dev_class
             if self.getModel(): self.detach() #Do not dettach previous model before pinging the new one (fail message will be shown at except: clause)
             TaurusWidget.setModel(self,model)
@@ -473,7 +486,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 if qpixmap.height()>.9*IMAGE_SIZE[1]: qpixmap=qpixmap.scaledToHeight(.9*IMAGE_SIZE[1])
                 if qpixmap.width()>.9*IMAGE_SIZE[0]: qpixmap=qpixmap.scaledToWidth(.9*IMAGE_SIZE[0])
             else:
-                qpixmap = getPixmap(':/logo.png')
+                qpixmap = getCachedPixmap(':/logo.png')
             
             self._image.setPixmap(qpixmap)
             self._state.setModel(model+'/state')
@@ -597,6 +610,7 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
           name,classname='vacca.panel.VaccaPanel',
           model=model,sharedDataRead={'SelectedInstrument':'setModelHook'},
           )
+
         
 def configure_form(dev,form=None):
     """ Creates a TauForm and configures its Status fields 

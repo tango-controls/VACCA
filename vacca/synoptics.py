@@ -25,14 +25,12 @@
 
 import sys,re,traceback
 import fandango,fandango.qt,taurus
-from PyQt4 import Qt,Qwt5
+from taurus.external.qt import Qt,Qwt5
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
-from taurus.core.taurusvalidator import DeviceNameValidator, AttributeNameValidator
 from taurus.qt.qtcore.mimetypes import TAURUS_ATTR_MIME_TYPE, \
     TAURUS_DEV_MIME_TYPE, TAURUS_MODEL_MIME_TYPE, TAURUS_MODEL_LIST_MIME_TYPE
 from taurus import Manager
 
-from taurus.qt import Qt
 from fandango import partial,FakeLogger as FL
 
 from taurus.qt.qtgui.graphic import TaurusJDrawSynopticsView,TaurusGraphicsScene,TaurusJDrawGraphicsFactory,TYPE_TO_GRAPHICS
@@ -41,6 +39,13 @@ from taurus.qt.qtgui.util import ExternalAppAction
 
 from vacca.utils import get_env_variable
 from vacca.panel import VaccaPanel
+
+try:
+    #Taurus 3
+    from taurus.core.taurusvalidator import DeviceNameValidator as TaurusDeviceNameValidator, AttributeNameValidator as TaurusAttributeNameValidator
+except:
+    #Taurus 4
+    from taurus.core.taurusvalidator import TaurusDeviceNameValidator, TaurusAttributeNameValidator
 
 import traceback
 def catched(f):
@@ -163,10 +168,10 @@ class VaccaSynoptic(TaurusJDrawSynopticsView):
                 # self.debug('getMimeData(): DeviceModel at %s: %s',self.mousePos,model)
                 mimeData.setText(model)
                 mimeData.setData(TAURUS_MODEL_MIME_TYPE, model)
-                if DeviceNameValidator().getParams(model):
+                if TaurusDeviceNameValidator().getParams(model):
                     self.debug('getMimeData(): DeviceModel at %s: %s',self.mousePos,model)
                     mimeData.setData(TAURUS_DEV_MIME_TYPE,model)
-                elif AttributeNameValidator().getParams(model):
+                elif TaurusAttributeNameValidator().getParams(model):
                     self.debug('getMimeData(): AttributeModel at %s: %s',self.mousePos,model)
                     mimeData.setData(TAURUS_ATTR_MIME_TYPE,model)
                     mimeData.setData(TAURUS_DEV_MIME_TYPE,model.rsplit('/',1)[0])

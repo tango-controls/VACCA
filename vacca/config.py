@@ -101,12 +101,12 @@ using environment variables (adding the VACCA_ preffix).
 # unless you know what you are doing
 
 import time,os,sys,traceback,imp,inspect
-from PyQt4.QtCore import SIGNAL
 import fandango as fn,taurus
 import vacca,vacca.utils
 from .doc import get_autodoc,get_vars_docs
 from fandango import partial,FakeLogger as FL
-from taurus.qt import Qt
+from taurus.external.qt import Qt
+from taurus.external.qt.Qt import SIGNAL
 from taurus.qt.qtgui.taurusgui.utils import \
   PanelDescription, ExternalApp, ToolBarDescription, AppletDescription
 from vacca.panel import VaccaAction,VaccaSplash
@@ -175,8 +175,19 @@ try:
     
     if CONFIG:
         print('\n%s Config Options:\n'%VACCA_CONFIG)
+
+        #Check renamed variables
+        if getattr(CONFIG,'EXTRA_DEVICES',[]) and not getattr(CONFIG,'DEVICES',None):
+            CONFIG.DEVICES = CONFIG.EXTRA_DEVICES
+        if not getattr(CONFIG,'DEVICE',None) and getattr(CONFIG,'COMPOSER',None):
+            CONFIG.DEVICE = CONFIG.COMPOSER
+
+        varpatch = lambda old,new: (
+          setattr(CONFIG,new,getattr(CONFIG,old)) 
+          if getattr(CONFIG,old,None) and not getattr(CONFIG,new,None) 
+          else none)
           
-        #Variable replacement
+        #Variable replacement (update config ->  update default -> load default)
         for op in OPTIONS:
             limit = 800
             if 'VACCA_'+op in os.environ:
@@ -191,9 +202,6 @@ try:
                 v = replace_env(getattr(CONFIG,op))
                 print('\t%s: \t%s = %s'%(CONFIG.__name__,op,str(v).replace('\n',',')[:limit]))
                 setattr(default,op,v)
-        
-        if not getattr(CONFIG,'DEVICE',None) and getattr(CONFIG,'COMPOSER',None):
-            default.DEVICE = default.COMPOSER
     
     #Adding all variables to Namespace where taurusgui can found them
     try:
@@ -252,6 +260,7 @@ try:
 
     #: USE_DEVICE_TREE:  True or False, To Show by default the Device_Tree
     USE_DEVICE_TREE = USE_DEVICE_TREE
+    #print('\t>>> Parsing DEVICES: %s ...'%(str(DEVICES)[:80]))
     
     try:
         DEVICES = expand_device_list(DEVICES)
@@ -260,6 +269,7 @@ try:
           DEVICES.append(DEVICE.lower())
         if DEVICES and not DEVICE: 
           DEVICE = DEVICES[0]
+        DEVICES = sorted(set(DEVICES))
     except: 
         traceback.print_exc()
 
@@ -308,7 +318,8 @@ try:
     if USE_DEVICE_PANEL:
         print('\t>>> Loading Device panel (%s)...' % DEVICE)
         from vacca.panel import VaccaPanel
-        panel = VaccaPanel.getPanelDescription('Device',model=DEVICE or None)
+        m = DEVICE if DEVICE and fn.check_device(DEVICE) else None
+        panel = VaccaPanel.getPanelDescription('Device',model=m)
         
     from vacca.panel import VaccaPanel
     if AttributeFilters: VaccaPanel.setAttributeFilters(AttributeFilters)
@@ -521,7 +532,6 @@ try:
     #===============================================================================
 
     #: 
-    from PyQt4 import Qt
     
     #Forcing nesting of dock widgets
     if app:
