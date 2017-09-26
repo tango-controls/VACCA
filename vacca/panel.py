@@ -28,6 +28,7 @@ __doc__ = """Custom widgets for panels, forms and buttons in Vacca"""
 import re,os,traceback,time,sys
 import fandango,vacca
 import fandango.functional as fun
+import fandango.qt
 
 from vacca.utils import * #Qt, Qwt5, etc
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
