@@ -124,20 +124,19 @@ GRID = {
 
 #Extra widgets to appear in the NewPanel dialog
 EXTRA_WIDGETS = [
-        #('panic.gui.AlarmGUI',WDIR+'/vacca/image/icons/panic.gif'),
-        #('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',WDIR+'/vacca/image/icons/search.png'),
+        ('panic.gui.AlarmGUI',WDIR+'/vacca/image/icons/panic.gif'),
+        ('PyTangoArchiving.widget.ArchivingBrowser.ArchivingBrowser',WDIR+'/vacca/image/icons/search.png'),
     ] #('vacca.VacuumProfile',WDIR+'image/ProfilePlot.jpg'),
 
 from taurus.qt.qtgui.taurusgui.utils import PanelDescription
 EXTRA_PANELS = {}
-##EXTRA_PANELS['PANIC'] = PanelDescription('PANIC','panic.gui.AlarmGUI',model='',
-    ##sharedDataWrite={'HighlightInstruments':'devicesSelected'})
-#try:
-  #import MySQLdb
-  #EXTRA_PANELS['Finder'] = PanelDescription('Finder','vacca.panel.VaccaFinder',model='')
-#except:
-  #pass
-
+EXTRA_PANELS['PANIC'] = PanelDescription('PANIC','panic.gui.AlarmGUI',model='',
+    sharedDataWrite={'HighlightInstruments':'devicesSelected'})
+try:
+  import MySQLdb
+  EXTRA_PANELS['Finder'] = PanelDescription('Finder','vacca.panel.VaccaFinder',model='')
+except:
+  pass
 TOOLBARS = [] #[(name,modulename.classname)]
 
 #===============================================================================
@@ -170,15 +169,15 @@ EXTRA_APPS = {
     #'xrga':{'name':'RGA','classname':'VaccaAction','model':['RGA',WDIR+'image/equips/icon-rga.gif']+['rdesktop -g 1440x880 ctrga01']}
     }
 
-#try:
-    #import panic
-    #EXTRA_APPS['PANIC'] = {'name': 'PANIC',
-                #'class': vacca.VaccaPanic}
-#except: pass
+try:
+    import panic
+    EXTRA_APPS['PANIC'] = {'name': 'PANIC',
+                'class': vacca.VaccaPanic}
+except: pass
 
-#EXTRA_APPS['Finder'] = {'name': 'Finder',
-                #'class': lambda:os.system('taurusfinder&'),
-                #'icon': vacca.utils.wdir('image/icons/search.png')}
+EXTRA_APPS['Finder'] = {'name': 'Finder',
+                'class': lambda:os.system('taurusfinder&'),
+                'icon': vacca.utils.wdir('image/icons/search.png')}
     
 #from vacca.panel import VaccaAction
     
