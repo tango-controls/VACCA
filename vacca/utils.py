@@ -398,7 +398,10 @@ def get_os_launcher(cmd,args=[]):
   
 def get_main_window(app=None):
     app = app or Qt.QApplication.instance()
-    main = fandango.first((a for a in app.allWidgets() if isinstance(a,Qt.QMainWindow)),default=None)
+    main = fandango.first((a for a in app.allWidgets() 
+                           if isinstance(a,Qt.QMainWindow)),default=None)
+    if not main:
+        print('No QMainWindow instance found!?!?')
     return main
 
 def get_taurus_gui(app=None):
@@ -610,8 +613,12 @@ def add_menu(menuname,actions):
         ('TaurusTrend',lambda:os.system('taurustrend -a &'),None),
         ]),
     '''
-    print 'Adding new menu %s'%menuname
     self = get_main_window()
+    if not self:
+        print('ERROR: Unable to add %s menu, QMainWindow not found'%menuname)
+        return
+        
+    print('Adding new menu %s'%menuname)
     MenuBar = self.menuBar()
     newmenu = Qt.QMenu(MenuBar)
     newmenu.setTitle(menuname)
@@ -781,6 +788,8 @@ class addCustomPanel2Gui(object):
                 if isinstance(widget, TaurusGui):
                     taurusgui = widget
             #taurusgui = get_taurus_gui() #get_main_window() does not work here!?
+            
+            assert taurusgui, 'TaurusGui instance not found!?'
 
             #Launch method
             def _launchPanel(panelName, panelClass, *args):

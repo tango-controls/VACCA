@@ -14,6 +14,7 @@ MAIN CODE FOR PANELS GENERATION IS IN vacca.config SUBMODULE
 import sys,os,re,time,imp,traceback
 
 args = sys.argv[1:]
+files = []
 
 __doc__ = """
 
@@ -68,6 +69,10 @@ def remove_last_config(filename):
     fo.close()  
 
 folder = os.getenv('HOME')+'/.config/VACCA/'
+
+options = [a for a in args if a.startswith('-')]
+values = [a for a in args if '=' in a]
+
 if '--clean' in args:
   print('Removing last vacca configs (%s/*.ini)'%folder)
   os.remove(folder+'*.ini')
@@ -90,6 +95,16 @@ elif '--list' in args:
   print('\n\t'+'\n\t'.join(configs)+'\n')
   sys.exit(0)
   
+if '--panel' not in args:
+  files = [a for a in args if a not in options+values]  
+  
+files = files or  [os.getenv('VACCA_CONFIG')]
+  
+###############################################################################
+
+print('-'*80)
+print("In vacca.main(%s) ..."%args)
+  
 ###############################################################################
 # Delayed imports
 
@@ -101,14 +116,6 @@ from taurus.qt.qtgui.taurusgui import TaurusGui
 import vacca.utils as vu
 import vacca 
 
-###############################################################################
-
-print('-'*80)
-print("In vacca.main(%s) ..."%args)
-
-options = [a for a in args if a.startswith('-')]
-values = [a for a in args if '=' in a]
-files = [a for a in args if a not in options+values] or [os.getenv('VACCA_CONFIG')]
 configs = vu.get_config_properties() or vu.create_config_properties()
 
 if not files or not files[0]: files = [configs.keys()[0]]
@@ -144,14 +151,21 @@ vu.VACCA_CONFIG = os.environ['VACCA_CONFIG'] = config
 
 print('Vacca Environment variables (vacca.main):')
 print('\n'.join(map(str,(t for t in os.environ.items() if 'VACCA' in t[0]))))
-  
+
 ### MAIN CODE FOR PANELS GENERATION IS IN vacca.config SUBMODULE
 print '-'*80
-confname = 'vaccagui'
-app = TaurusApplication()
-gui = TaurusGui(None, confname=confname)
-gui.show()
-ret = app.exec_()
+
+
+if '--panel' in options:
+    import vacca.panel
+    ret = vacca.panel.main(args[:1]+args[-1:])
+    
+else:
+    confname = 'vaccagui'
+    app = TaurusApplication()
+    gui = TaurusGui(None, confname=confname)
+    gui.show()
+    ret = app.exec_()
 
 taurus.info('Finished execution of TaurusGui')
 sys.exit(ret)

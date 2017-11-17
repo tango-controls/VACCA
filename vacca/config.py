@@ -537,7 +537,11 @@ try:
     if app:
         try:
             main = vacca.utils.get_main_window(app)
-            main.setDockNestingEnabled(True)
+            if main:
+                main.setDockNestingEnabled(True)
+            else:
+                print('ERROR: QMainWindow not found!?,'
+                    ' unable to set DockNesting')
         except:
             traceback.print_exc()
             
