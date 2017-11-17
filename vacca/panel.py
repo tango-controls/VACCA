@@ -636,12 +636,29 @@ def configure_form(dev,form=None):
 def main(args):
 
     import sys,re,traceback,taurus
-    assert len(args)>1, '\n\nUsage:\n\t> python panel.py [a/device/name or synoptic.jdw] [--attrs] [attr_regexps] --comms [comm_regexps]'
+    assert len(args)>1, '\n\nUsage:\n\t'\
+        '> python panel.py [a/device/name or synoptic.jdw] [--attrs] '\
+            '[attr_regexps] --comms [comm_regexps]'
     
     model = args[1]
     taurus.setLogLevel(taurus.core.util.Logger.Debug)
     app = Qt.QApplication(args)
     form = None
+    
+    VACCA_CONFIG = os.getenv('VACCA_CONFIG')
+    if VACCA_CONFIG:
+        import vacca.utils as vu
+        PROPS = vu.get_config_properties(VACCA_CONFIG)
+        VACCA_DIR = WDIR = PROPS.get('VACCA_DIR',vu.VACCA_DIR)
+        try:
+            import default
+        except:
+            try:
+                default = get_config_file(imp.find_module('vacca')[1]
+                                          +'/default.py')
+            except:
+                traceback.print_exc()
+        CONFIG = vu.get_config_file()
     
     if re.match('[\w-]+/[\w-]+/[\w-]+.*',model):
       
@@ -656,8 +673,10 @@ def main(args):
         
     elif model.lower().endswith('.jdw'):
         print 'loading a synoptic'
-        form = taurus.qt.qtgui.graphic.TauJDrawSynopticsView(designMode=False,
-          updateMode=taurus.qt.qtgui.graphic.TauJDrawSynopticsView.NoViewportUpdate
+        import taurus.qt.qtgui.graphic as tqqg
+        form = tqqg.TauJDrawSynopticsView(
+          designMode = False,
+          updateMode = tqqg.TauJDrawSynopticsView.NoViewportUpdate
           ) 
         #FullViewportUpdate, : AWFUL CPU USAGE!!!!!!!!
         #MinimalViewportUpdate, : Qt Defaults

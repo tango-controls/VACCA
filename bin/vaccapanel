@@ -18,7 +18,7 @@ if [ ! "$VACCA_PATH" ] ; then
     export VACCA_PATH=$(python -c "import imp;print(imp.find_module('vacca')[1])")
 fi
 
-LAUNCHER=$VACCA_PATH/panel.py
-python $LAUNCHER $* 
+LAUNCHER=$VACCA_PATH/main.py
+python $LAUNCHER --panel $* 
 #3>&1 2>&1 1>/dev/null
 
