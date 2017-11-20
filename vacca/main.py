@@ -113,6 +113,16 @@ from taurus.core.util import argparse
 from taurus.qt.qtgui.application import TaurusApplication
 from taurus.qt.qtgui.taurusgui import TaurusGui
 
+###################################################################### 
+# Set tangoFormatter as default formatter 
+try: 
+    from taurus.core.tango.util import tangoFormatter 
+    from taurus.qt.qtgui.base import TaurusBaseComponent 
+    TaurusBaseComponent.FORMAT = tangoFormatter 
+except: 
+    pass 
+######################################################################
+
 import vacca.utils as vu
 import vacca 
 

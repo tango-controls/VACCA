@@ -31,6 +31,7 @@ from vacca.utils import Qt,Qwt5
 from taurus.qt.qtgui.plot import TaurusTrend,TaurusPlot
 from taurus.qt.qtgui.panel import TaurusDevicePanel
 from fandango.qt import Draggable
+from fandango.tango import parse_tango_model
 
 try:
   from PyTangoArchiving.widget.trend import ArchivingTrend
@@ -109,7 +110,9 @@ class VaccaProfilePlot(Draggable(TaurusPlot)):
         print '*'*80
         try:
             #if self._profile_loaded: return
-            if fandango.isSequence(model) or 'attributename' in fandango.tango.parse_tango_model(model):
+            if (fandango.isSequence(model) or 
+                'attributename' in parse_tango_model(model.split('|')[0])
+                ):
                 self.info('setting an attribute model')
                 TaurusPlot.setModel(self, model)# model = model[0]# str(
                 # model).rsplit('/',1)[0]
@@ -125,11 +128,13 @@ class VaccaProfilePlot(Draggable(TaurusPlot)):
                     setup_profile_plot(self, model)
                 else:
                     self.warning('%s has not all required attributes' % model)
+                    
             if len(self._positions) and len(self._labels):
                 self.info('Setting CustomXLabels ...')
                 self.setAxisCustomLabels(Qwt5.QwtPlot.xBottom,
                                          zip(self._positions, self._labels), 60)
         except Exception, e:
+            traceback.print_exc()
             self.warning('VaccaProfilePlot.setModel(%s) failed!: %s' % (model, e))
             
 def setup_profile_plot(tp, composer, picker=True):
@@ -149,15 +154,28 @@ def setup_profile_plot(tp, composer, picker=True):
     pumps, gauges, tcs = [str(s).lower() for s in (pumps, gauges, tcs)]
     tp.setModelInConfig(False)
     tp.setModifiableByUser(False)
-    tp.setModel(pumps)
-    tp.addModels([tcs])
+    try:
+        tp.setModel(pumps)
+    except:
+        traceback.print_exc()
+    try:
+        tp.addModels([tcs])
+    except:
+        traceback.print_exc()
     tcs = tcs.split('|')[-1]
-    tp.setCurvesYAxis([tcs], tp.yRight)
-    tp.addModels([gauges])
+    try:
+        tp.setCurvesYAxis([tcs], tp.yRight)
+    except:
+        traceback.print_exc()
+    try:
+        tp.addModels([gauges])
+    except:
+        traceback.print_exc()
     gauges = gauges.split('|')[-1]
     Curves = {}
     for cname in (pumps, gauges, tcs):
         tp.info('set curve %s' % cname)
+        tp.info('curves: %s'%tp.curves.keys())
         try:
             Curves[cname] = tp.curves[cname]
         except:
@@ -166,8 +184,10 @@ def setup_profile_plot(tp, composer, picker=True):
     if positions and labels:
         tp.info('Setting CustomXLabels ...')
         try:
-            tp._positions = list(int(i) for i in taurus.Attribute(positions).read().value)
-            tp._labels = list(str(i) for i in taurus.Attribute(labels).read().value)
+            tp._positions = list(int(i) for i in 
+                                 taurus.Attribute(positions).read().value)
+            tp._labels = list(str(i) for i in 
+                              taurus.Attribute(labels).read().value)
             tp.setAxisCustomLabels(Qwt5.QwtPlot.xBottom,zip(tp._positions,
                                                             tp._labels), 60)
         except:
@@ -184,12 +204,15 @@ def setup_profile_plot(tp, composer, picker=True):
         cap.lWidth = width
         tp.setCurveAppearanceProperties({Curves[cname].getCurveName(): cap})
         
-    Curves[gauges].setSymbol(Qwt5.QwtSymbol(Qwt5.QwtSymbol.Diamond,
+    try:
+        Curves[gauges].setSymbol(Qwt5.QwtSymbol(Qwt5.QwtSymbol.Diamond,
                                             Qt.QBrush(Qt.Qt.yellow),
                                             Qt.QPen(Qt.Qt.green),
                                             Qt.QSize(7, 7)
-                                            )
-                             )
+                                            ))
+    except:
+        traceback.print_exc()
+        
     #f1 = Qwt5.QwtSplineCurveFitter()
     #f1.setSplineSize(2000)
     #Curves[pumps].setCurveFitter(f1)

@@ -99,6 +99,7 @@ class DomainButton(Qt.QToolButton):
         from taurus.qt.qtgui.display import TaurusLed
         self._led = TaurusLed()
         self._label = Qt.QLabel()
+        self.setMinimumWidth(10)
         self.layout().addWidget(self._led)
         self.layout().addWidget(self._label)
         self.layout().setAlignment(Qt.Qt.AlignCenter)
@@ -330,6 +331,8 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
         """
         
         self.call__init__(taurus.qt.qtgui.panel.TaurusDevicePanel, parent, model)
+        self._status.setFixedHeight(2000)
+        self._status.setFixedWidth(7000)
         #self.setLogLevel(self.Info)
         self.info('init(%s,%s): connecting ...'%(model,filters))
         
