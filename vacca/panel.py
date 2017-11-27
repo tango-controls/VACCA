@@ -493,8 +493,12 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
                 qpixmap = getCachedPixmap(':/logo.png')
             
             self._image.setPixmap(qpixmap)
-            self._state.setModel(model+'/state')
-            if hasattr(self,'_statelabel'): self._statelabel.setModel(model+'/state')
+            if hasattr(self,'_state'): self._state.setModel(model+'/state')
+            if hasattr(self,'_statelabel'): 
+                self._statelabel.setBgRole('value')
+                from taurus.qt.qtgui.base.taurusbase import defaultFormatter
+                self._statelabel.setFormat(defaultFormatter)
+                self._statelabel.setModel(model+'/state')
             self._status.setModel(model+'/status')
             
             try:
