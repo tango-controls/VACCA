@@ -83,7 +83,8 @@ if os.path.isdir(vgb):
 #import pickle
 #pickle.dump(package_data,open('data.pck','w'))
   
-packages = package_dir.keys()
+packages = sorted(set(package_dir.keys()+find_packages()))
+print( 'packages: %s' % str(packages) )
 
 
 setup(
