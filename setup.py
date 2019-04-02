@@ -30,7 +30,7 @@ version = open('vacca/VERSION').read().strip()
 scripts = []
 license = 'GPL-3.0'
 
-scripts = ['./bin/vaccagui','./bin/vaccapanel']
+scripts = ['./bin/vaccagui','./bin/vaccapanel','./bin/ctvc']
 
 entry_points = {
         'console_scripts': [
