@@ -1,0 +1,14 @@
+#!/bin/sh
+#export PYTHONPATH=/control/user-packages/checkout/vacca.git:$PYTHONPATH
+
+if [ `echo $1 | grep tauruspanel` ] ; then
+ echo "Legacy Taurus panel"
+ rm ~/.config/Unknown\ Organization/tauruspanel.ini
+ python -c "from vacca.legacy.taurusdevicepanel import TaurusPanelMain;TaurusPanelMain()" --default-formatter=taurus.core.tango.util.tangoFormatter 
+ 
+elif [ `echo $1 | grep taurus` ] ; then
+ $1 --default-formatter=taurus.core.tango.util.tangoFormatter $2 $3 $4 $5 $6 $7 $8
+ 
+else 
+ vaccagui $*
+fi
