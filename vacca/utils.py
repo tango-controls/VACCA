@@ -67,13 +67,12 @@ VACCA_PATH: *vpath('path/to/icon')*
 
 """
 
+from taurus.external.qt import Qt, Qwt5
 import os,sys,traceback,imp,time,re
 import fandango
 from fandango import printf,get_database,first,\
     isString,isRegexp,clmatch
 from fandango.dicts import SortedDict
-from taurus.external.qt import Qt
-from taurus.external.qt import Qwt5
 
 try:
   from taurus.core import TaurusDatabase as TaurusAuthority

@@ -43,8 +43,14 @@ from taurus.core.tango.search import get_alias_for_device
 from taurus.qt.qtgui.base import TaurusBaseComponent, TaurusBaseWidget
 
 TREE_ITEM_MIME_TYPE = 'application/x-qabstractitemmodeldatalist'
-import taurus.qt.qtgui.tree.taurusdevicetree
-from taurus.qt.qtgui.tree.taurusdevicetree import *
+try:
+    from taurus.qt.qtgui.tree.taurusdevicetree import (
+        TaurusDevTree, TaurusDevTreeOptions, TaurusSearchTree)
+    #from taurus.qt.qtgui.tree.taurusdevicetree import *
+except:
+    from vacca.legacy.taurusdevicetree import (
+        TaurusDevTree, TaurusDevTreeOptions, TaurusSearchTree)
+    
 from taurus.qt.qtcore.mimetypes import *
 
 if not hasattr(TaurusDevTree,'__pyqtSignals__'):
@@ -62,7 +68,7 @@ TaurusSearchTree.setDefaultPanelClass = staticmethod(lambda c: TaurusDevTree.set
 TaurusSearchTree.setDefaultAttrFilter = staticmethod(lambda c: TaurusDevTree.setDefaultAttrFilter(c))
 
 
-class VaccaDevTree(taurus.qt.qtgui.tree.taurusdevicetree.TaurusDevTree, TaurusBaseWidget):
+class VaccaDevTree(TaurusDevTree, TaurusBaseWidget):
     ## @TODO: SAME CHANGE MUST BE ADDED TO TAURUSJDRAWGRAPHICS SELECTGRAPHICITEM!!!
 
     MAX_NODES_TO_UPDATE = 120
