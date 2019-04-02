@@ -6,5 +6,6 @@ include README
 include bin/ctvc
 include vacca/VERSION
 include vacca/CHANGES
+include vacca/legacy/ui/TaurusDevPanel.ui
 
 recursive-include vacca *.ini *.jpg *.png *.PNG *.JPG *.qrc *.gif
