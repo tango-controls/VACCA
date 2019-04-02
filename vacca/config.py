@@ -124,10 +124,14 @@ print('In vacca.config(done=%s,vacca_dir=%s)'%(globals().get('CONFIG_DONE',False
 
 try:
 
-    if VACCA_DIR:
-        print('Changing directory to VACCA_DIR:%s' %(VACCA_DIR))
-        os.chdir(os.environ['VACCA_DIR'])
-        sys.path.append(os.environ['VACCA_DIR'])
+    try:
+        if VACCA_DIR:
+            print('Changing directory to VACCA_DIR:%s' %(VACCA_DIR))
+            os.chdir(os.environ['VACCA_DIR'])
+            sys.path.append(os.environ['VACCA_DIR'])
+    except:
+        print('Unable to change to %s directory'%os.environ['VACCA_DIR'])
+        traceback.print_exc()
 
     try:
         app = Qt.QApplication.instance()
