@@ -1,0 +1,91 @@
+vacca (4.6.4+git20190402.1.b3cab7-0~bpo9+0~alba+1~1) stretch-backports; urgency=medium
+
+  * local package
+
+  ** SNAPSHOT build @be4fe460ca026c80ce19aca267bf819b564c6e17 **
+
+  * New upstream version 4.6.4+git20190402.1.b3cab7
+
+ -- srubio <srubio@cells.es>  Tue, 02 Apr 2019 19:13:07 +0000
+
+vacca (4.6.3+git20190402.1.575e64-0~bpo9+0~alba+1~1) stretch-backports; urgency=medium
+
+  * local package
+
+  ** SNAPSHOT build @6b72a82379e4d57cf99fb18099dc6e42ebed3434 **
+
+  * New upstream version 4.6.3+git20190402.1.575e64
+
+ -- srubio <srubio@cells.es>  Tue, 02 Apr 2019 18:53:16 +0000
+
+vacca (4.6.2+git20190402.1.cc2b4c-0~bpo9+0~alba+1~1.gbp578325) stretch-backports; urgency=medium
+
+  * local package
+  ** SNAPSHOT build @578325d93128d5ac9a2752c8a4d593f0d8c2fed8 **
+
+  [ srubio ]
+  * local package
+  ** SNAPSHOT build @77655a871ad52a1f05851ee6980e10c354bb5e89 **
+
+  * New upstream version 4.6.2+git20190402.1.cc2b4c
+
+  [ srubio ]
+
+ -- srubio <srubio@cells.es>  Tue, 02 Apr 2019 18:42:09 +0000
+
+vacca (4.6.1+git20190402.1.d8e262-0~bpo9+0~alba+1~1.gbp8a2a15) stretch-backports; urgency=medium
+
+  * local package
+
+  ** SNAPSHOT build @8a2a15e2ad96a3abd9bb22383b343bc4aae93d60 **
+
+  * New upstream version 4.6.1+git20190402.1.d8e262
+
+ -- srubio <srubio@cells.es>  Tue, 02 Apr 2019 12:41:16 +0000
+
+vacca (4.6.1+git20171127.1.766c45-0~bpo9+0~alba+1) stretch-backports; urgency=medium
+
+  * local package
+
+  ** SNAPSHOT build @0d27413699d446d2987dadd9557ad8f74f98860d **
+
+  * New upstream version 4.6.1+git20171127.1.766c45
+
+ -- srubio <srubio@cells.es>  Mon, 27 Nov 2017 17:13:29 +0000
+
+vacca (4.6.0+git20171120.1.bae260-1~bpo9+0~alba+1) stretch-backports; urgency=medium
+
+  * local package
+  * New upstream version 4.6.0+git20171120.1.bae260
+
+ -- srubio <srubio@cells.es>  Mon, 20 Nov 2017 14:04:50 +0000
+
+vacca (4.5.1+git20170828.1.13d3b7-0~bpo9+0~alba+1) stretch-backports; urgency=medium
+
+  * local package
+
+  ** SNAPSHOT build @76d7c1236f1be32a0f821d2dbe972b3fb919cb09 **
+
+  * New upstream version 4.5.1+git20170828.1.13d3b7
+
+ -- srubio <srubio@cells.es>  Mon, 28 Aug 2017 08:28:33 +0000
+
+vacca (4.5.0+git20170620.1.8597d5-2~bpo9+0~alba+2) stretch-backports; urgency=low
+
+  * local package
+  * updated description
+
+ -- srubio <srubio@cells.es>  Tue, 20 Jun 2017 11:45:33 +0000
+
+vacca (4.5.0+git20170620.1.8597d5-2~bpo9+0~alba+1) stretch-backports; urgency=low
+
+  * local package
+  * debian files updated
+
+ -- srubio <srubio@cells.es>  Tue, 20 Jun 2017 09:21:42 +0000
+
+vacca (4.5.0+git20170620.1.8597d5-1) unstable; urgency=low
+
+  * source package automatically created by stdeb 0.8.5
+
+ -- srubio <srubio@cells.es>  Tue, 20 Jun 2017 09:18:38 +0000

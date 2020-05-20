@@ -1,0 +1,15 @@
+Source: vacca
+Maintainer: srubio <srubio@cells.es>
+Section: python
+Priority: optional
+Build-Depends: dh-python, python-setuptools (>= 0.6b3), python-all (>= 2.6.6-3), debhelper (>= 9)
+Standards-Version: 3.9.8
+
+Package: python-vacca
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}, python-taurus, python-fandango
+Description: Viewer and Commander Control Application for Tango Control S
+ It will allow to search for devices from trees and synoptics, access
+ to its attributes and commands and plot its data from archiving. This fancy
+ features will turn your Tango control system into a versatile SCADA.
+

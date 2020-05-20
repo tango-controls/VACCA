@@ -24,13 +24,11 @@ To tune some options:
 -------------------------------------------------------------------------------
 """
 
-print(__doc__)
-
 version = open('vacca/VERSION').read().strip()
 scripts = []
 license = 'GPL-3.0'
 
-scripts = ['./bin/vaccagui','./bin/vaccapanel','./bin/ctvc']
+scripts = ['./bin/vaccagui','./bin/vaccapanel','./bin/vaccabar']
 
 entry_points = {
         'console_scripts': [
@@ -53,11 +51,11 @@ package_data = {
 # PARSING EXTRA FILES ADDED TO THE PACKAGE
 import os,re
 
-if os.path.isdir('vaccagui'):
-  print 'Adding custom vaccagui package ...'
-  package_dir['vaccagui'] = 'vaccagui'
-else:
-  package_dir['vaccagui'] = 'vacca/ini/vaccagui'
+#if os.path.isdir('vaccagui'):
+#  print 'Adding custom vaccagui package ...'
+#  package_dir['vaccagui'] = 'vaccagui'
+#else:
+#  package_dir['vaccagui'] = 'vacca/ini/vaccagui'
   
 def getter(s,d,files,remove='vaccagui'):
   #d = os.path.join(*(d.split(os.path.sep)[1:] or ['']))
@@ -69,26 +67,22 @@ def getter(s,d,files,remove='vaccagui'):
         n = n.replace(remove+os.path.sep,'')
       s.append(n)
 
-vg = package_dir['vaccagui']
-package_data['vaccagui'] = []
-os.path.walk(vg,getter,package_data['vaccagui'])
-vgb = os.path.join(vg,'bin')
-if os.path.isdir(vgb):
-  os.path.walk(vgb,
-    lambda l,d,f:l.extend(os.path.join(vgb,n) for n in f),
-    scripts)
-#print package_data
+#vg = package_dir['vaccagui']
+#package_data['vaccagui'] = []
+#os.path.walk(vg,getter,package_data['vaccagui'])
+#vgb = os.path.join(vg,'bin')
+#if os.path.isdir(vgb):
+#  os.path.walk(vgb,
+#    lambda l,d,f:l.extend(os.path.join(vgb,n) for n in f),
+#    scripts)
 
-
-#import pickle
-#pickle.dump(package_data,open('data.pck','w'))
+import pickle
+pickle.dump(package_data,open('data.pck','w'))
   
 packages = sorted(set(package_dir.keys()+find_packages()))
-print( 'packages: %s' % str(packages) )
-
 
 setup(
-    name="Vacca",
+    name="vacca",
     version=str(version),
     license=license,
     packages=packages,

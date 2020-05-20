@@ -1,0 +1,19 @@
+Metadata-Version: 1.1
+Name: vacca
+Version: 4.6.4
+Summary: Viewer and Commander Control Application for Tango Control System.
+Home-page: UNKNOWN
+Author: Sergi Rubio
+Author-email: srubio@cells.es
+License: GPL-3.0
+Description: UNKNOWN
+Platform: Linux
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Other Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Unix
+Classifier: Programming Language :: Python
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Software Development :: Libraries

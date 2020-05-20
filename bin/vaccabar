@@ -1,0 +1,5 @@
+#!/bin/sh
+
+DIR=$(fandango findModule vacca)
+python $DIR/launcher.py &
+echo "done"
