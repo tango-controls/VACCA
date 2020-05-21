@@ -59,7 +59,6 @@ import os,re
   
 def getter(s,d,files,remove='vaccagui'):
   #d = os.path.join(*(d.split(os.path.sep)[1:] or ['']))
-  print d,files
   for n in files:
     n,r = os.path.join(d,n),re.match('.*(pyc|~|git|svn|bak|tmp)$',n)
     if os.path.isfile(n) and not r:
