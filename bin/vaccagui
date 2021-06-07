@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # # VACuum Control Application for ALBA
 # # 
 # # Usage:
@@ -31,6 +30,8 @@
 #Source your own environment variables from here:
 #source alba_blissrc
 
+export QT_API=pyqt
+
 if [ ! "$VACCA_PATH" ] ; then
     #Getting current script folder
     export VACCA_PATH=$(python -c "import imp;print(imp.find_module('vacca')[1])")
@@ -39,6 +40,7 @@ fi
 echo "Launching $VACCA_PATH/main.py [$*]"
 
 LAUNCHER=$VACCA_PATH/main.py
+export QT_API=pyqt
 python $LAUNCHER $* 
 #3>&1 2>&1 1>/dev/null
 

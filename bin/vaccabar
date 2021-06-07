@@ -1,5 +1,6 @@
 #!/bin/sh
 
+export QT_API=pyqt
 DIR=$(fandango findModule vacca)
 python $DIR/launcher.py &
 echo "done"

@@ -495,10 +495,13 @@ class VaccaPanel(fandango.qt.Dropable(taurus.qt.qtgui.panel.TaurusDevicePanel)):
             self._image.setPixmap(qpixmap)
             if hasattr(self,'_state'): self._state.setModel(model+'/state')
             if hasattr(self,'_statelabel'): 
-                self._statelabel.setBgRole('value')
-                from taurus.qt.qtgui.base.taurusbase import defaultFormatter
-                self._statelabel.setFormat(defaultFormatter)
-                self._statelabel.setModel(model+'/state')
+	        try:
+                    self._statelabel.setBgRole('value')
+                    from taurus.qt.qtgui.base.taurusbase import defaultFormatter
+                    self._statelabel.setFormat(defaultFormatter)
+                    self._statelabel.setModel(model+'/state')
+                except:
+                    print('no taurus formatter for state')
             self._status.setModel(model+'/status')
             
             try:
@@ -643,6 +646,7 @@ def configure_form(dev,form=None):
 def main(args):
 
     import sys,re,traceback,taurus
+    print('args: %s' % str(args))
     assert len(args)>1, '\n\nUsage:\n\t'\
         '> python panel.py [a/device/name or synoptic.jdw] [--attrs] '\
             '[attr_regexps] --comms [comm_regexps]'
@@ -653,6 +657,9 @@ def main(args):
     form = None
     
     VACCA_CONFIG = os.getenv('VACCA_CONFIG')
+    if not VACCA_CONFIG:
+      VACCA_CONFIG = fandango.objects.find_module('vaccagui')
+    print('VACCA_CONFIG: %s' % VACCA_CONFIG)
     if VACCA_CONFIG:
         import vacca.utils as vu
         PROPS = vu.get_config_properties(VACCA_CONFIG)
@@ -667,7 +674,7 @@ def main(args):
                 traceback.print_exc()
         CONFIG = vu.get_config_file()
     
-    if re.match('[\w-]+/[\w-]+/[\w-]+.*',model):
+    if re.match(fandango.tango.retango,model):
       
         print 'loading a device panel'
         k,filters = '--attrs',fandango.defaultdict(list)
@@ -699,6 +706,9 @@ def main(args):
             try: 
                 taurus.Attribute(m).changePollingPeriod(period)
             except: print '(%s).changePollingPeriod(%s): Failed: %s'%(m,period,traceback.format_exc())
+            
+    else:
+      print('Unknown model: %s' % model)
     
     print 'showing ...'
     form.show()
@@ -707,4 +717,5 @@ def main(args):
 __doc__ = vacca.get_autodoc(__name__,vars())
 
 if __name__ == '__main__': 
+  print('main args: %s' % str(sys.argv))
   main(sys.argv)

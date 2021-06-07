@@ -13,12 +13,15 @@
 #Source your own environment variables from here:
 #source alba_blissrc
 
+export QT_API=pyqt
+
 if [ ! "$VACCA_PATH" ] ; then
     #Getting current script folder
     export VACCA_PATH=$(python -c "import imp;print(imp.find_module('vacca')[1])")
 fi
 
-LAUNCHER=$VACCA_PATH/main.py
-python $LAUNCHER --panel $* 
+LAUNCHER=$VACCA_PATH/panel.py
+#python $LAUNCHER --panel $* #vacca main fails with args
+python $LAUNCHER $*
 #3>&1 2>&1 1>/dev/null
 
