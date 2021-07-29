@@ -75,8 +75,8 @@ def getter(s,d,files,remove='vaccagui'):
 #    lambda l,d,f:l.extend(os.path.join(vgb,n) for n in f),
 #    scripts)
 
-import pickle
-pickle.dump(package_data,open('data.pck','w'))
+#import pickle
+#pickle.dump(package_data,open('data.pck','w'))
   
 packages = sorted(set(package_dir.keys()+find_packages()))
 
