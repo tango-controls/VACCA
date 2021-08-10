@@ -4,6 +4,7 @@ include AUTHORS
 include LICENSE
 include README.rst
 include bin/ctvc
+include bin/vaccagui
 include vacca/VERSION
 include vacca/CHANGES
 include vacca/legacy/ui/TaurusDevPanel.ui
